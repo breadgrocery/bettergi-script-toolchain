@@ -1,4 +1,4 @@
-The command-line interface for BetterGI JavaScript development.
+The command-line interface for [Better Genshin Impact](https://github.com/babalae/better-genshin-impact) JavaScript development.
 
 ## Installation
 

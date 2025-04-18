@@ -1,4 +1,4 @@
-Scaffolding Your First BetterGI BetterGI JavaScript Project.
+Scaffolding Your First [Better Genshin Impact](https://github.com/babalae/better-genshin-impact) JavaScript Project.
 
 With NPM:
 
