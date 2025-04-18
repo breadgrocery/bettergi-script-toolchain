@@ -48,7 +48,7 @@ export const installScript = async (
   const scriptPath = config.bettergi?.scriptPath || path.join(installPath, "User/JsScript");
   if (!scriptPath) return;
 
-  const scriptDist = path.join(scriptPath, manifest.name);
+  const scriptDist = path.join(scriptPath, config.bettergi?.outDir || manifest.name);
   if (fs.existsSync(outDir)) {
     fs.copySync(outDir, scriptDist);
   }

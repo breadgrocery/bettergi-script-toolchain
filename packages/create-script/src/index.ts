@@ -1,7 +1,6 @@
 import * as prompts from "@clack/prompts";
 import fs from "fs-extra";
 import path from "node:path";
-import url from "node:url";
 import {
   authorInput,
   authorLinkInput,
@@ -57,7 +56,7 @@ const cancel = () => prompts.cancel("Operation cancelled");
     version: version.toString(),
     description: description.toString(),
     author: author.toString(),
-    authorLink: authorLink.toString()
+    authorLink: authorLink?.toString()
   };
 
   // Create template

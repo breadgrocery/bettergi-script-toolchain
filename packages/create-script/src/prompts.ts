@@ -81,6 +81,8 @@ export const authorLinkInput = async () => {
     }
   })();
 
+  if (!link) return undefined;
+
   return prompts.text({
     message: "Author link:",
     ...(link && {

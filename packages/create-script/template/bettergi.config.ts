@@ -3,9 +3,10 @@ import { defineConfig } from "@bettergi/cli/config";
 export default defineConfig({
   // 调试配置
   bettergi: {
-    enable: true
+    enable: true,
+    outDir: "测试"
   },
-  // 清单信息
+  // 脚本清单(覆写 package.json 中的定义)
   manifest: {},
   // 配置UI
   settings: [

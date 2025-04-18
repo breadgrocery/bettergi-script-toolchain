@@ -4,7 +4,8 @@ export default defineConfig({
   main: "main.ts",
   // 调试配置
   bettergi: {
-    enable: true
+    enable: true,
+    outDir: "测试"
   },
   // 清单信息
   manifest: {},
