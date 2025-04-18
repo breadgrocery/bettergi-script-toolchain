@@ -4,7 +4,7 @@ import esbuild from "esbuild";
 import fs from "fs-extra";
 import path from "node:path";
 import { type ScriptConfig } from "./config.js";
-import { getInstallPath, installScript } from "./util/bettergi.js";
+import { installScript } from "./util/bettergi.js";
 import { tempFile } from "./util/file.js";
 import { syncManifestConfig, syncSettingsConfig } from "./util/meta.js";
 import { terminate } from "./util/process.js";
@@ -52,11 +52,7 @@ import { terminate } from "./util/process.js";
       }
       // Install script if enabled
       if (config.bettergi?.enable ?? true) {
-        if (config.bettergi?.installPath || (await getInstallPath())) {
-          await installScript(outDir, config, manifest);
-        } else {
-          console.warn(`Auto-detect BetterGI failed. Set "bettergi.installPath" manually.`);
-        }
+        await installScript(outDir, config, manifest);
       }
     } catch (err) {
       console.error(err);
