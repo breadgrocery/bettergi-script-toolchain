@@ -1,0 +1,17 @@
+{
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    ".gitignore": ".git*,lefthook.*,prettier.config.*,.prettierignore,LICENSE",
+    "README.md": "README.*.md",
+    "tsconfig.json": "tsconfig.*.json",
+    "package.json": "package-lock.json,yarn.lock,pnpm-*.yaml,bun.lockb"
+  },
+  "search.exclude": {
+    "dist": true,
+    "node_modules": true
+  },
+  "files.watcherExclude": {
+    "**/create-script/template/**": true
+  }
+}

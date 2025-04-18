@@ -1,0 +1,25 @@
+{
+  "name": "@bettergi/types",
+  "version": "0.0.4",
+  "description": "TypeScript Definitions for BetterGI JavaScript",
+  "type": "module",
+  "author": "Bread Grocery<https://github.com/breadgrocery>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/breadgrocery/bettergi-script-toolchain.git",
+    "directory": "packages/types"
+  },
+  "bugs": {
+    "url": "https://github.com/breadgrocery/bettergi-script-toolchain/issues"
+  },
+  "homepage": "https://github.com/breadgrocery/bettergi-script-toolchain/tree/main/packages/types",
+  "types": "index.d.ts",
+  "keywords": [
+    "bettergi",
+    "types"
+  ],
+  "dependencies": {
+    "mirada": "^0.0.15"
+  }
+}

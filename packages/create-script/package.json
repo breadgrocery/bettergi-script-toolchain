@@ -1,0 +1,44 @@
+{
+  "name": "@bettergi/create-script",
+  "version": "0.0.1",
+  "description": "Scaffolding Your BetterGI JavaScript Project",
+  "type": "module",
+  "author": "Bread Grocery<https://github.com/breadgrocery>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/breadgrocery/bettergi-script-toolchain.git",
+    "directory": "packages/create-script"
+  },
+  "bugs": {
+    "url": "https://github.com/breadgrocery/bettergi-script-toolchain/issues"
+  },
+  "homepage": "https://github.com/breadgrocery/bettergi-script-toolchain/tree/main/packages/create-script",
+  "bin": {
+    "create-script": "bin/create-script.js"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "template"
+  ],
+  "keywords": [
+    "bettergi",
+    "template"
+  ],
+  "scripts": {
+    "dev": "tsc && create-script",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.10.1",
+    "fs-extra": "^11.3.0",
+    "git-config": "^0.0.7"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/git-config": "^0.0.32",
+    "@types/node": "^22.14.1",
+    "typescript": "^5.6.3"
+  }
+}

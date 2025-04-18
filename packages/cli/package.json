@@ -1,0 +1,57 @@
+{
+  "name": "@bettergi/cli",
+  "version": "0.0.3",
+  "description": "A CLI for BetterGI JavaScript Development",
+  "type": "module",
+  "author": "Bread Grocery<https://github.com/breadgrocery>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/breadgrocery/bettergi-script-toolchain.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/breadgrocery/bettergi-script-toolchain/issues"
+  },
+  "homepage": "https://github.com/breadgrocery/bettergi-script-toolchain/tree/main/packages/cli",
+  "bin": {
+    "bettergi-cli": "./bin/bettergi-cli.js"
+  },
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./config": {
+      "import": "./dist/config.js",
+      "types": "./dist/config.d.ts"
+    }
+  },
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "keywords": [
+    "bettergi",
+    "cli"
+  ],
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "chokidar": "^4.0.3",
+    "cosmiconfig": "^9.0.0",
+    "esbuild": "^0.25.2",
+    "find-cache-directory": "^6.0.0",
+    "fs-extra": "^11.3.0",
+    "winreg": "^1.2.5"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.14.1",
+    "@types/winreg": "^1.2.36",
+    "typescript": "^5.6.3"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "my-bettergi-script",
+  "version": "0.0.1",
+  "description": "My BetterGI script project",
+  "author": {
+    "name": "users.noreply",
+    "url": "https://github.com/users.noreply"
+  },
+  "scripts": {
+    "dev": "bettergi-cli --watch",
+    "build": "bettergi-cli"
+  },
+  "dependencies": {
+    "@bettergi/cli": "^0.0.3"
+  },
+  "devDependencies": {
+    "@bettergi/types": "^0.0.4",
+    "typescript": "^5.6.3"
+  }
+}

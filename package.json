@@ -1,0 +1,26 @@
+{
+  "name": "@bettergi/monorepo",
+  "private": true,
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "prepare": "lefthook install",
+    "dev": "pnpm run -C playground dev"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "lefthook": "^1.11.10",
+    "prettier": "^3.5.0"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=9"
+  },
+  "packageManager": "pnpm@9.15.9"
+}
