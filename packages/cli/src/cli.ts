@@ -39,23 +39,27 @@ import { terminate } from "./util/process.js";
 
   // Sync files
   const sync = async () => {
-    // Reload config
-    Object.assign(config, (await loadConfig()).config);
-    // Write into manifest.json
-    const manifest = await syncManifestConfig(outDir, config);
-    // Write into settings.json
-    await syncSettingsConfig(outDir, config);
-    // Copy asset files
-    if (fs.existsSync(assetsDir)) {
-      fs.copySync(assetsDir, path.join(outDir, assetsDir));
-    }
-    // Install script if enabled
-    if (config.bettergi?.enable ?? true) {
-      if (config.bettergi?.installPath || (await getInstallPath())) {
-        await installScript(outDir, config, manifest);
-      } else {
-        console.warn(`Auto-detect BetterGI failed. Set "bettergi.installPath" manually.`);
+    try {
+      // Reload config
+      Object.assign(config, (await loadConfig()).config);
+      // Write into manifest.json
+      const manifest = await syncManifestConfig(outDir, config);
+      // Write into settings.json
+      await syncSettingsConfig(outDir, config);
+      // Copy asset files
+      if (fs.existsSync(assetsDir)) {
+        fs.copySync(assetsDir, path.join(outDir, assetsDir));
       }
+      // Install script if enabled
+      if (config.bettergi?.enable ?? true) {
+        if (config.bettergi?.installPath || (await getInstallPath())) {
+          await installScript(outDir, config, manifest);
+        } else {
+          console.warn(`Auto-detect BetterGI failed. Set "bettergi.installPath" manually.`);
+        }
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -83,8 +87,13 @@ import { terminate } from "./util/process.js";
     // Watch code
     await context.watch();
     // Watch files
-    const watchPaths = [filepath, assetsDir] as string[];
-    chokidar.watch(watchPaths).on("all", sync);
+    const watchPaths = [filepath, assetsDir, "package.json"] as string[];
+    chokidar.watch(watchPaths).on("all", async (_, path, state) => {
+      if (state?.isFile()) {
+        console.debug(`[File Watcher]: ${path}`);
+      }
+      await sync();
+    });
     console.log("Watching for changes...");
   } else {
     fs.removeSync(outDir); // Remove old dist folder
