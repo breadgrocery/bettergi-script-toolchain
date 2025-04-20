@@ -10,8 +10,5 @@
   "search.exclude": {
     "dist": true,
     "node_modules": true
-  },
-  "files.watcherExclude": {
-    "**/create-script/template/**": true
   }
 }
