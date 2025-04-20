@@ -33,7 +33,11 @@ export interface ImageRegion extends Region {
    * @param successAction 识别成功回调
    * @param failAction 识别失败回调
    */
-  find: (ro: RecognitionObject, successAction?: () => Region, failAction?: () => void) => Region;
+  find: (
+    ro: RecognitionObject,
+    successAction?: (region: Region) => void,
+    failAction?: () => void
+  ) => Region;
 
   /**
    * 在本区域内查找识别对象，返回所有找到的结果
@@ -44,7 +48,7 @@ export interface ImageRegion extends Region {
    */
   findMulti: (
     ro: RecognitionObject,
-    successAction?: () => List<Region>,
+    successAction?: (regions: List<Region>) => void,
     failAction?: () => void
   ) => List<Region>;
 }
