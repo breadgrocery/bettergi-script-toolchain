@@ -1,0 +1,17 @@
+{
+  "include": ["./src/**/*.ts"],
+  "compilerOptions": {
+    "outDir": "dist",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "declaration": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "alwaysStrict": false,
+    "removeComments": false,
+    "noEmitOnError": true,
+    "types": ["@bettergi/types"]
+  }
+}

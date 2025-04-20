@@ -1,0 +1,39 @@
+{
+  "name": "@bettergi/utils",
+  "version": "0.0.1",
+  "description": "Utils for BetterGI JavaScript Development",
+  "type": "module",
+  "author": "Bread Grocery<https://github.com/breadgrocery>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/breadgrocery/bettergi-script-toolchain.git",
+    "directory": "packages/utils"
+  },
+  "bugs": {
+    "url": "https://github.com/breadgrocery/bettergi-script-toolchain/issues"
+  },
+  "homepage": "https://github.com/breadgrocery/bettergi-script-toolchain/tree/main/packages/utils",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "bettergi",
+    "utils"
+  ],
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@bettergi/types": "^0.0.5",
+    "typescript": "^5.6.3"
+  }
+}
