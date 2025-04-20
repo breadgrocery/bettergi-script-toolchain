@@ -1,18 +1,15 @@
-export const openMail = async (maxAttempts: number = 5) => {
-  keyPress("ESCAPE");
+import { findImage, waitUntil } from "@bettergi/utils";
 
-  const findMail = () => {
-    const mat = file.readImageMatSync("./assets/mail.png");
-    const ro = RecognitionObject.templateMatch(mat);
-    return captureGameRegion().find(ro);
-  };
+export const openMail = async () => {
+  // 等待直到找到邮件图标，超时5秒，每秒检查一次，等待期间按 Esc 键打开菜单
+  const found = await waitUntil(
+    () => findImage("./assets/mail.png") !== undefined,
+    5000,
+    1000,
+    () => keyPress("ESCAPE")
+  );
+  if (!found) throw new Error("Mail icon not found");
 
-  let region;
-  let count = 0;
-  while ((region = findMail()).isEmpty() && count < maxAttempts) {
-    count += 1;
-    await sleep(1000);
-  }
-
-  region && region.isExist() && region.click();
+  const mailIcon = findImage("./assets/mail.png")!;
+  mailIcon.click();
 };
