@@ -127,6 +127,12 @@ export interface ScriptConfig {
    */
   outDir?: string;
 
+  /**
+   * 启用脚本压缩
+   * @default false
+   */
+  minify?: boolean;
+
   /** BetterGI 调试配置 */
   bettergi?: bettergi.BetterGI;
 

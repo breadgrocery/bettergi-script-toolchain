@@ -36,6 +36,7 @@ import { terminate } from "./util/process.js";
   const main = [config.main || "main.ts"];
   const assetsDir = config.assetsDir || "assets";
   const outDir = path.resolve(config.outDir || "dist");
+  const minify = config.minify ?? false;
 
   // Sync files
   const sync = async () => {
@@ -67,7 +68,7 @@ import { terminate } from "./util/process.js";
     format: "esm",
     target: "es2022",
     bundle: true,
-    minify: false,
+    minify,
     plugins: [
       {
         name: "rebuild",
