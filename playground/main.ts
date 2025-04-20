@@ -7,7 +7,5 @@ const greeting = (name: string) => {
 (async function () {
   greeting(settings.name);
 
-  await genshin.returnMainUi();
-
-  await openMail();
+  await genshin.returnMainUi().then(openMail);
 })();

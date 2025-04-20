@@ -9,7 +9,8 @@
     "build": "bettergi-cli"
   },
   "dependencies": {
-    "@bettergi/cli": "workspace:latest"
+    "@bettergi/cli": "workspace:latest",
+    "@bettergi/utils": "workspace:latest"
   },
   "devDependencies": {
     "@bettergi/types": "workspace:latest",

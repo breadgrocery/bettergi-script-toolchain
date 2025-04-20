@@ -89,11 +89,23 @@ importers:
         specifier: ^0.0.15
         version: 0.0.15
 
+  packages/utils:
+    devDependencies:
+      '@bettergi/types':
+        specifier: ^0.0.5
+        version: 0.0.5
+      typescript:
+        specifier: ^5.6.3
+        version: 5.8.3
+
   playground:
     dependencies:
       '@bettergi/cli':
         specifier: workspace:latest
         version: link:../packages/cli
+      '@bettergi/utils':
+        specifier: workspace:latest
+        version: link:../packages/utils
     devDependencies:
       '@bettergi/types':
         specifier: workspace:latest
@@ -136,6 +148,9 @@ packages:
   '@babel/types@7.27.0':
     resolution: {integrity: sha512-H45s8fVLYjbhFH62dIJ3WtmJ6RSPt/3DRO0ZcT2SUiYiQyz3BLVb9ADEnLl91m74aQPS3AzzeajZHYOalWe3bg==}
     engines: {node: '>=6.9.0'}
+
+  '@bettergi/types@0.0.5':
+    resolution: {integrity: sha512-6tg6s6G0Mbx/zjuqDfuUdPY2FF28+x7RwafAvE7rRKcZZsbaBFg2ZwzgVwn5E7ZhIWUyvfTm5rl7Ab4GHQC61w==}
 
   '@clack/core@0.4.2':
     resolution: {integrity: sha512-NYQfcEy8MWIxrT5Fj8nIVchfRFA26yYKJcvBS7WlUIlw2OmQOY9DhGGXMovyI5J5PpxrCPGkgUi207EBrjpBvg==}
@@ -944,6 +959,12 @@ snapshots:
     dependencies:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
+
+  '@bettergi/types@0.0.5':
+    dependencies:
+      mirada: 0.0.15
+    transitivePeerDependencies:
+      - encoding
 
   '@clack/core@0.4.2':
     dependencies:
