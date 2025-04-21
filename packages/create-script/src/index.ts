@@ -46,13 +46,18 @@ const cancel = () => prompts.cancel("操作已取消");
 
   // Get script version
   const version = await versionInput();
+  if (prompts.isCancel(version)) return cancel();
 
   // Get script description
   const description = await descriptionInput();
+  if (prompts.isCancel(description)) return cancel();
 
   // Get script author and link
   const author = await authorInput();
+  if (prompts.isCancel(author)) return cancel();
+
   const authorLink = await authorLinkInput();
+  if (prompts.isCancel(authorLink)) return cancel();
 
   // Wrap up
   const input: UserInput = {
@@ -69,11 +74,8 @@ const cancel = () => prompts.cancel("操作已取消");
 
   // Print done message according to package manager
   let doneMessage = "";
-  const cdProjectName = path.relative(cwd, targetRoot);
-
-  outro();
-
   if (targetRoot !== cwd) {
+    const cdProjectName = path.relative(cwd, targetRoot);
     doneMessage += `  cd ${cdProjectName.includes(" ") ? `"${cdProjectName}"` : cdProjectName}`;
   }
   switch (pkgManager) {
@@ -86,5 +88,6 @@ const cancel = () => prompts.cancel("操作已取消");
       doneMessage += `\n  ${pkgManager} run dev`;
       break;
   }
+  outro();
   prompts.note(doneMessage);
 })();
