@@ -11,11 +11,11 @@
     "build": "bettergi-cli"
   },
   "dependencies": {
-    "@bettergi/cli": "^0.0.5",
+    "@bettergi/cli": "^0.0.7",
     "@bettergi/utils": "^0.0.1"
   },
   "devDependencies": {
-    "@bettergi/types": "^0.0.4",
+    "@bettergi/types": "^0.0.6",
     "typescript": "^5.6.3"
   }
 }

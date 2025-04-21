@@ -1,19 +1,19 @@
-Scaffolding Your First [Better Genshin Impact](https://github.com/babalae/better-genshin-impact) JavaScript Project.
+本项目是一个为[Better Genshin Impact](https://github.com/babalae/better-genshin-impact) 设计的 JavaScript 脚本项目搭建模板，现在开始搭建你的第一个脚本项目。
 
-With NPM:
+## 用法
+
+### 使用 npm
 
 ```shell
 npm create @bettergi/script
 ```
 
-With PNPM:
+### 使用 pnpm
 
 ```shell
 pnpm create @bettergi/script
 ```
 
-Then follow the prompts!
+然后按照提示操作，完成搭建！
 
-## Related Tools
-
-[@bettergi/cli](https://www.npmjs.com/package/@bettergi/cli)
+> 提示：创建过程中输入的内容，后续可以在 `package.json` 或 `bettergi.config.ts` 文件中进行修改。
