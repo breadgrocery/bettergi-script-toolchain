@@ -3,29 +3,33 @@ import gitConfig from "git-config";
 import os from "node:os";
 import util from "node:util";
 
+export const intro = () => {
+  return prompts.intro("构建您的第一个 BetterGI 脚本！");
+};
+
 export const projectNameInput = () => {
   return prompts.text({
-    message: "Project name:",
+    message: "脚本名称:",
     defaultValue: "my-bettergi-script",
     placeholder: "my-bettergi-script",
-    validate: value => (value.length === 0 ? `Project name is required!` : undefined)
+    validate: value => (value.length === 0 ? `脚本名称不能为空！` : undefined)
   });
 };
 
 export const overwriteSelect = (targetDir: string) => {
   return prompts.select({
-    message: `Target directory "${targetDir}"` + " is not empty. Please choose how to proceed:",
+    message: `目标目录 "${targetDir}"` + " 不为空，请选择如何处理:",
     options: [
       {
-        label: "Cancel operation",
+        label: "取消操作",
         value: "no"
       },
       {
-        label: "Remove existing files and continue",
+        label: "移除文件并继续",
         value: "yes"
       },
       {
-        label: "Ignore files and continue",
+        label: "忽略并继续",
         value: "ignore"
       }
     ]
@@ -34,39 +38,38 @@ export const overwriteSelect = (targetDir: string) => {
 
 export const versionInput = () => {
   return prompts.text({
-    message: "Version:",
+    message: "脚本版本:",
     defaultValue: "0.0.1",
     placeholder: "0.0.1",
-    validate: value => (value.length === 0 ? `Version is required!` : undefined)
+    validate: value => (value.length === 0 ? `脚本版本不能为空！` : undefined)
   });
 };
 
 export const descriptionInput = () => {
   return prompts.text({
-    message: "Description:",
-    validate: value => (value.length === 0 ? `Description is required!` : undefined)
+    message: "脚本描述:",
+    validate: value => (value.length === 0 ? `脚本描述不能为空！` : undefined)
   });
 };
 
 export const authorInput = async () => {
-  const username = await (async () => {
+  const author = await (async () => {
     try {
       const config = (await util.promisify(gitConfig)()) as Record<string, any>;
-      if (config?.user?.name) return config.user.name;
+      if (config?.user?.name) return config.user.name as string;
 
       const { username } = os.userInfo();
       if (username) return username;
-    } catch {
-      return undefined;
-    }
+    } catch {}
+    return "Anonymous";
   })();
 
   return prompts.text({
-    message: "Author:",
-    ...(username && {
-      defaultValue: username,
-      placeholder: username,
-      validate: value => (value.length === 0 ? `Description is required!` : undefined)
+    message: "脚本作者:",
+    ...(author && {
+      defaultValue: author,
+      placeholder: author,
+      validate: value => (value.length === 0 ? `脚本作者不能为空！` : undefined)
     })
   });
 };
@@ -84,10 +87,14 @@ export const authorLinkInput = async () => {
   if (!link) return undefined;
 
   return prompts.text({
-    message: "Author link:",
+    message: "作者主页:",
     ...(link && {
       defaultValue: link,
       placeholder: link
     })
   });
+};
+
+export const outro = () => {
+  return prompts.intro("构建完成，现在运行：");
 };

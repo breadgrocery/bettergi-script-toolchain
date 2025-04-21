@@ -5,6 +5,8 @@ import {
   authorInput,
   authorLinkInput,
   descriptionInput,
+  intro,
+  outro,
   overwriteSelect,
   projectNameInput,
   versionInput
@@ -17,9 +19,11 @@ const cwd = process.cwd();
 const pkgManager = getPkgManager();
 
 // Actions
-const cancel = () => prompts.cancel("Operation cancelled");
+const cancel = () => prompts.cancel("操作已取消");
 
 (async () => {
+  intro();
+
   // Get project name
   const projectName = await projectNameInput();
   if (prompts.isCancel(projectName)) return cancel();
@@ -66,9 +70,11 @@ const cancel = () => prompts.cancel("Operation cancelled");
   // Print done message according to package manager
   let doneMessage = "";
   const cdProjectName = path.relative(cwd, targetRoot);
-  doneMessage += `Done. Now run:\n`;
+
+  outro();
+
   if (targetRoot !== cwd) {
-    doneMessage += `\n  cd ${cdProjectName.includes(" ") ? `"${cdProjectName}"` : cdProjectName}`;
+    doneMessage += `  cd ${cdProjectName.includes(" ") ? `"${cdProjectName}"` : cdProjectName}`;
   }
   switch (pkgManager) {
     case "yarn":
