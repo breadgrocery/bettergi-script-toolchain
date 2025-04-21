@@ -1,45 +1,62 @@
-The command-line interface for [Better Genshin Impact](https://github.com/babalae/better-genshin-impact) JavaScript development.
+本项目是一个为[Better Genshin Impact](https://github.com/babalae/better-genshin-impact) 设计的 JavaScript 脚本开发脚手架，旨在帮助开发者快速创建脚本项目。
 
-## Installation
+## 快速开始
+
+使用 [@bettergi/create-script](https://www.npmjs.com/package/@bettergi/create-script) 快速创建 JavaScript 脚本项目：
+
+### 使用 npm
+
+```shell
+npm create @bettergi/script
+```
+
+### 使用 pnpm
+
+```shell
+pnpm create @bettergi/script
+```
+
+## 安装
 
 ```shell
 npm install --save-dev @bettergi/cli
 ```
 
-## Usage
+## 用法
 
-1. Create a configuration file named bettergi.config.ts (or .js, .cjs, .mjs) in your project root:
+### 创建配置文件
+
+在工作目录下创建一个 `bettergi.config.ts` (或 `.js`, `.cjs`, `.mjs`) 配置文件。
 
 ```ts
-import { defineConfig } from "@bettergi/cli/config";
+import { defineConfig } from "@bettergi/cli";
 
 export default defineConfig({
-  // Build configuration options
+  // 构建配置项
   main: "main.ts",
+  // ...
 
-  // Debug configuration options
+  // 调试配置项
   bettergi: {},
 
-  // Script manifest definitions
+  // 脚本清单
   manifest: {},
 
-  // UI Settings configuration
+  // UI配置项
   settings: []
 });
 ```
 
-2. Execute the CLI with the following command:
+### 构建脚本
 
 ```shell
 npx bettergi-cli
 ```
 
-3. For continuous development with file watching:
+### 开发模式
+
+如需监视进行持续开发，则运行以下命令。
 
 ```shell
 npx bettergi-cli --watch
 ```
-
-## Related Tools
-
-[@bettergi/create-script](https://www.npmjs.com/package/@bettergi/create-script)
