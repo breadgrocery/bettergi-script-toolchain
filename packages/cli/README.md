@@ -29,7 +29,7 @@ npm install --save-dev @bettergi/cli
 在工作目录下创建一个 `bettergi.config.ts` (或 `.js`, `.cjs`, `.mjs`) 配置文件。
 
 ```ts
-import { defineConfig } from "@bettergi/cli";
+import { defineConfig } from "@bettergi/cli/config";
 
 export default defineConfig({
   // 构建配置项
