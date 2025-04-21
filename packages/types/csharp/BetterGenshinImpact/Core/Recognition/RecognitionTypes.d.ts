@@ -16,5 +16,6 @@ export enum RecognitionTypes {
   /** 提取指定颜色后进行文字识别 */
   ColorRangeAndOcr,
 
+  /** 自动检测 */
   Detect
 }

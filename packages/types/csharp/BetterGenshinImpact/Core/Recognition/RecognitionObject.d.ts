@@ -83,8 +83,10 @@ export interface RecognitionObject {
   /** 颜色匹配方式 */
   colorConversionCode: ColorConversionCodes;
 
+  /** 起始颜色范围 */
   lowerColor: Scalar;
 
+  /** 终止颜色范围 */
   upperColor: Scalar;
 
   /**
@@ -108,19 +110,44 @@ export interface RecognitionObject {
   /** 正则匹配 多个值全匹配的情况下才算成功 */
   regexMatchText: List<string>;
 
+  /** 初始化模板 */
   initTemplate(): RecognitionObject;
 }
 
 declare global {
   namespace RecognitionObject {
+    /**
+     * 识别图片模板
+     * @param mat 模板图片
+     */
     function templateMatch(mat: Mat): RecognitionObject;
 
+    /**
+     * 在指定区域识别图片模板
+     * @param mat 模板图片
+     * @param x 水平位置（像素）
+     * @param y 垂直位置（像素）
+     * @param w 宽度
+     * @param h 高度
+     */
     function templateMatch(mat: Mat, x: number, y: number, w: number, h: number): RecognitionObject;
 
+    /**
+     * 识别指定区域
+     * @param x 水平位置（像素）
+     * @param y 垂直位置（像素）
+     * @param w 宽度
+     * @param h 高度
+     */
     function ocr(x: number, y: number, w: number, h: number): RecognitionObject;
 
+    /**
+     * 识别矩形区域
+     * @param rect 矩形
+     */
     function ocr(rect: Rect): RecognitionObject;
 
+    /** 识别文字 */
     var ocrThis: RecognitionObject;
   }
 }
