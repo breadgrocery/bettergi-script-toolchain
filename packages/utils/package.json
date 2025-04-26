@@ -1,6 +1,6 @@
 {
   "name": "@bettergi/utils",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Utils for BetterGI JavaScript Development",
   "type": "module",
   "author": "Bread Grocery<https://github.com/breadgrocery>",

@@ -1,21 +1,81 @@
-Utils for [Better Genshin Impact](https://github.com/babalae/better-genshin-impact) JavaScript development.
+本项目是一个为[Better Genshin Impact](https://github.com/babalae/better-genshin-impact) 设计的 JavaScript 开发工具函数，旨在帮助开发者简化代码。
 
-## Installation
+## 安装
 
 ```shell
 npm install @bettergi/utils
 ```
 
-## Example
+## 函数清单
+
+### 图文识别
+
+> 对RecognitionObject代码的封装，对于简单的OCR操作，无需写复杂的代码。
 
 ```ts
-import { findImage } from "@bettergi/utils";
+import {
+  findImage,
+  findImageInDirection,
+  findImageWithinBounds,
+  findText,
+  findTextInDirection,
+  findTextWithinBounds
+} from "@bettergi/utils";
 
-const mailIcon = findImage("./assets/mail.png");
+// 在整个画面内搜索图片，找不到返回 undefined
+const f1 = findImage("assets/关闭.png");
 
-mailIcon?.click();
+// 在指定方向上搜索图片，找不到返回 undefined
+const f2 = findImageInDirection("assets/关闭.png", "north-east");
+
+// 在指定区域内搜索图片，找不到返回 undefined
+const f3 = findImageWithinBounds("assets/关闭.png", 960, 0, 960, 1080);
+
+// 在整个画面内搜索文本（包含、忽略大小写），找不到返回 undefined
+const t1 = findText("确认", true, true);
+
+// 在指定方向上搜索文本（包含、忽略大小写），找不到返回 undefined
+const t2 = findTextInDirection("购买", true, true, "south-east");
+
+// 在指定区域内搜索文本（包含、忽略大小写），找不到返回 undefined
+const t3 = findTextWithinBounds("购买", true, true, 960, 540, 960, 540);
 ```
 
-## Related Tools
+### 行为
 
-[@bettergi/create-script](https://www.npmjs.com/package/@bettergi/create-script)
+> 对脚本工作流中行为的抽象。
+
+```ts
+import { findImageInDirection, waitUntil } from "@bettergi/utils";
+
+// 等待直到找不到[关闭按钮] 或 5秒后超时，每隔1秒检查一次，期间按 Esc 键
+const done = await waitUntil(
+  () => findImageInDirection("assets/关闭.png", "north-east") !== undefined,
+  5000,
+  1000,
+  () => keyPress("ESCAPE")
+);
+if (!done) throw new Error("关闭页面");
+```
+
+### 存储
+
+> 对象数据持久化，通过代理实现自动存储。可以无感知地读取/更新数据，而无需考虑如何持久化。
+
+```ts
+import { useStore } from "@bettergi/utils";
+
+// 创建/读取存储对象，保存到存储文件 store/state.json 中
+// 通过Proxy来实现：对存储对象的操作会同步保存到存储文件
+const state = useStore<{ lastUsedTime?: number; count: number }>("state");
+if (state?.lastUsedTime) {
+  log.info(`欢迎回来！上次使用时间：${state.lastUsedTime}，计数器已累计至：${state.count}`);
+}
+try {
+  for (let i = 0; i < Math.floor(Math.random() * 100); i++) {
+    state.count = (state.count || 0) + 1; // 同步保存到文件
+  }
+} finally {
+  state.lastUsedTime = Date.now(); // 同步保存到文件
+}
+```

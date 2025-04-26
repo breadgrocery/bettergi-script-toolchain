@@ -43,8 +43,8 @@ declare global {
 
   /**
    * 相对当前鼠标位置移动光标
-   * @param x - 水平移动偏移量（像素）
-   * @param y - 垂直移动偏移量（像素）
+   * @param x - 水平方向偏移量（像素）
+   * @param y - 垂直方向偏移量（像素）
    * @since 0.35
    */
   function moveMouseBy(x: number, y: number): void;

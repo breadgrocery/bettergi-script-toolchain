@@ -32,7 +32,7 @@ const directionToBounds = (direction: Direction) => {
 };
 
 /**
- * 搜索图片
+ * 在整个画面内搜索图片
  * @param path 图片路径
  * @returns 如果找到匹配的图片区域，则返回该区域，否则返回 undefined
  */
@@ -49,8 +49,8 @@ export const findImage = (path: string) => {
 /**
  * 在指定区域内搜索图片
  * @param path 图片路径
- * @param x - 水平移动偏移量（像素）
- * @param y - 垂直移动偏移量（像素）
+ * @param x - 水平方向偏移量（像素）
+ * @param y - 垂直方向偏移量（像素）
  * @param w 宽度
  * @param h 高度
  * @returns 如果找到匹配的图片区域，则返回该区域，否则返回 undefined
@@ -77,7 +77,7 @@ export const findImageInDirection = (path: string, direction: Direction) => {
 };
 
 /**
- * 搜索文本
+ * 在整个画面内搜索文本
  * @param text 待搜索文本
  * @param contains 是否包含
  * @param ignoreCase 是否忽略大小写
@@ -99,9 +99,9 @@ export const findText = (text: string, contains: boolean, ignoreCase: boolean) =
  * @param text 待搜索文本
  * @param contains 是否包含
  * @param ignoreCase 是否忽略大小写
- * @param x 水平移动偏移量（像素）
- * @param x - 水平移动偏移量（像素）
- * @param y - 垂直移动偏移量（像素）
+ * @param x 水平方向偏移量（像素）
+ * @param x - 水平方向偏移量（像素）
+ * @param y - 垂直方向偏移量（像素）
  * @param w 宽度
  * @param h 高度
  * @returns 如果找到匹配的文本区域，则返回该区域，否则返回 undefined
