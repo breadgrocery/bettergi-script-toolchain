@@ -10,7 +10,7 @@ npm install @bettergi/utils
 
 ### 图文识别
 
-> 对RecognitionObject代码的封装，对于简单的OCR操作，无需写复杂的代码。
+> 对 RecognitionObject 代码的封装，对于简单的 OCR 操作，无需写复杂的代码。
 
 ```ts
 import {
@@ -23,59 +23,59 @@ import {
 } from "@bettergi/utils";
 
 // 在整个画面内搜索图片，找不到返回 undefined
-const f1 = findImage("assets/关闭.png");
+const i1 = findImage("assets/关闭.png");
 
 // 在指定方向上搜索图片，找不到返回 undefined
-const f2 = findImageInDirection("assets/关闭.png", "north-east");
+const i2 = findImageInDirection("assets/关闭.png", "north-east");
 
 // 在指定区域内搜索图片，找不到返回 undefined
-const f3 = findImageWithinBounds("assets/关闭.png", 960, 0, 960, 1080);
+const i3 = findImageWithinBounds("assets/关闭.png", 960, 0, 960, 1080);
 
-// 在整个画面内搜索文本（包含、忽略大小写），找不到返回 undefined
-const t1 = findText("确认", true, true);
+// 在整个画面内搜索文本（不包含、忽略大小写），找不到返回 undefined
+const t1 = findText("购买", false, true);
 
 // 在指定方向上搜索文本（包含、忽略大小写），找不到返回 undefined
-const t2 = findTextInDirection("购买", true, true, "south-east");
+const t2 = findTextInDirection("师傅", true, true, "east");
 
-// 在指定区域内搜索文本（包含、忽略大小写），找不到返回 undefined
-const t3 = findTextWithinBounds("购买", true, true, 960, 540, 960, 540);
+// 在指定区域内搜索文本（不包含、忽略大小写），找不到返回 undefined
+const t3 = findTextWithinBounds("确认", false, true, 960, 540, 960, 540);
 ```
 
 ### 行为
 
-> 对脚本工作流中行为的抽象。
+> 对脚本开发过程中常见工作流的抽象，例如：等待 XXX 完成/出现/消失。
 
 ```ts
 import { findImageInDirection, waitUntil } from "@bettergi/utils";
 
 // 等待直到找不到[关闭按钮] 或 5秒后超时，每隔1秒检查一次，期间按 Esc 键
 const done = await waitUntil(
-  () => findImageInDirection("assets/关闭.png", "north-east") !== undefined,
+  () => findImageInDirection("assets/关闭.png", "north-east") === undefined,
   5000,
   1000,
   () => keyPress("ESCAPE")
 );
-if (!done) throw new Error("关闭页面");
+if (!done) throw new Error("关闭页面超时");
 ```
 
 ### 存储
 
-> 对象数据持久化，通过代理实现自动存储。可以无感知地读取/更新数据，而无需考虑如何持久化。
+> 对象数据持久化，通过 Proxy 实现自动存储。从而可以无感知地读取/更新数据，而无需考虑如何持久化。
 
 ```ts
 import { useStore } from "@bettergi/utils";
 
 // 创建/读取存储对象，保存到存储文件 store/state.json 中
-// 通过Proxy来实现：对存储对象的操作会同步保存到存储文件
 const state = useStore<{ lastUsedTime?: number; count: number }>("state");
 if (state?.lastUsedTime) {
   log.info(`欢迎回来！上次使用时间：${state.lastUsedTime}，计数器已累计至：${state.count}`);
 }
 try {
+  // 模拟脚本运行期间状态的变化
   for (let i = 0; i < Math.floor(Math.random() * 100); i++) {
-    state.count = (state.count || 0) + 1; // 同步保存到文件
+    state.count = (state.count || 0) + 1; // 自动同步保存到文件
   }
 } finally {
-  state.lastUsedTime = Date.now(); // 同步保存到文件
+  state.lastUsedTime = Date.now(); // 自动同步保存到文件
 }
 ```

@@ -1,11 +1,9 @@
-import { openMail } from "./src/demo";
-
-const greeting = (name: string) => {
-  name && log.info(`Hello, ${name}!`);
-};
+import { greeting, openMailbox } from "./src/demo";
 
 (async function () {
-  greeting(settings.name);
+  // 问候欢迎语
+  greeting();
 
-  await genshin.returnMainUi().then(openMail);
+  // 打开邮件
+  await openMailbox();
 })();

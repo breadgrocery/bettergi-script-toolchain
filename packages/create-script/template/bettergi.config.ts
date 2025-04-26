@@ -14,7 +14,7 @@ export default defineConfig({
       type: "input-text",
       name: "name",
       label: "名称",
-      default: "tom"
+      default: "开发者"
     }
   ]
 });

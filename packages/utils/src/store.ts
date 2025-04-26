@@ -1,7 +1,7 @@
 /**
- * 创建一个存储对象，存储在 store 目录下
- * @param name 存储对象的文件名称
- * @returns 返回一个代理对象，对该对象的属性修改会自动存储到文件中
+ * 创建一个持久化存储对象，用于管理应用状态数据
+ * 该函数会创建一个代理对象，对该对象的所有属性的修改都会自动同步到相应的JSON文件（脚本的 `store` 目录下）中。
+ * @param name 存储对象的名称，将作为文件名（不包扩展名）
  */
 export const useStore = <T extends Record<string, any>>(name: string): T => {
   const path = `store/${name}.json`;

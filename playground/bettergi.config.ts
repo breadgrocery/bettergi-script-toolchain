@@ -5,7 +5,7 @@ export default defineConfig({
   // 调试配置
   bettergi: {
     enable: true,
-    outDir: "测试"
+    outDir: "开发"
   },
   // 清单信息
   manifest: {},
@@ -15,7 +15,7 @@ export default defineConfig({
       type: "input-text",
       name: "name",
       label: "名称",
-      default: "tom"
+      default: "开发者"
     }
   ]
 });
