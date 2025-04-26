@@ -47,16 +47,40 @@ export default defineConfig({
 });
 ```
 
+### 创建 TypeScript 配置文件
+
+在工作目录下创建一个 `tsconfig.json` 配置文件。
+
+```json
+{
+  "include": ["main.ts", "./src/**/*.ts"],
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "declaration": false,
+    "lib": ["ESNext"],
+    "skipLibCheck": true,
+    "strict": true,
+    "alwaysStrict": false,
+    "removeComments": false,
+    "noEmitOnError": true,
+    "types": ["@bettergi/types"]
+  }
+}
+```
+
+> BetterGI 使用 [ClearScript](https://github.com/microsoft/ClearScript) 的 V8 引擎来执行脚本，多数新特性支持较为良好。若环境出现特性兼容性问题，请自行修改 `target` 等配置。
+
+### 开发模式
+
+```shell
+npx bettergi-cli --watch
+```
+
 ### 构建脚本
 
 ```shell
 npx bettergi-cli
-```
-
-### 开发模式
-
-如需监视进行持续开发，则运行以下命令。
-
-```shell
-npx bettergi-cli --watch
 ```
