@@ -122,7 +122,7 @@ declare global {
   /**
    * 鼠标滚动
    * @param scrollAmountInClicks - 滚动的点击数 正数向上滚动，负数向下滚动
-   * @since 0.44.5
+   * @since 0.44.7
    */
   function verticalScroll(scrollAmountInClicks: number): void;
 

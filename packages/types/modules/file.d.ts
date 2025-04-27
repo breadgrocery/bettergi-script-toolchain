@@ -3,6 +3,20 @@ import { Mat } from "mirada/dist/src/types/opencv";
 declare global {
   namespace file {
     /**
+     * 读取指定文件夹内所有文件和文件夹的路径（非递归方式）
+     * @param folderPath 文件路径（相对于脚本根目录）
+     * @since 0.44.8
+     */
+    function readPathSync(folderPath: string): string[];
+
+    /**
+     * 判断指定路径是否为文件夹
+     * @param path 文件路径（相对于脚本根目录）
+     * @since 0.44.8
+     */
+    function isFolder(path: string): boolean;
+
+    /**
      * 读取文件文本（支持文件扩展名：`.txt`, `.json`, `.log`, `.csv`, `.xml`, `.html`, `.css`）
      * @param path 文件路径（相对于脚本根目录）
      * @since 0.33
