@@ -45,3 +45,40 @@ export const mouseScrollUpLines = (lines: number, lineHeight?: number) => {
 export const mouseScrollDownLines = (lines: number, lineHeight?: number) => {
   return mouseScrollDown(lines * (lineHeight ?? 175));
 };
+
+/**
+ * 鼠标拖拽滑动到指定位置
+ * @param x1 起始水平方向偏移量（像素）
+ * @param y1 起始垂直方向偏移量（像素）
+ * @param x2 终止水平方向偏移量（像素）
+ * @param y2 终止垂直方向偏移量（像素）
+ */
+export const mouseSlide = async (x1: number, y1: number, x2: number, y2: number) => {
+  moveMouseTo(x1, y1);
+  await sleep(50);
+  leftButtonDown();
+  await sleep(50);
+  moveMouseTo(x2, y2);
+  await sleep(50);
+  leftButtonUp();
+};
+
+/**
+ * 鼠标水平拖拽滑动指定距离
+ * @param x 起始水平方向偏移量（像素）
+ * @param y 起始垂直方向偏移量（像素）
+ * @param distance 水平拖拽滑动距离（像素） 正数向右，负数向左
+ */
+export const mouseSlideX = (x: number, y: number, distance: number) => {
+  return mouseSlide(x, y, x + distance, y);
+};
+
+/**
+ * 鼠标垂直拖拽滑动指定距离
+ * @param x 起始水平方向偏移量（像素）
+ * @param y 起始垂直方向偏移量（像素）
+ * @param distance 垂直拖拽滑动距离（像素） 正数向下，负数向上
+ */
+export const mouseSlideY = (x: number, y: number, distance: number) => {
+  return mouseSlide(x, y, x, y + distance);
+};

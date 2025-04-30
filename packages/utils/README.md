@@ -10,7 +10,7 @@ npm install @bettergi/utils
 
 ### 图文识别
 
-> 对 RecognitionObject 代码的封装，对于简单的 OCR 操作，无需写复杂的代码。
+> 对 RecognitionObject 代码的封装，对于简单的找图、找字操作，不再需要编写复杂的代码。
 
 ```ts
 import {
@@ -41,7 +41,7 @@ const t2 = findTextInDirection("师傅", true, true, "east");
 const t3 = findTextWithinBounds("确认", false, true, 960, 540, 960, 540);
 ```
 
-### 行为
+### 行为流程
 
 > 对脚本开发过程中常见工作流的抽象，例如：等待 XXX 完成/出现/消失。
 
@@ -58,7 +58,44 @@ const done = await waitUntil(
 if (!done) throw new Error("关闭页面超时");
 ```
 
-### 存储
+### 鼠标操作
+
+> 对常见鼠标操作的封装，如鼠标滚动、拖拽等。
+
+```ts
+import {
+  mouseScrollDown,
+  mouseScrollDownLines,
+  mouseScrollUp,
+  mouseScrollUpLines,
+  mouseSlide,
+  mouseSlideX,
+  mouseSlideY
+} from "@bettergi/utils";
+
+// 鼠标滚轮向上滚动 175 像素
+await mouseScrollUp(175);
+
+// 鼠标滚轮向下滚动 175 像素
+await mouseScrollDown(175);
+
+// 鼠标滚轮向上滚动 99 行，行高 175（默认：背包物品行高）
+await mouseScrollUpLines(99);
+
+// 鼠标滚轮向下滚动 1 行，行高 115（自定义：商店物品行高）
+await mouseScrollDownLines(1, 115);
+
+// 鼠标从 (745, 610) 拖拽到 (1280, 610)
+await mouseSlide(745, 610, 1280, 610);
+
+// 鼠标从 (745, 610) 向右拖拽 435 像素
+await mouseSlideX(745, 610, 435);
+
+// 鼠标从 (1290, 140) 向下拖拽 175 像素
+await mouseSlideY(1290, 140, 175);
+```
+
+### 数据存储
 
 > 对象数据持久化，通过 Proxy 实现自动存储。从而可以无感知地读取/更新数据，而无需考虑如何持久化。
 
