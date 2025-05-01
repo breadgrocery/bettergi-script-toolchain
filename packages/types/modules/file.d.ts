@@ -1,6 +1,7 @@
 import { Mat } from "mirada/dist/src/types/opencv";
 
 declare global {
+  /** @since 0.32.3 */
   namespace file {
     /**
      * 读取指定文件夹内所有文件和文件夹的路径（非递归方式）
@@ -19,14 +20,14 @@ declare global {
     /**
      * 读取文件文本（支持文件扩展名：`.txt`, `.json`, `.log`, `.csv`, `.xml`, `.html`, `.css`）
      * @param path 文件路径（相对于脚本根目录）
-     * @since 0.33
+     * @since 0.32.3
      */
     function readTextSync(path: string): string;
 
     /**
      * 读取文件文本（支持文件扩展名：`.txt`, `.json`, `.log`, `.csv`, `.xml`, `.html`, `.css`）
      * @param path 文件路径（相对于脚本根目录）
-     * @since 0.33
+     * @since 0.32.3
      */
     function readText(path: string): Promise<string>;
 
@@ -34,7 +35,7 @@ declare global {
      * 读取文件文本（支持文件扩展名：`.txt`, `.json`, `.log`, `.csv`, `.xml`, `.html`, `.css`）
      * @param path 文件路径（相对于脚本根目录）
      * @param callbackFunc 回调函数
-     * @since 0.33
+     * @since 0.32.3
      */
     function readText(
       path: string,
@@ -44,7 +45,7 @@ declare global {
     /**
      * 读取Mat图片
      * @param path 文件路径（相对于脚本根目录）
-     * @since 0.34
+     * @since 0.44.0
      */
     function readImageMatSync(path: string): Mat;
 
