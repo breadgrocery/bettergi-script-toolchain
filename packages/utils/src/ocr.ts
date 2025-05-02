@@ -1,9 +1,9 @@
-import { ImageRegion } from "@bettergi/types/csharp/BetterGenshinImpact/GameTask/Model/Area/ImageRegion";
+import { type ImageRegion } from "@bettergi/types/csharp/BetterGenshinImpact/GameTask/Model/Area/ImageRegion";
 import { type Region } from "@bettergi/types/csharp/BetterGenshinImpact/GameTask/Model/Area/Region";
 
 const findFirst = (
   ir: ImageRegion,
-  ro: ReturnType<typeof RecognitionObject.templateMatch>,
+  ro: typeof RecognitionObject.ocrThis,
   predicate: (candidate: Region) => boolean
 ) => {
   const candidates = ir.findMulti(ro);
