@@ -108,7 +108,7 @@ declare global {
      * @param partyName 队伍名称
      * @since 0.35.5
      */
-    function switchParty(partyName: string): Promise<void>;
+    function switchParty(partyName: string): Promise<boolean>;
 
     /**
      * 点击空月祝福
