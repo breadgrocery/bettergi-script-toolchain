@@ -1,5 +1,5 @@
 import { Point2f } from "mirada/dist/src/types/opencv";
-import { Area, Country } from "../enums/country";
+import { Area, BigMap, Country } from "../enums/country";
 
 declare global {
   /** @since 0.32.0 */
@@ -29,12 +29,22 @@ declare global {
     var screenDpiScale: number;
 
     /**
-     * 传送到指定位置
+     * 传送到[Teyvat大地图]的指定位置
      * @param x 目标水平位置（像素）
      * @param y 目标垂直位置（像素）
      * @since 0.32.0
      */
     function tp(x: number, y: number): Promise<void>;
+
+    /**
+     * 传送到[指定大地图]的指定位置
+     * @param x 目标水平位置（像素）
+     * @param y 目标垂直位置（像素）
+     * @param mapName 大地图名称
+     * @param force 是否强制（严格）传送（默认值：false）
+     * @since 0.44.9
+     */
+    function tp(x: number, y: number, mapName: BigMap, force: boolean): Promise<void>;
 
     /**
      * 传送到指定位置
@@ -63,13 +73,28 @@ declare global {
     function tp(x: string, y: string, force: boolean): Promise<void>;
 
     /**
-     * 移动大地图到指定坐标
+     * 移动[Teyvat大地图]到指定坐标
      * @param x 目标水平位置（像素）
      * @param y 目标垂直位置（像素）
      * @param forceCountry 强制指定移动大地图时先切换的国家（默认值：无）
      * @since 0.44.2
      */
     function moveMapTo(x: number, y: number, forceCountry?: Area): Promise<void>;
+
+    /**
+     * 移动[指定大地图]到指定坐标
+     * @param x 目标水平位置（像素）
+     * @param y 目标垂直位置（像素）
+     * @param mapName 大地图名称
+     * @param forceCountry 强制指定移动大地图时先切换的国家（默认值：无）
+     * @since 0.44.9
+     */
+    function moveIndependentMapTo(
+      x: number,
+      y: number,
+      mapName: BigMap,
+      forceCountry?: Area
+    ): Promise<void>;
 
     /**
      * 获取当前大地图缩放等级
@@ -92,16 +117,30 @@ declare global {
     function tpToStatueOfTheSeven(): Promise<void>;
 
     /**
-     * 获取当前在大地图上的位置坐标
+     * 获取当前在[Teyvat大地图]上的位置坐标
      * @since 0.44.3
      */
     function getPositionFromBigMap(): Point2f;
 
     /**
-     * 获取当前在小地图上的位置坐标
+     * 获取当前在[指定大地图]上的位置坐标
+     * @param mapName 大地图名称
+     * @since 0.44.9
+     */
+    function getPositionFromBigMap(mapName: BigMap): Point2f;
+
+    /**
+     * 获取当前在小地图上的 [Teyvat大地图] 位置坐标
      * @since 0.44.3
      */
     function getPositionFromMap(): Point2f;
+
+    /**
+     * 获取当前在小地图上的 [指定大地图] 位置坐标
+     * @param mapName 大地图名称
+     * @since 0.44.9
+     */
+    function getPositionFromMap(mapName: BigMap): Point2f;
 
     /**
      * 切换队伍
