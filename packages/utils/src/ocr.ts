@@ -1,5 +1,7 @@
 import { type ImageRegion } from "@bettergi/types/csharp/BetterGenshinImpact/GameTask/Model/Area/ImageRegion";
 import { type Region } from "@bettergi/types/csharp/BetterGenshinImpact/GameTask/Model/Area/Region";
+import { waitUntil } from "./flow";
+import { mouseScrollDownLines } from "./mouse";
 
 const findFirst = (
   ir: ImageRegion,
@@ -141,4 +143,62 @@ export const findTextInDirection = (
 ) => {
   const { x, y, w, h } = directionToBounds(direction);
   return findTextWithinBounds(text, contains, ignoreCase, x, y, w, h);
+};
+
+/**
+ * 在列表视图中滚动搜索文本
+ * @param text 待搜索文本
+ * @param contains 是否包含
+ * @param ignoreCase 是否忽略大小写
+ * @param listView 列表视图参数
+ * @param timeout 搜索超时
+ * @returns 如果找到匹配的文本区域，则返回该区域，否则返回 undefined
+ */
+export const findTextWithinListView = async (
+  text: string,
+  contains: boolean,
+  ignoreCase: boolean,
+  listView: {
+    x: number;
+    y: number;
+    w: number;
+    h: number;
+    maxListItems: number;
+    lineHeight: number;
+    padding?: number;
+  },
+  timeout?: number
+) => {
+  const { x, y, w, h, maxListItems, lineHeight, padding = 10 } = listView;
+  const find = () => {
+    return findTextWithinBounds(text, contains, ignoreCase, x, y, w, h);
+  };
+
+  let firstRegion: Region | undefined;
+  const isBottomTouched = () => {
+    const ro = RecognitionObject.ocr(x, y, w, h);
+    const list = captureGameRegion().findMulti(ro);
+    if (list.count > 0) {
+      if (firstRegion?.text === list[0].text && Math.abs(list[0].y - firstRegion.y) < lineHeight) {
+        return true;
+      } else {
+        firstRegion = list[0];
+        return false;
+      }
+    } else {
+      return true;
+    }
+  };
+
+  const ok = await waitUntil(
+    () => find() != undefined || isBottomTouched(),
+    timeout ?? 30 * 1000,
+    1000,
+    async () => {
+      moveMouseTo(x + w - padding, y + padding);
+      await mouseScrollDownLines(maxListItems, lineHeight);
+    }
+  );
+
+  return ok ? find() : undefined;
 };

@@ -8,6 +8,24 @@ npm install @bettergi/utils
 
 ## 函数清单
 
+### 游戏内操作
+
+```ts
+import { openMenu, openMenuPage, openPaimonMenu, setTime } from "@bettergi/utils";
+
+// 打开派蒙菜单
+await openPaimonMenu();
+
+// 打开菜单
+await openMenu("邮件");
+
+// 打开菜单页面
+await openMenuPage("问卷");
+
+// 调整游戏时间
+await setTime("evening");
+```
+
 ### 图文识别
 
 > 对 RecognitionObject 代码的封装，对于简单的找图、找字操作，不再需要编写复杂的代码。
