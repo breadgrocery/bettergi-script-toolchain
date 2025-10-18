@@ -1,20 +1,15 @@
 import { defineConfig } from "@bettergi/cli";
+import settings from "./src/settings";
 
 export default defineConfig({
+  main: "main.ts",
   // 调试配置
   bettergi: {
     enable: true,
-    outDir: "测试"
+    outDir: "我的第一个脚本"
   },
-  // 脚本清单(覆写 package.json 中的定义)
+  // 清单信息（覆写 package.json 中的定义）
   manifest: {},
   // 配置UI
-  settings: [
-    {
-      type: "input-text",
-      name: "name",
-      label: "名称",
-      default: "开发者"
-    }
-  ]
+  settings
 });

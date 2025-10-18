@@ -10,7 +10,7 @@ export const intro = () => {
 export const projectNameInput = () => {
   return prompts.text({
     message: "脚本名称:",
-    defaultValue: "my-bettergi-script",
+    initialValue: "my-bettergi-script",
     placeholder: "my-bettergi-script",
     validate: value => (value.length === 0 ? `脚本名称不能为空！` : undefined)
   });
@@ -39,7 +39,7 @@ export const overwriteSelect = (targetDir: string) => {
 export const versionInput = () => {
   return prompts.text({
     message: "脚本版本:",
-    defaultValue: "0.0.1",
+    initialValue: "0.0.1",
     placeholder: "0.0.1",
     validate: value => (value.length === 0 ? `脚本版本不能为空！` : undefined)
   });
@@ -67,7 +67,7 @@ export const authorInput = async () => {
   return prompts.text({
     message: "脚本作者:",
     ...(author && {
-      defaultValue: author,
+      initialValue: author,
       placeholder: author,
       validate: value => (value.length === 0 ? `脚本作者不能为空！` : undefined)
     })
@@ -89,7 +89,7 @@ export const authorLinkInput = async () => {
   return prompts.text({
     message: "作者主页:",
     ...(link && {
-      defaultValue: link,
+      initialValue: link,
       placeholder: link
     })
   });
