@@ -1,38 +1,25 @@
+import { loadConfig } from "c12";
 import chokidar from "chokidar";
-import { cosmiconfig } from "cosmiconfig";
 import esbuild from "esbuild";
 import fs from "fs-extra";
 import path from "node:path";
 import { type ScriptConfig } from "./config.js";
 import { installScript } from "./util/bettergi.js";
-import { tempFile } from "./util/file.js";
 import { syncManifestConfig, syncSettingsConfig } from "./util/meta.js";
 import { terminate } from "./util/process.js";
 
 (async () => {
-  const loadConfig = async (): Promise<{
+  const loadConfiguration = async (): Promise<{
     config: ScriptConfig;
     filepath: string;
   }> => {
-    const explorer = cosmiconfig("bettergi", {
-      searchStrategy: "project",
-      cache: false
-    });
-    // Locate config file
-    const sr = await explorer.search();
-    if (!sr) return terminate("No bettergi.config.(js,ts,cjs,mjs) files found");
+    const { config, configFile } = await loadConfig({ name: "bettergi" });
+    if (!configFile) return terminate("No bettergi.config.(js,ts,cjs,mjs) files found");
 
-    // Clone config file to avoid caching issues
-    const tempPath = tempFile(sr.filepath);
-    try {
-      const lr = await explorer.load(tempPath);
-      return { config: lr?.config, filepath: sr.filepath };
-    } finally {
-      fs.removeSync(tempPath);
-    }
+    return { config: config, filepath: configFile };
   };
 
-  const { config, filepath } = await loadConfig();
+  const { config, filepath } = await loadConfiguration();
   const main = [config.main || "main.ts"];
   const assetsDir = config.assetsDir || "assets";
   const outDir = path.resolve(config.outDir || "dist");
@@ -42,7 +29,7 @@ import { terminate } from "./util/process.js";
   const sync = async () => {
     try {
       // Reload config
-      Object.assign(config, (await loadConfig()).config);
+      Object.assign(config, (await loadConfiguration()).config);
       // Write into manifest.json
       const manifest = await syncManifestConfig(outDir, config);
       // Write into settings.json

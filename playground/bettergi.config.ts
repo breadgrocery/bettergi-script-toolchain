@@ -1,4 +1,5 @@
-import { defineConfig } from "@bettergi/cli/config";
+import { defineConfig } from "@bettergi/cli";
+import settings from "./src/settings";
 
 export default defineConfig({
   main: "main.ts",
@@ -10,12 +11,5 @@ export default defineConfig({
   // 清单信息
   manifest: {},
   // 配置UI
-  settings: [
-    {
-      type: "input-text",
-      name: "name",
-      label: "名称",
-      default: "开发者"
-    }
-  ]
+  settings
 });

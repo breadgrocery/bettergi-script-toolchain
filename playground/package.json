@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "description": "Playground for BetterGI Script",
   "author": "test",
+  "type": "module",
   "scripts": {
     "dev": "bettergi-cli --watch",
     "build": "bettergi-cli"

@@ -9,7 +9,7 @@ const settingsUIFile = "settings.json";
 export const syncManifestConfig = async (outDir: string, config: ScriptConfig) => {
   const pkg = fs.readJSONSync(path.resolve("package.json"));
 
-  const manifest: Record<string, any> = { ...config.manifest };
+  const manifest: Record<string, any> = {};
   manifest.manifest_version = config.manifest?.manifest_version || 1;
   manifest.name = config.manifest?.name || pkg.name;
   manifest.version = config.manifest?.version || pkg.version;

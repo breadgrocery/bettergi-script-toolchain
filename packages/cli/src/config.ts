@@ -146,3 +146,24 @@ export interface ScriptConfig {
 export const defineConfig = (config: ScriptConfig): ScriptConfig => {
   return config;
 };
+
+export type Settings = settings.SettingItem[];
+
+type Widen<T> = T extends string
+  ? string
+  : T extends number
+    ? number
+    : T extends boolean
+      ? boolean
+      : T extends bigint
+        ? bigint
+        : T extends symbol
+          ? symbol
+          : T;
+
+/**
+ * 提取设置参数名称
+ */
+export type ExtractSettingsMap<T extends readonly { name: string; default?: any }[]> = {
+  [K in T[number] as K["name"]]: Widen<K["default"]>;
+};

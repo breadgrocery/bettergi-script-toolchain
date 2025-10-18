@@ -1,4 +1,4 @@
-import { defineConfig } from "@bettergi/cli/config";
+import { defineConfig } from "@bettergi/cli";
 
 export default defineConfig({
   // 调试配置

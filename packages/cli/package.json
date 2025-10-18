@@ -1,6 +1,6 @@
 {
   "name": "@bettergi/cli",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A CLI for BetterGI JavaScript Development",
   "type": "module",
   "author": "Bread Grocery<https://github.com/breadgrocery>",
@@ -22,10 +22,6 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
-    },
-    "./config": {
-      "import": "./dist/config.js",
-      "types": "./dist/config.d.ts"
     }
   },
   "files": [
@@ -41,16 +37,16 @@
     "build": "tsc"
   },
   "dependencies": {
+    "c12": "^3.3.1",
     "chokidar": "^4.0.3",
-    "cosmiconfig": "^9.0.0",
-    "esbuild": "^0.25.3",
+    "esbuild": "^0.25.11",
     "find-cache-directory": "^6.0.0",
-    "fs-extra": "^11.3.0",
+    "fs-extra": "^11.3.2",
     "winreg": "^1.2.5"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.15.3",
+    "@types/node": "^24.8.1",
     "@types/winreg": "^1.2.36",
     "typescript": "5.6.3"
   }
