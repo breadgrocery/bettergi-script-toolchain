@@ -1,9 +1,8 @@
 declare global {
-  namespace System.Runtime.Serialization {
-    interface ISerializable {
+  namespace System {
+    class DateTimeOffset {
       // TODO: 待补充（如果有必要）
     }
   }
 }
-
 export {};

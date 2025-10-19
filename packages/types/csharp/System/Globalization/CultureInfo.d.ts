@@ -1,7 +1,7 @@
 declare global {
   namespace System.Globalization {
     class CultureInfo {
-      // TODO: Shims Needed
+      // TODO: 待补充（如果有必要）
     }
   }
 }

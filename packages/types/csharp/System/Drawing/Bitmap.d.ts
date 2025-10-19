@@ -2,7 +2,7 @@ import "./Image";
 
 declare global {
   class Bitmap extends System.Drawing.Image {
-    // TODO: Shims Needed
+    // TODO: 待补充（如果有必要）
   }
 }
 

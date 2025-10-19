@@ -1,7 +1,7 @@
 declare global {
   namespace System.Threading {
     abstract class WaitHandle {
-      // TODO: shims needed
+      // TODO: 待补充（如果有必要）
     }
   }
 }

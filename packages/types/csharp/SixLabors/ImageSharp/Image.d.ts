@@ -1,7 +1,7 @@
 declare global {
   namespace SixLabors.ImageSharp {
     class Image {
-      // TODO: Shims Needed
+      // TODO: 待补充（如果有必要）
     }
   }
 }
