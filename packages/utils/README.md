@@ -10,6 +10,8 @@ npm install @bettergi/utils
 
 ### 游戏内操作
 
+> 常见游戏内操作封装，省去手动实现的繁琐。
+
 ```ts
 import { openMenu, openMenuPage, openPaimonMenu, setTime } from "@bettergi/utils";
 
@@ -133,4 +135,17 @@ try {
 } finally {
   state.lastUsedTime = Date.now(); // 自动同步保存到文件
 }
+```
+
+### 网络请求
+
+> 对网络请求的简易封装。
+
+```ts
+import { getForBody } from "@bettergi/utils";
+
+// 发送 GET 请求获取响应体内容
+// 提示：需要在 `manifest.json` 文件中配置 `http_allowed_urls`，并在 调度器 -> 修改通用配置 中启用
+const body = await getForBody("https://example.com/", undefined, { "User-Agent": "BetterGI" });
+log.info(`响应体内容${body}`);
 ```
