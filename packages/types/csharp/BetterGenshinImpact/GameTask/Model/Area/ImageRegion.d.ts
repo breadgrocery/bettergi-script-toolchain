@@ -8,7 +8,7 @@ import "../../../../System/Collections/Generic/List";
 
 declare global {
   namespace BetterGenshinImpact.GameTask.Model.Area {
-    class ImageRegion extends Region {
+    class ImageRegion extends BetterGenshinImpact.GameTask.Model.Area.Region {
       srcMat: Mat;
 
       cacheGreyMat: Mat;
@@ -61,6 +61,7 @@ declare global {
       );
     }
   }
+  export import ImageRegion = BetterGenshinImpact.GameTask.Model.Area.ImageRegion;
 }
 
 export {};

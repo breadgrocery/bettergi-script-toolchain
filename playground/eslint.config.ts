@@ -19,7 +19,8 @@ export default defineConfig(
     rules: {
       "require-await": "off",
       "@typescript-eslint/require-await": "off",
-      "@typescript-eslint/no-floating-promises": ["error", { ignoreIIFE: true }]
+      "@typescript-eslint/no-floating-promises": ["error", { ignoreIIFE: true }],
+      "@typescript-eslint/no-unsafe-call": "off"
     }
   }
 );

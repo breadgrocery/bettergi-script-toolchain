@@ -22,6 +22,7 @@ declare global {
       constructor(name: SoloTaskName, config: any);
     }
   }
+  export import SoloTask = BetterGenshinImpact.Core.Script.Dependence.Model.SoloTask;
 }
 
 export {};

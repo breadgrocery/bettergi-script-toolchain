@@ -1,9 +1,10 @@
 import "../../GameTask/Model/BaseTaskParam";
+import "./AutoDomainTask";
 
 declare global {
   namespace BetterGenshinImpact.GameTask.AutoDomain {
     class AutoDomainParam extends BetterGenshinImpact.GameTask.Model
-      .BaseTaskParam<BetterGenshinImpact.GameTask.AutoDomain.AutoDomainParam> {
+      .BaseTaskParam<BetterGenshinImpact.GameTask.AutoDomain.AutoDomainTask> {
       /** 刷副本次数 */
       domainRoundNum: number;
 
@@ -65,6 +66,7 @@ declare global {
       constructor(domainRoundNum: number, path: string);
     }
   }
+  export import AutoDomainParam = BetterGenshinImpact.GameTask.AutoDomain.AutoDomainParam;
 }
 
 export {};

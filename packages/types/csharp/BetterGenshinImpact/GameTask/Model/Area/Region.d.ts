@@ -187,6 +187,7 @@ declare global {
       );
     }
   }
+  export import Region = BetterGenshinImpact.GameTask.Model.Area.Region;
 }
 
 export {};

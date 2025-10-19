@@ -29,6 +29,7 @@ declare global {
       constructor(name: RealtimeTimerName, config: any);
     }
   }
+  export import RealtimeTimer = BetterGenshinImpact.Core.Script.Dependence.Model.RealtimeTimer;
 }
 
 export {};
