@@ -92,8 +92,8 @@ importers:
   packages/utils:
     devDependencies:
       '@bettergi/types':
-        specifier: ^0.0.10
-        version: 0.0.10
+        specifier: ^0.0.11
+        version: 0.0.11
       typescript:
         specifier: 5.6.3
         version: 5.6.3
@@ -149,8 +149,8 @@ packages:
     resolution: {integrity: sha512-+EzkxvLNfiUeKMgy/3luqfsCWFRXLb7U6wNQTk60tovuckwB15B191tJWvpp4HjiQWdJkCxO3Wbvc6jlk3Xb2Q==}
     engines: {node: '>=6.9.0'}
 
-  '@bettergi/types@0.0.10':
-    resolution: {integrity: sha512-/uCvhzPBH90salEBH+XDkHkpkBke435IutpcQFIvN5Zod3GTksvPX69lv4jBTGVAmU3KABnOoxGfq/CSEZ/YBQ==}
+  '@bettergi/types@0.0.11':
+    resolution: {integrity: sha512-sU2Y8849ifvxdtRDkViNhn+UJBbcmpclelMiSQE5OkYRH7Xs+6ArIofJ+fbmtf+Qcyl3ISyQftTh0LPbXQsOkA==}
 
   '@clack/core@0.5.0':
     resolution: {integrity: sha512-p3y0FIOwaYRUPRcMO7+dlmLh8PSRcrjuTndsiA0WAFbWES0mLZlrjVoBRZ9DzkPFJZG6KGkJmoEAY0ZcVWTkow==}
@@ -1033,7 +1033,7 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
 
-  '@bettergi/types@0.0.10':
+  '@bettergi/types@0.0.11':
     dependencies:
       mirada: 0.0.15
     transitivePeerDependencies:
