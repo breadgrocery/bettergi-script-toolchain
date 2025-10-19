@@ -1,6 +1,9 @@
+import "../Collections/IEnumerable";
+import "./ICollection";
+
 declare global {
   namespace System.Collections {
-    interface IList extends ICollection, IEnumerable {
+    interface IList extends System.Collections.ICollection, System.Collections.IEnumerable {
       [index: number]: any;
 
       add(item: any): number;

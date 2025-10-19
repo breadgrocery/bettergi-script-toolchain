@@ -1,5 +1,5 @@
-import "@/csharp/System/Drawing/Pen";
 import { Rect } from "mirada/dist/src/types/opencv";
+import "../../../System/Drawing/Pen";
 
 declare global {
   namespace BetterGenshinImpact.View.Drawable {

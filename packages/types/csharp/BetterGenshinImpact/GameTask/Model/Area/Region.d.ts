@@ -1,10 +1,10 @@
-import "@/csharp/BetterGenshinImpact/GameTask/Model/Area/Converter/INodeConverter";
-import "@/csharp/BetterGenshinImpact/GameTask/Model/Area/ImageRegion";
-import "@/csharp/BetterGenshinImpact/View/Drawable/LineDrawable";
-import "@/csharp/BetterGenshinImpact/View/Drawable/RectDrawable";
-import "@/csharp/System/Drawing/Pen";
-import "@/csharp/System/IDisposable";
 import { Rect } from "mirada/dist/src/types/opencv";
+import "../../../../System/Drawing/Pen";
+import "../../../../System/IDisposable";
+import "../../../GameTask/Model/Area/Converter/INodeConverter";
+import "../../../GameTask/Model/Area/ImageRegion";
+import "../../../View/Drawable/LineDrawable";
+import "../../../View/Drawable/RectDrawable";
 
 declare global {
   namespace BetterGenshinImpact.GameTask.Model.Area {
@@ -39,7 +39,7 @@ declare global {
       text: string;
 
       /** 上一个区域 */
-      prev: Region | null;
+      prev: BetterGenshinImpact.GameTask.Model.Area.Region | null;
 
       /** 本区域节点向上一个区域节点坐标的转换器 */
       prevConverter: BetterGenshinImpact.GameTask.Model.Area.Converter.INodeConverter | null;
@@ -140,7 +140,7 @@ declare global {
       toRect(): Rect;
 
       /** 生成一个新的图片类型的区域 */
-      toImageRegion(): ImageRegion;
+      toImageRegion(): BetterGenshinImpact.GameTask.Model.Area.ImageRegion;
 
       /** 区域面积是否为空 */
       isEmpty(): boolean;
@@ -153,7 +153,7 @@ declare global {
        * @param x 水平位置（像素）
        * @param y 垂直位置（像素）
        */
-      derive(x: number, y: number): Region;
+      derive(x: number, y: number): BetterGenshinImpact.GameTask.Model.Area.Region;
 
       /**
        * 派生一个点类型的区域
@@ -162,13 +162,18 @@ declare global {
        * @param w 宽度
        * @param h 高度
        */
-      derive(x: number, y: number, w: number, h: number): Region;
+      derive(
+        x: number,
+        y: number,
+        w: number,
+        h: number
+      ): BetterGenshinImpact.GameTask.Model.Area.Region;
 
       /**
        * 派生一个矩形类型的区域
        * @param rect 矩形
        */
-      derive(rect: Rect): Region;
+      derive(rect: Rect): BetterGenshinImpact.GameTask.Model.Area.Region;
 
       constructor();
 
@@ -177,7 +182,7 @@ declare global {
         y: number,
         width: number,
         height: number,
-        owner?: Region,
+        owner?: BetterGenshinImpact.GameTask.Model.Area.Region,
         converter?: BetterGenshinImpact.GameTask.Model.Area.Converter.INodeConverter
       );
     }

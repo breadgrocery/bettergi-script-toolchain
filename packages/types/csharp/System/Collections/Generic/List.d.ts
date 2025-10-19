@@ -1,6 +1,13 @@
+import "./IEnumerable";
+import "./IEnumerator";
+import "./IList";
+import "./IReadOnlyList";
+
 declare global {
   namespace System.Collections.Generic {
-    class List<T> implements IList<T>, IReadOnlyList<T> {
+    class List<T>
+      implements System.Collections.Generic.IList<T>, System.Collections.Generic.IReadOnlyList<T>
+    {
       capacity: number;
 
       count: number;
@@ -13,9 +20,9 @@ declare global {
 
       add(item: T): void;
 
-      addRange(collection: IEnumerable<T>): void;
+      addRange(collection: System.Collections.Generic.IEnumerable<T>): void;
 
-      asReadOnly(): IReadOnlyList<T>;
+      asReadOnly(): System.Collections.Generic.IReadOnlyList<T>;
 
       /** @deprecated Not yet supported  */
       binarySearch(item: T, comparer?: (a: T, b: T) => number): number;
@@ -33,7 +40,9 @@ declare global {
       contains(item: T): boolean;
 
       /** @deprecated Not yet supported  */
-      convertAll<TOutput>(converter: (item: T) => TOutput): List<TOutput>;
+      convertAll<TOutput>(
+        converter: (item: T) => TOutput
+      ): System.Collections.Generic.List<TOutput>;
 
       copyTo(array: T[]): void;
 
@@ -50,7 +59,7 @@ declare global {
       find(match: (item: T) => boolean): T | null;
 
       /** @deprecated Not yet supported  */
-      findAll(match: (item: T) => boolean): List<T>;
+      findAll(match: (item: T) => boolean): System.Collections.Generic.List<T>;
 
       /** @deprecated Not yet supported  */
       findIndex(match: (item: T) => boolean): number;
@@ -76,9 +85,9 @@ declare global {
       /** @deprecated Not yet supported  */
       forEach(action: (item: T) => void): void;
 
-      getEnumerator(): IEnumerator<T>;
+      getEnumerator(): System.Collections.Generic.IEnumerator<T>;
 
-      getRange(index: number, count: number): List<T>;
+      getRange(index: number, count: number): System.Collections.Generic.List<T>;
 
       indexOf(item: T): number;
 
@@ -88,7 +97,7 @@ declare global {
 
       insert(index: number, item: T): void;
 
-      insertRange(index: number, collection: IEnumerable<T>): void;
+      insertRange(index: number, collection: System.Collections.Generic.IEnumerable<T>): void;
 
       lastIndexOf(item: T): number;
 
@@ -109,7 +118,7 @@ declare global {
 
       reverse(index: number, count: number): void;
 
-      slice(start: number, length: number): List<T>;
+      slice(start: number, length: number): System.Collections.Generic.List<T>;
 
       sort(): void;
 
@@ -133,7 +142,7 @@ declare global {
 
       constructor(capacity: number);
 
-      constructor(collection: IEnumerable<T>);
+      constructor(collection: System.Collections.Generic.IEnumerable<T>);
     }
   }
 }

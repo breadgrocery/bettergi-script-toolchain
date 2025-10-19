@@ -1,6 +1,8 @@
+import "./IEnumerable";
+
 declare global {
   namespace System.Collections.Generic {
-    interface ICollection<T> extends IEnumerable<T> {
+    interface ICollection<T> extends System.Collections.Generic.IEnumerable<T> {
       count: number;
 
       isReadOnly: boolean;

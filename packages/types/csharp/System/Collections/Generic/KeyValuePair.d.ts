@@ -5,7 +5,10 @@ declare global {
 
       value: TValue;
 
-      static create<TKey, TValue>(key: TKey, value: TValue): KeyValuePair<TKey, TValue>;
+      static create<TKey, TValue>(
+        key: TKey,
+        value: TValue
+      ): System.Collections.Generic.KeyValuePair<TKey, TValue>;
 
       deconstruct(outKey: TKey, outValue: TValue): void;
 

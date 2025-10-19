@@ -1,5 +1,5 @@
-import "@/csharp/Microsoft/Extensions/Localization/IStringLocalizer";
-import "@/csharp/System/Globalization/CultureInfo";
+import "../../../Microsoft/Extensions/Localization/IStringLocalizer";
+import "../../../System/Globalization/CultureInfo";
 
 declare global {
   namespace BetterGenshinImpact.GameTask.Model {

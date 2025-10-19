@@ -1,28 +1,43 @@
+import "../../Runtime/Serialization/IDeserializationCallback";
+import "../../Runtime/Serialization/ISerializable";
+import "../DictionaryEntry";
+import "../ICollection";
+import "../IDictionary";
+import "./DictionaryEnumerator";
+import "./ICollection";
+import "./IDictionary";
+import "./IEnumerable";
+import "./IEnumerator";
+import "./IEqualityComparer";
+import "./IReadOnlyCollection";
+import "./IReadOnlyDictionary";
+import "./KeyValuePair";
+
 declare global {
   namespace System.Collections.Generic {
     class Dictionary<TKey, TValue>
       implements
-        IDictionary<TKey, TValue>,
+        System.Collections.Generic.IDictionary<TKey, TValue>,
         System.Collections.IDictionary,
-        IReadOnlyDictionary<TKey, TValue>,
+        System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>,
         System.Runtime.Serialization.ISerializable,
         System.Runtime.Serialization.IDeserializationCallback
     {
-      comparer: IEqualityComparer<TKey>;
+      comparer: System.Collections.Generic.IEqualityComparer<TKey>;
 
       count: number;
 
-      keys: KeyCollection<TKey, TValue>;
+      keys: System.Collections.Generic.KeyCollection<TKey, TValue>;
 
-      values: ValueCollection<TKey, TValue>;
+      values: System.Collections.Generic.ValueCollection<TKey, TValue>;
 
-      add(item: KeyValuePair<TKey, TValue>): void;
+      add(item: System.Collections.Generic.KeyValuePair<TKey, TValue>): void;
 
       add(key: TKey, value: TValue): void;
 
-      contains(item: KeyValuePair<TKey, TValue>): boolean;
+      contains(item: System.Collections.Generic.KeyValuePair<TKey, TValue>): boolean;
 
-      remove(item: KeyValuePair<TKey, TValue>): boolean;
+      remove(item: System.Collections.Generic.KeyValuePair<TKey, TValue>): boolean;
 
       remove(key: TKey): boolean;
 
@@ -34,7 +49,7 @@ declare global {
 
       containsValue(value: TValue): boolean;
 
-      getEnumerator(): DictionaryEnumerator<TKey, TValue>;
+      getEnumerator(): System.Collections.Generic.DictionaryEnumerator<TKey, TValue>;
 
       onDeserialization(sender: any): void;
 
@@ -42,7 +57,10 @@ declare global {
 
       tryAdd(key: TKey, value: TValue): boolean;
 
-      copyTo(array: KeyValuePair<TKey, TValue>[], arrayIndex: number): void;
+      copyTo(
+        array: System.Collections.Generic.KeyValuePair<TKey, TValue>[],
+        arrayIndex: number
+      ): void;
 
       ensureCapacity(capacity: number): number;
 
@@ -62,34 +80,47 @@ declare global {
 
       constructor(capacity: number);
 
-      constructor(comparer: IEqualityComparer<TKey>);
+      constructor(comparer: System.Collections.Generic.IEqualityComparer<TKey>);
 
-      constructor(capacity: number, comparer: IEqualityComparer<TKey>);
+      constructor(capacity: number, comparer: System.Collections.Generic.IEqualityComparer<TKey>);
 
-      constructor(dictionary: IDictionary<TKey, TValue>);
-
-      constructor(dictionary: IDictionary<TKey, TValue>, comparer: IEqualityComparer<TKey>);
-
-      constructor(collection: IEnumerable<KeyValuePair<TKey, TValue>>);
+      constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>);
 
       constructor(
-        collection: IEnumerable<KeyValuePair<TKey, TValue>>,
-        comparer: IEqualityComparer<TKey>
+        dictionary: System.Collections.Generic.IDictionary<TKey, TValue>,
+        comparer: System.Collections.Generic.IEqualityComparer<TKey>
+      );
+
+      constructor(
+        collection: System.Collections.Generic.IEnumerable<
+          System.Collections.Generic.KeyValuePair<TKey, TValue>
+        >
+      );
+
+      constructor(
+        collection: System.Collections.Generic.IEnumerable<
+          System.Collections.Generic.KeyValuePair<TKey, TValue>
+        >,
+        comparer: System.Collections.Generic.IEqualityComparer<TKey>
       );
     }
 
     class DictionaryEnumerator<TKey, TValue>
-      implements IEnumerator<KeyValuePair<TKey, TValue>>, IDictionaryEnumerator
+      implements
+        System.Collections.Generic.IEnumerator<
+          System.Collections.Generic.KeyValuePair<TKey, TValue>
+        >,
+        System.Collections.IDictionaryEnumerator
     {
       moveNext(): boolean;
 
-      current: KeyValuePair<TKey, TValue>;
+      current: System.Collections.Generic.KeyValuePair<TKey, TValue>;
 
       dispose(): void;
 
       reset(): void;
 
-      entry: DictionaryEntry;
+      entry: System.Collections.DictionaryEntry;
 
       key: any;
 
@@ -97,9 +128,12 @@ declare global {
     }
 
     class KeyCollection<TKey, TValue>
-      implements ICollection<TKey>, System.Collections.ICollection, IReadOnlyCollection<TKey>
+      implements
+        System.Collections.Generic.ICollection<TKey>,
+        System.Collections.ICollection,
+        System.Collections.Generic.IReadOnlyCollection<TKey>
     {
-      getEnumerator(): KeyCollection.Enumerator<TKey>;
+      getEnumerator(): System.Collections.Generic.KeyCollection.Enumerator<TKey>;
 
       copyTo(array: TKey[], index: number): void;
 
@@ -135,9 +169,12 @@ declare global {
     }
 
     class ValueCollection<TKey, TValue>
-      implements ICollection<TValue>, System.Collections.ICollection, IReadOnlyCollection<TValue>
+      implements
+        System.Collections.Generic.ICollection<TValue>,
+        System.Collections.ICollection,
+        System.Collections.Generic.IReadOnlyCollection<TValue>
     {
-      getEnumerator(): ValueCollection.Enumerator<TValue>;
+      getEnumerator(): System.Collections.Generic.ValueCollection.Enumerator<TValue>;
 
       copyTo(array: TValue[], index: number): void;
 

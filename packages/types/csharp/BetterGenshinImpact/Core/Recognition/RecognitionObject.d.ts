@@ -1,9 +1,3 @@
-import "@/csharp/BetterGenshinImpact/Core/Recognition/OcrEngineTypes";
-import "@/csharp/BetterGenshinImpact/Core/Recognition/RecognitionTypes";
-import "@/csharp/System/Collections/Generic/Dictionary";
-import "@/csharp/System/Collections/Generic/List";
-import "@/csharp/System/Drawing/Color";
-import "@/csharp/System/Drawing/Pen";
 import {
   ColorConversionCodes,
   Mat,
@@ -11,6 +5,12 @@ import {
   Scalar,
   TemplateMatchModes
 } from "mirada/dist/src/types/opencv";
+import "../../../System/Collections/Generic/Dictionary";
+import "../../../System/Collections/Generic/List";
+import "../../../System/Drawing/Color";
+import "../../../System/Drawing/Pen";
+import "../Recognition/OcrEngineTypes";
+import "../Recognition/RecognitionTypes";
 
 declare global {
   namespace BetterGenshinImpact.Core.Recognition {

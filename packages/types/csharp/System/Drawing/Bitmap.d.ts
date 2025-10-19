@@ -1,4 +1,4 @@
-import "@/csharp/System/Drawing/Image";
+import "./Image";
 
 declare global {
   class Bitmap extends System.Drawing.Image {

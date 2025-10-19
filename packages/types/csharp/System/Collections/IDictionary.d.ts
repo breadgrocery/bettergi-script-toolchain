@@ -1,9 +1,13 @@
+import "./ICollection";
+import "./IDictionaryEnumerator";
+import "./IEnumerable";
+
 declare global {
   namespace System.Collections {
-    interface IDictionary extends ICollection, IEnumerable {
-      keys: ICollection;
+    interface IDictionary extends System.Collections.ICollection, System.Collections.IEnumerable {
+      keys: System.Collections.ICollection;
 
-      values: ICollection;
+      values: System.Collections.ICollection;
 
       contains(key: any): boolean;
 
@@ -15,7 +19,7 @@ declare global {
 
       isFixedSize: boolean;
 
-      getEnumerator(): IDictionaryEnumerator;
+      getEnumerator(): System.Collections.IDictionaryEnumerator;
 
       remove(key: any): void;
     }

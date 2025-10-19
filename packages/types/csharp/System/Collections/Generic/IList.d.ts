@@ -1,6 +1,11 @@
+import "./ICollection";
+import "./IEnumerable";
+
 declare global {
   namespace System.Collections.Generic {
-    interface IList<T> extends ICollection<T>, IEnumerable<T> {
+    interface IList<T>
+      extends System.Collections.Generic.ICollection<T>,
+        System.Collections.Generic.IEnumerable<T> {
       isFixedSize: boolean;
 
       [index: number]: T;
