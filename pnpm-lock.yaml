@@ -116,12 +116,6 @@ importers:
       eslint:
         specifier: ^9.38.0
         version: 9.38.0(jiti@2.6.1)
-      globals:
-        specifier: ^16.4.0
-        version: 16.4.0
-      jiti:
-        specifier: ^2.6.1
-        version: 2.6.1
       typescript:
         specifier: 5.6.3
         version: 5.6.3
@@ -915,10 +909,6 @@ packages:
 
   globals@14.0.0:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
-    engines: {node: '>=18'}
-
-  globals@16.4.0:
-    resolution: {integrity: sha512-ob/2LcVVaVGCYN+r14cnwnoDPUufjiYgSqRhiFD0Q1iI4Odora5RE8Iv1D24hAz5oMophRGkGz+yuvQmmUMnMw==}
     engines: {node: '>=18'}
 
   graceful-fs@4.2.11:
@@ -2280,8 +2270,6 @@ snapshots:
   globals@11.12.0: {}
 
   globals@14.0.0: {}
-
-  globals@16.4.0: {}
 
   graceful-fs@4.2.11: {}
 

@@ -1,0 +1,11 @@
+{
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "package.json": "package-lock.json,yarn.lock,pnpm-lock.yaml,bun.lockb",
+    "tsconfig.json": "eslint.config.*"
+  },
+  "search.exclude": {
+    "dist": true,
+    "node_modules": true
+  }
+}
