@@ -29,6 +29,10 @@ export const syncManifestConfig = async (outDir: string, config: ScriptConfig) =
   config.settings && config.settings?.length > 0 && (manifest.settings_ui = settingsUIFile);
   manifest.scripts = config.manifest?.scripts && [...config.manifest.scripts];
   manifest.library = config.manifest?.library && [...config.manifest.library];
+  manifest.saved_files = config.manifest?.saved_files && [...config.manifest.saved_files];
+  manifest.http_allowed_urls = config.manifest?.http_allowed_urls && [
+    ...config.manifest.http_allowed_urls
+  ];
 
   validateManifest(manifest);
 

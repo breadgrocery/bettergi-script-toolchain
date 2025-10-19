@@ -67,6 +67,12 @@ namespace manifest {
 
     /** external 类库（仅支持 CommonJS ） */
     library?: string[];
+
+    /** 订阅/导入新版脚本时，备份并恢复旧版脚本的 文件（夹） 列表 */
+    saved_files?: string[];
+
+    /** 允许请求的 URL 列表（支持通配符） */
+    http_allowed_urls?: string[];
   }
 
   interface Author {
