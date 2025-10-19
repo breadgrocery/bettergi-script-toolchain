@@ -16,6 +16,9 @@
 // 文件访问（受限）
 /// <reference path="./modules/file.d.ts" />
 
+// 网络请求（受限）
+/// <reference path="./modules/http.d.ts" />
+
 // 消息通知
 /// <reference path="./modules/notification.d.ts" />
 
