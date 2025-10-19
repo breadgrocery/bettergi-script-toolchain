@@ -1,17 +1,21 @@
-import { IEnumerable } from "./IEnumerable";
+declare global {
+  namespace System.Collections.Generic {
+    interface ICollection<T> extends IEnumerable<T> {
+      count: number;
 
-export interface ICollection<T> extends IEnumerable<T> {
-  count: number;
+      isReadOnly: boolean;
 
-  isReadOnly: boolean;
+      add(item: T): void;
 
-  add(item: T): void;
+      clear(): void;
 
-  clear(): void;
+      contains(item: T): boolean;
 
-  contains(item: T): boolean;
+      copyTo(array: T[], arrayIndex: number): void;
 
-  copyTo(array: T[], arrayIndex: number): void;
-
-  remove(item: T): boolean;
+      remove(item: T): boolean;
+    }
+  }
 }
+
+export {};

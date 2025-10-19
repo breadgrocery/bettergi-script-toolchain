@@ -18,21 +18,21 @@ declare global {
     function isFolder(path: string): boolean;
 
     /**
-     * 读取文件文本（支持文件扩展名：`.txt`, `.json`, `.log`, `.csv`, `.xml`, `.html`, `.css`）
+     * 读取文件文本（支持文件扩展名：`.txt`, `.json`, `.log`, `.csv`, `.xml`, `.html`, `.css`, `.png`, `.jpg`, `.jpeg`, `.bmp`, `.tiff`, `.webp`）
      * @param path 文件路径（相对于脚本根目录）
      * @since 0.32.3
      */
     function readTextSync(path: string): string;
 
     /**
-     * 读取文件文本（支持文件扩展名：`.txt`, `.json`, `.log`, `.csv`, `.xml`, `.html`, `.css`）
+     * 读取文件文本（支持文件扩展名：`.txt`, `.json`, `.log`, `.csv`, `.xml`, `.html`, `.css`, `.png`, `.jpg`, `.jpeg`, `.bmp`, `.tiff`, `.webp`）
      * @param path 文件路径（相对于脚本根目录）
      * @since 0.32.3
      */
     function readText(path: string): Promise<string>;
 
     /**
-     * 读取文件文本（支持文件扩展名：`.txt`, `.json`, `.log`, `.csv`, `.xml`, `.html`, `.css`）
+     * 读取文件文本（支持文件扩展名：`.txt`, `.json`, `.log`, `.csv`, `.xml`, `.html`, `.css`, `.png`, `.jpg`, `.jpeg`, `.bmp`, `.tiff`, `.webp`）
      * @param path 文件路径（相对于脚本根目录）
      * @param callbackFunc 回调函数
      * @since 0.32.3

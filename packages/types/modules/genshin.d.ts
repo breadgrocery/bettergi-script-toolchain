@@ -132,15 +132,26 @@ declare global {
     /**
      * 获取当前在小地图上的 [Teyvat大地图] 位置坐标
      * @since 0.44.3
+     * @deprecated 已弃用
      */
     function getPositionFromMap(): Point2f;
 
     /**
      * 获取当前在小地图上的 [指定大地图] 位置坐标
      * @param mapName 大地图名称
+     * @param cacheTimeMs 缓存时间（毫秒，默认值：900）
      * @since 0.44.9
      */
-    function getPositionFromMap(mapName: BigMap): Point2f;
+    function getPositionFromMap(mapName: BigMap, cacheTimeMs?: number): Point2f;
+
+    /**
+     * 获取当前在小地图上的 [指定大地图] 位置坐标（仅在给定坐标附近匹配）
+     * @param mapName 大地图名称
+     * @param x 大地图坐标水平位置（像素）
+     * @param y 大地图坐标垂直位置（像素）
+     * @since 0.48.0
+     */
+    function getPositionFromMap(mapName: BigMap, x: number, y: number): Point2f;
 
     /**
      * 切换队伍
@@ -148,6 +159,12 @@ declare global {
      * @since 0.35.5
      */
     function switchParty(partyName: string): Promise<boolean>;
+
+    /**
+     * 清除当前调度器的队伍缓存
+     * @since 0.48.0
+     */
+    function clearPartyCache(): void;
 
     /**
      * 点击空月祝福

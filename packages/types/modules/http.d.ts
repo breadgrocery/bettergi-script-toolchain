@@ -1,14 +1,3 @@
-type HttpReponse = {
-  /** 状态码 */
-  status_code: number;
-
-  /** 响应头 */
-  headers: Record<string, string>;
-
-  /** 响应体 */
-  body: string;
-};
-
 declare global {
   /** @since 0.52.0 */
   namespace http {
@@ -21,21 +10,34 @@ declare global {
      * @since 0.52.0
      */
     function request(
-      method:
-        | "GET"
-        | "PUT"
-        | "POST"
-        | "DELETE"
-        | "HEAD"
-        | "OPTIONS"
-        | "TRACE"
-        | "PATCH"
-        | "CONNECT",
+      method: HttpMethod,
       url: string,
       body?: string,
       headersJson?: string
     ): Promise<HttpReponse>;
   }
 }
+
+type HttpMethod =
+  | "GET"
+  | "PUT"
+  | "POST"
+  | "DELETE"
+  | "HEAD"
+  | "OPTIONS"
+  | "TRACE"
+  | "PATCH"
+  | "CONNECT";
+
+type HttpReponse = {
+  /** 状态码 */
+  status_code: number;
+
+  /** 响应头 */
+  headers: Record<string, string>;
+
+  /** 响应体 */
+  body: string;
+};
 
 export {};

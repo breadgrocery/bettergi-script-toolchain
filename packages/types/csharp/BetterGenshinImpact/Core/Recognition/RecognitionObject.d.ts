@@ -1,3 +1,9 @@
+import "@/csharp/BetterGenshinImpact/Core/Recognition/OcrEngineTypes";
+import "@/csharp/BetterGenshinImpact/Core/Recognition/RecognitionTypes";
+import "@/csharp/System/Collections/Generic/Dictionary";
+import "@/csharp/System/Collections/Generic/List";
+import "@/csharp/System/Drawing/Color";
+import "@/csharp/System/Drawing/Pen";
 import {
   ColorConversionCodes,
   Mat,
@@ -5,149 +11,152 @@ import {
   Scalar,
   TemplateMatchModes
 } from "mirada/dist/src/types/opencv";
-import { Dictionary } from "../../../System/Collections/Generic/Dictionary";
-import { List } from "../../../System/Collections/Generic/List";
-import { Color } from "../../../System/Drawing/Color";
-import { Pen } from "../../../System/Drawing/Pen";
-import { OcrEngineTypes } from "./OcrEngineTypes";
-import { RecognitionTypes } from "./RecognitionTypes";
-
-export interface RecognitionObject {
-  /** 匹配类型 */
-  recognitionType: RecognitionTypes;
-
-  /** 感兴趣的区域 */
-  regionOfInterest: Rect;
-
-  /** 识别对象名称 */
-  name: string | null;
-
-  /** 模板匹配的对象（彩色） */
-  templateImageMat: Mat | null;
-
-  /** 模板匹配的对象（灰色） */
-  templateImageGreyMat: Mat | null;
-
-  /**
-   * 模板匹配阈值
-   * @default 0.8
-   */
-  threshold: number;
-
-  /**
-   * 是否使用3通道匹配
-   * @default false
-   */
-  use3Channels: boolean;
-
-  /**
-   * [模板匹配算法](https://docs.opencv.org/4.x/df/dfb/group__imgproc__object.html)
-   * @default CCoeffNormed
-   */
-  templateMatchMode: TemplateMatchModes;
-
-  /**
-   * 匹配模板遮罩（图片中不需要匹配的颜色）
-   * @default false
-   */
-  useMask: boolean;
-
-  /**
-   * 模板遮罩颜色（图片中不需要匹配的颜色）不需要匹配的颜色
-   * @requires `useMask` 为 true
-   * @default 绿色
-   */
-  maskColor: Color;
-
-  maskMat: Mat | null;
-
-  /**
-   * 匹配成功时，是否在屏幕上绘制矩形框
-   * @requires `name` 不为空
-   * @default false
-   */
-  drawOnWindow: boolean;
-
-  /**
-   * 绘制的矩形框的颜色及线条宽度
-   * @default 红色 2px
-   */
-  drawOnWindowPen: Pen;
-
-  /**
-   * 一个模板匹配多个结果的时候最大匹配数量
-   * @default -1 （不限制）
-   */
-  maxMatchCount: number;
-
-  /** 颜色匹配方式 */
-  colorConversionCode: ColorConversionCodes;
-
-  /** 起始颜色范围 */
-  lowerColor: Scalar;
-
-  /** 终止颜色范围 */
-  upperColor: Scalar;
-
-  /**
-   * 符合的点的数量要求
-   * @default 1
-   */
-  matchCount: number;
-
-  /** OCR 引擎 */
-  ocrEngine: OcrEngineTypes;
-
-  /** 文字识别替换字典（部分文字识别结果不准确） */
-  replaceDictionary: Dictionary<string, string[]>;
-
-  /** 包含匹配 多个值全匹配的情况下才算成功 复杂情况请用正则匹配 */
-  allContainMatchText: List<string>;
-
-  /** 包含匹配 一个值匹配就算成功 */
-  oneContainMatchText: List<string>;
-
-  /** 正则匹配 多个值全匹配的情况下才算成功 */
-  regexMatchText: List<string>;
-
-  /** 初始化模板 */
-  initTemplate(): RecognitionObject;
-}
 
 declare global {
-  namespace RecognitionObject {
-    /**
-     * 识别图片模板
-     * @param mat 模板图片
-     */
-    function templateMatch(mat: Mat): RecognitionObject;
+  namespace BetterGenshinImpact.Core.Recognition {
+    class RecognitionObject {
+      /** 匹配类型 */
+      recognitionType: RecognitionTypes;
 
-    /**
-     * 在指定区域识别图片模板
-     * @param mat 模板图片
-     * @param x 水平位置（像素）
-     * @param y 垂直位置（像素）
-     * @param w 宽度
-     * @param h 高度
-     */
-    function templateMatch(mat: Mat, x: number, y: number, w: number, h: number): RecognitionObject;
+      /** 感兴趣的区域 */
+      regionOfInterest: Rect;
 
-    /**
-     * 识别指定区域
-     * @param x 水平位置（像素）
-     * @param y 垂直位置（像素）
-     * @param w 宽度
-     * @param h 高度
-     */
-    function ocr(x: number, y: number, w: number, h: number): RecognitionObject;
+      /** 识别对象名称 */
+      name: string | null;
 
-    /**
-     * 识别矩形区域
-     * @param rect 矩形
-     */
-    function ocr(rect: Rect): RecognitionObject;
+      /** 模板匹配的对象（彩色） */
+      templateImageMat: Mat | null;
 
-    /** 识别文字 */
-    var ocrThis: RecognitionObject;
+      /** 模板匹配的对象（灰色） */
+      templateImageGreyMat: Mat | null;
+
+      /**
+       * 模板匹配阈值
+       * @default 0.8
+       */
+      threshold: number;
+
+      /**
+       * 是否使用3通道匹配
+       * @default false
+       */
+      use3Channels: boolean;
+
+      /**
+       * [模板匹配算法](https://docs.opencv.org/4.x/df/dfb/group__imgproc__object.html)
+       * @default CCoeffNormed
+       */
+      templateMatchMode: TemplateMatchModes;
+
+      /**
+       * 匹配模板遮罩（图片中不需要匹配的颜色）
+       * @default false
+       */
+      useMask: boolean;
+
+      /**
+       * 模板遮罩颜色（图片中不需要匹配的颜色）不需要匹配的颜色
+       * @requires `useMask` 为 true
+       * @default 绿色
+       */
+      maskColor: System.Drawing.Color;
+
+      maskMat: Mat | null;
+
+      /**
+       * 匹配成功时，是否在屏幕上绘制矩形框
+       * @requires `name` 不为空
+       * @default false
+       */
+      drawOnWindow: boolean;
+
+      /**
+       * 绘制的矩形框的颜色及线条宽度
+       * @default 红色 2px
+       */
+      drawOnWindowPen: System.Drawing.Pen;
+
+      /**
+       * 一个模板匹配多个结果的时候最大匹配数量
+       * @default -1 （不限制）
+       */
+      maxMatchCount: number;
+
+      /** 颜色匹配方式 */
+      colorConversionCode: ColorConversionCodes;
+
+      /** 起始颜色范围 */
+      lowerColor: Scalar;
+
+      /** 终止颜色范围 */
+      upperColor: Scalar;
+
+      /**
+       * 符合的点的数量要求
+       * @default 1
+       */
+      matchCount: number;
+
+      /** OCR 引擎 */
+      ocrEngine: OcrEngineTypes;
+
+      /** 文字识别替换字典（部分文字识别结果不准确） */
+      replaceDictionary: System.Collections.Generic.Dictionary<string, string[]>;
+
+      /** 包含匹配 多个值全匹配的情况下才算成功 复杂情况请用正则匹配 */
+      allContainMatchText: System.Collections.Generic.List<string>;
+
+      /** 包含匹配 一个值匹配就算成功 */
+      oneContainMatchText: System.Collections.Generic.List<string>;
+
+      /** 正则匹配 多个值全匹配的情况下才算成功 */
+      regexMatchText: System.Collections.Generic.List<string>;
+
+      /** 初始化模板 */
+      initTemplate(): RecognitionObject;
+
+      /**
+       * 识别图片模板
+       * @param mat 模板图片
+       */
+      static templateMatch(mat: Mat): RecognitionObject;
+
+      /**
+       * 识别图片模板
+       * @param mat 模板图片
+       */
+      static templateMatch(mat: Mat): RecognitionObject;
+
+      /**
+       * 在指定区域识别图片模板
+       * @param mat 模板图片
+       * @param x 水平位置（像素）
+       * @param y 垂直位置（像素）
+       * @param w 宽度
+       * @param h 高度
+       */
+      static templateMatch(mat: Mat, x: number, y: number, w: number, h: number): RecognitionObject;
+
+      /**
+       * 识别指定区域
+       * @param x 水平位置（像素）
+       * @param y 垂直位置（像素）
+       * @param w 宽度
+       * @param h 高度
+       */
+      static ocr(x: number, y: number, w: number, h: number): RecognitionObject;
+
+      /**
+       * 识别矩形区域
+       * @param rect 矩形
+       */
+      static ocr(rect: Rect): RecognitionObject;
+
+      /** 识别文字 */
+      static readonly ocrThis: RecognitionObject;
+    }
   }
+  export import RecognitionObject = BetterGenshinImpact.Core.Recognition.RecognitionObject;
 }
+
+export {};

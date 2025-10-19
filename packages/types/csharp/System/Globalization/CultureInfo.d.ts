@@ -1,6 +1,6 @@
 declare global {
-  namespace System.Drawing {
-    class Image {
+  namespace System.Globalization {
+    class CultureInfo {
       // TODO: Shims Needed
     }
   }

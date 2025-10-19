@@ -1,13 +1,17 @@
-export interface KeyValuePair<TKey, TValue> {
-  key: TKey;
+declare global {
+  namespace System.Collections.Generic {
+    class KeyValuePair<TKey, TValue> {
+      key: TKey;
 
-  value: TValue;
+      value: TValue;
 
-  create<TKey, TValue>(key: TKey, value: TValue): KeyValuePair<TKey, TValue>;
+      static create<TKey, TValue>(key: TKey, value: TValue): KeyValuePair<TKey, TValue>;
 
-  pairToString(key: any, value: any): string;
+      deconstruct(outKey: TKey, outValue: TValue): void;
 
-  toString(): string;
-
-  deconstruct(outKey: TKey, outValue: TValue): void;
+      constructor(key: TKey, value: TValue);
+    }
+  }
 }
+
+export {};

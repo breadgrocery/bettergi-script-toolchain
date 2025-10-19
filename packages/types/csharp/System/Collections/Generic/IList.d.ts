@@ -1,13 +1,17 @@
-import { ICollection } from "./ICollection";
+declare global {
+  namespace System.Collections.Generic {
+    interface IList<T> extends ICollection<T>, IEnumerable<T> {
+      isFixedSize: boolean;
 
-export interface IList<T> extends ICollection<T> {
-  isFixedSize: boolean;
+      [index: number]: T;
 
-  [index: number]: T;
+      indexOf(item: T): number;
 
-  indexOf(item: T): number;
+      insert(index: number, item: T): void;
 
-  insert(index: number, item: T): void;
-
-  removeAt(index: number): void;
+      removeAt(index: number): void;
+    }
+  }
 }
+
+export {};

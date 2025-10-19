@@ -1,7 +1,9 @@
-export interface IEnumerator<T> {
-  moveNext(): boolean;
-
-  current: T;
-
-  reset(): void;
+declare global {
+  namespace System.Collections.Generic {
+    interface IEnumerator<T> extends System.IDisposable, System.Collections.IEnumerator {
+      current: T;
+    }
+  }
 }
+
+export {};

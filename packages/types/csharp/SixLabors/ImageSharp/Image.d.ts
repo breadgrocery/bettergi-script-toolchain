@@ -1,5 +1,5 @@
 declare global {
-  namespace System.Drawing {
+  namespace SixLabors.ImageSharp {
     class Image {
       // TODO: Shims Needed
     }

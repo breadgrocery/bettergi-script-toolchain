@@ -4,19 +4,23 @@ export type SoloTaskName =
   | "AutoFight" // 自动战斗
   | "AutoDomain" // 自动秘境
   | "AutoFishing" // 自动钓鱼
+  | "AutoEat" // 自动吃药
+  | "CountInventoryItem" // 背包数物品
   | (string & {});
 
 declare global {
-  class SoloTask {
-    /** 任务名称 */
-    name: SoloTaskName;
+  namespace BetterGenshinImpact.Core.Script.Dependence.Model {
+    class SoloTask {
+      /** 任务名称 */
+      name: SoloTaskName;
 
-    /** 任务配置 */
-    config: any | null;
+      /** 任务配置 */
+      config: any | null;
 
-    constructor(name: SoloTaskName);
+      constructor(name: SoloTaskName);
 
-    constructor(name: SoloTaskName, config: any);
+      constructor(name: SoloTaskName, config: any);
+    }
   }
 }
 

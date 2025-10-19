@@ -1,3 +1,9 @@
-export interface Color {
-  // TODO: Shims for System.Drawing.Color
+declare global {
+  namespace System.Drawing {
+    class Color {
+      // TODO: Shims Needed
+    }
+  }
 }
+
+export {};

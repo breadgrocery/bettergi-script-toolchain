@@ -1,9 +1,7 @@
-import { ImageRegion } from "../csharp/BetterGenshinImpact/GameTask/Model/Area/ImageRegion";
+import "../csharp/BetterGenshinImpact/GameTask/Model/Area/ImageRegion";
 import { KeyCode } from "../csharp/BetterGenshinImpact/Helpers/User32Helper";
 
 declare global {
-  var global: typeof globalThis;
-
   /**
    * 休眠执行指定时长
    * @param duration - 休眠时长（毫秒）
@@ -130,7 +128,13 @@ declare global {
    * 捕获当前游戏窗口内容
    * @since 0.34.5
    */
-  function captureGameRegion(): ImageRegion;
+  function captureGameRegion(): BetterGenshinImpact.GameTask.Model.Area.ImageRegion;
+
+  /**
+   * 当前队伍 角色名称 数组
+   * @since 0.48.0
+   */
+  function getAvatars(): string[];
 
   /**
    * 模拟输入文本

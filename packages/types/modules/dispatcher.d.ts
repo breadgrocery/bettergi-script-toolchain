@@ -1,5 +1,6 @@
 import "../csharp/BetterGenshinImpact/Core/Script/Dependence/Model/RealtimeTimer";
 import "../csharp/BetterGenshinImpact/Core/Script/Dependence/Model/SoloTask";
+import "../csharp/BetterGenshinImpact/GameTask/AutoDomain/AutoDomainParam";
 
 declare global {
   /** @since 0.32.5 */
@@ -15,21 +16,43 @@ declare global {
      * @param timer 实时任务触发器
      * @since 0.32.5
      */
-    function addTimer(timer: RealtimeTimer): void;
+    function addTimer(timer: BetterGenshinImpact.Core.Script.Dependence.Model.RealtimeTimer): void;
 
     /**
      * 添加实时任务（不会清理之前的任务）
      * @param timer 实时任务触发器
      * @since 0.43.5
      */
-    function addTrigger(timer: RealtimeTimer): void;
+    function addTrigger(
+      timer: BetterGenshinImpact.Core.Script.Dependence.Model.RealtimeTimer
+    ): void;
 
     /**
      * 运行独立任务
      * @param soloTask 独立任务
      * @since 0.34.5
      */
-    function runTask(soloTask: SoloTask): Promise<void>;
+    function runTask(
+      soloTask: BetterGenshinImpact.Core.Script.Dependence.Model.SoloTask
+    ): Promise<void>;
+
+    /**
+     * 运行自动秘境任务
+     * @param param 秘境任务参数
+     * @since 0.52.0
+     */
+    function runAutoDomainTask(
+      param: BetterGenshinImpact.GameTask.AutoDomain.AutoDomainParam
+    ): Promise<void>;
+
+    /**
+     * 运行自动战斗任务
+     * @param param 战斗任务参数
+     * @since 0.52.0
+     */
+    function runAutoFightTask(
+      param: BetterGenshinImpact.GameTask.AutoDomain.AutoDomainParam
+    ): Promise<void>;
   }
 }
 

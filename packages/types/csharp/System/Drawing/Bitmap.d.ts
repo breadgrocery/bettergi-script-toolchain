@@ -1,3 +1,9 @@
-export interface Bitmap {
-  // TODO: Shims for System.Drawing.Bitmap
+import "@/csharp/System/Drawing/Image";
+
+declare global {
+  class Bitmap extends System.Drawing.Image {
+    // TODO: Shims Needed
+  }
 }
+
+export {};

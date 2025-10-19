@@ -1,15 +1,17 @@
-import { IEnumerable } from "./IEnumerable";
-import { IReadOnlyCollection } from "./IReadOnlyCollection";
-import { KeyValuePair } from "./KeyValuePair";
+declare global {
+  namespace System.Collections.Generic {
+    interface IReadOnlyDictionary<TKey, TValue>
+      extends IReadOnlyCollection<KeyValuePair<TKey, TValue>>,
+        IEnumerable<KeyValuePair<TKey, TValue>> {
+      containsKey(key: TKey): boolean;
 
-export interface IReadOnlyDictionary<TKey, TValue>
-  extends IReadOnlyCollection<KeyValuePair<TKey, TValue>>,
-    IEnumerable<KeyValuePair<TKey, TValue>> {
-  containsKey(key: TKey): boolean;
+      tryGetValue(key: TKey, value: TValue | null): boolean;
 
-  tryGetValue(key: TKey, value: TValue | null): boolean;
+      keys: IEnumerable<TKey>;
 
-  Keys: IEnumerable<TKey>;
-
-  Values: IEnumerable<TValue>;
+      values: IEnumerable<TValue>;
+    }
+  }
 }
+
+export {};
