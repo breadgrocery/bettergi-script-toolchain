@@ -1,6 +1,6 @@
 {
   "name": "@bettergi/create-script",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Scaffolding Your BetterGI JavaScript Project",
   "type": "module",
   "author": "Bread Grocery<https://github.com/breadgrocery>",

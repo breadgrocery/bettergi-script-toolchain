@@ -36,9 +36,7 @@ export const syncManifestConfig = async (outDir: string, config: ScriptConfig) =
 
   validateManifest(manifest);
 
-  await fs.writeJSON(path.join(outDir, manifestFile), manifest, {
-    spaces: 2
-  });
+  await fs.outputJSON(path.join(outDir, manifestFile), manifest, { spaces: 2 });
 
   return manifest;
 };
@@ -71,8 +69,6 @@ const validateManifest = (manifest: Record<string, any>) => {
 
 export const syncSettingsConfig = async (outDir: string, config: ScriptConfig) => {
   if (config.settings && config.settings.length > 0) {
-    await fs.writeJSON(path.join(outDir, settingsUIFile), config.settings, {
-      spaces: 2
-    });
+    await fs.outputJSON(path.join(outDir, settingsUIFile), config.settings, { spaces: 2 });
   }
 };
