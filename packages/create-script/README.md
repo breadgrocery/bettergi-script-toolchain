@@ -5,13 +5,13 @@
 ### 使用 npm
 
 ```shell
-npm create @bettergi/script
+npm create @bettergi/script@latest
 ```
 
 ### 使用 pnpm
 
 ```shell
-pnpm create @bettergi/script
+pnpm create @bettergi/script@latest
 ```
 
 然后按照提示操作，完成搭建！
