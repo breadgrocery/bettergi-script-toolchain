@@ -30,14 +30,14 @@ export const openPaimonMenu = async () => {
  */
 export const openMenu = async (
   name: "拍照" | "公告" | "邮件" | "时间" | "设置" | (string & {}),
-  reverse?: boolean,
-  config?: { x?: number; step?: number; timeout?: number }
+  reverse: boolean = false,
+  config: { x?: number; step?: number; timeout?: number } = {}
 ) => {
   // 1.打开派蒙菜单
   await openPaimonMenu();
 
   // 2.搜索菜单按钮
-  const { x = 50, step = 30, timeout = 3000 } = config || {};
+  const { x = 50, step = 30, timeout = 3000 } = config;
   const findTooltip = () => findTextWithinBounds(name, false, true, 0, 0, x + 150, genshin.height);
 
   let result: Region | undefined = undefined;
@@ -73,19 +73,19 @@ export const openMenu = async (
  */
 export const openMenuPage = async (
   name: string,
-  config?: {
+  config: {
     x?: number;
     y?: number;
     w?: number;
     h?: number;
     lineHeight?: number;
-  }
+  } = {}
 ) => {
   // 1.打开派蒙菜单
   await openPaimonMenu();
 
   // 2.搜索菜单页面
-  const { x = 100, y = 330, w = 670, h = 730, lineHeight = 142 } = config || {};
+  const { x = 100, y = 330, w = 670, h = 730, lineHeight = 142 } = config;
   const pageButton = await findTextWithinListView(name, false, true, {
     x,
     y,
@@ -107,18 +107,18 @@ export const openMenuPage = async (
  */
 export const setTime = async (
   period: "night" | "morning" | "noon" | "evening",
-  config?: {
+  config: {
     centerX?: number;
     centerY?: number;
     radius?: number;
     offset?: number;
-  }
+  } = {}
 ) => {
   // 1.打开时间页面
   await openMenu("时间", true);
 
   // 2.拨动指针
-  const { centerX = 1440, centerY = 502, radius = 400, offset = 5 } = config || {};
+  const { centerX = 1440, centerY = 502, radius = 400, offset = 5 } = config;
   const index = ["night", "morning", "noon", "evening"].indexOf(period);
   const periodsDirections = [
     () => mouseSlide(centerX, centerY, centerX - offset, centerY + radius),

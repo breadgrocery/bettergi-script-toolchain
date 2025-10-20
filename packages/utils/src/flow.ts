@@ -9,16 +9,20 @@
  */
 export const waitUntil = async (
   condition: (context: Record<string, any>) => boolean,
-  timeout?: number,
-  interval?: number,
-  action?: (context: Record<string, any>) => void
-) => {
-  const context: Record<string, any> = {};
-  const deadline = Date.now() + (timeout ?? 3 * 1000);
+  timeout: number = 3000,
+  interval: number = 300,
+  action?: (context: Record<string, any>) => Promise<void> | void
+): Promise<boolean> => {
+  const context = {};
+
+  const deadline = Date.now() + timeout;
   while (Date.now() < deadline) {
     if (condition(context)) return true;
-    action?.(context);
-    await sleep(interval ?? 300);
+
+    await action?.(context);
+
+    await sleep(interval);
   }
+
   return false;
 };

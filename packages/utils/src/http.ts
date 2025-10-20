@@ -10,15 +10,10 @@
 export const requestForBody = async (
   method: Parameters<typeof http.request>[0],
   url: string,
-  body?: string,
+  body: string = "null",
   headers?: Record<string, any>
 ) => {
-  const resp = await http.request(
-    method,
-    url,
-    body ?? "null",
-    headers ? JSON.stringify(headers) : "null"
-  );
+  const resp = await http.request(method, url, body, headers ? JSON.stringify(headers) : "null");
   if (resp.status_code >= 200 && resp.status_code < 400) {
     return resp.body;
   } else {

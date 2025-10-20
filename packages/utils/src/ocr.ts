@@ -168,7 +168,7 @@ export const findTextWithinListView = async (
     lineHeight: number;
     padding?: number;
   },
-  timeout?: number
+  timeout: number = 30 * 1000
 ) => {
   const { x, y, w, h, maxListItems, lineHeight, padding = 10 } = listView;
   const find = () => {
@@ -193,7 +193,7 @@ export const findTextWithinListView = async (
 
   const ok = await waitUntil(
     () => find() != undefined || isBottomTouched(),
-    timeout ?? 30 * 1000,
+    timeout,
     1000,
     async () => {
       moveMouseTo(x + w - padding, y + padding);

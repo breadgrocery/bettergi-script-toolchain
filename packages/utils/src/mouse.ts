@@ -11,10 +11,11 @@ const _simulateScroll = async (scrollAmountInClicks: number, times: number) => {
  * @param height 滚动高度
  * @param algorithm 自定义滚动算法函数，接收高度参数并返回滚动次数（默认算法为每18像素滚动一次）
  */
-export const mouseScrollUp = (height: number, algorithm?: (h: number) => number) => {
-  const scrollAlgorithm = algorithm ?? (h => Math.floor(h / 18));
-  const scrollTimes = scrollAlgorithm(height);
-  return _simulateScroll(120, scrollTimes);
+export const mouseScrollUp = (
+  height: number,
+  algorithm: (h: number) => number = h => Math.floor(h / 18)
+) => {
+  return _simulateScroll(120, algorithm(height));
 };
 
 /**
@@ -22,10 +23,11 @@ export const mouseScrollUp = (height: number, algorithm?: (h: number) => number)
  * @param height 滚动高度
  * @param algorithm 自定义滚动算法函数，接收高度参数并返回滚动次数（默认算法为每18像素滚动一次）
  */
-export const mouseScrollDown = (height: number, algorithm?: (height: number) => number) => {
-  const scrollAlgorithm = algorithm ?? (h => Math.floor(h / 18));
-  const scrollTimes = scrollAlgorithm(height);
-  return _simulateScroll(-120, scrollTimes);
+export const mouseScrollDown = (
+  height: number,
+  algorithm: (height: number) => number = h => Math.floor(h / 18)
+) => {
+  return _simulateScroll(-120, algorithm(height));
 };
 
 /**
@@ -33,8 +35,8 @@ export const mouseScrollDown = (height: number, algorithm?: (height: number) => 
  * @param lines 滚动行数
  * @param lineHeight 行高（默认值为175像素）
  */
-export const mouseScrollUpLines = (lines: number, lineHeight?: number) => {
-  return mouseScrollUp(lines * (lineHeight ?? 175));
+export const mouseScrollUpLines = (lines: number, lineHeight: number = 175) => {
+  return mouseScrollUp(lines * lineHeight);
 };
 
 /**
@@ -42,8 +44,8 @@ export const mouseScrollUpLines = (lines: number, lineHeight?: number) => {
  * @param lines 滚动行数
  * @param lineHeight 行高（默认值为175像素）
  */
-export const mouseScrollDownLines = (lines: number, lineHeight?: number) => {
-  return mouseScrollDown(lines * (lineHeight ?? 175));
+export const mouseScrollDownLines = (lines: number, lineHeight: number = 175) => {
+  return mouseScrollDown(lines * lineHeight);
 };
 
 /**
