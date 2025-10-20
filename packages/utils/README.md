@@ -142,10 +142,12 @@ try {
 > 对网络请求的简易封装。
 
 ```ts
-import { getForBody } from "@bettergi/utils";
+import { getForBody, postForBody } from "@bettergi/utils";
 
 // 发送 GET 请求获取响应体内容
 // 提示：需要在 `manifest.json` 文件中配置 `http_allowed_urls`，并在 调度器 -> 修改通用配置 中启用
-const body = await getForBody("https://example.com/", undefined, { "User-Agent": "BetterGI" });
-log.info(`响应体内容${body}`);
+const body1 = await getForBody("https://example.com/", undefined, { "User-Agent": "BetterGI" });
+const body2 = await postForBody("https://example.com/", undefined, { "User-Agent": "BetterGI" });
+log.info(`GET 请求响应体内容${body1}`);
+log.info(`POST 请求响应体内容${body2}`);
 ```

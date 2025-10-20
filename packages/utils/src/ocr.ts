@@ -1,7 +1,10 @@
-import { type ImageRegion } from "@bettergi/types/csharp/BetterGenshinImpact/GameTask/Model/Area/ImageRegion";
-import { type Region } from "@bettergi/types/csharp/BetterGenshinImpact/GameTask/Model/Area/Region";
+import "@bettergi/types/csharp/BetterGenshinImpact/GameTask/Model/Area/ImageRegion";
+import "@bettergi/types/csharp/BetterGenshinImpact/GameTask/Model/Area/Region";
 import { waitUntil } from "./flow";
 import { mouseScrollDownLines } from "./mouse";
+
+type ImageRegion = BetterGenshinImpact.GameTask.Model.Area.ImageRegion;
+type Region = BetterGenshinImpact.GameTask.Model.Area.Region;
 
 const findFirst = (
   ir: ImageRegion,

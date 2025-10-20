@@ -1,7 +1,9 @@
-import { type Region } from "@bettergi/types/csharp/BetterGenshinImpact/GameTask/Model/Area/Region";
+import "@bettergi/types/csharp/BetterGenshinImpact/GameTask/Model/Area/Region";
 import { waitUntil } from "./flow";
-import { mouseScrollDownLines, mouseSlide } from "./mouse";
+import { mouseSlide } from "./mouse";
 import { findTextInDirection, findTextWithinBounds, findTextWithinListView } from "./ocr";
+
+type Region = BetterGenshinImpact.GameTask.Model.Area.Region;
 
 /**
  * 打开派蒙菜单

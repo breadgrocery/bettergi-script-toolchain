@@ -45,5 +45,5 @@ export const getForBody = async (url: string, body?: string, headers?: Record<st
  * @returns 响应体内容
  */
 export const postForBody = (url: string, body?: string, headers?: Record<string, any>) => {
-  return http.request("POST", url, body, headers ? JSON.stringify(headers) : undefined);
+  return requestForBody("POST", url, body, headers);
 };
