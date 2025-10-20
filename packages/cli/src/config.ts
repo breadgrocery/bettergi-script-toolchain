@@ -68,7 +68,7 @@ namespace manifest {
     /** external 类库（仅支持 CommonJS ） */
     library?: string[];
 
-    /** 订阅/导入新版脚本时，备份并恢复旧版脚本的 文件（夹） 列表 */
+    /** 脚本升级时需保留还原的 文件/文件夹 列表（支持正则表达式与通配符） */
     saved_files?: string[];
 
     /** 允许请求的 URL 列表（支持通配符） */
