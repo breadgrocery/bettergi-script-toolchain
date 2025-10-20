@@ -12,7 +12,7 @@
     "build": "bettergi-cli"
   },
   "dependencies": {
-    "@bettergi/utils": "^0.0.7"
+    "@bettergi/utils": "^0.0.8"
   },
   "devDependencies": {
     "@bettergi/cli": "^0.0.10",
