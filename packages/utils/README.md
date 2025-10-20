@@ -1,9 +1,17 @@
-本项目是一个为[Better Genshin Impact](https://github.com/babalae/better-genshin-impact) 设计的 JavaScript 开发工具函数，旨在帮助开发者简化代码。
+本项目是一个为[Better Genshin Impact](https://github.com/babalae/better-genshin-impact) 设计的 JavaScript 开发工具集，旨在帮助开发者简化代码、不用重复造轮子。工具函数支持按需引入，轻量依赖。
 
 ## 安装
 
+### 使用 npm
+
 ```shell
 npm install @bettergi/utils
+```
+
+### 使用 pnpm
+
+```shell
+pnpm install @bettergi/utils
 ```
 
 ## 函数清单

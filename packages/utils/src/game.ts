@@ -1,4 +1,3 @@
-import "@bettergi/types/csharp/BetterGenshinImpact/GameTask/Model/Area/Region";
 import { waitUntil } from "./flow";
 import { mouseSlide } from "./mouse";
 import { findTextInDirection, findTextWithinBounds, findTextWithinListView } from "./ocr";

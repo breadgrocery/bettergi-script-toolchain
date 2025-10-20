@@ -1,5 +1,3 @@
-import "@bettergi/types/csharp/BetterGenshinImpact/GameTask/Model/Area/ImageRegion";
-import "@bettergi/types/csharp/BetterGenshinImpact/GameTask/Model/Area/Region";
 import { waitUntil } from "./flow";
 import { mouseScrollDownLines } from "./mouse";
 

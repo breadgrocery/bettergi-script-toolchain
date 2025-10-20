@@ -1,7 +1,7 @@
 {
   "name": "@bettergi/create-script",
   "version": "0.0.9",
-  "description": "Scaffolding Your BetterGI JavaScript Project",
+  "description": "搭建您的第一个 BetterGI 脚本项目",
   "type": "module",
   "author": "Bread Grocery<https://github.com/breadgrocery>",
   "license": "MIT",

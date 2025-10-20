@@ -1,7 +1,7 @@
 {
   "name": "@bettergi/cli",
-  "version": "0.0.11",
-  "description": "A CLI for BetterGI JavaScript Development",
+  "version": "0.0.12",
+  "description": "构建 BetterGI 脚本的脚手架",
   "type": "module",
   "author": "Bread Grocery<https://github.com/breadgrocery>",
   "license": "MIT",

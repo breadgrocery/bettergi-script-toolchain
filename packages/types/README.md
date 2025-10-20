@@ -2,8 +2,16 @@
 
 ## 安装
 
+### 使用 npm
+
 ```shell
 npm install --save-dev @bettergi/types
+```
+
+### 使用 pnpm
+
+```shell
+pnpm install --save-dev @bettergi/types
 ```
 
 ## 用法

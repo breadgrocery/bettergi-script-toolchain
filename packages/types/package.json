@@ -1,6 +1,6 @@
 {
   "name": "@bettergi/types",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "TypeScript Definitions for BetterGI JavaScript",
   "type": "module",
   "author": "Bread Grocery<https://github.com/breadgrocery>",

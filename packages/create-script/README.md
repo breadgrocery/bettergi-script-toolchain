@@ -1,4 +1,4 @@
-本项目是一个为[Better Genshin Impact](https://github.com/babalae/better-genshin-impact) 设计的 JavaScript 脚本项目搭建模板，现在开始搭建你的第一个脚本项目。
+本项目是一个为[Better Genshin Impact](https://github.com/babalae/better-genshin-impact) 设计的 JavaScript 脚本项目搭建模板，现在开始搭建您的第一个脚本项目。
 
 ## 用法
 

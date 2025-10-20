@@ -1,7 +1,7 @@
 {
   "name": "@bettergi/utils",
-  "version": "0.0.8",
-  "description": "Utils for BetterGI JavaScript Development",
+  "version": "0.0.9",
+  "description": "开发 BetterGI 脚本常用工具集",
   "type": "module",
   "author": "Bread Grocery<https://github.com/breadgrocery>",
   "license": "MIT",
@@ -33,7 +33,7 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "@bettergi/types": "^0.0.12",
+    "@bettergi/types": "^0.0.13",
     "typescript": "5.6.3"
   }
 }

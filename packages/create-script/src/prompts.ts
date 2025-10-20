@@ -4,7 +4,7 @@ import os from "node:os";
 import util from "node:util";
 
 export const intro = () => {
-  return prompts.intro("构建您的第一个 BetterGI 脚本！");
+  return prompts.intro("创建您的第一个 BetterGI 脚本！");
 };
 
 export const projectNameInput = () => {
