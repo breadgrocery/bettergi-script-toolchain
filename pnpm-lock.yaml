@@ -32,6 +32,9 @@ importers:
       chokidar:
         specifier: ^4.0.3
         version: 4.0.3
+      debounce:
+        specifier: ^2.2.0
+        version: 2.2.0
       esbuild:
         specifier: ^0.25.11
         version: 0.25.11
@@ -725,6 +728,10 @@ packages:
   dargs@8.1.0:
     resolution: {integrity: sha512-wAV9QHOsNbwnWdNW2FYvE1P56wtgSbM+3SZcdGiWQILwVjACCXDCI3Ai8QlCjMDB8YK5zySiXZYBiwGmNY3lnw==}
     engines: {node: '>=12'}
+
+  debounce@2.2.0:
+    resolution: {integrity: sha512-Xks6RUDLZFdz8LIdR6q0MTH44k7FikOmnh5xkSjMig6ch45afc8sjTjRQf3P6ax8dMgcQrYO/AR2RGWURrruqw==}
+    engines: {node: '>=18'}
 
   debug@4.4.0:
     resolution: {integrity: sha512-6WTZ/IxCY/T6BALoZHaE4ctp9xm+Z5kY/pzYaCHRFeyVhojxlrm+46y68HA6hr0TcwEssoxNiDEUJQjfPZ/RYA==}
@@ -2052,6 +2059,8 @@ snapshots:
       which: 2.0.2
 
   dargs@8.1.0: {}
+
+  debounce@2.2.0: {}
 
   debug@4.4.0:
     dependencies:

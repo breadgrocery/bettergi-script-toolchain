@@ -1,9 +1,9 @@
 import { loadConfig } from "c12";
 import chokidar from "chokidar";
+import debounce from "debounce";
 import esbuild from "esbuild";
 import fs from "fs-extra";
 import path from "node:path";
-import { cwd } from "node:process";
 import glob from "tiny-glob";
 import { type ScriptConfig } from "./config.js";
 import { installScript } from "./util/bettergi.js";
@@ -35,55 +35,61 @@ import { terminate } from "./util/process.js";
   const minify = config.minify ?? false;
 
   // Sync files
-  const sync = async () => {
-    try {
-      // Reload config
-      Object.assign(config, (await loadConfiguration()).config);
+  const sync = debounce(
+    async () => {
+      try {
+        // Reload config
+        Object.assign(config, (await loadConfiguration()).config);
 
-      // Write into manifest.json
-      const manifest = await syncManifestConfig(outDir, config);
+        // Write into manifest.json
+        const manifest = await syncManifestConfig(outDir, config);
 
-      // Write into settings.json
-      await syncSettingsConfig(outDir, config);
+        // Write into settings.json
+        await syncSettingsConfig(outDir, config);
 
-      // Copy asset files
-      if (fs.existsSync(assetsDir)) {
-        fs.copySync(assetsDir, path.join(outDir, assetsDir));
+        // Copy asset files
+        if (fs.existsSync(assetsDir)) {
+          fs.copySync(assetsDir, path.join(outDir, assetsDir));
+        }
+
+        // Cpoy additional files
+        const copyTasks = await Promise.all(
+          additionalFiles.map(async item => {
+            if (typeof item === "string") {
+              const paths = await glob(item, { cwd: path.resolve("."), absolute: true });
+              return paths.map(p => ({
+                from: p,
+                to: path.resolve(outDir, path.basename(p))
+              }));
+            }
+            if (typeof item === "object") {
+              return [
+                {
+                  from: path.resolve(item.from),
+                  to: item.to
+                    ? path.resolve(outDir, item.to)
+                    : path.resolve(outDir, path.basename(item.from))
+                }
+              ];
+            }
+            return [];
+          })
+        );
+        await Promise.all(
+          copyTasks.flat().map(p => fs.existsSync(p.from) && fs.copy(p.from, p.to))
+        );
+
+        // Install script if enabled
+        if (config.bettergi?.enable ?? true) {
+          await installScript(outDir, config, manifest);
+        }
+      } catch (err) {
+        console.error(err);
       }
-
-      // Cpoy additional files
-      const copyTasks = await Promise.all(
-        additionalFiles.map(async item => {
-          if (typeof item === "string") {
-            const paths = await glob(item, { cwd: path.resolve("."), absolute: true });
-            return paths.map(p => ({
-              from: p,
-              to: path.resolve(outDir, path.basename(p))
-            }));
-          }
-          if (typeof item === "object") {
-            return [
-              {
-                from: path.resolve(item.from),
-                to: item.to
-                  ? path.resolve(outDir, item.to)
-                  : path.resolve(outDir, path.basename(item.from))
-              }
-            ];
-          }
-          return [];
-        })
-      );
-      await Promise.all(copyTasks.flat().map(p => fs.existsSync(p.from) && fs.copy(p.from, p.to)));
-
-      // Install script if enabled
-      if (config.bettergi?.enable ?? true) {
-        await installScript(outDir, config, manifest);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
+    },
+    1000,
+    { immediate: true }
+  );
 
   // Configure build options
   const context = await esbuild.context({
