@@ -134,6 +134,24 @@ export interface ScriptConfig {
   outDir?: string;
 
   /**
+   * 额外打包文件（支持通配符）
+   * @default `README.md`
+   */
+  additionalFiles?:
+    | string
+    | {
+        from: string;
+        to?: string;
+      }
+    | (
+        | string
+        | {
+            from: string;
+            to?: string;
+          }
+      )[];
+
+  /**
    * 启用脚本压缩
    * @default false
    */
