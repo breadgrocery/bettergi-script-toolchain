@@ -34,6 +34,6 @@
   },
   "devDependencies": {
     "@bettergi/types": "^0.0.13",
-    "typescript": "5.6.3"
+    "typescript": "^5.9.3"
   }
 }
