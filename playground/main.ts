@@ -1,15 +1,30 @@
-import { goShopping, greeting, openMailbox, showStatistics } from "./src/demos";
+import {
+  assertExists,
+  assertNotExists,
+  findImageInDirection,
+  findTextInDirection,
+  findTextWithinBounds,
+  waitUntil
+} from "@bettergi/utils";
 
-(async function () {
-  // 案例1：打印欢迎语（读取用户的脚本设置）
-  greeting();
+// 等待直到找不到[关闭按钮] 或 5秒后超时，每隔1秒检查一次，期间按 Esc 键
+const done = await waitUntil(
+  () => findImageInDirection("assets/关闭.png", "north-east") === undefined,
+  5000,
+  1000,
+  () => keyPress("ESCAPE")
+);
+if (!done) throw new Error("关闭页面超时");
 
-  // 案例2：打印统计信息（持久化脚本数据）
-  showStatistics();
+// 断言 "世界等级" 区域存在 或 5秒后超时抛出异常，每隔1秒检查一次，期间按 Esc 键
+await assertExists(
+  () => findTextInDirection("世界等级", false, true, "north-west"),
+  "打开派蒙菜单超时",
+  5000,
+  1000,
+  () => keyPress("ESCAPE")
+);
 
-  // 案例3：导航去蒙德杂货店（路径追踪）
-  await goShopping();
-
-  // 案例4：打开邮件（找图/找字）
-  await openMailbox();
-})();
+// 断言 "购买" 区域存在 或 5秒后超时抛出异常，每隔1秒检查一次，期间按 "购买" 按钮
+const findButton = () => findTextWithinBounds("购买", true, true, 500, 740, 900, 110);
+await assertNotExists(findButton, "点击购买按钮超时", 5000, 1000, () => findButton()?.click());

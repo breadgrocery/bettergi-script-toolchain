@@ -1,5 +1,5 @@
-import { KeyCode } from "@/csharp/BetterGenshinImpact/Helpers/User32Helper";
 import "../csharp/BetterGenshinImpact/GameTask/Model/Area/ImageRegion";
+import { KeyCode } from "../csharp/BetterGenshinImpact/Helpers/User32Helper";
 
 declare global {
   /**

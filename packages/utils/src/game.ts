@@ -1,4 +1,4 @@
-import { waitUntil } from "./flow";
+import { assertExists, assertNotExists } from "./flow";
 import { mouseSlide } from "./mouse";
 import { findTextInDirection, findTextWithinBounds, findTextWithinListView } from "./ocr";
 
@@ -12,14 +12,13 @@ export const openPaimonMenu = async () => {
   await genshin.returnMainUi();
 
   // 2.打开派蒙菜单
-  const findWorldLevel = () => findTextInDirection("世界等级", false, true, "north-west");
-  const ok = await waitUntil(
-    () => findWorldLevel() !== undefined,
+  await assertExists(
+    () => findTextInDirection("世界等级", false, true, "north-west"),
+    "打开派蒙菜单超时",
     5000,
     1000,
     () => keyPress("ESCAPE")
   );
-  if (!ok) throw new Error("打开派蒙菜单超时");
 };
 
 /**
@@ -46,21 +45,15 @@ export const openMenu = async (
     const o = i * step;
     const y = reverse ? genshin.height - o : o;
     moveMouseTo(x, y);
-    await sleep(30);
+    await sleep(30); // 等待提示文字出现
     if ((result = findTooltip()) !== undefined) break;
   }
 
   // 3.点击菜单按钮
   if (result != undefined) {
-    const ok = await waitUntil(
-      () => findTooltip() === undefined,
-      timeout,
-      1000,
-      () => {
-        click(x, result.y);
-      }
-    );
-    if (!ok) throw new Error(`打开菜单 ${name} 超时`);
+    await assertNotExists(findTooltip, `打开菜单 ${name} 超时`, timeout, 1000, () => {
+      click(x, result.y);
+    });
   } else {
     throw new Error(`打开菜单 ${name} 失败`);
   }
@@ -135,17 +128,15 @@ export const setTime = async (
   for (const job of jobs) await job();
 
   // 3.点击确认按钮，等待调整结束
-  const findTooShort = () => findTextInDirection("时间少于", true, true, "south-east");
-  const findConfirmButton = () => findTextInDirection("确认", false, true, "south-east");
-  const ok = await waitUntil(
-    () => findTooShort() !== undefined,
+  await assertExists(
+    () => findTextInDirection("时间少于", true, true, "south-east"),
+    "调整时间超时",
     20 * 1000,
     1000,
     () => {
-      findConfirmButton()?.click();
+      findTextInDirection("确认", false, true, "south-east")?.click();
     }
   );
-  if (!ok) throw new Error("调整时间超时");
 
   // 4.返回主界面
   await genshin.returnMainUi();

@@ -57,11 +57,11 @@ export const mouseScrollDownLines = (lines: number, lineHeight: number = 175) =>
  */
 export const mouseSlide = async (x1: number, y1: number, x2: number, y2: number) => {
   moveMouseTo(x1, y1);
-  await sleep(50);
+  await sleep(100);
   leftButtonDown();
-  await sleep(50);
+  await sleep(100);
   moveMouseTo(x2, y2);
-  await sleep(50);
+  await sleep(100);
   leftButtonUp();
 };
 
