@@ -104,7 +104,7 @@ import { terminate } from "./util/process.js";
       {
         name: "rebuild",
         setup: build => {
-          build.onEnd(sync); /** Sync files after build */
+          build.onEnd(sync); // Sync files after build
         }
       }
     ]

@@ -16,10 +16,10 @@ npm create @bettergi/script
 pnpm create @bettergi/script
 ```
 
-## 安装
+## 手动安装
 
 ```shell
-npm install --save-dev @bettergi/cli
+npm install --save-dev @bettergi/cli @bettergi/types
 ```
 
 ## 用法
@@ -34,6 +34,10 @@ import { defineConfig } from "@bettergi/cli";
 export default defineConfig({
   // 构建配置项
   main: "main.ts",
+  // assetsDir: "assets",
+  // outDir: "dist",
+  // additionalFiles: ["README.md"], // 需要额外打包的文件
+  // minify: false,
   // ...
 
   // 调试配置项

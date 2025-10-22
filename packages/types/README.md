@@ -16,12 +16,15 @@ pnpm install --save-dev @bettergi/types
 
 ## 用法
 
-在 TypeScript 项目的 `tsconfig.json` 配置文件中添加类型引用。
+在 TypeScript 项目的 [`tsconfig.json`](https://www.typescriptlang.org/tsconfig/#types) 配置文件中添加类型引用。
 
 ```json
 {
   "compilerOptions": {
+    // xxx...
+    "lib": ["ES2022"],
     "types": ["@bettergi/types"]
+    // xxx...
   }
 }
 ```

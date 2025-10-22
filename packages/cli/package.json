@@ -1,6 +1,6 @@
 {
   "name": "@bettergi/cli",
-  "version": "0.0.14",
+  "version": "0.1.0",
   "description": "构建 BetterGI 脚本的脚手架",
   "type": "module",
   "author": "Bread Grocery<https://github.com/breadgrocery>",
