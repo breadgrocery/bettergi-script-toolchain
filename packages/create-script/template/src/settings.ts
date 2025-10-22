@@ -11,7 +11,7 @@ const settings = [
     type: "input-text",
     name: "username",
     label: "用户名",
-    default: "哈基米"
+    default: "开发者"
   }
 ] as const satisfies Settings;
 
