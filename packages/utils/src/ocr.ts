@@ -1,8 +1,5 @@
-import { waitUntil } from "./flow";
 import { mouseScrollDownLines } from "./mouse";
-
-type ImageRegion = BetterGenshinImpact.GameTask.Model.Area.ImageRegion;
-type Region = BetterGenshinImpact.GameTask.Model.Area.Region;
+import { RetryOptions, waitForAction } from "./workflow";
 
 const findFirst = (
   ir: ImageRegion,
@@ -16,7 +13,7 @@ const findFirst = (
   return undefined;
 };
 
-type Direction =
+type MatchDirection =
   | "north"
   | "north-east"
   | "east"
@@ -26,7 +23,7 @@ type Direction =
   | "west"
   | "north-west";
 
-const directionToBounds = (direction: Direction) => {
+const directionToBounds = (direction: MatchDirection) => {
   const x = direction.includes("east") ? genshin.width / 2 : 0;
   const y = direction.includes("south") ? genshin.height / 2 : 0;
   const w = direction === "north" || direction === "south" ? genshin.width : genshin.width / 2;
@@ -37,7 +34,7 @@ const directionToBounds = (direction: Direction) => {
 /**
  * 在整个画面内搜索图片
  * @param path 图片路径
- * @returns 如果找到匹配的图片区域，则返回该区域，否则返回 undefined
+ * @returns 如果找到匹配的图片区域，则返回该区域
  */
 export const findImage = (path: string) => {
   try {
@@ -52,11 +49,11 @@ export const findImage = (path: string) => {
 /**
  * 在指定区域内搜索图片
  * @param path 图片路径
- * @param x - 水平方向偏移量（像素）
- * @param y - 垂直方向偏移量（像素）
+ * @param x 水平方向偏移量（像素）
+ * @param y 垂直方向偏移量（像素）
  * @param w 宽度
  * @param h 高度
- * @returns 如果找到匹配的图片区域，则返回该区域，否则返回 undefined
+ * @returns 如果找到匹配的图片区域，则返回该区域
  */
 export const findImageWithinBounds = (path: string, x: number, y: number, w: number, h: number) => {
   try {
@@ -72,21 +69,29 @@ export const findImageWithinBounds = (path: string, x: number, y: number, w: num
  * 在指定方向上搜索图片
  * @param path 图片路径
  * @param direction 搜索方向
- * @returns 如果找到匹配的图片区域，则返回该区域，否则返回 undefined
+ * @returns 如果找到匹配的图片区域，则返回该区域
  */
-export const findImageInDirection = (path: string, direction: Direction) => {
+export const findImageInDirection = (path: string, direction: MatchDirection) => {
   const { x, y, w, h } = directionToBounds(direction);
   return findImageWithinBounds(path, x, y, w, h);
+};
+
+/** 文本搜索选项 */
+type TextMatchOptions = {
+  /** 是否忽略大小写（默认：是） */
+  ignoreCase?: boolean;
+  /** 是否非完全匹配（默认：否） */
+  contains?: boolean;
 };
 
 /**
  * 在整个画面内搜索文本
  * @param text 待搜索文本
- * @param contains 是否包含
- * @param ignoreCase 是否忽略大小写
- * @returns 如果找到匹配的文本区域，则返回该区域，否则返回 undefined
+ * @param options 搜索选项
+ * @returns 如果找到匹配的文本区域，则返回该区域
  */
-export const findText = (text: string, contains: boolean, ignoreCase: boolean) => {
+export const findText = (text: string, options?: TextMatchOptions) => {
+  const { ignoreCase = true, contains = false } = options || {};
   const searchText = ignoreCase ? text.toLowerCase() : text;
   const ir = captureGameRegion();
   const ro = RecognitionObject.ocrThis;
@@ -100,24 +105,22 @@ export const findText = (text: string, contains: boolean, ignoreCase: boolean) =
 /**
  * 在指定区域内搜索文本
  * @param text 待搜索文本
- * @param contains 是否包含
- * @param ignoreCase 是否忽略大小写
  * @param x 水平方向偏移量（像素）
- * @param x - 水平方向偏移量（像素）
- * @param y - 垂直方向偏移量（像素）
+ * @param y 垂直方向偏移量（像素）
  * @param w 宽度
  * @param h 高度
- * @returns 如果找到匹配的文本区域，则返回该区域，否则返回 undefined
+ * @param options 搜索选项
+ * @returns 如果找到匹配的文本区域，则返回该区域
  */
 export const findTextWithinBounds = (
   text: string,
-  contains: boolean,
-  ignoreCase: boolean,
   x: number,
   y: number,
   w: number,
-  h: number
+  h: number,
+  options?: TextMatchOptions
 ) => {
+  const { ignoreCase = true, contains = false } = options || {};
   const searchText = ignoreCase ? text.toLowerCase() : text;
   const ir = captureGameRegion();
   const ro = RecognitionObject.ocr(x, y, w, h);
@@ -131,75 +134,76 @@ export const findTextWithinBounds = (
 /**
  * 在指定方向上搜索文本
  * @param text 待搜索文本
- * @param contains 是否包含
- * @param ignoreCase 是否忽略大小写
  * @param direction 搜索方向
- * @returns 如果找到匹配的文本区域，则返回该区域，否则返回 undefined
+ * @param options 搜索选项
+ * @returns 如果找到匹配的文本区域，则返回该区域
  */
 export const findTextInDirection = (
   text: string,
-  contains: boolean,
-  ignoreCase: boolean,
-  direction: Direction
+  direction: MatchDirection,
+  options?: TextMatchOptions
 ) => {
   const { x, y, w, h } = directionToBounds(direction);
-  return findTextWithinBounds(text, contains, ignoreCase, x, y, w, h);
+  return findTextWithinBounds(text, x, y, w, h, options);
+};
+
+/** 列表视图参数 */
+export type ListView = {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  /** 垂直方向最大列表项个数 */
+  maxItems: number;
+  /** 列表项高度 */
+  lineHeight: number;
+  /** 横向内边距 */
+  paddingX?: number;
+  /** 纵向内边距 */
+  paddingY?: number;
 };
 
 /**
  * 在列表视图中滚动搜索文本
  * @param text 待搜索文本
- * @param contains 是否包含
- * @param ignoreCase 是否忽略大小写
  * @param listView 列表视图参数
+ * @param matchOptions 搜索选项
  * @param timeout 搜索超时
  * @returns 如果找到匹配的文本区域，则返回该区域，否则返回 undefined
  */
 export const findTextWithinListView = async (
   text: string,
-  contains: boolean,
-  ignoreCase: boolean,
-  listView: {
-    x: number;
-    y: number;
-    w: number;
-    h: number;
-    maxListItems: number;
-    lineHeight: number;
-    padding?: number;
-  },
-  timeout: number = 30 * 1000
+  listView: ListView,
+  matchOptions?: TextMatchOptions,
+  retryOptions?: RetryOptions
 ) => {
-  const { x, y, w, h, maxListItems, lineHeight, padding = 10 } = listView;
-  const find = () => {
-    return findTextWithinBounds(text, contains, ignoreCase, x, y, w, h);
-  };
+  const { x, y, w, h, maxItems, lineHeight, paddingX = 10, paddingY = 10 } = listView;
+  const { maxAttempts = 30, retryInterval = 1000 } = retryOptions || {};
+  const findTargetText = () => findTextWithinBounds(text, x, y, w, h, matchOptions);
 
-  let firstRegion: Region | undefined;
-  const isBottomTouched = () => {
-    const ro = RecognitionObject.ocr(x, y, w, h);
-    const list = captureGameRegion().findMulti(ro);
+  let firstText: Region | undefined;
+  const isReachedBottom = () => {
+    const list = captureGameRegion().findMulti(RecognitionObject.ocr(x, y, w, h));
     if (list.count > 0) {
-      if (firstRegion?.text === list[0].text && Math.abs(list[0].y - firstRegion.y) < lineHeight) {
+      if (firstText?.text === list[0].text && Math.abs(list[0].y - firstText.y) < lineHeight) {
         return true;
       } else {
-        firstRegion = list[0];
+        firstText = list[0];
         return false;
       }
-    } else {
-      return true;
     }
+    // 异常情况：找不到任何文本
+    return true;
   };
 
-  const ok = await waitUntil(
-    () => find() != undefined || isBottomTouched(),
-    timeout,
-    1000,
+  const isTextFoundOrBottomReached = await waitForAction(
+    () => findTargetText() != undefined || isReachedBottom(),
     async () => {
-      moveMouseTo(x + w - padding, y + padding);
-      await mouseScrollDownLines(maxListItems, lineHeight);
-    }
+      moveMouseTo(x + w - paddingX, y + paddingY); // 移动到滚动条附近
+      await mouseScrollDownLines(maxItems, lineHeight); // 滚动一页
+    },
+    { maxAttempts, retryInterval }
   );
 
-  return ok ? find() : undefined;
+  return isTextFoundOrBottomReached ? findTargetText() : undefined;
 };

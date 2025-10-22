@@ -21,5 +21,5 @@ export default settings as Settings;
 export type SettingsMap = ExtractSettingsMap<typeof settings>;
 
 declare global {
-  var settings: SettingsMap;
+  var settings: Record<string, any> & SettingsMap;
 }

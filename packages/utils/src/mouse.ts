@@ -1,7 +1,7 @@
 const _simulateScroll = async (scrollAmountInClicks: number, times: number) => {
   const script = {
     macroEvents: Array(times).fill({ type: 6, mouseX: 0, mouseY: scrollAmountInClicks, time: 0 }),
-    info: { name: "", description: "", x: 0, y: 0, width: 1920, height: 1080, recordDpi: 1.25 }
+    info: { name: "", description: "", x: 0, y: 0, width: 1920, height: 1080, recordDpi: 1.5 }
   };
   await keyMouseScript.run(JSON.stringify(script));
 };
@@ -57,11 +57,11 @@ export const mouseScrollDownLines = (lines: number, lineHeight: number = 175) =>
  */
 export const mouseSlide = async (x1: number, y1: number, x2: number, y2: number) => {
   moveMouseTo(x1, y1);
-  await sleep(100);
+  await sleep(50);
   leftButtonDown();
-  await sleep(100);
+  await sleep(50);
   moveMouseTo(x2, y2);
-  await sleep(100);
+  await sleep(50);
   leftButtonUp();
 };
 
