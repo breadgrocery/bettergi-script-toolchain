@@ -10,8 +10,8 @@ export const intro = () => {
 export const projectNameInput = () => {
   return prompts.text({
     message: "脚本名称:",
-    initialValue: "my-bettergi-script",
-    placeholder: "my-bettergi-script",
+    initialValue: "MyScript",
+    placeholder: "MyScript",
     validate: value => (value.length === 0 ? `脚本名称不能为空！` : undefined)
   });
 };
@@ -48,6 +48,7 @@ export const versionInput = () => {
 export const descriptionInput = () => {
   return prompts.text({
     message: "脚本描述:",
+    initialValue: "我的脚本描述",
     validate: value => (value.length === 0 ? `脚本描述不能为空！` : undefined)
   });
 };
