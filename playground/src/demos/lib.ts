@@ -1,6 +1,6 @@
 import {
-  assertRegionAppear,
-  assertRegionDisappear,
+  assertRegionAppearing,
+  assertRegionDisappearing,
   findImageInDirection,
   findImageWithinBounds,
   useStore
@@ -11,8 +11,8 @@ const printStatistics = () => {
   const mycustomData = useStore<{ lastUsedTime?: number; count?: number }>("my-custom-data");
   try {
     log.info(`这是您第 ${(mycustomData.count ?? 0) + 1} 次使用本脚本`);
-    if (!mycustomData.lastUsedTime) {
-      log.info(`上次退出时间: ${mycustomData.lastUsedTime}`);
+    if (mycustomData.lastUsedTime) {
+      log.info(`欢迎回来，上次退出时间: ${mycustomData.lastUsedTime}`);
     }
   } finally {
     mycustomData.lastUsedTime = Date.now();
@@ -22,7 +22,7 @@ const printStatistics = () => {
 
 const openMailbox = async () => {
   // 等待邮件图标出现
-  await assertRegionAppear(
+  await assertRegionAppearing(
     () => findImageWithinBounds("assets/邮件.png", 0, 0, 95, 1080),
     "打开派蒙菜单超时",
     () => keyPress("ESCAPE"), // 按 Esc 键打开菜单
@@ -30,7 +30,7 @@ const openMailbox = async () => {
   );
 
   // 等待关闭图标出现
-  await assertRegionAppear(
+  await assertRegionAppearing(
     () => findImageInDirection("assets/关闭.png", "north-east"), // 在右上角寻找关闭图标
     "打开邮件超时",
     () => {
@@ -44,12 +44,12 @@ const openMailbox = async () => {
 
   // 等待关闭图标消失
   const findCloseButton = () => findImageInDirection("assets/关闭.png", "north-east");
-  await assertRegionDisappear(
+  await assertRegionDisappearing(
     findCloseButton,
     "关闭邮件超时",
     () => {
-      // 如果发现邮件图标，则点击它
-      findImageInDirection("assets/邮件.png", "west")?.click();
+      // 如果发现关闭图标，则点击它
+      findImageInDirection("assets/关闭.png", "north-east")?.click();
     },
     { maxAttempts: 6, retryInterval: 500 } // 重试6次，每500毫秒重试一次
   );

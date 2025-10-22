@@ -1,6 +1,6 @@
+import { assertRegionAppearing, assertRegionDisappearing } from "./asserts";
 import { mouseSlide } from "./mouse";
 import { ListView, findTextInDirection, findTextWithinBounds, findTextWithinListView } from "./ocr";
-import { assertRegionAppear, assertRegionDisappear } from "./workflow";
 
 /**
  * 打开派蒙菜单
@@ -10,7 +10,7 @@ export const openPaimonMenu = async () => {
   await genshin.returnMainUi();
 
   // 2.打开派蒙菜单
-  await assertRegionAppear(
+  await assertRegionAppearing(
     () => findTextInDirection("世界等级", "north-west"),
     "打开派蒙菜单超时",
     () => keyPress("ESCAPE")
@@ -47,7 +47,7 @@ export const openMenu = async (
 
   // 3.点击菜单按钮
   if (result != undefined) {
-    await assertRegionDisappear(findTooltip, `打开菜单 ${name} 超时`, () => {
+    await assertRegionDisappearing(findTooltip, `打开菜单 ${name} 超时`, () => {
       click(x, result.y);
     });
   } else {
@@ -108,7 +108,7 @@ export const setTime = async (
   for (const job of jobs) await job();
 
   // 3.点击确认按钮，等待调整结束
-  await assertRegionAppear(
+  await assertRegionAppearing(
     () => findTextInDirection("时间少于", "south-east", { contains: true }),
     "调整时间超时",
     () => {

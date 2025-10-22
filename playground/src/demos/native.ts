@@ -16,14 +16,28 @@ const findText = () => {
   const tro1 = RecognitionObject.ocr(192, 108, 1536, 864); // 指定区域
   const list1 = region.findMulti(tro1);
   for (let i = 0; i < list1.count; i++) {
-    log.info("指定区域识别到文字：{text}，位置：({x}, {y})", list1[i].text, list1[i].x, list1[i].y);
+    if (list1[i].isExist()) {
+      log.info(
+        "指定区域识别到文字：{text}，位置：({x}, {y})",
+        list1[i].text,
+        list1[i].x,
+        list1[i].y
+      );
+    }
   }
 
   // 创建文字识别对象
   const tro2 = RecognitionObject.ocrThis; // 整个屏幕
   const list2 = region.findMulti(tro2);
   for (let i = 0; i < list2.count; i++) {
-    log.info("整个屏幕识别到文字：{text}，位置：({x}, {y})", list2[i].text, list2[i].x, list2[i].y);
+    if (list2[i].isExist()) {
+      log.info(
+        "整个屏幕识别到文字：{text}，位置：({x}, {y})",
+        list2[i].text,
+        list2[i].x,
+        list2[i].y
+      );
+    }
   }
 };
 
@@ -37,12 +51,12 @@ const findImage = () => {
   const iro2 = RecognitionObject.templateMatch(mat, 192, 108, 1536, 864);
 
   const r2 = region.find(iro1);
-  if (r2 != null) {
+  if (r2 != null && r2.isExist()) {
     log.info(`找到图片，位置：(${r2.x}, ${r2.y})`);
   }
 
   const r3 = region.find(iro2);
-  if (r3 != null) {
+  if (r3 != null && r3.isExist()) {
     log.info(`找到图片，位置：(${r3.x}, ${r3.y})`);
   }
 };

@@ -48,7 +48,14 @@ export const waitForRegionAppear = async (
   retryAction?: Action,
   options?: RetryOptions
 ): Promise<boolean> => {
-  return waitForAction(() => regionProvider() != null, retryAction, options);
+  return waitForAction(
+    () => {
+      const region = regionProvider();
+      return region != null && region.isExist();
+    },
+    retryAction,
+    options
+  );
 };
 
 /**
@@ -64,7 +71,14 @@ export const waitForRegionDisappear = async (
   retryAction?: Action,
   options?: RetryOptions
 ): Promise<boolean> => {
-  return waitForAction(() => regionProvider() == null, retryAction, options);
+  return waitForAction(
+    () => {
+      const region = regionProvider();
+      return !region || !region.isExist();
+    },
+    retryAction,
+    options
+  );
 };
 
 /**
@@ -105,80 +119,4 @@ export const waitForElementDisappear = async (
     retryAction,
     options
   );
-};
-
-/**
- * 断言某个区域出现，否则抛出错误
- * @param regionProvider 返回区域的函数
- * @param message 错误信息
- * @param retryAction 每次重试时执行的操作（可选）
- * @param options 配置选项
- */
-export const assertRegionAppear = async (
-  regionProvider: () => Region | null | undefined,
-  message: string,
-  retryAction?: Action,
-  options?: RetryOptions
-) => {
-  const isAppeared = await waitForRegionAppear(regionProvider, retryAction, options);
-  if (!isAppeared) {
-    throw new Error(message);
-  }
-};
-
-/**
- * 断言某个区域消失，否则抛出错误
- * @param regionProvider 返回区域的函数
- * @param message 错误信息
- * @param retryAction 每次重试时执行的操作（可选）
- * @param options 配置选项
- */
-export const assertRegionDisappear = async (
-  regionProvider: () => Region | null | undefined,
-  message: string,
-  retryAction?: Action,
-  options?: RetryOptions
-) => {
-  const isDisappeared = await waitForRegionDisappear(regionProvider, retryAction, options);
-  if (!isDisappeared) {
-    throw new Error(message);
-  }
-};
-
-/**
- * 断言整个画面上某个元素出现，否则抛出错误
- * @param message 错误信息
- * @param recognitionObject 识别对象
- * @param retryAction 每次重试时执行的操作（可选）
- * @param options 配置选项
- */
-export const assertElementAppear = async (
-  message: string,
-  recognitionObject: RecognitionObject,
-  retryAction?: Action,
-  options?: RetryOptions
-) => {
-  const isAppeared = await waitForElementAppear(recognitionObject, retryAction, options);
-  if (!isAppeared) {
-    throw new Error(message);
-  }
-};
-
-/**
- * 断言整个画面上某个元素消失，否则抛出错误
- * @param message 错误信息
- * @param recognitionObject 识别对象
- * @param retryAction 每次重试时执行的操作（可选）
- * @param options 配置选项
- */
-export const assertElementDisappear = async (
-  message: string,
-  recognitionObject: RecognitionObject,
-  retryAction?: Action,
-  options?: RetryOptions
-) => {
-  const isDisappeared = await waitForElementDisappear(recognitionObject, retryAction, options);
-  if (!isDisappeared) {
-    throw new Error(message);
-  }
 };
