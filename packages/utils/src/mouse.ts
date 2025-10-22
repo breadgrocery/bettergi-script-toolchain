@@ -35,6 +35,23 @@ export const mouseMoveAlongWaypoints = async (
   return true;
 };
 
+/**
+ * 鼠标拖拽滑动到指定位置
+ * @param x1 起始水平方向偏移量（像素）
+ * @param y1 起始垂直方向偏移量（像素）
+ * @param x2 终止水平方向偏移量（像素）
+ * @param y2 终止垂直方向偏移量（像素）
+ */
+export const mouseDrag = async (x1: number, y1: number, x2: number, y2: number) => {
+  return mouseMoveAlongWaypoints(
+    [
+      { x: x1, y: y1 },
+      { x: x2, y: y2 }
+    ],
+    { shouldDrag: true }
+  );
+};
+
 type NaturalMouseMoveOptions = {
   /** 移动持续时间（毫秒） */
   duration: number;

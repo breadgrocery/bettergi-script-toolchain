@@ -33,7 +33,7 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "@bettergi/types": "^0.1.0",
+    "@bettergi/types": "^0.1.1",
     "typescript": "^5.9.3"
   }
 }
