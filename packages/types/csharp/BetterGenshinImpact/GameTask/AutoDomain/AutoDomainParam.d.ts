@@ -51,7 +51,9 @@ declare global {
        * 设置战斗策略路径
        * @param strategyName 策略名称
        */
-      setCombatStrategyPath(strategyName?: string): void;
+      setCombatStrategyPath(strategyName: string): void;
+      // overload
+      setCombatStrategyPath(strategyName: string | null): void;
 
       /**
        * 设置使用树脂优先级

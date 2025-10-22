@@ -79,7 +79,9 @@ declare global {
      * @param forceCountry 强制指定移动大地图时先切换的国家（默认值：无）
      * @since 0.44.2
      */
-    function moveMapTo(x: number, y: number, forceCountry?: Area): Promise<void>;
+    function moveMapTo(x: number, y: number): Promise<void>;
+    // overload
+    function moveMapTo(x: number, y: number, forceCountry: Area | null): Promise<void>;
 
     /**
      * 移动[指定大地图]到指定坐标
@@ -89,11 +91,13 @@ declare global {
      * @param forceCountry 强制指定移动大地图时先切换的国家（默认值：无）
      * @since 0.44.9
      */
+    function moveIndependentMapTo(x: number, y: number, mapName: BigMap): Promise<void>;
+    // overload
     function moveIndependentMapTo(
       x: number,
       y: number,
       mapName: BigMap,
-      forceCountry?: Area
+      forceCountry: Area | null
     ): Promise<void>;
 
     /**
@@ -142,7 +146,9 @@ declare global {
      * @param cacheTimeMs 缓存时间（毫秒，默认值：900）
      * @since 0.44.9
      */
-    function getPositionFromMap(mapName: BigMap, cacheTimeMs?: number): Point2f;
+    function getPositionFromMap(mapName: BigMap): Point2f;
+    // overload
+    function getPositionFromMap(mapName: BigMap, cacheTimeMs: number | null): Point2f;
 
     /**
      * 获取当前在小地图上的 [指定大地图] 位置坐标（仅在给定坐标附近匹配）
@@ -179,10 +185,13 @@ declare global {
      * @param isOrange 是否为橙色选项（默认值：false）
      * @since 0.37.4
      */
+    function chooseTalkOption(option: string): Promise<void>;
+    // overload
+    function chooseTalkOption(option: string, skipTimes: number | null): Promise<void>;
     function chooseTalkOption(
       option: string,
-      skipTimes?: number,
-      isOrange?: boolean
+      skipTimes: number | null,
+      isOrange: boolean | null
     ): Promise<void>;
 
     /**

@@ -72,7 +72,9 @@ declare global {
        * 设置战斗策略路径
        * @param strategyName 战斗策略名称
        */
-      setCombatStrategyPath(strategyName?: string): void;
+      setCombatStrategyPath(strategyName: string): void;
+      // overload
+      setCombatStrategyPath(strategyName: string | null): void;
 
       /** 设置默认值 */
       setDefault(): void;

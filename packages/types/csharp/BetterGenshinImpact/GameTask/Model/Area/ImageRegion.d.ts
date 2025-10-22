@@ -30,11 +30,19 @@ declare global {
        * @param successAction 识别成功回调
        * @param failAction 识别失败回调
        */
-      find: (
+      find(
+        ro: BetterGenshinImpact.Core.Recognition.RecognitionObject
+      ): BetterGenshinImpact.GameTask.Model.Area.Region;
+      // overload
+      find(
         ro: BetterGenshinImpact.Core.Recognition.RecognitionObject,
-        successAction?: (region: BetterGenshinImpact.GameTask.Model.Area.Region) => void,
-        failAction?: () => void
-      ) => BetterGenshinImpact.GameTask.Model.Area.Region;
+        successAction: ((region: BetterGenshinImpact.GameTask.Model.Area.Region) => void) | null
+      ): BetterGenshinImpact.GameTask.Model.Area.Region;
+      find(
+        ro: BetterGenshinImpact.Core.Recognition.RecognitionObject,
+        successAction: ((region: BetterGenshinImpact.GameTask.Model.Area.Region) => void) | null,
+        failAction: (() => void) | null
+      ): BetterGenshinImpact.GameTask.Model.Area.Region;
 
       /**
        * 在本区域内查找识别对象，返回所有找到的结果
@@ -43,21 +51,50 @@ declare global {
        * @param failAction  识别失败回调
        * @returns
        */
-      findMulti: (
+      findMulti(
+        ro: BetterGenshinImpact.Core.Recognition.RecognitionObject
+      ): System.Collections.Generic.List<BetterGenshinImpact.GameTask.Model.Area.Region>;
+      // overload
+      findMulti(
         ro: BetterGenshinImpact.Core.Recognition.RecognitionObject,
-        successAction?: (
-          regions: System.Collections.Generic.List<BetterGenshinImpact.GameTask.Model.Area.Region>
-        ) => void,
-        failAction?: () => void
-      ) => System.Collections.Generic.List<BetterGenshinImpact.GameTask.Model.Area.Region>;
+        successAction:
+          | ((
+              regions: System.Collections.Generic.List<BetterGenshinImpact.GameTask.Model.Area.Region>
+            ) => void)
+          | null
+      ): System.Collections.Generic.List<BetterGenshinImpact.GameTask.Model.Area.Region>;
+      findMulti(
+        ro: BetterGenshinImpact.Core.Recognition.RecognitionObject,
+        successAction:
+          | ((
+              regions: System.Collections.Generic.List<BetterGenshinImpact.GameTask.Model.Area.Region>
+            ) => void)
+          | null,
+        failAction: (() => void) | null
+      ): System.Collections.Generic.List<BetterGenshinImpact.GameTask.Model.Area.Region>;
 
+      constructor(mat: Mat, x: number, y: number);
       constructor(
         mat: Mat,
         x: number,
         y: number,
-        owner?: BetterGenshinImpact.GameTask.Model.Area.Region,
-        converter?: BetterGenshinImpact.GameTask.Model.Area.Converter.INodeConverter,
-        drawContent?: BetterGenshinImpact.View.Drawable.DrawContent
+        owner: BetterGenshinImpact.GameTask.Model.Area.Region | null
+      );
+      // overload
+      constructor(
+        mat: Mat,
+        x: number,
+        y: number,
+        owner: BetterGenshinImpact.GameTask.Model.Area.Region | null,
+        converter: BetterGenshinImpact.GameTask.Model.Area.Converter.INodeConverter | null
+      );
+      constructor(
+        mat: Mat,
+        x: number,
+        y: number,
+        owner: BetterGenshinImpact.GameTask.Model.Area.Region | null,
+        converter: BetterGenshinImpact.GameTask.Model.Area.Converter.INodeConverter | null,
+        drawContent: BetterGenshinImpact.View.Drawable.DrawContent | null
       );
     }
   }

@@ -37,7 +37,9 @@ declare global {
    * @param dpi - DPI（默认值：1）
    * @since 0.34.5
    */
-  function setGameMetrics(w: number, h: number, dpi?: number): void;
+  function setGameMetrics(w: number, h: number): void;
+  // overload
+  function setGameMetrics(w: number, h: number, dpi: number | null): void;
 
   /**
    * 相对当前鼠标位置移动光标

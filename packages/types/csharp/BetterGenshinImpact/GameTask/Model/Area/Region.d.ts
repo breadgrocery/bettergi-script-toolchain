@@ -66,32 +66,42 @@ declare global {
       moveTo(x: number, y: number, w: number, h: number): void;
 
       /** 绘制当前区域 */
-      drawSelf(name: string, pen?: System.Drawing.Pen): void;
+      drawSelf(name: string): void;
+      // overload
+      drawSelf(name: string, pen: System.Drawing.Pen | null): void;
 
       /** 绘制矩形区域 */
+      drawRect(x: number, y: number, w: number, h: number, name: string): void;
+      // overload
       drawRect(
         x: number,
         y: number,
         w: number,
         h: number,
         name: string,
-        pen?: System.Drawing.Pen
+        pen: System.Drawing.Pen | null
       ): void;
 
       /** 绘制矩形区域 */
-      drawRect(rect: Rect, name: string, pen?: System.Drawing.Pen): void;
+      drawRect(rect: Rect, name: string): void;
+      // overload
+      drawRect(rect: Rect, name: string, pen: System.Drawing.Pen | null): void;
 
       /** 将 [当前区域] 转换成 [遮罩窗口绘制矩形] */
+      selfToRectDrawable(name: string): BetterGenshinImpact.View.Drawable.RectDrawable;
+      // overload
       selfToRectDrawable(
         name: string,
-        pen?: System.Drawing.Pen
+        pen: System.Drawing.Pen | null
       ): BetterGenshinImpact.View.Drawable.RectDrawable;
 
       /** 将 [区域] 转换成 [遮罩窗口绘制矩形] */
+      toRectDrawable(rect: Rect, name: string): BetterGenshinImpact.View.Drawable.RectDrawable;
+      // overload
       toRectDrawable(
         rect: Rect,
         name: string,
-        pen?: System.Drawing.Pen
+        pen: System.Drawing.Pen | null
       ): BetterGenshinImpact.View.Drawable.RectDrawable;
 
       /** 将 [区域] 转换成 [遮罩窗口绘制矩形] */
@@ -100,8 +110,16 @@ declare global {
         y: number,
         w: number,
         h: number,
+        name: string
+      ): BetterGenshinImpact.View.Drawable.RectDrawable;
+      // overload
+      toRectDrawable(
+        x: number,
+        y: number,
+        w: number,
+        h: number,
         name: string,
-        pen?: System.Drawing.Pen
+        pen: System.Drawing.Pen | null
       ): BetterGenshinImpact.View.Drawable.RectDrawable;
 
       /** 将 [直线] 转换成 [遮罩窗口绘制直线] */
@@ -110,8 +128,16 @@ declare global {
         y1: number,
         x2: number,
         y2: number,
+        name: string
+      ): BetterGenshinImpact.View.Drawable.LineDrawable;
+      // overload
+      toLineDrawable(
+        x1: number,
+        y1: number,
+        x2: number,
+        y2: number,
         name: string,
-        pen?: System.Drawing.Pen
+        pen: System.Drawing.Pen | null
       ): BetterGenshinImpact.View.Drawable.LineDrawable;
 
       /** 绘制直线 */
@@ -120,8 +146,16 @@ declare global {
         y1: number,
         x2: number,
         y2: number,
+        name: string
+      ): BetterGenshinImpact.View.Drawable.LineDrawable;
+      // overload
+      drawLine(
+        x1: number,
+        y1: number,
+        x2: number,
+        y2: number,
         name: string,
-        pen?: System.Drawing.Pen
+        pen: System.Drawing.Pen | null
       ): BetterGenshinImpact.View.Drawable.LineDrawable;
 
       /** 将当前区域的截图转换成矩形类型的区域 */
@@ -177,13 +211,22 @@ declare global {
 
       constructor();
 
+      constructor(x: number, y: number, width: number, height: number);
+      // overload
       constructor(
         x: number,
         y: number,
         width: number,
         height: number,
-        owner?: BetterGenshinImpact.GameTask.Model.Area.Region,
-        converter?: BetterGenshinImpact.GameTask.Model.Area.Converter.INodeConverter
+        owner: BetterGenshinImpact.GameTask.Model.Area.Region | null
+      );
+      constructor(
+        x: number,
+        y: number,
+        width: number,
+        height: number,
+        owner: BetterGenshinImpact.GameTask.Model.Area.Region | null,
+        converter: BetterGenshinImpact.GameTask.Model.Area.Converter.INodeConverter | null
       );
     }
   }

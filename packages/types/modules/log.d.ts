@@ -7,7 +7,7 @@ declare global {
      * @param args 占位参数
      * @since 0.32.0
      */
-    function debug(message?: string, ...args: any[]): void;
+    function debug(message: string, ...args: any[]): void;
 
     /**
      * 输出提示信息
@@ -15,7 +15,7 @@ declare global {
      * @param args 占位参数
      * @since 0.32.0
      */
-    function info(message?: string, ...args: any[]): void;
+    function info(message: string, ...args: any[]): void;
 
     /**
      * 输出警告信息
@@ -23,7 +23,7 @@ declare global {
      * @param args 占位参数
      * @since 0.32.0
      */
-    function warn(message?: string, ...args: any[]): void;
+    function warn(message: string, ...args: any[]): void;
 
     /**
      * 输出错误信息
@@ -31,7 +31,7 @@ declare global {
      * @param args 占位参数
      * @since 0.32.0
      */
-    function error(message?: string, ...args: any[]): void;
+    function error(message: string, ...args: any[]): void;
   }
 }
 

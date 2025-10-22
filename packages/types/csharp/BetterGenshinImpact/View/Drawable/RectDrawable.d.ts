@@ -16,9 +16,11 @@ declare global {
       /** 区域面积是否为空 */
       isEmpty: boolean;
 
-      constructor(rect: Rect, pen?: System.Drawing.Pen, name?: string);
-
-      constructor(rect: Rect, name?: string);
+      constructor(rect: Rect);
+      // overload
+      constructor(rect: Rect, name: string | null);
+      constructor(rect: Rect, pen: System.Drawing.Pen | null);
+      constructor(rect: Rect, pen: System.Drawing.Pen | null, name: string | null);
     }
   }
 }

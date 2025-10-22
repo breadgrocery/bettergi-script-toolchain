@@ -25,14 +25,18 @@ declare global {
       asReadOnly(): System.Collections.Generic.IReadOnlyList<T>;
 
       /** @deprecated Not yet supported  */
-      binarySearch(item: T, comparer?: (a: T, b: T) => number): number;
+      binarySearch(item: T): number;
+      // overload
+      binarySearch(item: T, comparer: ((a: T, b: T) => number) | null): number;
 
       /** @deprecated Not yet supported  */
+      binarySearch(index: number, count: number, item: T): number;
+      // overload
       binarySearch(
         index: number,
         count: number,
         item: T,
-        comparer?: (a: T, b: T) => number
+        comparer: ((a: T, b: T) => number) | null
       ): number;
 
       clear(): void;

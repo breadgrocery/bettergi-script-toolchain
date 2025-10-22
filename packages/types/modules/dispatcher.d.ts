@@ -46,8 +46,12 @@ declare global {
      * @since 0.45.1
      */
     function runTask(
+      soloTask: BetterGenshinImpact.Core.Script.Dependence.Model.SoloTask
+    ): Promise<void>;
+    // overload
+    function runTask(
       soloTask: BetterGenshinImpact.Core.Script.Dependence.Model.SoloTask,
-      customCt?: System.Threading.CancellationToken
+      customCt: System.Threading.CancellationToken | null
     ): Promise<void>;
 
     /**
@@ -68,8 +72,12 @@ declare global {
      * @since 0.52.0
      */
     function runAutoDomainTask(
+      param: BetterGenshinImpact.GameTask.AutoDomain.AutoDomainParam
+    ): Promise<void>;
+    // overload
+    function runAutoDomainTask(
       param: BetterGenshinImpact.GameTask.AutoDomain.AutoDomainParam,
-      customCt?: System.Threading.CancellationToken
+      customCt: System.Threading.CancellationToken | null
     ): Promise<void>;
 
     /**
@@ -78,8 +86,12 @@ declare global {
      * @since 0.52.0
      */
     function runAutoFightTask(
+      param: BetterGenshinImpact.GameTask.AutoFight.AutoFightParam
+    ): Promise<void>;
+    // overload
+    function runAutoFightTask(
       param: BetterGenshinImpact.GameTask.AutoFight.AutoFightParam,
-      customCt?: System.Threading.CancellationToken
+      customCt: System.Threading.CancellationToken | null
     ): Promise<void>;
   }
 }

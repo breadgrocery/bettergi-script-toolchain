@@ -9,11 +9,14 @@ declare global {
      * @param headersJson 请求头（可选）
      * @since 0.52.0
      */
+    function request(method: HttpMethod, url: string): Promise<HttpReponse>;
+    // overload
+    function request(method: HttpMethod, url: string, body: string | null): Promise<HttpReponse>;
     function request(
       method: HttpMethod,
       url: string,
-      body?: string,
-      headersJson?: string
+      body: string | null,
+      headersJson: string | null
     ): Promise<HttpReponse>;
   }
 }
