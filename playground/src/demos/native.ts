@@ -13,7 +13,7 @@ const findText = () => {
   const region = captureGameRegion(); // 整个屏幕
 
   // 创建文字识别对象
-  const tro1 = RecognitionObject.ocr(192, 108, 1536, 864); // 指定区域
+  const tro1 = RecognitionObject.ocr(192, 108, 1536, 864); // 识别指定区域的文字
   const list1 = region.findMulti(tro1);
   for (let i = 0; i < list1.count; i++) {
     if (list1[i].isExist()) {
@@ -27,7 +27,7 @@ const findText = () => {
   }
 
   // 创建文字识别对象
-  const tro2 = RecognitionObject.ocrThis; // 整个屏幕
+  const tro2 = RecognitionObject.ocrThis; // 识别整个搜索区域的文字
   const list2 = region.findMulti(tro2);
   for (let i = 0; i < list2.count; i++) {
     if (list2[i].isExist()) {

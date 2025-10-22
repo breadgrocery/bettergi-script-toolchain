@@ -10,13 +10,13 @@ const printStatistics = () => {
   // 自定义数据持久化（数据保存在 `脚本目录/store/my-custom-data.json` 文件中）
   const mycustomData = useStore<{ lastUsedTime?: number; count?: number }>("my-custom-data");
   try {
-    log.info(`这是您第 ${(mycustomData.count ?? 0) + 1} 次使用本脚本`);
+    log.info(`这是您第 ${(mycustomData.count || 0) + 1} 次使用本脚本`);
     if (mycustomData.lastUsedTime) {
       log.info(`欢迎回来，上次退出时间: ${mycustomData.lastUsedTime}`);
     }
   } finally {
     mycustomData.lastUsedTime = Date.now();
-    mycustomData.count = (mycustomData.count ?? 0) + 1;
+    mycustomData.count = (mycustomData.count || 0) + 1;
   }
 };
 

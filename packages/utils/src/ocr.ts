@@ -153,10 +153,10 @@ export type ListView = {
   y: number;
   w: number;
   h: number;
-  /** 垂直方向最大列表项个数 */
-  maxItems: number;
   /** 列表项高度 */
   lineHeight: number;
+  /** 每次滚动的行数 */
+  scrollLines?: number;
   /** 横向内边距 */
   paddingX?: number;
   /** 纵向内边距 */
@@ -177,18 +177,23 @@ export const findTextWithinListView = async (
   matchOptions?: TextMatchOptions,
   retryOptions?: RetryOptions
 ) => {
-  const { x, y, w, h, maxItems, lineHeight, paddingX = 10, paddingY = 10 } = listView;
+  const { x, y, w, h, lineHeight, scrollLines = 1, paddingX = 10, paddingY = 10 } = listView;
   const { maxAttempts = 30, retryInterval = 1000 } = retryOptions || {};
   const findTargetText = () => findTextWithinBounds(text, x, y, w, h, matchOptions);
 
-  let firstText: Region | undefined;
+  let lastTextRegion: Region | undefined;
   const isReachedBottom = () => {
-    const list = captureGameRegion().findMulti(RecognitionObject.ocr(x, y, w, h));
-    if (list.count > 0) {
-      if (firstText?.text === list[0].text && Math.abs(list[0].y - firstText.y) < lineHeight) {
+    const textRegion = findFirst(captureGameRegion(), RecognitionObject.ocr(x, y, w, h), region => {
+      return region.isExist() && region.text.trim().length > 0;
+    });
+    if (textRegion) {
+      if (
+        lastTextRegion?.text === textRegion.text &&
+        Math.abs(textRegion.y - lastTextRegion.y) < lineHeight
+      ) {
         return true;
       } else {
-        firstText = list[0];
+        lastTextRegion = textRegion;
         return false;
       }
     }
@@ -200,7 +205,7 @@ export const findTextWithinListView = async (
     () => findTargetText() != undefined || isReachedBottom(),
     async () => {
       moveMouseTo(x + w - paddingX, y + paddingY); // 移动到滚动条附近
-      await mouseScrollDownLines(maxItems, lineHeight); // 滚动一页
+      await mouseScrollDownLines(scrollLines, lineHeight); // 滚动指定行数
     },
     { maxAttempts, retryInterval }
   );
