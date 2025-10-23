@@ -62,7 +62,7 @@ const t3 = findTextWithinBounds("确认", 960, 540, 960, 540);
 
 ### 行为流程
 
-> 对脚本开发过程中常见工作流的抽象，例如：等待 XXX 完成/出现/消失。
+> 对脚本开发过程中常见工作流的抽象，例如: 等待/断言 操作/元素/区域 完成/出现/消失。
 
 ```ts
 // 等待直到找不到[关闭按钮] 或 5秒后超时，每隔1秒检查一次，期间按 Esc 键
@@ -106,10 +106,10 @@ await mouseScrollUp(175);
 // 鼠标滚轮向下滚动 175 像素
 await mouseScrollDown(175);
 
-// 鼠标滚轮向上滚动 99 行，行高 175（默认：背包物品行高）
+// 鼠标滚轮向上滚动 99 行，行高 175（默认: 背包物品行高）
 await mouseScrollUpLines(99);
 
-// 鼠标滚轮向下滚动 1 行，行高 115（自定义：商店物品行高）
+// 鼠标滚轮向下滚动 1 行，行高 115（自定义: 商店物品行高）
 await mouseScrollDownLines(1, 115);
 ```
 
@@ -123,7 +123,7 @@ import { useStore } from "@bettergi/utils";
 // 创建/读取存储对象，保存到存储文件 store/state.json 中
 const state = useStore<{ lastUsedTime?: number; count: number }>("state");
 if (state?.lastUsedTime) {
-  log.info(`欢迎回来！上次使用时间：${state.lastUsedTime}，计数器已累计至：${state.count}`);
+  log.info(`欢迎回来！上次使用时间: ${state.lastUsedTime}，计数器已累计至: ${state.count}`);
 }
 try {
   // 模拟脚本运行期间状态的变化
@@ -143,7 +143,7 @@ try {
 import { getForBody, postForBody } from "@bettergi/utils";
 
 // 发送 GET 请求获取响应体内容
-// 提示：需要在 `manifest.json` 文件中配置 `http_allowed_urls`，并在 调度器 -> 修改通用配置 中启用
+// 提示: 需要在 `manifest.json` 文件中配置 `http_allowed_urls`，并在 调度器 -> 修改通用配置 中启用
 const body1 = await getForBody("https://example.com/", undefined, { "User-Agent": "BetterGI" });
 const body2 = await postForBody("https://example.com/", undefined, { "User-Agent": "BetterGI" });
 log.info(`GET 请求响应体内容${body1}`);

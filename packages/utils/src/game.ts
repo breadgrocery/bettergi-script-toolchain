@@ -6,19 +6,19 @@ import { ListView, findTextInDirection, findTextWithinBounds, findTextWithinList
  * 临时设置游戏分辨率和DPI缩放比例，执行指定动作后恢复
  * 适用于使用了鼠标移动的操作，保证在不同的分辨率和DPI下都能正确地复现鼠标操作
  * @param w 游戏宽度
- * @param y 游戏高度
+ * @param h 游戏高度
  * @param dpi 系统屏幕的DPI缩放比例
  * @param action 执行动作
  */
 export const withGameMetrics = async <T>(
   w: number,
-  y: number,
+  h: number,
   dpi: number,
   action: () => Promise<T> | T
 ): Promise<T> => {
   const { width, height, screenDpiScale } = genshin;
   try {
-    setGameMetrics(w, y, dpi);
+    setGameMetrics(w, h, dpi);
     return await action();
   } finally {
     setGameMetrics(width, height, screenDpiScale);
@@ -107,10 +107,15 @@ export const openMenuPage = async (name: string, listView?: ListView) => {
 };
 
 type ClockOptions = {
+  /** 时钟中心X坐标 */
   centerX?: number;
+  /** 时钟中心Y坐标 */
   centerY?: number;
+  /** 偏移小时数（默认: 6） */
   offsetHours?: number;
+  /** 时钟半径（默认: 154） */
   radius?: number;
+  /** 平滑度（默认: 3） */
   smooth?: number;
 };
 

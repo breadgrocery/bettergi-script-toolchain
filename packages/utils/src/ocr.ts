@@ -14,14 +14,14 @@ const findFirst = (
 };
 
 type MatchDirection =
-  | "north"
-  | "north-east"
-  | "east"
-  | "south-east"
-  | "south"
-  | "south-west"
-  | "west"
-  | "north-west";
+  | "north" /** 上半边 */
+  | "north-east" /** 右上四分之一 */
+  | "east" /** 右半边 */
+  | "south-east" /** 右下四分之一 */
+  | "south" /** 下半边 */
+  | "south-west" /** 左下四分之一 */
+  | "west" /** 左半边 */
+  | "north-west"; /** 左上四分之一 */
 
 const directionToBounds = (direction: MatchDirection) => {
   const x = direction.includes("east") ? genshin.width / 2 : 0;
@@ -78,9 +78,9 @@ export const findImageInDirection = (path: string, direction: MatchDirection) =>
 
 /** 文本搜索选项 */
 type TextMatchOptions = {
-  /** 是否忽略大小写（默认：是） */
+  /** 是否忽略大小写（默认: 是） */
   ignoreCase?: boolean;
-  /** 是否非完全匹配（默认：否） */
+  /** 是否非完全匹配（默认: 否） */
   contains?: boolean;
 };
 
@@ -155,11 +155,11 @@ export type ListView = {
   h: number;
   /** 列表项高度 */
   lineHeight: number;
-  /** 每次滚动的行数 */
+  /** 每次滚动的行数（默认: 1） */
   scrollLines?: number;
-  /** 横向内边距 */
+  /** 横向内边距 （默认: 10） */
   paddingX?: number;
-  /** 纵向内边距 */
+  /** 纵向内边距 （默认: 10） */
   paddingY?: number;
 };
 
@@ -197,7 +197,7 @@ export const findTextWithinListView = async (
         return false;
       }
     }
-    // 异常情况：找不到任何文本
+    // 异常情况: 找不到任何文本
     return true;
   };
 

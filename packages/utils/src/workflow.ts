@@ -1,9 +1,9 @@
 export type Action = () => Promise<void> | void;
 
 export type RetryOptions = {
-  /** 重试次数 */
+  /** 重试次数（默认: 5） */
   maxAttempts?: number;
-  /** 重试间隔（毫秒） */
+  /** 重试间隔（毫秒，默认: 1000） */
   retryInterval?: number;
 };
 

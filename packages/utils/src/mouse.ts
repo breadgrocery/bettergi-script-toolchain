@@ -1,5 +1,7 @@
 type MouseWaypointsOptions = {
+  /** 是否按住鼠标左键拖动 */
   shouldDrag?: boolean;
+  /** 超时时间（毫秒，默认: 不超时） */
   timeout?: number;
 };
 
@@ -53,13 +55,13 @@ export const mouseDrag = async (x1: number, y1: number, x2: number, y2: number) 
 };
 
 type NaturalMouseMoveOptions = {
-  /** 移动持续时间（毫秒） */
+  /** 移动持续时间（毫秒，默认: 800） */
   duration: number;
-  /** 摆动幅度（像素） */
+  /** 摆动幅度（默认: 30） */
   wiggle?: number;
-  /** 随机种子 */
+  /** 随机种子（可选） */
   seed?: number;
-  /** 缓动函数 */
+  /** 缓动函数（默认: ease-out-cubic） */
   easing?: (progress: number) => number;
 };
 
