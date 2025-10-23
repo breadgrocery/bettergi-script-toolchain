@@ -28,9 +28,10 @@ export const waitForAction = async (
 ): Promise<boolean> => {
   const { maxAttempts = defaultMaxAttempts, retryInterval = defaultRetryInterval } = options || {};
   for (let i = 0; i < maxAttempts; i++) {
-    if (condition()) return true;
+    if (i === 0 && condition()) return true; // fast path
     await retryAction?.();
     await sleep(retryInterval);
+    if (condition()) return true;
   }
   return false;
 };

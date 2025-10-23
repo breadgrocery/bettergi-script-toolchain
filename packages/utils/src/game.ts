@@ -34,7 +34,7 @@ export const openPaimonMenu = async () => {
 
   // 2.打开派蒙菜单
   await assertRegionAppearing(
-    () => findTextWithinBounds("世界等级", 300, 230, 440, 100),
+    () => findTextWithinBounds("生日", 300, 230, 440, 100),
     "打开派蒙菜单超时",
     () => keyPress("ESCAPE")
   );
@@ -85,7 +85,35 @@ export const openMenu = async (
  * @param name 菜单页面名称
  * @param listView 菜单页面视图参数
  */
-export const openMenuPage = async (name: string, listView?: ListView) => {
+export const openMenuPage = async (
+  name:
+    | "商城"
+    | "队伍配置"
+    | "好友"
+    | "成就"
+    | "图鉴"
+    | "角色图鉴"
+    | "角色"
+    | "提升指南"
+    | "背包"
+    | "任务"
+    | "地图"
+    | "活动"
+    | "冒险之证"
+    | "祈愿"
+    | "纪行"
+    | "多人游戏"
+    | "千星商城"
+    | "人气奇域"
+    | "奇域收藏"
+    | "我的奇域"
+    | "大厅"
+    | "装扮搭配"
+    | "颂愿"
+    | "纪游"
+    | (string & {}),
+  listView?: ListView
+) => {
   // 1.打开派蒙菜单
   await openPaimonMenu();
 
