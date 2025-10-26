@@ -150,6 +150,16 @@ log.info(`GET 请求响应体内容${body1}`);
 log.info(`POST 请求响应体内容${body2}`);
 ```
 
+### 文件操作
+
+```ts
+// 列出指定文件夹内所有文件路径
+const files = listFiles("assets");
+
+// 读取文件文本行（非空白、去除首尾空白、去重）
+const lines = readLinesSync("assets/data.txt", { notBlank: true, trim: true, distinct: true });
+```
+
 ### 日期时间
 
 ```ts
@@ -157,4 +167,15 @@ log.info(`POST 请求响应体内容${body2}`);
 const d1 = getNextDay4AM();
 // 获取下一个（含当日）周一凌晨4点的时间
 const d2 = getNextMonday4AM();
+```
+
+### 杂项
+
+```ts
+// 生成UUID（不带连字符）
+const uuid = generateUUID(false);
+
+// 数组洗牌
+const arr = [1, 2, 3, 4, 5];
+const shuffled = shuffleArray(arr);
 ```

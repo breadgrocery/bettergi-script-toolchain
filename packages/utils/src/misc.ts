@@ -1,0 +1,27 @@
+/**
+ * 生成UUID
+ * @param withDashes 是否包含连字符
+ */
+export const generateUUID = (withDashes = true) => {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
+    .replace(/[xy]/g, c => {
+      const r = (Math.random() * 16) | 0;
+      return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
+    })
+    .replace(/-/g, withDashes ? "-" : "");
+};
+
+/**
+ * Fisher-Yates 洗牌算法
+ * @param array 待洗牌数组
+ * @returns 洗牌后的新数组
+ */
+export const shuffleArray = <T>(array: T[]) => {
+  const shuffled = [...array];
+  let i = shuffled.length;
+  while (i) {
+    const j = Math.floor(Math.random() * i--);
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};

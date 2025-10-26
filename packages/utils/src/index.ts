@@ -1,11 +1,17 @@
 /** 断言 */
 export * from "./asserts";
 
+/** 文件操作 */
+export * from "./file";
+
 /** 游戏操作 */
 export * from "./game";
 
 /** HTTP 请求 */
 export * from "./http";
+
+/** 杂项 */
+export * from "./misc";
 
 /** 鼠标操作 */
 export * from "./mouse";
