@@ -1,5 +1,5 @@
 {
-  "name": "my-bettergi-script",
+  "name": "my-script",
   "version": "0.0.1",
   "description": "My BetterGI script project",
   "author": {
@@ -12,7 +12,7 @@
     "build": "bettergi-cli"
   },
   "dependencies": {
-    "@bettergi/utils": "^0.1.0"
+    "@bettergi/utils": "^0.1.4"
   },
   "devDependencies": {
     "@bettergi/cli": "^0.1.0",
