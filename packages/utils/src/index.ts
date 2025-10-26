@@ -16,5 +16,8 @@ export * from "./ocr";
 /** 数据存储 */
 export * from "./store";
 
+/** 日期时间 */
+export * from "./time";
+
 /** 流程控制 */
 export * from "./workflow";

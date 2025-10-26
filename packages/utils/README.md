@@ -149,3 +149,12 @@ const body2 = await postForBody("https://example.com/", undefined, { "User-Agent
 log.info(`GET 请求响应体内容${body1}`);
 log.info(`POST 请求响应体内容${body2}`);
 ```
+
+### 日期时间
+
+```ts
+// 获取下一个（含当日）凌晨4点的时间
+const d1 = getNextDay4AM();
+// 获取下一个（含当日）周一凌晨4点的时间
+const d2 = getNextMonday4AM();
+```
