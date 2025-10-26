@@ -23,7 +23,7 @@ export const getNextMonday4AM = () => {
 
   // 如果当前为周一且时间在4点前，则返回今天4点，否则返回下一个周一的4点
   const currentDay = now.getDay();
-  const daysUntilNextMonday = currentDay === 1 && now.getHours() < 4 ? 0 : (8 - currentDay) % 7;
+  const daysUntilNextMonday = currentDay === 1 && now.getHours() < 4 ? 0 : 8 - currentDay;
 
   result.setDate(now.getDate() + daysUntilNextMonday);
   return result;
