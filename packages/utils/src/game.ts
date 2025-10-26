@@ -176,11 +176,12 @@ export const setTimeTo = async (hour: number, minute: number, options?: ClockOpt
       .map(p => ({ x: Math.round(p.x + centerX), y: Math.round(p.y + centerY) }))
   );
 
-  // 3.拨动指针
+  // 3.调整时间
   await withGameMetrics(1920, 1080, 1.5, async () => {
+    // 拨动指针
     await mouseMoveAlongWaypoints(waypoints, { shouldDrag: true });
 
-    // 3.点击确认按钮，等待调整结束
+    // 点击确认按钮，等待调整结束
     await assertRegionAppearing(
       () => findTextInDirection("时间少于", "south-east", { contains: true }),
       "调整时间超时",
@@ -206,12 +207,12 @@ export const setTime = async (
 ) => {
   switch (period) {
     case "night":
-      return setTimeTo(0, 0, options);
+      return setTimeTo(0, 5, options);
     case "morning":
-      return setTimeTo(6, 0, options);
+      return setTimeTo(6, 5, options);
     case "noon":
-      return setTimeTo(12, 0, options);
+      return setTimeTo(12, 5, options);
     case "evening":
-      return setTimeTo(18, 0, options);
+      return setTimeTo(18, 5, options);
   }
 };
