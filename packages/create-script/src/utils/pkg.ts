@@ -18,15 +18,13 @@ export const getPkgManager = () => {
   return pkgInfo ? pkgInfo.name : "npm";
 };
 
-export const isValidPackageName = (packageName: string) => {
-  return /^(?:@[a-z\d\-*~][a-z\d\-*._~]*\/)?[a-z\d\-~][a-z\d\-._~]*$/.test(packageName);
-};
-
-export const toValidPackageName = (projectName: string) => {
-  return projectName
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, "-")
-    .replace(/^[._]/, "")
-    .replace(/[^a-z\d\-~]+/g, "-");
+export const kebabize = (str: string) => {
+  return str
+    .split("")
+    .map((letter, idx) => {
+      return letter.toUpperCase() === letter
+        ? `${idx !== 0 ? "-" : ""}${letter.toLowerCase()}`
+        : letter;
+    })
+    .join("");
 };

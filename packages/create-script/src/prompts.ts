@@ -39,8 +39,8 @@ export const overwriteSelect = (targetDir: string) => {
 export const versionInput = () => {
   return prompts.text({
     message: "脚本版本:",
-    initialValue: "0.0.1",
-    placeholder: "0.0.1",
+    initialValue: "0.1.0",
+    placeholder: "0.1.0",
     validate: value => (value.length === 0 ? `脚本版本不能为空！` : undefined)
   });
 };
@@ -48,7 +48,7 @@ export const versionInput = () => {
 export const descriptionInput = () => {
   return prompts.text({
     message: "脚本描述:",
-    initialValue: "我的脚本描述",
+    initialValue: "我的脚本",
     validate: value => (value.length === 0 ? `脚本描述不能为空！` : undefined)
   });
 };

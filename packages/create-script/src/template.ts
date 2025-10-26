@@ -1,6 +1,7 @@
 import fs from "fs-extra";
 import path from "node:path";
 import url from "node:url";
+import { kebabize } from "./utils/pkg.js";
 
 export interface UserInput {
   name: string;
@@ -16,16 +17,6 @@ export const createTemplate = (targetRoot: string, input: UserInput) => {
   fs.copySync(templateDir, targetRoot);
 
   // Replace template variables in package.json
-  const kebabize = (str: string) => {
-    return str
-      .split("")
-      .map((letter, idx) => {
-        return letter.toUpperCase() === letter
-          ? `${idx !== 0 ? "-" : ""}${letter.toLowerCase()}`
-          : letter;
-      })
-      .join("");
-  };
   const pkg = fs.readJsonSync(path.join(templateDir, "package.json"), "utf-8");
   pkg.name = kebabize(input.name);
   pkg.version = input.version;
@@ -55,6 +46,10 @@ export const createTemplate = (targetRoot: string, input: UserInput) => {
   const configContent = fs.readFileSync(configPath, "utf-8");
   const updatedConfigContent = configContent
     .replace(/\{\{name\}\}/g, input.name)
+    .replace(/\{\{version\}\}/g, input.version)
+    .replace(/\{\{description\}\}/g, input.description)
+    .replace(/\{\{author\}\}/g, input.author)
+    .replace(/\{\{authorLink\}\}/g, input.authorLink || "")
     .replace(/\{\{outDir\}\}/g, input.name);
   fs.writeFileSync(configPath, updatedConfigContent);
 };
