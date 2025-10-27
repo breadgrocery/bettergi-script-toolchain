@@ -1,5 +1,5 @@
-import "../csharp/BetterGenshinImpact/GameTask/Model/Area/ImageRegion";
-import { KeyCode } from "../csharp/BetterGenshinImpact/Helpers/User32Helper";
+import "../types/BetterGenshinImpact/GameTask/Model/Area/ImageRegion";
+import { KeyCode } from "../types/BetterGenshinImpact/Helpers/User32Helper";
 
 declare global {
   /**
@@ -40,6 +40,12 @@ declare global {
   function setGameMetrics(w: number, h: number): void;
   // overload
   function setGameMetrics(w: number, h: number, dpi: number | null): void;
+
+  /**
+   * 获取游戏窗口尺寸和显示缩放
+   * @since 0.53.0
+   */
+  function getGameMetrics(): number[];
 
   /**
    * 相对当前鼠标位置移动光标

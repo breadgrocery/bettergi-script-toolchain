@@ -216,3 +216,50 @@ export const setTime = async (
       return setTimeTo(18, 5, options);
   }
 };
+
+/** tab 翻页配置 */
+type TabNavigationOptions = {
+  /** 标签页图标宽度（默认：96） */
+  tabIconWidth?: number;
+  /** 翻页按钮垂直偏移（默认：540） */
+  verticalOffset?: number;
+  /** 翻页按钮左侧内边距（默认：72） */
+  paddingLeft?: number;
+  /** 翻页按钮右侧内边距（默认：72） */
+  paddingRight?: number;
+  /** 是否向前翻页（默认：false） */
+  backwards?: boolean;
+  /** 最大尝试次数（默认：屏幕宽度 / 标签页图标宽度） */
+  maxAttempts?: number;
+  /** 每次尝试间隔时间（毫秒，默认：1000） */
+  retryInterval?: number;
+};
+
+/**
+ * 导航到指定标签页
+ * @param condition 导航成功的条件
+ * @param options 翻页配置
+ * @returns - true  条件满足
+ *          - false 达到最大重试次数
+ */
+export const navigateToTab = async (condition: () => boolean, options?: TabNavigationOptions) => {
+  const {
+    tabIconWidth = 96,
+    verticalOffset = 540,
+    paddingLeft = 72,
+    paddingRight = 72,
+    backwards = false,
+    retryInterval = 1000
+  } = options || {};
+  const attempts = Math.floor(options?.maxAttempts ?? genshin.width / tabIconWidth);
+
+  return withGameMetrics(1920, 1080, 1.5, async () => {
+    for (let i = 0; i < attempts; i++) {
+      if (i === 0 && condition()) return true; // fast path
+      click(backwards ? paddingLeft : genshin.width - paddingRight, verticalOffset); // prev or next
+      await sleep(retryInterval);
+      if (condition()) return true;
+    }
+    return false;
+  });
+};

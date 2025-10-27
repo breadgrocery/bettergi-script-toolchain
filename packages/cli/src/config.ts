@@ -181,13 +181,11 @@ type Widen<T> = T extends string
       ? boolean
       : T extends bigint
         ? bigint
-        : T extends symbol
-          ? symbol
-          : T;
+        : T;
 
 /**
  * 提取设置参数名称
  */
 export type ExtractSettingsMap<T extends readonly { name: string; default?: any }[]> = {
-  [K in T[number] as K["name"]]: Widen<K["default"]>;
+  [K in T[number] as K["name"]]?: Widen<K["default"]>;
 };

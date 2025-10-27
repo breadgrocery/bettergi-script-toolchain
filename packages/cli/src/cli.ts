@@ -52,7 +52,7 @@ import { terminate } from "./util/process.js";
           fs.copySync(assetsDir, path.join(outDir, assetsDir));
         }
 
-        // Cpoy additional files
+        // Copy additional files
         const copyTasks = await Promise.all(
           additionalFiles.map(async item => {
             if (typeof item === "string") {

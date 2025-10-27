@@ -1,9 +1,9 @@
-import "../csharp/BetterGenshinImpact/Core/Script/Dependence/Model/RealtimeTimer";
-import "../csharp/BetterGenshinImpact/Core/Script/Dependence/Model/SoloTask";
-import "../csharp/BetterGenshinImpact/GameTask/AutoDomain/AutoDomainParam";
-import "../csharp/BetterGenshinImpact/GameTask/AutoFight/AutoFightParam";
-import "../csharp/System/Threading/CancellationToken";
-import "../csharp/System/Threading/CancellationTokenSource";
+import "../types/BetterGenshinImpact/Core/Script/Dependence/Model/RealtimeTimer";
+import "../types/BetterGenshinImpact/Core/Script/Dependence/Model/SoloTask";
+import "../types/BetterGenshinImpact/GameTask/AutoDomain/AutoDomainParam";
+import "../types/BetterGenshinImpact/GameTask/AutoFight/AutoFightParam";
+import "../types/System/Threading/CancellationToken";
+import "../types/System/Threading/CancellationTokenSource";
 
 declare global {
   /** @since 0.32.5 */
