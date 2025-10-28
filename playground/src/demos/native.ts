@@ -12,8 +12,8 @@ const findText = () => {
   // 创建搜索区域
   const region = captureGameRegion(); // 整个屏幕
 
-  // 创建文字识别对象
-  const tro1 = RecognitionObject.ocr(192, 108, 1536, 864); // 识别指定区域的文字
+  // 识别指定区域的文字
+  const tro1 = RecognitionObject.ocr(192, 108, 1536, 864); // 坐标宽高必须以1920x1080为基准
   const list1 = region.findMulti(tro1);
   for (let i = 0; i < list1.count; i++) {
     if (list1[i].isExist()) {
@@ -26,8 +26,8 @@ const findText = () => {
     }
   }
 
-  // 创建文字识别对象
-  const tro2 = RecognitionObject.ocrThis; // 识别整个搜索区域的文字
+  // 识别整个搜索区域的文字
+  const tro2 = RecognitionObject.ocrThis;
   const list2 = region.findMulti(tro2);
   for (let i = 0; i < list2.count; i++) {
     if (list2[i].isExist()) {
@@ -47,14 +47,16 @@ const findImage = () => {
 
   // 创建图片识别对象
   const mat = file.readImageMatSync("assets/邮件.png");
-  const iro1 = RecognitionObject.templateMatch(mat);
-  const iro2 = RecognitionObject.templateMatch(mat, 192, 108, 1536, 864);
 
+  // 识别整个搜索区域的图片
+  const iro1 = RecognitionObject.templateMatch(mat);
   const r2 = region.find(iro1);
   if (r2 != null && r2.isExist()) {
     log.info(`找到图片，位置：(${r2.x}, ${r2.y})`);
   }
 
+  // 识别指定区域的图片
+  const iro2 = RecognitionObject.templateMatch(mat, 192, 108, 1536, 864); // 坐标宽高必须以1920x1080为基准
   const r3 = region.find(iro2);
   if (r3 != null && r3.isExist()) {
     log.info(`找到图片，位置：(${r3.x}, ${r3.y})`);
