@@ -28,7 +28,12 @@ const directionToBounds = (direction: MatchDirection) => {
   const y = direction.includes("south") ? genshin.height / 2 : 0;
   const w = direction === "north" || direction === "south" ? genshin.width : genshin.width / 2;
   const h = direction === "west" || direction === "east" ? genshin.height : genshin.height / 2;
-  return { x, y, w, h };
+  const scale = genshin.width / 1920;
+  if (scale <= 1) {
+    return { x, y, w, h };
+  } else {
+    return { x: x / scale, y: y / scale, w: w / scale, h: h / scale };
+  }
 };
 
 /**
@@ -37,12 +42,14 @@ const directionToBounds = (direction: MatchDirection) => {
  * @returns 如果找到匹配的图片区域，则返回该区域
  */
 export const findImage = (path: string) => {
+  const ir = captureGameRegion();
   try {
-    const ir = captureGameRegion();
     const ro = RecognitionObject.templateMatch(file.readImageMatSync(path));
     return findFirst(ir, ro, region => region.isExist());
   } catch (err: any) {
-    err?.message && log.warn(`${err.message}`);
+    log.warn(`${err.message || err}`);
+  } finally {
+    ir.dispose();
   }
 };
 
@@ -56,12 +63,14 @@ export const findImage = (path: string) => {
  * @returns 如果找到匹配的图片区域，则返回该区域
  */
 export const findImageWithinBounds = (path: string, x: number, y: number, w: number, h: number) => {
+  const ir = captureGameRegion();
   try {
-    const ir = captureGameRegion();
     const ro = RecognitionObject.templateMatch(file.readImageMatSync(path), x, y, w, h);
     return findFirst(ir, ro, region => region.isExist());
   } catch (err: any) {
-    err?.message && log.warn(`${err.message}`);
+    log.warn(`${err.message || err}`);
+  } finally {
+    ir.dispose();
   }
 };
 
@@ -94,12 +103,18 @@ export const findText = (text: string, options?: TextMatchOptions) => {
   const { ignoreCase = true, contains = false } = options || {};
   const searchText = ignoreCase ? text.toLowerCase() : text;
   const ir = captureGameRegion();
-  const ro = RecognitionObject.ocrThis;
-  return findFirst(ir, ro, region => {
-    const itemText = ignoreCase ? region.text.toLowerCase() : region.text;
-    const isMatch = contains ? itemText.includes(searchText) : itemText === searchText;
-    return isMatch && region.isExist();
-  });
+  try {
+    const ro = RecognitionObject.ocrThis;
+    return findFirst(ir, ro, region => {
+      const itemText = ignoreCase ? region.text.toLowerCase() : region.text;
+      const isMatch = contains ? itemText.includes(searchText) : itemText === searchText;
+      return isMatch && region.isExist();
+    });
+  } catch (err: any) {
+    log.warn(`${err.message || err}`);
+  } finally {
+    ir.dispose();
+  }
 };
 
 /**
@@ -123,12 +138,18 @@ export const findTextWithinBounds = (
   const { ignoreCase = true, contains = false } = options || {};
   const searchText = ignoreCase ? text.toLowerCase() : text;
   const ir = captureGameRegion();
-  const ro = RecognitionObject.ocr(x, y, w, h);
-  return findFirst(ir, ro, region => {
-    const itemText = ignoreCase ? region.text.toLowerCase() : region.text;
-    const isMatch = contains ? itemText.includes(searchText) : itemText === searchText;
-    return isMatch && region.isExist();
-  });
+  try {
+    const ro = RecognitionObject.ocr(x, y, w, h);
+    return findFirst(ir, ro, region => {
+      const itemText = ignoreCase ? region.text.toLowerCase() : region.text;
+      const isMatch = contains ? itemText.includes(searchText) : itemText === searchText;
+      return isMatch && region.isExist();
+    });
+  } catch (err: any) {
+    log.warn(`${err.message || err}`);
+  } finally {
+    ir.dispose();
+  }
 };
 
 /**

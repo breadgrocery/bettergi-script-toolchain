@@ -16,12 +16,12 @@ export const withGameMetrics = async <T>(
   dpi: number,
   action: () => Promise<T> | T
 ): Promise<T> => {
-  const { width, height, screenDpiScale } = genshin;
+  const [_w, _h, _dpi] = globalThis["getGameMetrics"] ? getGameMetrics() : [];
   try {
     setGameMetrics(w, h, dpi);
     return await action();
   } finally {
-    setGameMetrics(width, height, screenDpiScale);
+    globalThis["getGameMetrics"] && setGameMetrics(_w, _h, _dpi);
   }
 };
 
@@ -56,14 +56,13 @@ export const openMenu = async (
 
   // 2.步进搜索菜单按钮
   const { navWidth = 95, steps: step = 30 } = options;
-  const findTooltip = () =>
-    findTextWithinBounds(name, navWidth, 0, 20 + name.length * 20, genshin.height);
+  const findTooltip = () => findTextWithinBounds(name, navWidth, 0, 20 + name.length * 20, 1080);
   const tooltip = await withGameMetrics(1920, 1080, 1.5, async () => {
     let result: Region | undefined = undefined;
-    const steps = Math.ceil(genshin.height / step);
+    const steps = Math.ceil(1080 / step);
     for (let i = 0; i < steps; i++) {
       const o = i * step;
-      const y = stepBackwards ? genshin.height - o : o;
+      const y = stepBackwards ? 1080 - o : o;
       moveMouseTo(Math.round(navWidth / 2), y);
       await sleep(30); // 等待提示文字出现
       if ((result = findTooltip()) !== undefined) return result;
@@ -251,15 +250,13 @@ export const navigateToTab = async (condition: () => boolean, options?: TabNavig
     backwards = false,
     retryInterval = 1000
   } = options || {};
-  const attempts = Math.floor(options?.maxAttempts ?? genshin.width / tabIconWidth);
+  const attempts = Math.floor(options?.maxAttempts ?? 1920 / tabIconWidth);
 
-  return withGameMetrics(1920, 1080, 1.5, async () => {
-    for (let i = 0; i < attempts; i++) {
-      if (i === 0 && condition()) return true; // fast path
-      click(backwards ? paddingLeft : genshin.width - paddingRight, verticalOffset); // prev or next
-      await sleep(retryInterval);
-      if (condition()) return true;
-    }
-    return false;
-  });
+  for (let i = 0; i < attempts; i++) {
+    if (i === 0 && condition()) return true; // fast path
+    click(backwards ? paddingLeft : 1920 - paddingRight, verticalOffset); // prev or next
+    await sleep(retryInterval);
+    if (condition()) return true;
+  }
+  return false;
 };

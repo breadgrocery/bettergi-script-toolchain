@@ -1,6 +1,6 @@
 {
   "name": "@bettergi/utils",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "开发 BetterGI 脚本常用工具集",
   "type": "module",
   "author": "Bread Grocery<https://github.com/breadgrocery>",
@@ -33,7 +33,7 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "@bettergi/types": "^0.1.1",
+    "@bettergi/types": "^0.1.3",
     "typescript": "^5.9.3"
   }
 }
