@@ -16,7 +16,7 @@ declare global {
   namespace BetterGenshinImpact.Core.Recognition {
     class RecognitionObject {
       /** 匹配类型 */
-      recognitionType: RecognitionTypes;
+      recognitionType: BetterGenshinImpact.Core.Recognition.RecognitionTypes;
 
       /** 感兴趣的区域 */
       regionOfInterest: Rect;
@@ -82,6 +82,18 @@ declare global {
        */
       maxMatchCount: number;
 
+      /**
+       * 是否启用二值化后模板匹配
+       * @default false
+       */
+      useBinaryMatch: boolean;
+
+      /**
+       * 二值化阈值
+       * @default 128
+       */
+      binaryThreshold: number;
+
       /** 颜色匹配方式 */
       colorConversionCode: ColorConversionCodes;
 
@@ -98,7 +110,7 @@ declare global {
       matchCount: number;
 
       /** OCR 引擎 */
-      ocrEngine: OcrEngineTypes;
+      ocrEngine: BetterGenshinImpact.Core.Recognition.OcrEngineTypes;
 
       /** 文字识别替换字典（部分文字识别结果不准确） */
       replaceDictionary: System.Collections.Generic.Dictionary<string, string[]>;
@@ -112,20 +124,29 @@ declare global {
       /** 正则匹配 多个值全匹配的情况下才算成功 */
       regexMatchText: System.Collections.Generic.List<string>;
 
+      /** 用于多个OCR结果的匹配 */
+      text: string;
+
       /** 初始化模板 */
-      initTemplate(): RecognitionObject;
+      initTemplate(): BetterGenshinImpact.Core.Recognition.RecognitionObject;
+
+      clone(): BetterGenshinImpact.Core.Recognition.RecognitionObject;
 
       /**
        * 识别图片模板
        * @param mat 模板图片
        */
-      static templateMatch(mat: Mat): RecognitionObject;
-
-      /**
-       * 识别图片模板
-       * @param mat 模板图片
-       */
-      static templateMatch(mat: Mat): RecognitionObject;
+      static templateMatch(mat: Mat): BetterGenshinImpact.Core.Recognition.RecognitionObject;
+      // overload
+      static templateMatch(
+        mat: Mat,
+        useMask: boolean
+      ): BetterGenshinImpact.Core.Recognition.RecognitionObject;
+      static templateMatch(
+        mat: Mat,
+        useMask: boolean,
+        maskColor: System.Drawing.Color
+      ): BetterGenshinImpact.Core.Recognition.RecognitionObject;
 
       /**
        * 在指定区域识别图片模板
@@ -135,7 +156,13 @@ declare global {
        * @param w 宽度
        * @param h 高度
        */
-      static templateMatch(mat: Mat, x: number, y: number, w: number, h: number): RecognitionObject;
+      static templateMatch(
+        mat: Mat,
+        x: number,
+        y: number,
+        w: number,
+        h: number
+      ): BetterGenshinImpact.Core.Recognition.RecognitionObject;
 
       /**
        * 识别指定区域
@@ -144,16 +171,29 @@ declare global {
        * @param w 宽度
        * @param h 高度
        */
-      static ocr(x: number, y: number, w: number, h: number): RecognitionObject;
+      static ocr(
+        x: number,
+        y: number,
+        w: number,
+        h: number
+      ): BetterGenshinImpact.Core.Recognition.RecognitionObject;
 
       /**
        * 识别矩形区域
        * @param rect 矩形
        */
-      static ocr(rect: Rect): RecognitionObject;
+      static ocr(rect: Rect): BetterGenshinImpact.Core.Recognition.RecognitionObject;
+
+      static ocrMatch(
+        x: number,
+        y: number,
+        w: number,
+        h: number,
+        ...matchTexts: string[]
+      ): BetterGenshinImpact.Core.Recognition.RecognitionObject;
 
       /** 识别文字 */
-      static readonly ocrThis: RecognitionObject;
+      static readonly ocrThis: BetterGenshinImpact.Core.Recognition.RecognitionObject;
     }
   }
   export import RecognitionObject = BetterGenshinImpact.Core.Recognition.RecognitionObject;
