@@ -95,11 +95,12 @@ import { terminate } from "./util/process.js";
   const context = await esbuild.context({
     outdir: outDir,
     entryPoints: main,
-    charset: "utf8",
     format: "esm",
     target: "es2022",
     bundle: true,
     minify,
+    legalComments: "inline",
+    charset: "utf8",
     plugins: [
       {
         name: "rebuild",

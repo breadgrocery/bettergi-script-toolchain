@@ -1,6 +1,6 @@
 {
   "name": "@bettergi/create-script",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "搭建您的第一个 BetterGI 脚本项目",
   "type": "module",
   "author": "Bread Grocery<https://github.com/breadgrocery>",
