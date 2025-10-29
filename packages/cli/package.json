@@ -34,7 +34,7 @@
   ],
   "scripts": {
     "dev": "tsc --watch",
-    "build": "tsc"
+    "build": "rimraf dist && tsc"
   },
   "dependencies": {
     "c12": "^3.3.1",
@@ -50,6 +50,7 @@
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^24.8.1",
     "@types/winreg": "^1.2.36",
+    "rimraf": "^6.0.1",
     "typescript": "^5.9.3"
   }
 }

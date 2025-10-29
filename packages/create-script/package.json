@@ -28,7 +28,7 @@
   ],
   "scripts": {
     "dev": "tsc && create-script",
-    "build": "tsc"
+    "build": "rimraf dist && tsc"
   },
   "dependencies": {
     "@clack/prompts": "^0.11.0",
@@ -39,6 +39,7 @@
     "@types/fs-extra": "^11.0.4",
     "@types/git-config": "^0.0.32",
     "@types/node": "^24.8.1",
+    "rimraf": "^6.0.1",
     "typescript": "^5.9.3"
   }
 }

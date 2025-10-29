@@ -35,6 +35,11 @@ await setTimeTo(12, 35);
 
 // 调整游戏时间段
 await setTime("evening");
+
+// tab 翻页到指定页面
+await navigateToTab(() => {
+  return findTextWithinBounds("小道具", 0, 0, 220, 96) !== undefined;
+});
 ```
 
 ### 图文识别
