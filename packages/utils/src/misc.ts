@@ -25,3 +25,19 @@ export const shuffleArray = <T>(array: T[]) => {
   }
   return shuffled;
 };
+
+/**
+ * 深度合并多个对象
+ * @param objects 多个对象
+ * @returns 合并后的对象副本
+ */
+export const deepMerge = (...objects: any[]): any => {
+  const isPlainObject = (input: any) => input?.constructor === Object;
+  return objects.reduce((result, obj) => {
+    return Object.entries(obj).reduce((acc, [key, value]) => {
+      const recursive = isPlainObject(acc[key]) && isPlainObject(value);
+      acc[key] = recursive ? deepMerge(acc[key], value) : value;
+      return acc;
+    }, result);
+  }, {});
+};

@@ -1,3 +1,5 @@
+import { deepMerge } from "./misc";
+
 /**
  * 创建一个持久化存储对象，用于管理应用状态数据
  * 该函数会创建一个代理对象，对该对象的所有属性的修改都会自动同步到相应的JSON文件（脚本的 `store` 目录下）中。
@@ -51,4 +53,18 @@ export const useStore = <T extends Record<string, any>>(name: string): T => {
   };
 
   return createProxy(obj);
+};
+
+/**
+ * 创建一个带有默认值的持久化存储对象，用于管理应用状态数据
+ * @param name 存储对象的名称，将作为文件名（不包扩展名）
+ * @param defaults 默认值数据对象
+ */
+export const useStoreWithDefaults = <T extends Record<string, any>>(
+  name: string,
+  defaults: Partial<T>
+): T => {
+  const store = useStore<T>(name);
+  Object.assign(store, deepMerge(defaults, store));
+  return store;
 };

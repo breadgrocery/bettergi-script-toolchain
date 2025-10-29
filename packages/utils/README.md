@@ -183,4 +183,7 @@ const uuid = generateUUID(false);
 // 数组洗牌
 const arr = [1, 2, 3, 4, 5];
 const shuffled = shuffleArray(arr);
+
+// 深度合并多个对象：{ x: 1, y: { a: 2, b: 4, c: 5 }, d: 6 }
+const result = deepMerge({ x: 1, y: { a: 2, b: 3 } }, { y: { b: 4, c: 5 }, d: 6 });
 ```
