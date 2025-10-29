@@ -1,6 +1,9 @@
 /** 断言 */
 export * from "./asserts";
 
+/** 异常 */
+export * from "./exception";
+
 /** 文件操作 */
 export * from "./file";
 

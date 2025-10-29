@@ -174,6 +174,20 @@ const d1 = getNextDay4AM();
 const d2 = getNextMonday4AM();
 ```
 
+### 异常
+
+```ts
+// 重复执行某个可能失败的异步操作，但是发生主机异常（如任务取消）时停止
+for (let i = 0; i < 1000; i++) {
+  try {
+    await sleep(i);
+  } catch (err: any) {
+    if (isHostException(err)) throw err;
+    log.info(`第 ${i} 次运行失败，错误信息：${err.message}`);
+  }
+}
+```
+
 ### 杂项
 
 ```ts
