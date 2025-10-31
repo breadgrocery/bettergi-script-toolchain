@@ -102,6 +102,7 @@ namespace settings {
   }
 
   interface ComboBox extends Control<string> {
+    /** 下拉框 */
     type: "select";
     options: string[];
   }

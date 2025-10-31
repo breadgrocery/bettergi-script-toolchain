@@ -99,7 +99,7 @@ import { terminate } from "./util/process.js";
     target: "es2022",
     bundle: true,
     minify,
-    legalComments: "inline",
+    legalComments: minify ? "none" : "inline",
     charset: "utf8",
     plugins: [
       {
