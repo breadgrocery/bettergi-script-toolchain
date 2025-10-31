@@ -39,12 +39,14 @@ const directionToBounds = (direction: MatchDirection) => {
 /**
  * 在整个画面内搜索图片
  * @param path 图片路径
+ * @param similarity 相似度阈值（默认: 0.8）
  * @returns 如果找到匹配的图片区域，则返回该区域
  */
-export const findImage = (path: string) => {
+export const findImage = (path: string, similarity: number = 0.8) => {
   const ir = captureGameRegion();
   try {
     const ro = RecognitionObject.templateMatch(file.readImageMatSync(path));
+    ro.threshold = similarity;
     return findFirst(ir, ro, region => region.isExist());
   } catch (err: any) {
     log.warn(`${err.message || err}`);
@@ -60,12 +62,21 @@ export const findImage = (path: string) => {
  * @param y 垂直方向偏移量（像素）
  * @param w 宽度
  * @param h 高度
+ * @param similarity 相似度阈值（默认: 0.8）
  * @returns 如果找到匹配的图片区域，则返回该区域
  */
-export const findImageWithinBounds = (path: string, x: number, y: number, w: number, h: number) => {
+export const findImageWithinBounds = (
+  path: string,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  similarity: number = 0.8
+) => {
   const ir = captureGameRegion();
   try {
     const ro = RecognitionObject.templateMatch(file.readImageMatSync(path), x, y, w, h);
+    ro.threshold = similarity;
     return findFirst(ir, ro, region => region.isExist());
   } catch (err: any) {
     log.warn(`${err.message || err}`);
@@ -80,9 +91,13 @@ export const findImageWithinBounds = (path: string, x: number, y: number, w: num
  * @param direction 搜索方向
  * @returns 如果找到匹配的图片区域，则返回该区域
  */
-export const findImageInDirection = (path: string, direction: MatchDirection) => {
+export const findImageInDirection = (
+  path: string,
+  direction: MatchDirection,
+  similarity: number = 0.8
+) => {
   const { x, y, w, h } = directionToBounds(direction);
-  return findImageWithinBounds(path, x, y, w, h);
+  return findImageWithinBounds(path, x, y, w, h, similarity);
 };
 
 /** 文本搜索选项 */
