@@ -1,11 +1,11 @@
 import { mouseScrollDownLines } from "./mouse";
 import { RetryOptions, waitForAction } from "./workflow";
 
-const findFirst = (
-  ir: ImageRegion,
-  ro: typeof RecognitionObject.ocrThis,
-  predicate: (candidate: Region) => boolean
-) => {
+export type ROInstance = InstanceType<typeof RecognitionObject>;
+
+export type ROConfig = Partial<{ [K in keyof ROInstance]: ROInstance[K] }>;
+
+const findFirst = (ir: ImageRegion, ro: ROInstance, predicate: (candidate: Region) => boolean) => {
   const candidates = ir.findMulti(ro);
   for (let i = 0; i < candidates.count; i++) {
     if (predicate(candidates[i])) return candidates[i];
@@ -13,7 +13,7 @@ const findFirst = (
   return undefined;
 };
 
-type MatchDirection =
+export type MatchDirection =
   | "north" /** 上半边 */
   | "north-east" /** 右上四分之一 */
   | "east" /** 右半边 */
@@ -39,14 +39,14 @@ const directionToBounds = (direction: MatchDirection) => {
 /**
  * 在整个画面内搜索图片
  * @param path 图片路径
- * @param similarity 相似度阈值（默认: 0.8）
+ * @param config 识别对象配置
  * @returns 如果找到匹配的图片区域，则返回该区域
  */
-export const findImage = (path: string, similarity: number = 0.8) => {
+export const findImage = (path: string, config: ROConfig = {}) => {
   const ir = captureGameRegion();
   try {
     const ro = RecognitionObject.templateMatch(file.readImageMatSync(path));
-    ro.threshold = similarity;
+    Object.assign(ro, config);
     return findFirst(ir, ro, region => region.isExist());
   } catch (err: any) {
     log.warn(`${err.message || err}`);
@@ -62,7 +62,7 @@ export const findImage = (path: string, similarity: number = 0.8) => {
  * @param y 垂直方向偏移量（像素）
  * @param w 宽度
  * @param h 高度
- * @param similarity 相似度阈值（默认: 0.8）
+ * @param config 识别对象配置
  * @returns 如果找到匹配的图片区域，则返回该区域
  */
 export const findImageWithinBounds = (
@@ -71,12 +71,12 @@ export const findImageWithinBounds = (
   y: number,
   w: number,
   h: number,
-  similarity: number = 0.8
+  config: ROConfig = {}
 ) => {
   const ir = captureGameRegion();
   try {
     const ro = RecognitionObject.templateMatch(file.readImageMatSync(path), x, y, w, h);
-    ro.threshold = similarity;
+    Object.assign(ro, config);
     return findFirst(ir, ro, region => region.isExist());
   } catch (err: any) {
     log.warn(`${err.message || err}`);
@@ -89,19 +89,20 @@ export const findImageWithinBounds = (
  * 在指定方向上搜索图片
  * @param path 图片路径
  * @param direction 搜索方向
+ * @param config 识别对象配置
  * @returns 如果找到匹配的图片区域，则返回该区域
  */
 export const findImageInDirection = (
   path: string,
   direction: MatchDirection,
-  similarity: number = 0.8
+  config: ROConfig = {}
 ) => {
   const { x, y, w, h } = directionToBounds(direction);
-  return findImageWithinBounds(path, x, y, w, h, similarity);
+  return findImageWithinBounds(path, x, y, w, h, config);
 };
 
 /** 文本搜索选项 */
-type TextMatchOptions = {
+export type TextMatchOptions = {
   /** 是否忽略大小写（默认: 是） */
   ignoreCase?: boolean;
   /** 是否非完全匹配（默认: 否） */
@@ -112,14 +113,16 @@ type TextMatchOptions = {
  * 在整个画面内搜索文本
  * @param text 待搜索文本
  * @param options 搜索选项
+ * @param config 识别对象配置
  * @returns 如果找到匹配的文本区域，则返回该区域
  */
-export const findText = (text: string, options?: TextMatchOptions) => {
+export const findText = (text: string, options?: TextMatchOptions, config: ROConfig = {}) => {
   const { ignoreCase = true, contains = false } = options || {};
   const searchText = ignoreCase ? text.toLowerCase() : text;
   const ir = captureGameRegion();
   try {
     const ro = RecognitionObject.ocrThis;
+    Object.assign(ro, config);
     return findFirst(ir, ro, region => {
       const itemText = ignoreCase ? region.text.toLowerCase() : region.text;
       const isMatch = contains ? itemText.includes(searchText) : itemText === searchText;
@@ -140,6 +143,7 @@ export const findText = (text: string, options?: TextMatchOptions) => {
  * @param w 宽度
  * @param h 高度
  * @param options 搜索选项
+ * @param config 识别对象配置
  * @returns 如果找到匹配的文本区域，则返回该区域
  */
 export const findTextWithinBounds = (
@@ -148,13 +152,15 @@ export const findTextWithinBounds = (
   y: number,
   w: number,
   h: number,
-  options?: TextMatchOptions
+  options?: TextMatchOptions,
+  config: ROConfig = {}
 ) => {
   const { ignoreCase = true, contains = false } = options || {};
   const searchText = ignoreCase ? text.toLowerCase() : text;
   const ir = captureGameRegion();
   try {
     const ro = RecognitionObject.ocr(x, y, w, h);
+    Object.assign(ro, config);
     return findFirst(ir, ro, region => {
       const itemText = ignoreCase ? region.text.toLowerCase() : region.text;
       const isMatch = contains ? itemText.includes(searchText) : itemText === searchText;
@@ -172,15 +178,17 @@ export const findTextWithinBounds = (
  * @param text 待搜索文本
  * @param direction 搜索方向
  * @param options 搜索选项
+ * @param config 识别对象配置
  * @returns 如果找到匹配的文本区域，则返回该区域
  */
 export const findTextInDirection = (
   text: string,
   direction: MatchDirection,
-  options?: TextMatchOptions
+  options?: TextMatchOptions,
+  config: ROConfig = {}
 ) => {
   const { x, y, w, h } = directionToBounds(direction);
-  return findTextWithinBounds(text, x, y, w, h, options);
+  return findTextWithinBounds(text, x, y, w, h, options, config);
 };
 
 /** 列表视图参数 */
@@ -204,18 +212,20 @@ export type ListView = {
  * @param text 待搜索文本
  * @param listView 列表视图参数
  * @param matchOptions 搜索选项
- * @param timeout 搜索超时
+ * @param retryOptions 重试选项
+ * @param config 识别对象配置
  * @returns 如果找到匹配的文本区域，则返回该区域，否则返回 undefined
  */
 export const findTextWithinListView = async (
   text: string,
   listView: ListView,
   matchOptions?: TextMatchOptions,
-  retryOptions?: RetryOptions
+  retryOptions?: RetryOptions,
+  config: ROConfig = {}
 ) => {
   const { x, y, w, h, lineHeight, scrollLines = 1, paddingX = 10, paddingY = 10 } = listView;
   const { maxAttempts = 30, retryInterval = 1000 } = retryOptions || {};
-  const findTargetText = () => findTextWithinBounds(text, x, y, w, h, matchOptions);
+  const findTargetText = () => findTextWithinBounds(text, x, y, w, h, matchOptions, config);
 
   let lastTextRegion: Region | undefined;
   const isReachedBottom = () => {

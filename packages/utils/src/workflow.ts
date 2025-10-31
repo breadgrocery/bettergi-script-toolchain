@@ -1,5 +1,6 @@
 export type Action = () => Promise<void> | void;
 
+/** 重试选项 */
 export type RetryOptions = {
   /** 重试次数（默认: 5） */
   maxAttempts?: number;

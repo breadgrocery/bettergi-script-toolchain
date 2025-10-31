@@ -47,13 +47,13 @@ await navigateToTab(() => {
 > 对 RecognitionObject 代码的封装，对于简单的找图、找字操作，不再需要编写复杂的代码。
 
 ```ts
-// 在整个画面内搜索图片，相似度0.8（默认），找不到返回 undefined
-const i1 = findImage("assets/关闭.png");
+// 在整个画面内搜索图片，找不到返回 undefined
+const i1 = findImage("assets/关闭.png", { use3Channels: true }); // 匹配颜色
 
-// 在指定方向上搜索图片，相似度0.9，找不到返回 undefined
-const i2 = findImageInDirection("assets/关闭.png", "north-east", 0.9);
+// 在指定方向上搜索图片，找不到返回 undefined
+const i2 = findImageInDirection("assets/关闭.png", "north-east");
 
-// 在指定区域内搜索图片，相似度0.8（默认），找不到返回 undefined
+// 在指定区域内搜索图片，找不到返回 undefined
 const i3 = findImageWithinBounds("assets/关闭.png", 960, 0, 960, 1080);
 
 // 在整个画面内搜索文本（不包含、忽略大小写），找不到返回 undefined

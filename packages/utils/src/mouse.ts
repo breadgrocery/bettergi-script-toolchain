@@ -1,4 +1,4 @@
-type MouseWaypointsOptions = {
+export type MouseWaypointsOptions = {
   /** 是否按住鼠标左键拖动 */
   shouldDrag?: boolean;
   /** 超时时间（毫秒，默认: 不超时） */
@@ -54,7 +54,7 @@ export const mouseDrag = async (x1: number, y1: number, x2: number, y2: number) 
   );
 };
 
-type NaturalMouseMoveOptions = {
+export type NaturalMouseMoveOptions = {
   /** 移动持续时间（毫秒，默认: 800） */
   duration: number;
   /** 摆动幅度（默认: 30） */

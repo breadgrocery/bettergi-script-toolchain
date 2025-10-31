@@ -133,7 +133,7 @@ export const openMenuPage = async (
   );
 };
 
-type ClockOptions = {
+export type ClockOptions = {
   /** 时钟中心X坐标 */
   centerX?: number;
   /** 时钟中心Y坐标 */
@@ -218,7 +218,7 @@ export const setTime = async (
 };
 
 /** tab 翻页配置 */
-type TabNavigationOptions = {
+export type TabNavigationOptions = {
   /** 标签页图标宽度（默认：96） */
   tabIconWidth?: number;
   /** 翻页按钮垂直偏移（默认：540） */
