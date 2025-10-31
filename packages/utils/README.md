@@ -16,7 +16,7 @@ pnpm install @bettergi/utils
 
 ## 函数清单
 
-### 游戏内操作
+### 游戏操作
 
 > 常见游戏内操作封装，省去手动实现的繁琐。
 
@@ -36,7 +36,7 @@ await setTimeTo(12, 35);
 // 调整游戏时间段
 await setTime("evening");
 
-// tab 翻页到指定页面
+// tab 翻页到指定页面（假设当前已打开背包）
 await navigateToTab(() => {
   return findTextWithinBounds("小道具", 0, 0, 220, 96) !== undefined;
 });
@@ -47,6 +47,7 @@ await navigateToTab(() => {
 > 对 RecognitionObject 代码的封装，对于简单的找图、找字操作，不再需要编写复杂的代码。
 
 ```ts
+// 在整个画面内搜索图片，找不到返回 undefined
 const i1 = findImage("assets/关闭.png");
 
 // 在指定方向上搜索图片，找不到返回 undefined
@@ -70,7 +71,7 @@ const t3 = findTextWithinBounds("确认", 960, 540, 960, 540);
 > 对脚本开发过程中常见工作流的抽象，例如: 等待/断言 操作/元素/区域 完成/出现/消失。
 
 ```ts
-// 等待直到找不到[关闭按钮] 或 5秒后超时，每隔1秒检查一次，期间按 Esc 键
+// 等待直到找不到 [关闭按钮] ，重试5次，每隔1秒重试一次，期间按 Esc 键
 const done = await waitForAction(
   () => findImageInDirection("assets/关闭.png", "north-east") === undefined,
   () => keyPress("ESCAPE"),
@@ -78,15 +79,15 @@ const done = await waitForAction(
 );
 if (!done) throw new Error("关闭页面超时");
 
-// 断言 "世界等级" 区域即将出现 或 5秒后超时抛出异常，每隔1秒检查一次，期间按 Esc 键
+// 断言 "生日" 文字区域即将出现，重试5次，每隔1秒重试一次，期间按 Esc 键
 await assertRegionAppearing(
-  () => findTextInDirection("世界等级", "north-west"),
+  () => findTextInDirection("生日", "north-west"),
   "打开派蒙菜单超时",
   () => keyPress("ESCAPE"),
   { maxAttempts: 5, retryInterval: 1000 }
 );
 
-// 断言 "购买" 区域不存在 或 5秒后超时抛出异常，每隔1秒检查一次，期间如果存在 "购买" 按钮则点击
+// 断言 "购买" 区域不存在，否则抛出异常，重试5次，每隔1秒重试一次，期间如果存在 "购买" 按钮则点击
 const findButton = () => findTextWithinBounds("购买", 500, 740, 900, 110);
 await assertRegionDisappearing(findButton, "点击购买按钮超时", () => findButton()?.click(), {
   maxAttempts: 5,
@@ -96,7 +97,7 @@ await assertRegionDisappearing(findButton, "点击购买按钮超时", () => fin
 
 ### 鼠标操作
 
-> 对常见鼠标操作的封装，如鼠标滚动、拖拽等。
+> 对常见鼠标操作的封装，如鼠标的平滑移动、鼠标滚轮滚动、鼠标拖拽等。
 
 ```ts
 // 鼠标从 (745, 610) 平滑自然地移动 (1920, 1080)
@@ -123,10 +124,11 @@ await mouseScrollDownLines(1, 115);
 > 对象数据持久化，通过 Proxy 实现自动存储。从而可以无感知地读取/更新数据，而无需考虑如何持久化。
 
 ```ts
-import { useStore } from "@bettergi/utils";
+// 创建/读取存储对象，保存到存储文件 store/my-data.json 中
+const state = useStore<{ lastUsedTime?: number; count: number }>("my-data");
+// 默认值版本
+// const state = useStoreWithDefaults("my-data", { lastUsedTime: 0, count: 0 });
 
-// 创建/读取存储对象，保存到存储文件 store/state.json 中
-const state = useStore<{ lastUsedTime?: number; count: number }>("state");
 if (state?.lastUsedTime) {
   log.info(`欢迎回来！上次使用时间: ${state.lastUsedTime}，计数器已累计至: ${state.count}`);
 }
@@ -143,15 +145,16 @@ try {
 ### 网络请求
 
 > 对网络请求的简易封装。
+>
+> 提示：需要在 `manifest.json` 文件中配置 `http_allowed_urls`，并在 `调度器` -> `修改通用配置` 中启用。
 
 ```ts
-import { getForBody, postForBody } from "@bettergi/utils";
-
 // 发送 GET 请求获取响应体内容
-// 提示: 需要在 `manifest.json` 文件中配置 `http_allowed_urls`，并在 调度器 -> 修改通用配置 中启用
 const body1 = await getForBody("https://example.com/", undefined, { "User-Agent": "BetterGI" });
-const body2 = await postForBody("https://example.com/", undefined, { "User-Agent": "BetterGI" });
 log.info(`GET 请求响应体内容${body1}`);
+
+// 发送 POST 请求获取响应体内容
+const body2 = await postForBody("https://example.com/", undefined, { "User-Agent": "BetterGI" });
 log.info(`POST 请求响应体内容${body2}`);
 ```
 
@@ -170,6 +173,7 @@ const lines = readLinesSync("assets/data.txt", { notBlank: true, trim: true, dis
 ```ts
 // 获取下一个（含当日）凌晨4点的时间
 const d1 = getNextDay4AM();
+
 // 获取下一个（含当日）周一凌晨4点的时间
 const d2 = getNextMonday4AM();
 ```
@@ -177,6 +181,12 @@ const d2 = getNextMonday4AM();
 ### 异常
 
 ```ts
+// 获取异常信息字符串
+const message = getErrorMessage(err);
+
+// 判断是否为任务取消异常
+const isTaskCanceled = isTaskCanceledException(err);
+
 // 重复执行某个可能失败的异步操作，但是发生主机异常（如任务取消）时停止
 for (let i = 0; i < 1000; i++) {
   try {
