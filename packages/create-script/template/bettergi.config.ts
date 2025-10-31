@@ -16,7 +16,7 @@ export default defineConfig({
   // 清单信息
   manifest: {
     name: "{{description}}",
-    bgi_version: "0.48.0", // 该脚本适用的 BetterGI 最低版本
+    bgi_version: "0.53.0", // 该脚本适用的 BetterGI 最低版本
     saved_files: ["store/*.json"] // 脚本升级时需保留还原的文件/文件夹
   },
   // UI配置
