@@ -48,9 +48,9 @@
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^24.8.1",
+    "@types/node": "^24.9.2",
     "@types/winreg": "^1.2.36",
-    "rimraf": "^6.0.1",
+    "rimraf": "^6.1.0",
     "typescript": "^5.9.3"
   }
 }

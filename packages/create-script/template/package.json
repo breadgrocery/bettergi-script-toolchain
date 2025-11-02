@@ -12,10 +12,10 @@
     "build": "bettergi-cli"
   },
   "dependencies": {
-    "@bettergi/utils": "^0.1.9"
+    "@bettergi/utils": "^0.1.12"
   },
   "devDependencies": {
-    "@bettergi/cli": "^0.1.2",
+    "@bettergi/cli": "^0.1.4",
     "@bettergi/types": "^0.1.3",
     "@eslint/js": "^9.38.0",
     "eslint": "^9.38.0",

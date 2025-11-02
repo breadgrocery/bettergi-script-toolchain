@@ -12,7 +12,7 @@ import {
   versionInput
 } from "./prompts.js";
 import { type UserInput, createTemplate } from "./template.js";
-import { getPkgManager } from "./utils/pkg.js";
+import { getPkgManager } from "./utils.js";
 
 // Environment
 const cwd = process.cwd();
@@ -24,11 +24,11 @@ const cancel = () => prompts.cancel("操作已取消");
 (async () => {
   intro();
 
-  // Get project name
+  // 获取项目名称
   const projectName = await projectNameInput();
   if (prompts.isCancel(projectName)) return cancel();
 
-  // Handle directory if exist and not empty
+  // 处理已存在且非空的目录
   const targetDir = projectName.trim().replace(/\/+$/g, "");
   if (fs.existsSync(targetDir) && fs.readdirSync(targetDir).length > 0) {
     const overwrite = await overwriteSelect(targetDir);
@@ -44,15 +44,15 @@ const cancel = () => prompts.cancel("操作已取消");
     }
   }
 
-  // Get script version
+  // 获取脚本版本
   const version = await versionInput();
   if (prompts.isCancel(version)) return cancel();
 
-  // Get script description
+  // 获取脚本描述
   const description = await descriptionInput();
   if (prompts.isCancel(description)) return cancel();
 
-  // Get script author and link
+  // 获取脚本作者和链接
   const author = await authorInput();
   if (prompts.isCancel(author)) return cancel();
 
@@ -68,11 +68,11 @@ const cancel = () => prompts.cancel("操作已取消");
     authorLink: authorLink?.toString()
   };
 
-  // Create template
+  // 创建模板
   const targetRoot = path.join(cwd, targetDir);
   createTemplate(targetRoot, input);
 
-  // Print done message according to package manager
+  // 根据包管理器打印完成信息
   let doneMessage = "";
   if (targetRoot !== cwd) {
     const cdProjectName = path.relative(cwd, targetRoot);

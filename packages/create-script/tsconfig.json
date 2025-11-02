@@ -6,7 +6,7 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
-    "declaration": true,
+    "declaration": false,
     "skipLibCheck": true,
     "strict": true,
     "alwaysStrict": false,

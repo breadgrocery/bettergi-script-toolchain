@@ -3,6 +3,7 @@ export interface PkgInfo {
   version: string;
 }
 
+/** 获取包管理器信息 */
 export const getPkgFromUserAgent = (userAgent: string | undefined): PkgInfo | undefined => {
   if (!userAgent) return undefined;
   const pkgSpec = userAgent.split(" ")[0];
@@ -13,11 +14,13 @@ export const getPkgFromUserAgent = (userAgent: string | undefined): PkgInfo | un
   };
 };
 
+/** 获取包管理器名称 */
 export const getPkgManager = () => {
   const pkgInfo = getPkgFromUserAgent(process.env.npm_config_user_agent);
   return pkgInfo ? pkgInfo.name : "npm";
 };
 
+/** 将字符串转换为 kebab-case 格式 */
 export const kebabize = (str: string) => {
   return str
     .split("")

@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import path from "node:path";
 import url from "node:url";
-import { kebabize } from "./utils/pkg.js";
+import { kebabize } from "./utils.js";
 
 export interface UserInput {
   name: string;
@@ -12,11 +12,11 @@ export interface UserInput {
 }
 
 export const createTemplate = (targetRoot: string, input: UserInput) => {
-  // Copy template files to target directory
+  // 复制模板文件到目标目录
   const templateDir = path.resolve(url.fileURLToPath(import.meta.url), "../..", "template");
   fs.copySync(templateDir, targetRoot);
 
-  // Replace template variables in package.json
+  // 替换 package.json 文件中的模板变量
   const pkg = fs.readJsonSync(path.join(templateDir, "package.json"), "utf-8");
   pkg.name = kebabize(input.name);
   pkg.version = input.version;
@@ -31,7 +31,7 @@ export const createTemplate = (targetRoot: string, input: UserInput) => {
   }
   fs.writeJsonSync(path.join(targetRoot, "package.json"), pkg, { spaces: 2 });
 
-  // Replace template variables in README.md
+  // 替换 README.md 文件中的模板变量
   const readme = fs.readFileSync(path.join(templateDir, "README.md"), "utf-8");
   const updatedReadme = readme
     .replace(/\{\{name\}\}/g, input.name)
@@ -41,7 +41,7 @@ export const createTemplate = (targetRoot: string, input: UserInput) => {
     .replace(/\{\{authorLink\}\}/g, input.authorLink || "");
   fs.writeFileSync(path.join(targetRoot, "README.md"), updatedReadme);
 
-  // Replace template variables in bettergi.config.ts
+  // 替换 bettergi.config.ts 文件中的模板变量
   const configPath = path.join(targetRoot, "bettergi.config.ts");
   const configContent = fs.readFileSync(configPath, "utf-8");
   const updatedConfigContent = configContent

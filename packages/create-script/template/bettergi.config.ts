@@ -6,8 +6,9 @@ export default defineConfig({
   main: "main.ts",
   assetsDir: "assets",
   outDir: "dist",
-  additionalFiles: ["README.md"], // 需要额外打包的文件
+  additionalFiles: ["README.md", "LICENSE"], // 需要额外打包的文件
   minify: false,
+  banner: true,
   // 调试配置
   bettergi: {
     enable: true,
