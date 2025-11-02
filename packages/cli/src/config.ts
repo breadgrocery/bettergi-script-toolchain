@@ -85,7 +85,7 @@ namespace manifest {
 }
 
 namespace settings {
-  interface Control<T> {
+  export interface Control<T> {
     /** 变量名 */
     name: string;
 
@@ -96,18 +96,18 @@ namespace settings {
     default?: T;
   }
 
-  interface TextBox extends Control<string> {
+  export interface TextBox extends Control<string> {
     /** 输入框 */
     type: "input-text";
   }
 
-  interface ComboBox extends Control<string> {
+  export interface ComboBox extends Control<string> {
     /** 下拉框 */
     type: "select";
     options: string[];
   }
 
-  interface CheckBox extends Control<boolean> {
+  export interface CheckBox extends Control<boolean> {
     /** 勾选框 */
     type: "checkbox";
   }
@@ -136,7 +136,7 @@ export interface ScriptConfig {
 
   /**
    * 额外打包文件（支持通配符）
-   * @default `README.md`
+   * @default `README.md` 和 `LICENSE`
    */
   additionalFiles?:
     | string
@@ -158,6 +158,12 @@ export interface ScriptConfig {
    */
   minify?: boolean;
 
+  /**
+   * 文件头部注释
+   * @default true
+   */
+  banner?: boolean | string;
+
   /** BetterGI 调试配置 */
   bettergi?: bettergi.BetterGI;
 
@@ -174,7 +180,7 @@ export const defineConfig = (config: ScriptConfig): ScriptConfig => {
 
 export type Settings = settings.SettingItem[];
 
-type Widen<T> = T extends string
+export type BaseType<T> = T extends string
   ? string
   : T extends number
     ? number
@@ -187,6 +193,6 @@ type Widen<T> = T extends string
 /**
  * 提取设置参数名称
  */
-export type ExtractSettingsMap<T extends readonly { name: string; default?: any }[]> = {
-  [K in T[number] as K["name"]]?: Widen<K["default"]>;
-};
+export type ExtractSettingsMap<T extends readonly settings.Control<any>[]> = Partial<{
+  [K in T[number] as K["name"]]: BaseType<K["default"]>;
+}>;
