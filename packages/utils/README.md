@@ -50,20 +50,26 @@ await navigateToTab(() => {
 // 在整个画面内搜索图片，找不到返回 undefined
 const i1 = findImage("assets/关闭.png", { use3Channels: true }); // 匹配颜色
 
-// 在指定方向上搜索图片，找不到返回 undefined
-const i2 = findImageInDirection("assets/关闭.png", "north-east");
-
 // 在指定区域内搜索图片，找不到返回 undefined
-const i3 = findImageWithinBounds("assets/关闭.png", 960, 0, 960, 1080);
+const i2 = findImageWithinBounds("assets/关闭.png", 960, 0, 960, 1080);
+
+// 在指定坐标范围内搜索图片，找不到返回 undefined
+const i3 = findImageBetweenCoordinates("assets/关闭.png", 960, 0, 1920, 1080);
+
+// 在指定方向上搜索图片，找不到返回 undefined
+const i4 = findImageInDirection("assets/关闭.png", "north-east");
 
 // 在整个画面内搜索文本（不包含、忽略大小写），找不到返回 undefined
 const t1 = findText("购买");
 
-// 在指定方向上搜索文本（包含、忽略大小写），找不到返回 undefined
-const t2 = findTextInDirection("师傅", "east", { contains: true, ignoreCase: true });
-
 // 在指定区域内搜索文本（不包含、忽略大小写），找不到返回 undefined
-const t3 = findTextWithinBounds("确认", 960, 540, 960, 540);
+const t2 = findTextWithinBounds("确认", 960, 540, 960, 540);
+
+// 在指定坐标范围内搜索文本（不包含、忽略大小写），找不到返回 undefined
+const t3 = findTextBetweenCoordinates("确认", 960, 540, 1920, 1080);
+
+// 在指定方向上搜索文本（包含、忽略大小写），找不到返回 undefined
+const t4 = findTextInDirection("师傅", "east", { contains: true, ignoreCase: true });
 ```
 
 ### 行为流程
@@ -119,7 +125,7 @@ await mouseScrollUpLines(99);
 await mouseScrollDownLines(1, 115);
 ```
 
-### 数据存储
+### 状态管理和持久化
 
 > 对象数据持久化，通过 Proxy 实现自动存储。从而可以无感知地读取/更新数据，而无需考虑如何持久化。
 

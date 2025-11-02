@@ -1,9 +1,13 @@
 import { mouseScrollDownLines } from "./mouse";
 import { RetryOptions, waitForAction } from "./workflow";
 
+/** 识别对象实例 */
 export type ROInstance = InstanceType<typeof RecognitionObject>;
 
-export type ROConfig = Partial<{ [K in keyof ROInstance]: ROInstance[K] }>;
+/** 识别对象配置 */
+export type ROConfig = Partial<{
+  [K in keyof ROInstance as ROInstance[K] extends Function ? never : K]: ROInstance[K];
+}>;
 
 const findFirst = (ir: ImageRegion, ro: ROInstance, predicate: (candidate: Region) => boolean) => {
   const candidates = ir.findMulti(ro);
@@ -83,6 +87,27 @@ export const findImageWithinBounds = (
   } finally {
     ir.dispose();
   }
+};
+
+/**
+ * 在指定坐标范围内搜索图片
+ * @param path 图片路径
+ * @param left 左边界偏移量（像素）
+ * @param top 上边界偏移量（像素）
+ * @param right 右边界偏移量（像素）
+ * @param bottom 下边界偏移量（像素）
+ * @param config 识别对象配置
+ * @returns 如果找到匹配的图片区域，则返回该区域
+ */
+export const findImageBetweenCoordinates = (
+  path: string,
+  left: number,
+  top: number,
+  right: number,
+  bottom: number,
+  config: ROConfig = {}
+) => {
+  return findImageWithinBounds(path, left, top, right - left, bottom - top, config);
 };
 
 /**
@@ -174,6 +199,29 @@ export const findTextWithinBounds = (
 };
 
 /**
+ * 在指定坐标范围内搜索文本
+ * @param text 待搜索文本
+ * @param left 左边界偏移量（像素）
+ * @param top 上边界偏移量（像素）
+ * @param right 右边界偏移量（像素）
+ * @param bottom 下边界偏移量（像素）
+ * @param options 搜索选项
+ * @param config 识别对象配置
+ * @returns 如果找到匹配的文本区域，则返回该区域
+ */
+export const findTextBetweenCoordinates = (
+  text: string,
+  left: number,
+  top: number,
+  right: number,
+  bottom: number,
+  options?: TextMatchOptions,
+  config: ROConfig = {}
+) => {
+  return findTextWithinBounds(text, left, top, right - left, bottom - top, options, config);
+};
+
+/**
  * 在指定方向上搜索文本
  * @param text 待搜索文本
  * @param direction 搜索方向
@@ -251,6 +299,7 @@ export const findTextWithinListView = async (
     () => findTargetText() != undefined || isReachedBottom(),
     async () => {
       moveMouseTo(x + w - paddingX, y + paddingY); // 移动到滚动条附近
+      await sleep(50);
       await mouseScrollDownLines(scrollLines, lineHeight); // 滚动指定行数
     },
     { maxAttempts, retryInterval }

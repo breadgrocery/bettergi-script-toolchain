@@ -1,6 +1,8 @@
 export type MouseWaypointsOptions = {
   /** 是否按住鼠标左键拖动 */
   shouldDrag?: boolean;
+  /** 移动延时（毫秒） */
+  delay?: number;
   /** 超时时间（毫秒，默认: 不超时） */
   timeout?: number;
 };
@@ -14,7 +16,7 @@ export const mouseMoveAlongWaypoints = async (
   waypoints: { x: number; y: number; delay?: number }[],
   options?: MouseWaypointsOptions
 ) => {
-  const { shouldDrag = false, timeout = 0 } = options || {};
+  const { shouldDrag = false, delay = 50, timeout = 0 } = options || {};
   try {
     const startTime = Date.now();
     for (let i = 0; i < waypoints.length; i++) {
@@ -24,8 +26,8 @@ export const mouseMoveAlongWaypoints = async (
       moveMouseTo(Math.trunc(waypoints[i].x), Math.trunc(waypoints[i].y));
 
       // 等待指定延迟
-      const delay = Math.trunc(waypoints[i].delay || 50);
-      if (delay > 0) await sleep(delay);
+      const duration = Math.trunc(waypoints[i].delay || delay);
+      if (duration > 0) await sleep(duration);
 
       // 超时检查
       if (timeout > 0 && Date.now() - startTime > timeout) return false;
