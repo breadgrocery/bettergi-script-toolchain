@@ -154,21 +154,19 @@ const total = 100;
 const tracker = new ProgressTracker(total, { interval: 3000 });
 for (let i = 0; i < total; i++) {
   await sleep(Math.round(Math.random() * 200));
-  // 递进并尝试打印进度和消息
-  tracker.tick({ message: "等待任务完成..." });
-
-  // 也可以主动追踪，使用传递的进度信息自主控制打印时机和内容
-  // tracker.track((progress, shouldPrint, printed) => {
-  //   if (!shouldPrint()) return;
-  //   log.info(
-  //     "[进度: {pct} 预计剩余时间: {eta}]: 等待任务完成...",
-  //     progress.formatted.percentage,
-  //     progress.formatted.remaining
-  //   );
-  //   printed();
-  // });
+  // 仅递进+1
+  tracker.tick();
+  // 递进+3，并尝试打印当前进度和消息
+  tracker.tick({ message: "等待任务完成...", increment: 3 });
+  // 不递进，尝试打印当前进度和消息
+  tracker.print("等待任务完成...");
+  // 不递进，强制打印当前进度和警告消息
+  tracker.print("等待任务完成...", true, log.warn);
+  // 自定义模板
+  const progress = tracker.getProgress();
+  log.info("[{current}/{total}]: {msg}", progress.current, progress.total, "消息");
 }
-tracker.complete(`执行完成`);
+tracker.complete(`任务完成`);
 ```
 
 ### 网络请求

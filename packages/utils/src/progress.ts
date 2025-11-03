@@ -23,42 +23,48 @@ export type Progress = {
   };
 };
 
-/** 进度日志记录器 */
-export type ProgressLogger = (message: string, progress: Progress) => void;
+/** 进度消息格式化器 */
+export type ProgressFormatter = (
+  logger: typeof log.info,
+  message: string,
+  progress: Progress
+) => void;
 
 export type ProgressTrackerConfig = {
-  /** 日志记录器 */
-  logger?: ProgressLogger;
-  /** 节流间隔（毫秒），默认3000 */
+  /** 消息格式化器 */
+  formatter?: ProgressFormatter;
+  /** 打印间隔（毫秒），默认3000 */
   interval?: number;
 };
 
 /** 进度递进选项 */
 export type ProgressTickOptions = {
-  /** 递进后打印消息 */
-  message?: string;
   /** 递进的幅度 */
   increment?: number;
+  /** 递进后打印消息 */
+  message?: string;
+  /** 强制打印 */
+  force?: boolean;
 };
 
 /** 进度追踪器 */
 export class ProgressTracker {
-  private total = 0;
-  private current = 0;
-  private startTime = Date.now();
-  private readonly logger: ProgressLogger;
+  public total = 0;
+  public current = 0;
+  public startTime = Date.now();
+  private readonly formatter: ProgressFormatter;
   private readonly interval: number;
   private lastPrintTime = 0;
 
   constructor(total: number, config?: ProgressTrackerConfig) {
-    const { logger, interval: throttleInterval = 3000 } = config || {};
+    const { formatter, interval = 3000 } = config || {};
     this.total = total;
-    this.logger = logger || this.defaultLogger;
-    this.interval = throttleInterval;
+    this.formatter = formatter || this.defaultFormatter;
+    this.interval = interval;
   }
 
-  private readonly defaultLogger: ProgressLogger = (message, progress) => {
-    log.info(
+  private readonly defaultFormatter: ProgressFormatter = (logger, message, progress) => {
+    logger(
       "[🚧 {pct} ⏳ {eta}]: {msg}",
       progress.formatted.percentage.padStart(6),
       progress.current > 0 && progress.elapsed > 0 ? progress.formatted.remaining : "--:--:--",
@@ -66,40 +72,32 @@ export class ProgressTracker {
     );
   };
 
-  tick(options?: ProgressTickOptions): void {
-    const { message, increment = 1 } = options || {};
+  public tick(options?: ProgressTickOptions) {
+    const { increment = 1, message, force = false } = options || {};
     this.current = Math.min(this.current + increment, this.total);
-    if (message) this.print(message);
+    if (message) this.print(message, force);
+    return this.current === this.total;
   }
 
-  track(
-    callback: (progress: Progress, shouldPrint: () => boolean, printed: () => void) => void
-  ): void {
-    const progress = this.getProgress();
-    const shouldPrint = this.shouldPrint.bind(this);
-    const printed = this.printed.bind(this);
-    callback(progress, shouldPrint, printed);
-  }
-
-  complete(message: string): void {
+  public complete(message: string) {
     this.current = this.total;
-    if (message) this.print(message, true);
+    this.print(message, true);
   }
 
-  reset(): void {
+  public reset() {
     this.current = 0;
     this.startTime = Date.now();
     this.lastPrintTime = 0;
   }
 
-  private print(message: string, force: boolean = false): void {
+  public print(message: string, force: boolean = false, logger = log.info) {
     if (force || this.shouldPrint()) {
-      this.logger(message, this.getProgress());
+      this.formatter(logger, message, this.getProgress());
       this.printed();
     }
   }
 
-  private shouldPrint(): boolean {
+  private shouldPrint() {
     return Date.now() - this.lastPrintTime >= this.interval;
   }
 
@@ -107,7 +105,7 @@ export class ProgressTracker {
     this.lastPrintTime = Date.now();
   }
 
-  getProgress(): Progress {
+  public getProgress(): Progress {
     const percentage = this.current / this.total;
     const elapsed = Date.now() - this.startTime;
     const average = this.current > 0 ? elapsed / this.current : 0;
