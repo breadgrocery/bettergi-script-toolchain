@@ -77,28 +77,24 @@ const t4 = findTextInDirection("师傅", "east", { contains: true, ignoreCase: t
 > 对脚本开发过程中常见工作流的抽象，例如: 等待/断言 操作/元素/区域 完成/出现/消失。
 
 ```ts
-// 等待直到找不到 [关闭按钮] ，重试5次，每隔1秒重试一次，期间按 Esc 键
+// 等待直到找不到 [关闭按钮] ，重试5次，每隔1秒重试一次（默认参数），期间按 Esc 键
 const done = await waitForAction(
   () => findImageInDirection("assets/关闭.png", "north-east") === undefined,
-  () => keyPress("ESCAPE"),
-  { maxAttempts: 5, retryInterval: 1000 }
+  () => keyPress("ESCAPE")
 );
 if (!done) throw new Error("关闭页面超时");
 
-// 断言 "生日" 文字区域即将出现，重试5次，每隔1秒重试一次，期间按 Esc 键
+// 断言 "生日" 文字区域即将出现，重试10次，每隔1秒重试一次，期间按 Esc 键
 await assertRegionAppearing(
   () => findTextInDirection("生日", "north-west"),
   "打开派蒙菜单超时",
   () => keyPress("ESCAPE"),
-  { maxAttempts: 5, retryInterval: 1000 }
+  { maxAttempts: 10, retryInterval: 1000 }
 );
 
-// 断言 "购买" 区域不存在，否则抛出异常，重试5次，每隔1秒重试一次，期间如果存在 "购买" 按钮则点击
+// 断言 "购买" 文字区域即将消失，重试5次，每隔1秒重试一次（默认参数），期间如果存在 "购买" 按钮则点击
 const findButton = () => findTextWithinBounds("购买", 500, 740, 900, 110);
-await assertRegionDisappearing(findButton, "点击购买按钮超时", () => findButton()?.click(), {
-  maxAttempts: 5,
-  retryInterval: 1000
-});
+await assertRegionDisappearing(findButton, "点击购买按钮超时", () => findButton()?.click());
 ```
 
 ### 鼠标操作
@@ -127,24 +123,24 @@ await mouseScrollDownLines(1, 115);
 
 ### 状态管理和持久化
 
-> 对象数据持久化，通过 Proxy 实现自动存储。从而可以无感知地读取/更新数据，而无需考虑如何持久化。
+> 基于深度 Proxy 实现的对象数据持久化，能够在数据被修改时自动同步至文件。使开发其能够像操作普通对象一样进行数据读写，而无需关心底层的持久化细节。
 
 ```ts
 // 创建/读取存储对象，保存到存储文件 store/my-data.json 中
-const state = useStore<{ lastUsedTime?: number; count: number }>("my-data");
+const store = useStore<{ lastUsedTime?: number; count: number }>("my-data");
 // 默认值版本
 // const state = useStoreWithDefaults("my-data", { lastUsedTime: 0, count: 0 });
 
-if (state?.lastUsedTime) {
-  log.info(`欢迎回来！上次使用时间: ${state.lastUsedTime}，计数器已累计至: ${state.count}`);
+if (store?.lastUsedTime) {
+  log.info(`欢迎回来！上次使用时间: ${store.lastUsedTime}，计数器已累计至: ${store.count}`);
 }
 try {
   // 模拟脚本运行期间状态的变化
   for (let i = 0; i < Math.floor(Math.random() * 100); i++) {
-    state.count = (state.count || 0) + 1; // 自动同步保存到文件
+    store.count = (store.count || 0) + 1; // 自动保存到文件
   }
 } finally {
-  state.lastUsedTime = Date.now(); // 自动同步保存到文件
+  store.lastUsedTime = Date.now(); // 自动保存到文件
 }
 ```
 
