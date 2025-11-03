@@ -1,6 +1,6 @@
 {
   "name": "@bettergi/utils",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "开发 BetterGI 脚本常用工具集",
   "type": "module",
   "author": "Bread Grocery<https://github.com/breadgrocery>",

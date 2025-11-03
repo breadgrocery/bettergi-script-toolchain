@@ -28,3 +28,38 @@ export const getNextMonday4AM = () => {
   result.setDate(now.getDate() + daysUntilNextMonday);
   return result;
 };
+
+/**
+ * 解析时长
+ * @param duration 时长（毫秒）
+ */
+export const parseDuration = (duration: number) => {
+  return {
+    h: Math.floor(duration / 3600000),
+    m: Math.floor((duration % 3600000) / 60000),
+    s: Math.floor((duration % 60000) / 1000),
+    ms: Math.floor(duration % 1000)
+  };
+};
+
+/**
+ * 将时长转换为时钟字符串
+ * @param duration 时长（毫秒）
+ */
+export const formatDurationAsClock = (duration: number) => {
+  return Object.values(parseDuration(duration))
+    .slice(0, 3)
+    .map(num => String(num).padStart(2, "0"))
+    .join(":");
+};
+
+/**
+ * 将时长转换为可读格式
+ * @param duration 时长（毫秒）
+ */
+export const formatDurationAsReadable = (duration: number) => {
+  return Object.entries(parseDuration(duration))
+    .filter(([, value]) => value > 0)
+    .map(([unit, value]) => `${value}${unit}`)
+    .join(" ");
+};

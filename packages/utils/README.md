@@ -144,6 +144,33 @@ try {
 }
 ```
 
+### 进度追踪
+
+> 创建进度追踪器并设置总进度，通过递进函数增加进度，开发者可以获取当前进度、当前耗时、平均耗时、预估剩余时间等数据。
+
+```ts
+const total = 100;
+// 创建进度追踪器，使用默认日志记录器（可配置），打印间隔最小3秒
+const tracker = new ProgressTracker(total, { interval: 3000 });
+for (let i = 0; i < total; i++) {
+  await sleep(Math.round(Math.random() * 200));
+  // 递进并尝试打印进度和消息
+  tracker.tick({ message: "等待任务完成..." });
+
+  // 也可以主动追踪，使用传递的进度信息自主控制打印时机和内容
+  // tracker.track((progress, shouldPrint, printed) => {
+  //   if (!shouldPrint()) return;
+  //   log.info(
+  //     "[进度: {pct} 预计剩余时间: {eta}]: 等待任务完成...",
+  //     progress.formatted.percentage,
+  //     progress.formatted.remaining
+  //   );
+  //   printed();
+  // });
+}
+tracker.complete(`执行完成`);
+```
+
 ### 网络请求
 
 > 对网络请求的简易封装。

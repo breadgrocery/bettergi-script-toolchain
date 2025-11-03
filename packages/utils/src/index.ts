@@ -22,6 +22,9 @@ export * from "./mouse";
 /** 图像识别 */
 export * from "./ocr";
 
+/** 进度追踪 */
+export * from "./progress";
+
 /** 数据存储 */
 export * from "./store";
 
