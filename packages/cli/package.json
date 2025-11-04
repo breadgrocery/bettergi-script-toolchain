@@ -22,11 +22,15 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./loaders": {
+      "types": "./loaders.d.ts"
     }
   },
   "files": [
     "bin",
-    "dist"
+    "dist",
+    "loaders.d.ts"
   ],
   "keywords": [
     "bettergi",
@@ -39,7 +43,7 @@
   "dependencies": {
     "c12": "^3.3.1",
     "chokidar": "^4.0.3",
-    "debounce": "^2.2.0",
+    "debounce": "^3.0.0",
     "esbuild": "^0.25.11",
     "find-cache-directory": "^6.0.0",
     "fs-extra": "^11.3.2",
@@ -47,6 +51,7 @@
     "winreg": "^1.2.5"
   },
   "devDependencies": {
+    "@bettergi/types": "workspace:latest",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^24.9.2",
     "@types/winreg": "^1.2.36",

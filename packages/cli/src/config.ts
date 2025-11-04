@@ -152,6 +152,18 @@ export interface ScriptConfig {
           }
       )[];
 
+  /** 加载器配置 */
+  loaders?: {
+    /** 图片加载器配置 */
+    image?: {
+      /**
+       * 图片基础目录
+       * @default `assets`
+       */
+      baseDir?: string;
+    };
+  };
+
   /**
    * 启用脚本压缩
    * @default false

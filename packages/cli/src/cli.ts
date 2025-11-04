@@ -3,6 +3,7 @@ import chokidar from "chokidar";
 import debounce from "debounce";
 import esbuild from "esbuild";
 import fs from "fs-extra";
+import crypto from "node:crypto";
 import path from "node:path";
 import glob from "tiny-glob";
 import { type ScriptConfig } from "./config.js";
@@ -32,6 +33,7 @@ import { terminate } from "./util/process.js";
         ? [config.additionalFiles]
         : ["README.md", "LICENSE"])
   ];
+  const loaders = config.loaders || {};
   const minify = config.minify ?? false;
   const banner =
     config.banner === false
@@ -114,6 +116,31 @@ import { terminate } from "./util/process.js";
     charset: "utf8",
     banner: { js: banner },
     plugins: [
+      {
+        name: "image-loader",
+        setup(build) {
+          build.onLoad({ filter: /\.(png|jpg|jpeg|bmp|tiff|webp)$/ }, async args => {
+            const baseDir = loaders.image?.baseDir || "assets";
+
+            // Create hash-based filename to avoid name conflicts
+            const hash = crypto
+              .createHash("sha256")
+              .update(path.relative(process.cwd(), args.path))
+              .digest("hex")
+              .slice(0, 12);
+            const { name, ext } = path.parse(args.path);
+            const file = `${name}-${hash}${ext}`;
+
+            // Copy image to output directory
+            const dest = path.join(outDir, baseDir, file);
+            fs.copySync(args.path, dest);
+            return {
+              contents: `export default file.readImageMatSync("${baseDir}/${file}");`,
+              loader: "js"
+            };
+          });
+        }
+      },
       {
         name: "rebuild",
         setup: build => {

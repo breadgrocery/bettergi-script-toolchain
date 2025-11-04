@@ -1,5 +1,5 @@
 {
-  "include": ["./src/**/*.ts"],
+  "include": ["./src/**/*.ts", "./loaders.d.ts"],
   "compilerOptions": {
     "outDir": "dist",
     "target": "ESNext",
@@ -11,6 +11,7 @@
     "strict": true,
     "alwaysStrict": false,
     "removeComments": false,
-    "noEmitOnError": true
+    "noEmitOnError": true,
+    "types": ["@bettergi/types"]
   }
 }
