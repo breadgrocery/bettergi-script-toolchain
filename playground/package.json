@@ -15,9 +15,9 @@
   "devDependencies": {
     "@bettergi/cli": "workspace:latest",
     "@bettergi/types": "workspace:latest",
-    "@eslint/js": "^9.38.0",
-    "eslint": "^9.38.0",
+    "@eslint/js": "^9.39.1",
+    "eslint": "^9.39.1",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.2"
+    "typescript-eslint": "^8.46.3"
   }
 }
