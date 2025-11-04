@@ -1,0 +1,19 @@
+/** 测试 */
+export { default as btn_cancel } from "../assets/buttons/btn_cancel.png";
+export { default as btn_caution } from "../assets/buttons/btn_caution.png";
+export { default as btn_claim } from "../assets/buttons/btn_claim.png";
+export { default as btn_claim_all } from "../assets/buttons/btn_claim_all.png";
+export { default as btn_confirm } from "../assets/buttons/btn_confirm.png";
+export { default as btn_delete } from "../assets/buttons/btn_delete.png";
+export { default as btn_exit } from "../assets/buttons/btn_exit.png";
+export { default as btn_info } from "../assets/buttons/btn_info.png";
+export { default as btn_location } from "../assets/buttons/btn_location.png";
+export { default as btn_power } from "../assets/buttons/btn_power.png";
+export { default as btn_reset } from "../assets/buttons/btn_reset.png";
+export { default as btn_restore } from "../assets/buttons/btn_restore.png";
+export { default as btn_resume } from "../assets/buttons/btn_resume.png";
+export { default as btn_rewards } from "../assets/buttons/btn_rewards.png";
+export { default as btn_search } from "../assets/buttons/btn_search.png";
+export { default as btn_settings } from "../assets/buttons/btn_settings.png";
+export { default as btn_setup } from "../assets/buttons/btn_setup.png";
+export { default as btn_start } from "../assets/buttons/btn_start.png";
