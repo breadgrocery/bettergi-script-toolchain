@@ -12,6 +12,6 @@
     "alwaysStrict": false,
     "removeComments": false,
     "noEmitOnError": true,
-    "types": ["@bettergi/types"]
+    "types": ["@bettergi/types", "@bettergi/cli/loaders"]
   }
 }
