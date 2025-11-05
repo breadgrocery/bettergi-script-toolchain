@@ -118,7 +118,7 @@ import { terminate } from "./util/process.js";
     plugins: [
       {
         name: "image-loader",
-        setup(build) {
+        setup: build => {
           build.onLoad({ filter: /\.(png|jpg|jpeg|bmp|tiff|webp)$/ }, async args => {
             const baseDir = loaders.image?.baseDir || "assets";
 
@@ -135,7 +135,7 @@ import { terminate } from "./util/process.js";
             const dest = path.join(outDir, baseDir, file);
             fs.copySync(args.path, dest);
             return {
-              contents: `export default file.readImageMatSync("${baseDir}/${file}");`,
+              contents: `export default /* @__PURE__ */ file.readImageMatSync("${baseDir}/${file}");`,
               loader: "js"
             };
           });
