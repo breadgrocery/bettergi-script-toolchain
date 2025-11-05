@@ -9,6 +9,8 @@ export type ROConfig = Partial<{
   [K in keyof ROInstance as ROInstance[K] extends Function ? never : K]: ROInstance[K];
 }>;
 
+export type ImageMat = ReturnType<typeof file.readImageMatSync>;
+
 const findFirst = (ir: ImageRegion, ro: ROInstance, predicate: (candidate: Region) => boolean) => {
   const candidates = ir.findMulti(ro);
   for (let i = 0; i < candidates.count; i++) {
@@ -42,14 +44,15 @@ const directionToBounds = (direction: MatchDirection) => {
 
 /**
  * 在整个画面内搜索图片
- * @param path 图片路径
+ * @param image 图片路径 或 图片矩阵
  * @param config 识别对象配置
  * @returns 如果找到匹配的图片区域，则返回该区域
  */
-export const findImage = (path: string, config: ROConfig = {}) => {
+export const findImage = (image: string | ImageMat, config: ROConfig = {}) => {
   const ir = captureGameRegion();
   try {
-    const ro = RecognitionObject.templateMatch(file.readImageMatSync(path));
+    const mat = typeof image === "string" ? file.readImageMatSync(image) : image;
+    const ro = RecognitionObject.templateMatch(mat);
     Object.assign(ro, config);
     return findFirst(ir, ro, region => region.isExist());
   } catch (err: any) {
@@ -61,7 +64,7 @@ export const findImage = (path: string, config: ROConfig = {}) => {
 
 /**
  * 在指定区域内搜索图片
- * @param path 图片路径
+ * @param image 图片路径 或 图片矩阵
  * @param x 水平方向偏移量（像素）
  * @param y 垂直方向偏移量（像素）
  * @param w 宽度
@@ -70,7 +73,7 @@ export const findImage = (path: string, config: ROConfig = {}) => {
  * @returns 如果找到匹配的图片区域，则返回该区域
  */
 export const findImageWithinBounds = (
-  path: string,
+  image: string | ImageMat,
   x: number,
   y: number,
   w: number,
@@ -79,7 +82,8 @@ export const findImageWithinBounds = (
 ) => {
   const ir = captureGameRegion();
   try {
-    const ro = RecognitionObject.templateMatch(file.readImageMatSync(path), x, y, w, h);
+    const mat = typeof image === "string" ? file.readImageMatSync(image) : image;
+    const ro = RecognitionObject.templateMatch(mat, x, y, w, h);
     Object.assign(ro, config);
     return findFirst(ir, ro, region => region.isExist());
   } catch (err: any) {
@@ -91,7 +95,7 @@ export const findImageWithinBounds = (
 
 /**
  * 在指定坐标范围内搜索图片
- * @param path 图片路径
+ * @param image 图片路径 或 图片矩阵
  * @param left 左边界偏移量（像素）
  * @param top 上边界偏移量（像素）
  * @param right 右边界偏移量（像素）
@@ -100,30 +104,30 @@ export const findImageWithinBounds = (
  * @returns 如果找到匹配的图片区域，则返回该区域
  */
 export const findImageBetweenCoordinates = (
-  path: string,
+  image: string | ImageMat,
   left: number,
   top: number,
   right: number,
   bottom: number,
   config: ROConfig = {}
 ) => {
-  return findImageWithinBounds(path, left, top, right - left, bottom - top, config);
+  return findImageWithinBounds(image, left, top, right - left, bottom - top, config);
 };
 
 /**
  * 在指定方向上搜索图片
- * @param path 图片路径
+ * @param image 图片路径 或 图片矩阵
  * @param direction 搜索方向
  * @param config 识别对象配置
  * @returns 如果找到匹配的图片区域，则返回该区域
  */
 export const findImageInDirection = (
-  path: string,
+  image: string | ImageMat,
   direction: MatchDirection,
   config: ROConfig = {}
 ) => {
   const { x, y, w, h } = directionToBounds(direction);
-  return findImageWithinBounds(path, x, y, w, h, config);
+  return findImageWithinBounds(image, x, y, w, h, config);
 };
 
 /** 文本搜索选项 */
