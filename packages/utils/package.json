@@ -33,7 +33,7 @@
     "build": "rimraf dist && tsc"
   },
   "devDependencies": {
-    "@bettergi/types": "^0.1.3",
+    "@bettergi/types": "workspace:latest",
     "rimraf": "^6.1.0",
     "typescript": "^5.9.3"
   }
