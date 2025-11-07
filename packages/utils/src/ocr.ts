@@ -11,14 +11,6 @@ export type ROConfig = Partial<{
 
 export type ImageMat = ReturnType<typeof file.readImageMatSync>;
 
-const findFirst = (ir: ImageRegion, ro: ROInstance, predicate: (candidate: Region) => boolean) => {
-  const candidates = ir.findMulti(ro);
-  for (let i = 0; i < candidates.count; i++) {
-    if (predicate(candidates[i])) return candidates[i];
-  }
-  return undefined;
-};
-
 export type MatchDirection =
   | "north" /** 上半边 */
   | "north-east" /** 右上四分之一 */
@@ -56,7 +48,8 @@ export const findImage = (image: string | ImageMat, config: ROConfig = {}) => {
     if (Object.keys(config).length > 0) {
       Object.assign(ro, config) && ro.initTemplate();
     }
-    return findFirst(ir, ro, region => region.isExist());
+    const region = ir.find(ro);
+    return region.isExist() ? region : undefined;
   } catch (err: any) {
     log.warn(`${err.message || err}`);
   } finally {
@@ -89,7 +82,8 @@ export const findImageWithinBounds = (
     if (Object.keys(config).length > 0) {
       Object.assign(ro, config) && ro.initTemplate();
     }
-    return findFirst(ir, ro, region => region.isExist());
+    const region = ir.find(ro);
+    return region.isExist() ? region : undefined;
   } catch (err: any) {
     log.warn(`${err.message || err}`);
   } finally {
@@ -132,6 +126,14 @@ export const findImageInDirection = (
 ) => {
   const { x, y, w, h } = directionToBounds(direction);
   return findImageWithinBounds(image, x, y, w, h, config);
+};
+
+const findFirst = (ir: ImageRegion, ro: ROInstance, predicate: (candidate: Region) => boolean) => {
+  const candidates = ir.findMulti(ro);
+  for (let i = 0; i < candidates.count; i++) {
+    if (predicate(candidates[i])) return candidates[i];
+  }
+  return undefined;
 };
 
 /** 文本搜索选项 */
