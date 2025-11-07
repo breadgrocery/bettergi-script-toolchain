@@ -50,6 +50,27 @@ declare global {
     function readImageMatSync(path: string): Mat;
 
     /**
+     * 读取Mat图片，并调整到指定尺寸
+     * @param path 文件路径（相对于脚本根目录）
+     * @param width 调整后的宽度
+     * @param height 调整后的高度
+     * @param interpolation 插值算法（默认值：1）
+     *   - 0: 最近邻插值
+     *   - 1: 双线性插值
+     *   - 2: 双三次插值
+     *   - 3: 像素区域关系重采样
+     *   - 4: Lanczos插值
+     *   - 5: 精确双线性插值
+     * @since 0.54.0
+     */
+    function readImageMatWithResizeSync(
+      path: string,
+      width: number,
+      height: number,
+      interpolation?: number
+    ): Mat;
+
+    /**
      * 输出文本文件
      * @param path 文件路径（相对于脚本根目录，会自动创建目录）
      * @param content 文件内容（不能超过999MB）
