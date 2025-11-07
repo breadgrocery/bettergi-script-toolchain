@@ -2,11 +2,59 @@
 
 ## 工具特点
 
-- 提供零配置的开发体验，一键打包生成符合 BetterGI 规范的脚本文件。
+- 提供几乎零配置的开发体验，打包生成符合 BetterGI 规范的脚本文件。
 - 自动检测 BetterGI 的脚本目录，并输出构建结果，便于开发与调试。
+
+  自动读取注册表项 `HKCU\SOFTWARE\Classes\BetterGI\shell\open\command` 获取 BetterGI 的安装位置，并调试输出到 `User/JsScript` 目录下。
+
 - 支持引入第三方外部模块，借助 npm 生态提升开发效率。
-- 支持使用 `import` 导入文本文件（`.txt`、`.json`），使得大文本数据与脚本逻辑分离。
+
+  ```ts
+  import { merge } from "lodash-es";
+
+  const obj1 = { a: 1, b: { c: 2 } };
+  const obj2 = { b: { d: 3 }, e: 4 };
+  const merged = merge({}, obj1, obj2);
+  ```
+
+- 支持使用 `import` 导入文本文件（`.txt`、`.json`），大文本/预定义数据与脚本逻辑分离。
+
+  ```ts
+  import foo1 from "./foo1.txt";
+  import foo2 from "./foo2.json";
+
+  log.info(`${foo1}`);
+  log.info(`${JSON.stringify(foo2)}`);
+  ```
+
 - 支持使用 `import` 导入图片文件（`.png`、`.jpg`、`.jpeg`、`.bmp`、`.tiff`、`.webp`），自动导入为 `Mat` 对象实例。
+  - 导入为 Mat 对象
+
+  ```ts
+  import mat from "./foo.png";
+
+  const ir = captureGameRegion();
+  const ro = RecognitionObject.templateMatch(mat);
+  const result = ir.find(ro);
+  ```
+
+  - 导入为 Mat 对象（懒加载）
+
+  ```ts
+  import matFn from "./foo.png?lazy";
+
+  const ir = captureGameRegion();
+  const ro = RecognitionObject.templateMatch(matFn());
+  const result = ir.find(ro);
+  ```
+
+  - 获取构建后的文件所在位置
+
+  ```ts
+  import path from "./foo.png?path";
+
+  log.info(path);
+  ```
 
 ## 快速开始
 
@@ -61,7 +109,7 @@ export default defineConfig({
 
 ### 创建 TypeScript 配置文件
 
-在工作目录下创建一个 `tsconfig.json` 配置文件。其中，`@bettergi/types` 为 BetterGI 暴露的 js 接口类型声明; `@bettergi/cli/loaders` 为自定义 Loader 的模块声明，如 import xxx from "./foo.png"。
+在工作目录下创建一个 `tsconfig.json` 配置文件。其中，`@bettergi/types` 为 BetterGI 暴露的 js 接口类型声明; `@bettergi/cli/loaders` 为自定义 Loaders 的模块声明，如 import xxx from "./foo.png"。
 
 ```json
 {
