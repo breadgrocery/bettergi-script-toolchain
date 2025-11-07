@@ -53,7 +53,9 @@ export const findImage = (image: string | ImageMat, config: ROConfig = {}) => {
   try {
     const mat = typeof image === "string" ? file.readImageMatSync(image) : image;
     const ro = RecognitionObject.templateMatch(mat);
-    Object.assign(ro, config);
+    if (Object.keys(config).length > 0) {
+      Object.assign(ro, config) && ro.initTemplate();
+    }
     return findFirst(ir, ro, region => region.isExist());
   } catch (err: any) {
     log.warn(`${err.message || err}`);
@@ -84,7 +86,9 @@ export const findImageWithinBounds = (
   try {
     const mat = typeof image === "string" ? file.readImageMatSync(image) : image;
     const ro = RecognitionObject.templateMatch(mat, x, y, w, h);
-    Object.assign(ro, config);
+    if (Object.keys(config).length > 0) {
+      Object.assign(ro, config) && ro.initTemplate();
+    }
     return findFirst(ir, ro, region => region.isExist());
   } catch (err: any) {
     log.warn(`${err.message || err}`);
@@ -151,7 +155,9 @@ export const findText = (text: string, options?: TextMatchOptions, config: ROCon
   const ir = captureGameRegion();
   try {
     const ro = RecognitionObject.ocrThis;
-    Object.assign(ro, config);
+    if (Object.keys(config).length > 0) {
+      Object.assign(ro, config) && ro.initTemplate();
+    }
     return findFirst(ir, ro, region => {
       const itemText = ignoreCase ? region.text.toLowerCase() : region.text;
       const isMatch = contains ? itemText.includes(searchText) : itemText === searchText;
@@ -189,7 +195,9 @@ export const findTextWithinBounds = (
   const ir = captureGameRegion();
   try {
     const ro = RecognitionObject.ocr(x, y, w, h);
-    Object.assign(ro, config);
+    if (Object.keys(config).length > 0) {
+      Object.assign(ro, config) && ro.initTemplate();
+    }
     return findFirst(ir, ro, region => {
       const itemText = ignoreCase ? region.text.toLowerCase() : region.text;
       const isMatch = contains ? itemText.includes(searchText) : itemText === searchText;
