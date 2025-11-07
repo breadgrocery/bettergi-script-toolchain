@@ -1,15 +1,15 @@
 import { loadConfig } from "c12";
 import chokidar from "chokidar";
 import debounce from "debounce";
-import esbuild from "esbuild";
+import esbuild, { type OnLoadArgs } from "esbuild";
 import fs from "fs-extra";
-import crypto from "node:crypto";
 import path from "node:path";
 import glob from "tiny-glob";
 import { type ScriptConfig } from "./config.js";
 import { installScript } from "./util/bettergi.js";
 import { syncManifestConfig, syncSettingsConfig } from "./util/meta.js";
 import { terminate } from "./util/process.js";
+import { sanitizeVariableName, sha256 } from "./util/string.js";
 
 (async () => {
   const loadConfiguration = async (): Promise<{
@@ -119,25 +119,56 @@ import { terminate } from "./util/process.js";
       {
         name: "image-loader",
         setup: build => {
-          build.onLoad({ filter: /\.(png|jpg|jpeg|bmp|tiff|webp)$/ }, async args => {
+          const copyFile = (args: OnLoadArgs) => {
             const baseDir = loaders.image?.baseDir || "assets";
 
             // Create hash-based filename to avoid name conflicts
-            const hash = crypto
-              .createHash("sha256")
-              .update(path.relative(process.cwd(), args.path))
-              .digest("hex")
-              .slice(0, 12);
             const { name, ext } = path.parse(args.path);
-            const file = `${name}-${hash}${ext}`;
+            const file = `${name}-${sha256(args.path)}${ext}`;
 
             // Copy image to output directory
             const dest = path.join(outDir, baseDir, file);
             fs.copySync(args.path, dest);
-            return {
-              contents: `export default /* @__PURE__ */ file.readImageMatSync("${baseDir}/${file}");`,
-              loader: "js"
-            };
+            return `${baseDir}/${file}`;
+          };
+          build.onLoad({ filter: /\.(png|jpg|jpeg|bmp|tiff|webp)$/ }, args => {
+            const { width, height, interpolation = 1 } = args.with;
+            const file = copyFile(args);
+
+            // Handle ?path suffix to return file path
+            if (args.suffix.includes("path")) {
+              return {
+                contents: `export default "${file}";`,
+                loader: "js"
+              };
+            }
+
+            // Return resized image or original image based on parameters
+            const resize = Number(width) > 0 && Number(height) > 0;
+            const variableName = sanitizeVariableName(args.path);
+
+            if (args.suffix.includes("lazy")) {
+              const funcName = `readImageMatSync_${variableName}`;
+              return resize
+                ? {
+                    contents: `export default function ${funcName}() { return file.readImageMatWithResizeSync("${file}", ${width}, ${height}, ${interpolation}); }`,
+                    loader: "js"
+                  }
+                : {
+                    contents: `export default function ${funcName}() { return file.readImageMatSync("${file}"); }`,
+                    loader: "js"
+                  };
+            } else {
+              return resize
+                ? {
+                    contents: `export default /* @__PURE__ */ file.readImageMatWithResizeSync("${file}", ${width}, ${height}, ${interpolation});`,
+                    loader: "js"
+                  }
+                : {
+                    contents: `export default /* @__PURE__ */ file.readImageMatSync("${file}");`,
+                    loader: "js"
+                  };
+            }
           });
         }
       },

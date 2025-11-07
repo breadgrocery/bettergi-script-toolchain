@@ -1,6 +1,6 @@
 {
   "name": "@bettergi/cli",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "构建 BetterGI 脚本的脚手架",
   "type": "module",
   "author": "Bread Grocery<https://github.com/breadgrocery>",
@@ -47,6 +47,7 @@
     "esbuild": "^0.25.12",
     "find-cache-directory": "^6.0.0",
     "fs-extra": "^11.3.2",
+    "pinyin-pro": "^3.27.0",
     "tiny-glob": "^0.2.9",
     "winreg": "^1.2.5"
   },
