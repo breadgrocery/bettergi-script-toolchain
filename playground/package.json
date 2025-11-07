@@ -10,11 +10,11 @@
     "build": "bettergi-cli"
   },
   "dependencies": {
+    "@bettergi/assets": "workspace:latest",
     "@bettergi/utils": "workspace:latest"
   },
   "devDependencies": {
     "@bettergi/cli": "workspace:latest",
-    "@bettergi/elements": "workspace:latest",
     "@bettergi/types": "workspace:latest",
     "@eslint/js": "^9.39.1",
     "eslint": "^9.39.1",

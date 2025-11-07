@@ -1,19 +1,19 @@
 {
-  "name": "@bettergi/elements",
+  "name": "@bettergi/assets",
   "version": "0.0.1",
-  "description": "开发 BetterGI 脚本常用资源集",
+  "description": "开发 BetterGI 脚本常用资源包",
   "type": "module",
   "author": "Bread Grocery<https://github.com/breadgrocery>",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/breadgrocery/bettergi-script-toolchain.git",
-    "directory": "packages/elements"
+    "directory": "packages/assets"
   },
   "bugs": {
     "url": "https://github.com/breadgrocery/bettergi-script-toolchain/issues"
   },
-  "homepage": "https://github.com/breadgrocery/bettergi-script-toolchain/tree/main/packages/elements",
+  "homepage": "https://github.com/breadgrocery/bettergi-script-toolchain/tree/main/packages/assets",
   "main": "./dist/index.js",
   "exports": {
     ".": {
@@ -23,11 +23,11 @@
   },
   "files": [
     "dist",
-    "assets"
+    "images"
   ],
   "keywords": [
     "bettergi",
-    "elements"
+    "assets"
   ],
   "scripts": {
     "dev": "tsc --watch",
@@ -35,12 +35,12 @@
   },
   "devDependencies": {
     "@bettergi/cli": "workspace:latest",
-    "@bettergi/types": "^0.1.3",
+    "@bettergi/types": "workspace:latest",
     "mirada": "^0.0.15",
     "rimraf": "^6.1.0",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
-    "@bettergi/cli": ">=0.1.5"
+    "@bettergi/cli": ">=0.1.7"
   }
 }
