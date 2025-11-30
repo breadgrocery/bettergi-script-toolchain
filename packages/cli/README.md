@@ -117,7 +117,7 @@ export default defineConfig({
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "declaration": false,
     "lib": ["ESNext"],

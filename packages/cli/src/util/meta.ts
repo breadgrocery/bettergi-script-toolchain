@@ -1,6 +1,6 @@
 import fs from "fs-extra";
 import path from "node:path";
-import { type ScriptConfig } from "../config";
+import { type ScriptConfig } from "../config.js";
 import { getVersion } from "./bettergi.js";
 
 const manifestFile = "manifest.json";
