@@ -103,7 +103,7 @@ await assertRegionDisappearing(findButton, "点击购买按钮超时", () => fin
 
 ```ts
 // 鼠标从 (745, 610) 平滑自然地移动 (1920, 1080)
-await naturalMouseMove(0, 0, 1920, 1080);
+await naturalMouseMove(745, 610, 1920, 1080);
 
 // 鼠标从 (745, 610) 拖拽到 (1280, 610)
 await mouseDrag(745, 610, 1280, 610);
@@ -129,7 +129,7 @@ await mouseScrollDownLines(1, 115);
 // 创建/读取存储对象，保存到存储文件 store/my-data.json 中
 const store = useStore<{ lastUsedTime?: number; count: number }>("my-data");
 // 默认值版本
-// const state = useStoreWithDefaults("my-data", { lastUsedTime: 0, count: 0 });
+// const store = useStoreWithDefaults("my-data", { lastUsedTime: 0, count: 0 });
 
 if (store?.lastUsedTime) {
   log.info(`欢迎回来！上次使用时间: ${store.lastUsedTime}，计数器已累计至: ${store.count}`);
