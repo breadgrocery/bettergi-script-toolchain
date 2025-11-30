@@ -144,6 +144,8 @@ export type ClockOptions = {
   radius?: number;
   /** 平滑度（默认: 3） */
   smooth?: number;
+  /** 容差（单位：分钟，默认: 2） */
+  tolerance?: number;
 };
 
 /**
@@ -162,14 +164,16 @@ export const setTimeTo = async (hour: number, minute: number, options?: ClockOpt
     centerY = 502,
     offsetHours = 6,
     radius = 150,
-    smooth = 4
+    smooth = 4,
+    tolerance = 2
   } = options || {};
   const radian = ((((hour + offsetHours) * 60 + minute) % 1440) / 1440) * Math.PI * 2;
   const trackRadius = radius + 150; // 增加拨动半径，提高准确度
+  const toleranceRadian = (tolerance / (60 * 24)) * Math.PI * 2; // 容差弧度
   const waypoints = [{ x: centerX, y: centerY }].concat(
     Array.from({ length: Math.max(smooth, 3) })
       // 计算弧度
-      .map((_, i) => radian + (1 + i / (Math.max(smooth, 3) - 1)) * Math.PI)
+      .map((_, i) => radian + (1 + i / (Math.max(smooth, 3) - 1)) * Math.PI + toleranceRadian)
       // 计算相对圆点坐标
       .map(rad => ({ x: trackRadius * Math.cos(rad), y: trackRadius * Math.sin(rad) }))
       // 计算绝对坐标
