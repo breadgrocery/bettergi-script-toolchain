@@ -13,7 +13,6 @@
     "@bettergi/utils": "workspace:latest"
   },
   "devDependencies": {
-    "@bettergi/assets": "workspace:latest",
     "@bettergi/cli": "workspace:latest",
     "@bettergi/types": "workspace:latest",
     "@eslint/js": "^9.39.1",

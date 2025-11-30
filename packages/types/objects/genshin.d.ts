@@ -238,6 +238,24 @@ declare global {
      * @since 0.43.5
      */
     function relogin(): Promise<void>;
+
+    /**
+     * 调整时间
+     * @param hour 目标小时(0-24)s
+     * @param minute 目标分钟(0-59)
+     * @param skip 是否跳过动画（默认值：false）
+     * @since 0.54.0
+     */
+    function setTime(hour: number, minute: number, skip?: boolean): Promise<void>;
+
+    /**
+     * 调整时间
+     * @param hour 目标小时(0-24)s
+     * @param minute 目标分钟(0-59)
+     * @param skip 是否跳过动画（默认值：false）
+     * @since 0.54.0
+     */
+    function setTime(hour: string, minute: string, skip?: boolean): Promise<void>;
   }
 }
 
