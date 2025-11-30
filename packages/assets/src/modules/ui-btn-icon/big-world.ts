@@ -1,0 +1,40 @@
+import activity from "../../../images/UI_BtnIcon/UI_BtnIcon_ActivityEntry.png?path";
+import bag from "../../../images/UI_BtnIcon/UI_BtnIcon_Bag.png?path";
+import battle_pass from "../../../images/UI_BtnIcon/UI_BtnIcon_BattlePass.png?path";
+import beyond from "../../../images/UI_BtnIcon/UI_BtnIcon_Beyond_Recommend.png?path";
+import eye from "../../../images/UI_BtnIcon/UI_BtnIcon_Eye.png?path";
+import gacha from "../../../images/UI_BtnIcon/UI_BtnIcon_Gacha.png?path";
+import handbook from "../../../images/UI_BtnIcon/UI_BtnIcon_Handbook.png?path";
+import mp from "../../../images/UI_BtnIcon/UI_BtnIcon_MP.png?path";
+import mp_guest_1p from "../../../images/UI_BtnIcon/UI_BtnIcon_MP_Guest_1P.png?path";
+import mp_guest_2p from "../../../images/UI_BtnIcon/UI_BtnIcon_MP_Guest_2P.png?path";
+import mp_guest_3p from "../../../images/UI_BtnIcon/UI_BtnIcon_MP_Guest_3P.png?path";
+import mp_guest_4p from "../../../images/UI_BtnIcon/UI_BtnIcon_MP_Guest_4P.png?path";
+import mp_main_1p from "../../../images/UI_BtnIcon/UI_BtnIcon_MP_Main_1P.png?path";
+import mp_main_2p from "../../../images/UI_BtnIcon/UI_BtnIcon_MP_Main_2P.png?path";
+import mp_main_3p from "../../../images/UI_BtnIcon/UI_BtnIcon_MP_Main_3P.png?path";
+import mp_main_4p from "../../../images/UI_BtnIcon/UI_BtnIcon_MP_Main_4P.png?path";
+import player_boy from "../../../images/UI_BtnIcon/UI_BtnIcon_PlayerBoy.png?path";
+import player_girl from "../../../images/UI_BtnIcon/UI_BtnIcon_PlayerGirl.png?path";
+import { createDefaultResizable } from "../../utils/resizable";
+
+/** -------------------------------- 大世界顶部按钮 -------------------------------- */
+export const ui_eye = createDefaultResizable(eye, 52, 52);
+export const ui_mp = createDefaultResizable(mp, 48, 48);
+export const ui_mp_guest_1p = createDefaultResizable(mp_guest_1p, 48, 48);
+export const ui_mp_guest_2p = createDefaultResizable(mp_guest_2p, 48, 48);
+export const ui_mp_guest_3p = createDefaultResizable(mp_guest_3p, 48, 48);
+export const ui_mp_guest_4p = createDefaultResizable(mp_guest_4p, 48, 48);
+export const ui_mp_main_1p = createDefaultResizable(mp_main_1p, 48, 48);
+export const ui_mp_main_2p = createDefaultResizable(mp_main_2p, 48, 48);
+export const ui_mp_main_3p = createDefaultResizable(mp_main_3p, 48, 48);
+export const ui_mp_main_4p = createDefaultResizable(mp_main_4p, 48, 48);
+export const ui_icon_beyond_recommend = createDefaultResizable(beyond, 62, 62);
+// TODO: 相似度太低
+export const ui_icon_activity_entry = createDefaultResizable(activity, 57, 57);
+export const ui_icon_battle_pass = createDefaultResizable(battle_pass, 57, 57);
+export const ui_icon_gacha = createDefaultResizable(gacha, 56, 56);
+export const ui_icon_handbook = createDefaultResizable(handbook, 57, 57);
+export const ui_icon_bag = createDefaultResizable(bag, 57, 57);
+export const ui_icon_player_boy = createDefaultResizable(player_boy, 57, 57);
+export const ui_icon_player_girl = createDefaultResizable(player_girl, 57, 57);
