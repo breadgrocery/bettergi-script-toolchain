@@ -12,6 +12,9 @@ export const useStore = <T extends Record<string, any>>(name: string): T => {
   // 读取文件数据
   const obj = (() => {
     try {
+      const storeFiles = [...file.readPathSync("store")].map(path => path.replace(/\\/g, "/"));
+      if (!storeFiles.includes(filePath)) throw new Error("File does not exist");
+
       const text = file.readTextSync(filePath);
       return JSON.parse(text);
     } catch {
