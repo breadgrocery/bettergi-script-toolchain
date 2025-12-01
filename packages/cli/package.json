@@ -1,6 +1,6 @@
 {
   "name": "@bettergi/cli",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "构建 BetterGI 脚本的脚手架",
   "type": "module",
   "author": "Bread Grocery<https://github.com/breadgrocery>",
@@ -41,10 +41,10 @@
     "build": "rimraf dist && tsc"
   },
   "dependencies": {
-    "c12": "^3.3.1",
-    "chokidar": "^4.0.3",
+    "c12": "^3.3.2",
+    "chokidar": "^5.0.0",
     "debounce": "^3.0.0",
-    "esbuild": "^0.25.12",
+    "esbuild": "^0.27.0",
     "find-cache-directory": "^6.0.0",
     "fs-extra": "^11.3.2",
     "pinyin-pro": "^3.27.0",
@@ -54,9 +54,9 @@
   "devDependencies": {
     "@bettergi/types": "workspace:latest",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^24.10.0",
+    "@types/node": "^24.10.1",
     "@types/winreg": "^1.2.36",
-    "rimraf": "^6.1.0",
+    "rimraf": "^6.1.2",
     "typescript": "^5.9.3"
   }
 }
