@@ -1,5 +1,21 @@
 本项目是一个为[Better Genshin Impact](https://github.com/babalae/better-genshin-impact) 设计的 JavaScript 脚本开发脚手架，旨在帮助开发者快速创建脚本项目。
 
+## 快速开始
+
+使用 [@bettergi/create-script](https://www.npmjs.com/package/@bettergi/create-script) 快速创建 JavaScript 脚本项目：
+
+### 使用 npm
+
+```shell
+npm create @bettergi/script
+```
+
+### 使用 pnpm
+
+```shell
+pnpm create @bettergi/script
+```
+
 ## 工具特点
 
 - 提供几乎零配置的开发体验，打包生成符合 BetterGI 规范的脚本文件。
@@ -28,9 +44,10 @@
   ```
 
 - 支持使用 `import` 导入图片文件（`.png`、`.jpg`、`.jpeg`、`.bmp`、`.tiff`、`.webp`），自动导入为 `Mat` 对象实例。
-  - 导入为 Mat 对象
+  - 导入为 Mat 对象。
 
   ```ts
+  <!-- 示例代码 -->
   import mat from "./foo.png";
 
   const ir = captureGameRegion();
@@ -38,9 +55,39 @@
   const result = ir.find(ro);
   ```
 
-  - 导入为 Mat 对象（懒加载）
+  ```ts
+  <!-- 构建结果 -->
+  var mat_foo = file.readImageMatSync("assets/foo-d3036d20a653.png");
+
+  var ir = captureGameRegion();
+  var ro = RecognitionObject.templateMatch(mat_foo);
+  var result = ir.find(ro);
+  ```
+
+- 导入为 Mat 对象，并调整图像尺寸。
 
   ```ts
+  <!-- 示例代码 -->
+  import mat from "./foo.png" with { width: "100", height: "100" };
+
+  const ir = captureGameRegion();
+  const ro = RecognitionObject.templateMatch(mat);
+  const result = ir.find(ro);
+  ```
+
+  ```ts
+  <!-- 构建结果 -->
+  var mat_foo = file.readImageMatWithResizeSync("assets/foo-d3036d20a653.png", 100, 100, 1);
+
+  var ir = captureGameRegion();
+  var ro = RecognitionObject.templateMatch(mat_foo);
+  var result = ir.find(ro);
+  ```
+
+- 导入为 Mat 对象（懒加载）。
+
+  ```ts
+  <!-- 示例代码 -->
   import matFn from "./foo.png?lazy";
 
   const ir = captureGameRegion();
@@ -48,37 +95,40 @@
   const result = ir.find(ro);
   ```
 
-  - 获取构建后的文件所在位置
+  ```ts
+  <!-- 构建结果 -->
+  function readImageMatSync_foo() {
+    return file.readImageMatSync("assets/foo-d3036d20a653.png");
+  }
+
+  var ir = captureGameRegion();
+  var ro = RecognitionObject.templateMatch(readImageMatSync_foo());
+  var result = ir.find(ro);
+  ```
+
+- 获取构建后的文件所在位置。
 
   ```ts
+  <!-- 示例代码 -->
   import path from "./foo.png?path";
 
   log.info(path);
   ```
 
-## 快速开始
+  ```ts
+  <!-- 构建结果 -->
+  var path_foo = "assets/foo-d3036d20a653.png";
 
-使用 [@bettergi/create-script](https://www.npmjs.com/package/@bettergi/create-script) 快速创建 JavaScript 脚本项目：
+  log.info(path_foo);
+  ```
 
-### 使用 npm
+## 用法
 
-```shell
-npm create @bettergi/script
-```
-
-### 使用 pnpm
-
-```shell
-pnpm create @bettergi/script
-```
-
-## 手动安装
+### 手动安装
 
 ```shell
 npm install --save-dev @bettergi/cli @bettergi/types
 ```
-
-## 用法
 
 ### 创建配置文件
 

@@ -134,38 +134,40 @@ import { sanitizeVariableName, sha256 } from "./util/string.js";
           build.onLoad({ filter: /\.(png|jpg|jpeg|bmp|tiff|webp)$/ }, args => {
             const { width, height, interpolation = 1 } = args.with;
             const file = copyFile(args);
+            const variableName = sanitizeVariableName(args.path);
 
             // Handle ?path suffix to return file path
             if (args.suffix.includes("path")) {
+              const pathVarName = `path_${variableName}`;
               return {
-                contents: `export default "${file}";`,
+                contents: `const ${pathVarName} = "${file}";export { ${pathVarName} as default };`,
                 loader: "js"
               };
             }
 
             // Return resized image or original image based on parameters
             const resize = Number(width) > 0 && Number(height) > 0;
-            const variableName = sanitizeVariableName(args.path);
 
             if (args.suffix.includes("lazy")) {
-              const funcName = `readImageMatSync_${variableName}`;
+              const funcVarName = `readImageMatSync_${variableName}`;
               return resize
                 ? {
-                    contents: `export default function ${funcName}() { return file.readImageMatWithResizeSync("${file}", ${width}, ${height}, ${interpolation}); }`,
+                    contents: `export default function ${funcVarName}() { return file.readImageMatWithResizeSync("${file}", ${width}, ${height}, ${interpolation}); }`,
                     loader: "js"
                   }
                 : {
-                    contents: `export default function ${funcName}() { return file.readImageMatSync("${file}"); }`,
+                    contents: `export default function ${funcVarName}() { return file.readImageMatSync("${file}"); }`,
                     loader: "js"
                   };
             } else {
+              const matVarName = `mat_${variableName}`;
               return resize
                 ? {
-                    contents: `export default /* @__PURE__ */ file.readImageMatWithResizeSync("${file}", ${width}, ${height}, ${interpolation});`,
+                    contents: `const ${matVarName} = /* @__PURE__ */ file.readImageMatWithResizeSync("${file}", ${width}, ${height}, ${interpolation});export { ${matVarName} as default };`,
                     loader: "js"
                   }
                 : {
-                    contents: `export default /* @__PURE__ */ file.readImageMatSync("${file}");`,
+                    contents: `const ${matVarName} = /* @__PURE__ */ file.readImageMatSync("${file}");export { ${matVarName} as default };`,
                     loader: "js"
                   };
             }
