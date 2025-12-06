@@ -5,7 +5,7 @@
     ".gitignore": ".git*,lefthook.*,prettier.config.*,.prettierignore,LICENSE",
     "README.md": "README.*.md",
     "tsconfig.json": "tsconfig.*.json",
-    "package.json": "package-lock.json,yarn.lock,pnpm-*.yaml,bun.lockb"
+    "package.json": "package-lock.json,yarn.lock,pnpm-*.yaml,bun.lockb,deno.lock"
   },
   "search.exclude": {
     "dist": true,
