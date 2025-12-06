@@ -44,7 +44,7 @@
     "c12": "^3.3.2",
     "chokidar": "^5.0.0",
     "debounce": "^3.0.0",
-    "esbuild": "^0.27.0",
+    "esbuild": "^0.27.1",
     "find-cache-directory": "^6.0.0",
     "fs-extra": "^11.3.2",
     "pinyin-pro": "^3.27.0",
@@ -52,7 +52,7 @@
     "winreg": "^1.2.5"
   },
   "devDependencies": {
-    "@bettergi/types": "workspace:latest",
+    "@bettergi/types": "workspace:^",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^24.10.1",
     "@types/winreg": "^1.2.36",

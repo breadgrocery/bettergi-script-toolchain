@@ -10,14 +10,14 @@
     "build": "bettergi-cli"
   },
   "dependencies": {
-    "@bettergi/utils": "workspace:latest"
+    "@bettergi/utils": "workspace:^"
   },
   "devDependencies": {
-    "@bettergi/cli": "workspace:latest",
-    "@bettergi/types": "workspace:latest",
+    "@bettergi/cli": "workspace:^",
+    "@bettergi/types": "workspace:^",
     "@eslint/js": "^9.39.1",
     "eslint": "^9.39.1",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.3"
+    "typescript-eslint": "^8.48.1"
   }
 }
