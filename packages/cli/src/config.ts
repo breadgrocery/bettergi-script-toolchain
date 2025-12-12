@@ -79,40 +79,71 @@ namespace manifest {
     /** 作者名称 */
     name: string;
 
-    /** 作者主页 */
+    /** 作者主页/项目地址 */
     link?: string;
   }
 }
 
 namespace settings {
-  export interface Control<T> {
-    /** 变量名 */
+  export type SettingItem = Separator | TextBox | ComboBox | CheckBox | MultiCheckbox;
+
+  export interface Component {
+    type: string;
+  }
+
+  export interface Separator extends Component {
+    /**
+     * 分隔符
+     * @since 0.55.0
+     */
+    type: "separator";
+  }
+
+  /** 控件 */
+  export interface Control<TValue> extends Component {
+    /** 参数名 */
     name: string;
 
     /** 显示标签 */
     label: string;
 
     /** 默认值 */
-    default?: T;
+    default?: TValue;
   }
 
   export interface TextBox extends Control<string> {
-    /** 输入框 */
+    /**
+     * 输入框
+     * @since 0.33.3
+     */
     type: "input-text";
   }
 
   export interface ComboBox extends Control<string> {
-    /** 下拉框 */
+    /**
+     * 下拉框
+     * @since 0.33.3
+     */
     type: "select";
     options: string[];
   }
 
   export interface CheckBox extends Control<boolean> {
-    /** 勾选框 */
+    /**
+     * 勾选框
+     * @since 0.33.3
+     */
     type: "checkbox";
   }
 
-  export type SettingItem = TextBox | ComboBox | CheckBox;
+  export interface MultiCheckbox extends Control<string[]> {
+    /**
+     * 多选框
+     * @since 0.55.0
+     */
+    type: "multi-checkbox";
+    options: string[];
+  }
 }
 
 export interface ScriptConfig {
@@ -203,8 +234,10 @@ export type BaseType<T> = T extends string
         : T;
 
 /**
- * 提取设置参数名称
+ * 提取设置参数类型映射
  */
-export type ExtractSettingsMap<T extends readonly settings.Control<any>[]> = Partial<{
-  [K in T[number] as K["name"]]: BaseType<K["default"]>;
+export type ExtractSettingsMap<T extends readonly settings.Component[]> = Partial<{
+  [K in T[number] extends settings.Control<any> ? T[number] : never as K["name"]]: BaseType<
+    K["default"]
+  >;
 }>;
