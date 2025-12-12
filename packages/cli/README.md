@@ -64,7 +64,7 @@ pnpm create @bettergi/script@latest
   var result = ir.find(ro);
   ```
 
-- 导入为 Mat 对象，并调整图像尺寸。
+  - 导入为 Mat 对象，并调整图像尺寸。
 
   ```ts
   <!-- 示例代码 -->
@@ -84,7 +84,7 @@ pnpm create @bettergi/script@latest
   var result = ir.find(ro);
   ```
 
-- 导入为 Mat 对象（懒加载）。
+  - 导入为 Mat 对象（懒加载）。
 
   ```ts
   <!-- 示例代码 -->
@@ -106,7 +106,7 @@ pnpm create @bettergi/script@latest
   var result = ir.find(ro);
   ```
 
-- 获取构建后的文件所在位置。
+  - 获取构建后的文件所在位置。
 
   ```ts
   <!-- 示例代码 -->
