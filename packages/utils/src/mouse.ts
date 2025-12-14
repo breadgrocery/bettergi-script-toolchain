@@ -117,9 +117,9 @@ export const naturalMouseMove = async (
 };
 
 /** 使用回放脚本模拟滚动 */
-const simulateScroll = async (scrollAmountInClicks: number, times: number) => {
+const simulateScroll = async (wheelDelta: number, times: number) => {
   const script = {
-    macroEvents: Array(times).fill({ type: 6, mouseX: 0, mouseY: scrollAmountInClicks, time: 0 }),
+    macroEvents: Array(times).fill({ type: 6, mouseX: 0, mouseY: wheelDelta, time: 0 }),
     info: { name: "", description: "", x: 0, y: 0, width: 1920, height: 1080, recordDpi: 1.5 }
   };
   await keyMouseScript.run(JSON.stringify(script));
@@ -132,7 +132,7 @@ const simulateScroll = async (scrollAmountInClicks: number, times: number) => {
  */
 export const mouseScrollUp = (
   height: number,
-  algorithm: (h: number) => number = h => Math.floor(h / 18)
+  algorithm: (h: number) => number = h => Math.floor(h / 17.9795)
 ) => {
   return simulateScroll(120, algorithm(height));
 };
@@ -144,7 +144,7 @@ export const mouseScrollUp = (
  */
 export const mouseScrollDown = (
   height: number,
-  algorithm: (height: number) => number = h => Math.floor(h / 18)
+  algorithm: (height: number) => number = h => Math.floor(h / 17.9795)
 ) => {
   return simulateScroll(-120, algorithm(height));
 };

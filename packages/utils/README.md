@@ -126,11 +126,21 @@ await assertRegionDisappearing(findButton, "点击购买按钮超时", () => fin
 > 对常见鼠标操作的封装，如鼠标的平滑移动、鼠标滚轮滚动、鼠标拖拽等。
 
 ```ts
-// 鼠标从 (745, 610) 平滑自然地移动 (1920, 1080)
-await naturalMouseMove(745, 610, 1920, 1080);
+// 鼠标沿路径点移动并拖拽
+await mouseMoveAlongWaypoints(
+  [
+    { x: 100, y: 100 },
+    { x: 200, y: 200 },
+    { x: 300, y: 300 }
+  ],
+  { shouldDrag: true }
+);
 
 // 鼠标从 (745, 610) 拖拽到 (1280, 610)
 await mouseDrag(745, 610, 1280, 610);
+
+// 鼠标从 (745, 610) 平滑自然地移动 (1920, 1080)
+await naturalMouseMove(745, 610, 1920, 1080);
 
 // 鼠标滚轮向上滚动 175 像素
 await mouseScrollUp(175);
@@ -138,10 +148,10 @@ await mouseScrollUp(175);
 // 鼠标滚轮向下滚动 175 像素
 await mouseScrollDown(175);
 
-// 鼠标滚轮向上滚动 99 行，行高 175（默认: 背包物品行高）
+// 鼠标滚轮向上滚动 99 行（默认: 175为背包物品行高）
 await mouseScrollUpLines(99);
 
-// 鼠标滚轮向下滚动 1 行，行高 115（自定义: 商店物品行高）
+// 鼠标滚轮向下滚动 1 行（自定义: 115为商店物品行高）
 await mouseScrollDownLines(1, 115);
 ```
 
@@ -201,12 +211,14 @@ tracker.complete(`任务完成`);
 
 ```ts
 // 发送 GET 请求获取响应体内容
-const body1 = await getForBody("https://example.com/", undefined, { "User-Agent": "BetterGI" });
-log.info(`GET 请求响应体内容${body1}`);
+const body1 = await getForBody("https://jsonplaceholder.typicode.com/todos/1");
 
 // 发送 POST 请求获取响应体内容
-const body2 = await postForBody("https://example.com/", undefined, { "User-Agent": "BetterGI" });
-log.info(`POST 请求响应体内容${body2}`);
+const body2 = await postForBody("https://jsonplaceholder.typicode.com/posts", {
+  title: "foo",
+  body: "bar",
+  userId: 1
+});
 ```
 
 ### 文件操作

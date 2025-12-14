@@ -309,7 +309,6 @@ export const findWithinListView = async (
   let _lvr: ImageRegion | undefined;
   const isReachedBottom = () => {
     const region = sampling(captureListViewRegion());
-    file.writeImageSync("debug_bottom.png", region.srcMat);
     if (region?.isExist()) {
       if (_lvr?.find(RecognitionObject.templateMatch(region.srcMat))) {
         return true;
