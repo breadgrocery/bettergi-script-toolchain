@@ -59,6 +59,16 @@ const i3 = findImageBetweenCoordinates("assets/关闭.png", 960, 0, 1920, 1080);
 // 在指定方向上搜索图片，找不到返回 undefined
 const i4 = findImageInDirection("assets/关闭.png", "north-east");
 
+// 在列表视图中查找图片，并滚动列表视图直到找到目标图片 或 列表视图触底
+const i5 = await findImageWithinListView("assets/foo.png", {
+  x: 115,
+  y: 95,
+  w: 1157,
+  h: 906,
+  lineHeight: 175,
+  scrollLines: 4
+});
+
 // 在整个画面内搜索文本（不包含、忽略大小写），找不到返回 undefined
 const t1 = findText("购买");
 
@@ -70,6 +80,20 @@ const t3 = findTextBetweenCoordinates("确认", 960, 540, 1920, 1080);
 
 // 在指定方向上搜索文本（包含、忽略大小写），找不到返回 undefined
 const t4 = findTextInDirection("师傅", "east", { contains: true, ignoreCase: true });
+
+// 在列表视图中查找文本，并滚动列表视图直到找到目标文本 或 列表视图触底
+const t5 = await findTextWithinListView(
+  "小麦",
+  {
+    x: 120,
+    y: 95,
+    w: 1045,
+    h: 865,
+    lineHeight: 115,
+    scrollLines: 7
+  },
+  { contains: true }
+);
 ```
 
 ### 行为流程
