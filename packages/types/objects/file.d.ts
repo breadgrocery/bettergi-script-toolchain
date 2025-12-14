@@ -71,7 +71,7 @@ declare global {
     ): Mat;
 
     /**
-     * 输出文本文件
+     * 同步输出文本文件
      * @param path 文件路径（相对于脚本根目录，会自动创建目录）
      * @param content 文件内容（不能超过999MB）
      * @param append 是否追加内容（默认值：false）
@@ -89,7 +89,7 @@ declare global {
     function writeText(path: string, content: string, append?: boolean): Promise<boolean>;
 
     /**
-     *
+     * 输出文本文件
      * @param path 文件路径（相对于脚本根目录，会自动创建目录）
      * @param content 文件内容（不能超过999MB）
      * @param callbackFunc 回调函数
@@ -102,6 +102,14 @@ declare global {
       callbackFunc: (ex?: string, ret?: string) => void,
       append?: boolean
     ): Promise<boolean>;
+
+    /**
+     * 同步写入图片到文件
+     * @param path 文件路径（如果没有扩展名，自动追加.png）
+     * @param mat OpenCV Mat对象
+     * @since 0.48.2
+     */
+    function writeImageSync(path: string, mat: Mat): boolean;
   }
 }
 

@@ -53,8 +53,8 @@
 /// <reference path="./types/BetterGenshinImpact/Core/Script/Dependence/ServerTime.d.ts" />
 
 // 任务参数
-/// <reference path="./types/BetterGenshinImpact/GameTask/AutoDomain/AutoDomainParam" />
-/// <reference path="./types/BetterGenshinImpact/GameTask/AutoFight/AutoFightParam" />
+/// <reference path="./types/BetterGenshinImpact/GameTask/AutoDomain/AutoDomainParam.d.ts" />
+/// <reference path="./types/BetterGenshinImpact/GameTask/AutoFight/AutoFightParam.d.ts" />
 
 /// 设置
 /// <reference path="./objects/settings.d.ts" />
