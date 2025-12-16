@@ -117,15 +117,15 @@ export const openMenuPage = async (
   await openPaimonMenu();
 
   // 2.搜索菜单页面按钮
+  const { x = 95, y = 330, w = 670, h = 730, lineHeight = 142 } = listView || {};
   const button = await withGameMetrics(1920, 1080, 1.5, async () => {
-    const { x = 95, y = 330, w = 670, h = 730, lineHeight = 142 } = listView || {};
-    return await findTextWithinListView(name, { x, y, w, h, lineHeight, scrollLines: 2 });
+    return await findTextWithinListView(name, { x, y, w, h, lineHeight, scrollLines: 5 });
   });
   if (!button) throw new Error(`搜索菜单页面 ${name} 失败`);
 
   // 3.点击打开菜单页面
   await assertRegionDisappearing(
-    () => findTextWithinBounds(name, button.x, button.y, button.width, button.height),
+    () => findTextWithinBounds(name, x, y, w, h),
     `打开菜单页面 ${name} 超时`,
     () => {
       button.click();

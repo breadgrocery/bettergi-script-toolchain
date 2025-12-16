@@ -291,34 +291,47 @@ export type ListView = {
  * @param condition 查找条件
  * @param listView 列表视图参数
  * @param retryOptions 重试选项
- * @param sampling 区域采样函数，通过采样区域画面变化判断列表是否触底（默认：取上半部分）
+ * @param sampling 区域采样函数，通过采样区域画面变化判断列表是否触底（默认：底半区）
+ * @param threshold 采样区域匹配阈值（默认：0.9）
  * @returns 如果找到匹配的区域，则返回该区域，否则返回 undefined
  */
 export const findWithinListView = async (
   condition: (listViewRegion: ImageRegion) => Region | undefined,
   listView: ListView,
   retryOptions?: RetryOptions,
-  sampling?: (listViewRegion: ImageRegion) => ImageRegion
+  sampling?: (listViewRegion: ImageRegion) => ImageRegion,
+  threshold: number = 0.9
 ) => {
   const { x, y, w, h, lineHeight, scrollLines = 1, paddingX = 10, paddingY = 10 } = listView;
-  const { maxAttempts = 99, retryInterval = 1000 } = retryOptions || {};
-  sampling = sampling || (r => r.deriveCrop(0, 0, r.width, Math.floor(r.height / 2)));
+  const { maxAttempts = 99, retryInterval = 1200 } = retryOptions || {};
+  sampling ??= r => r.deriveCrop(1, r.height * 0.5, r.width - 1, r.height * 0.5);
 
   const captureListViewRegion = () => captureGameRegion().deriveCrop(x, y, w, h);
 
-  let _lvr: ImageRegion | undefined;
-  const isReachedBottom = () => {
-    const region = sampling(captureListViewRegion());
-    if (region?.isExist()) {
-      if (_lvr?.find(RecognitionObject.templateMatch(region.srcMat))) {
-        return true;
-      } else {
-        _lvr = region;
-        return false;
+  const isReachedBottom = (() => {
+    let lastCaptured: ImageRegion | undefined;
+    return () => {
+      const newRegion = captureListViewRegion();
+      if (!newRegion?.isExist()) return true;
+
+      try {
+        if (!lastCaptured) return false;
+
+        const oldRegion = sampling(lastCaptured);
+        if (!oldRegion?.isExist()) return true;
+
+        // 根据采样区域画面是否变化，判断列表是否触底
+        const ro = RecognitionObject.templateMatch(oldRegion.srcMat);
+        ro.threshold = threshold;
+        ro.use3Channels = true;
+        ro.initTemplate();
+
+        return newRegion.find(ro)?.isExist();
+      } finally {
+        lastCaptured = newRegion;
       }
-    }
-    return true; // 异常情况: 无法获取列表视图截图
-  };
+    };
+  })();
 
   const isFoundOrReachedBottom = await waitForAction(
     () => condition(captureListViewRegion())?.isExist() || isReachedBottom(),
@@ -340,6 +353,8 @@ export const findWithinListView = async (
  * @param matchOptions 搜索选项
  * @param retryOptions 重试选项
  * @param config 识别对象配置
+ * @param sampling 区域采样函数，通过采样区域画面变化判断列表是否触底（默认：底半区）
+ * @param threshold 采样区域匹配阈值（默认：0.9）
  * @returns 如果找到匹配的文本区域，则返回该区域，否则返回 undefined
  */
 export const findTextWithinListView = async (
@@ -348,7 +363,8 @@ export const findTextWithinListView = async (
   matchOptions?: TextMatchOptions,
   retryOptions?: RetryOptions,
   config: ROConfig = {},
-  sampling?: (listViewRegion: ImageRegion) => ImageRegion
+  sampling?: (listViewRegion: ImageRegion) => ImageRegion,
+  threshold: number = 0.9
 ) => {
   const ro = RecognitionObject.ocrThis;
   if (Object.keys(config).length > 0) {
@@ -362,7 +378,8 @@ export const findTextWithinListView = async (
     },
     listView,
     retryOptions,
-    sampling
+    sampling,
+    threshold
   );
 };
 
@@ -370,16 +387,19 @@ export const findTextWithinListView = async (
  * 在列表视图中查找图像
  * @param image 图片路径 或 图片Mat
  * @param listView 列表视图参数
- * @param config 识别对象配置
  * @param retryOptions 重试选项
+ * @param config 识别对象配置
+ * @param sampling 区域采样函数，通过采样区域画面变化判断列表是否触底（默认：底半区）
+ * @param threshold 采样区域匹配阈值（默认：0.9）
  * @returns 如果找到匹配的区域，则返回该区域，否则返回 undefined
  */
 export const findImageWithinListView = async (
   image: string | ImageMat,
   listView: ListView,
-  config: ROConfig = {},
   retryOptions?: RetryOptions,
-  sampling?: (listViewRegion: ImageRegion) => ImageRegion
+  config: ROConfig = {},
+  sampling?: (listViewRegion: ImageRegion) => ImageRegion,
+  threshold: number = 0.9
 ) => {
   const mat = typeof image === "string" ? file.readImageMatSync(image) : image;
   const ro = RecognitionObject.templateMatch(mat);
@@ -393,6 +413,7 @@ export const findImageWithinListView = async (
     },
     listView,
     retryOptions,
-    sampling
+    sampling,
+    threshold
   );
 };
