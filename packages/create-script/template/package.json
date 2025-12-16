@@ -12,15 +12,15 @@
     "build": "bettergi-cli"
   },
   "dependencies": {
-    "@bettergi/utils": "^0.1.19"
+    "@bettergi/utils": "^0.1.21"
   },
   "devDependencies": {
-    "@bettergi/cli": "^0.1.9",
-    "@bettergi/types": "^0.1.5",
-    "@eslint/js": "^9.39.1",
-    "eslint": "^9.39.1",
+    "@bettergi/cli": "^0.1.10",
+    "@bettergi/types": "^0.1.6",
+    "@eslint/js": "^9.39.2",
+    "eslint": "^9.39.2",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.3"
+    "typescript-eslint": "^8.50.0"
   },
   "engines": {
     "node": "^20.9.0 || >=21.1.0"

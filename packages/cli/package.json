@@ -54,7 +54,7 @@
   "devDependencies": {
     "@bettergi/types": "workspace:^",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^24.10.1",
+    "@types/node": "^25.0.2",
     "@types/winreg": "^1.2.36",
     "rimraf": "^6.1.2",
     "typescript": "^5.9.3"
