@@ -34,13 +34,13 @@
   },
   "dependencies": {
     "@clack/prompts": "^0.11.0",
-    "fs-extra": "^11.3.2",
+    "fs-extra": "^11.3.3",
     "git-config": "^0.0.7"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
     "@types/git-config": "^0.0.32",
-    "@types/node": "^25.0.2",
+    "@types/node": "^25.0.3",
     "rimraf": "^6.1.2",
     "typescript": "^5.9.3"
   }

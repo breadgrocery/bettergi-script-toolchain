@@ -41,12 +41,11 @@
     "build": "rimraf dist && tsc"
   },
   "dependencies": {
-    "c12": "^3.3.2",
+    "c12": "^3.3.3",
     "chokidar": "^5.0.0",
     "debounce": "^3.0.0",
-    "esbuild": "^0.27.1",
-    "find-cache-directory": "^6.0.0",
-    "fs-extra": "^11.3.2",
+    "esbuild": "^0.27.2",
+    "fs-extra": "^11.3.3",
     "pinyin-pro": "^3.27.0",
     "tiny-glob": "^0.2.9",
     "winreg": "^1.2.5"
@@ -54,7 +53,7 @@
   "devDependencies": {
     "@bettergi/types": "workspace:^",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^25.0.2",
+    "@types/node": "^25.0.3",
     "@types/winreg": "^1.2.36",
     "rimraf": "^6.1.2",
     "typescript": "^5.9.3"
