@@ -51,7 +51,7 @@ await navigateToTab(() => {
 const i1 = findImage("assets/关闭.png", { use3Channels: true }); // 匹配颜色
 
 // 在指定区域内搜索图片，找不到返回 undefined
-const i2 = findImageWithinBounds("assets/关闭.png", 960, 0, 960, 1080);
+const i2 = findImageWithinBounds("assets/关闭.png", 960, 0, 960, 1080, { threshold: 0.75 }); // 阈值0.75
 
 // 在指定坐标范围内搜索图片，找不到返回 undefined
 const i3 = findImageBetweenCoordinates("assets/关闭.png", 960, 0, 1920, 1080);
@@ -157,7 +157,7 @@ await mouseScrollDownLines(1, 115);
 
 ### 状态管理和持久化
 
-> 基于深度 Proxy 实现的对象数据持久化，能够在数据被修改时自动同步至文件。使开发其能够像操作普通对象一样进行数据读写，而无需关心底层的持久化细节。
+> 基于深度 Proxy 实现的对象数据持久化，能够在数据被修改时自动同步至文件。使开发者能够像操作普通对象一样进行数据读写，而无需关心底层的持久化细节。
 
 ```ts
 // 创建/读取存储对象，保存到存储文件 store/my-data.json 中

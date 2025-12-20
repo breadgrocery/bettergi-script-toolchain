@@ -1,6 +1,6 @@
 import { assertRegionAppearing, assertRegionDisappearing } from "./asserts";
 import { mouseMoveAlongWaypoints } from "./mouse";
-import { ListView, findTextInDirection, findTextWithinBounds, findTextWithinListView } from "./ocr";
+import { type ListView, findTextWithinBounds, findTextWithinListView } from "./ocr";
 
 /**
  * 临时设置游戏分辨率和DPI缩放比例，执行指定动作后恢复
@@ -16,12 +16,12 @@ export const withGameMetrics = async <T>(
   dpi: number,
   action: () => Promise<T> | T
 ): Promise<T> => {
-  const [_w, _h, _dpi] = globalThis["getGameMetrics"] ? getGameMetrics() : [];
+  const [_w, _h, _dpi] = getGameMetrics();
   try {
     setGameMetrics(w, h, dpi);
     return await action();
   } finally {
-    globalThis["getGameMetrics"] && setGameMetrics(_w, _h, _dpi);
+    setGameMetrics(_w, _h, _dpi);
   }
 };
 
@@ -187,10 +187,10 @@ export const setTimeTo = async (hour: number, minute: number, options?: ClockOpt
 
     // 点击确认按钮，等待调整结束
     await assertRegionAppearing(
-      () => findTextInDirection("时间少于", "south-east", { contains: true }),
+      () => findTextWithinBounds("时间少于", 960, 540, 960, 540, { contains: true }),
       "调整时间超时",
       () => {
-        findTextInDirection("确认", "south-east")?.click();
+        findTextWithinBounds("确认", 960, 540, 960, 540)?.click();
       },
       { maxAttempts: 20, retryInterval: 1000 }
     );

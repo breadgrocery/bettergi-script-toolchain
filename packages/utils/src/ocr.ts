@@ -1,5 +1,5 @@
 import { mouseScrollDownLines } from "./mouse";
-import { RetryOptions, waitForAction } from "./workflow";
+import { type RetryOptions, waitForAction } from "./workflow";
 
 /** 识别对象实例 */
 export type ROInstance = InstanceType<typeof RecognitionObject>;
@@ -38,7 +38,7 @@ const directionToBounds = (direction: MatchDirection) => {
  * 在整个画面内搜索图片
  * @param image 图片路径 或 图片Mat
  * @param config 识别对象配置
- * @returns 如果找到匹配的图片区域，则返回该区域
+ * @returns 如果找到匹配的图片区域，则返回该区域，否则返回 undefined
  */
 export const findImage = (image: string | ImageMat, config: ROConfig = {}) => {
   const ir = captureGameRegion();
@@ -65,7 +65,7 @@ export const findImage = (image: string | ImageMat, config: ROConfig = {}) => {
  * @param w 宽度
  * @param h 高度
  * @param config 识别对象配置
- * @returns 如果找到匹配的图片区域，则返回该区域
+ * @returns 如果找到匹配的图片区域，则返回该区域，否则返回 undefined
  */
 export const findImageWithinBounds = (
   image: string | ImageMat,
@@ -99,7 +99,7 @@ export const findImageWithinBounds = (
  * @param right 右边界偏移量（像素）
  * @param bottom 下边界偏移量（像素）
  * @param config 识别对象配置
- * @returns 如果找到匹配的图片区域，则返回该区域
+ * @returns 如果找到匹配的图片区域，则返回该区域，否则返回 undefined
  */
 export const findImageBetweenCoordinates = (
   image: string | ImageMat,
@@ -117,7 +117,7 @@ export const findImageBetweenCoordinates = (
  * @param image 图片路径 或 图片Mat
  * @param direction 搜索方向
  * @param config 识别对象配置
- * @returns 如果找到匹配的图片区域，则返回该区域
+ * @returns 如果找到匹配的图片区域，则返回该区域，否则返回 undefined
  */
 export const findImageInDirection = (
   image: string | ImageMat,
@@ -174,7 +174,7 @@ const textMatch = (text: string, searchText: string, options?: TextMatchOptions)
  * @param text 待搜索文本
  * @param options 搜索选项
  * @param config 识别对象配置
- * @returns 如果找到匹配的文本区域，则返回该区域
+ * @returns 如果找到匹配的文本区域，则返回该区域，否则返回 undefined
  */
 export const findText = (text: string, options?: TextMatchOptions, config: ROConfig = {}) => {
   const ir = captureGameRegion();
@@ -202,7 +202,7 @@ export const findText = (text: string, options?: TextMatchOptions, config: ROCon
  * @param h 高度
  * @param options 搜索选项
  * @param config 识别对象配置
- * @returns 如果找到匹配的文本区域，则返回该区域
+ * @returns 如果找到匹配的文本区域，则返回该区域，否则返回 undefined
  */
 export const findTextWithinBounds = (
   text: string,
@@ -238,7 +238,7 @@ export const findTextWithinBounds = (
  * @param bottom 下边界偏移量（像素）
  * @param options 搜索选项
  * @param config 识别对象配置
- * @returns 如果找到匹配的文本区域，则返回该区域
+ * @returns 如果找到匹配的文本区域，则返回该区域，否则返回 undefined
  */
 export const findTextBetweenCoordinates = (
   text: string,
@@ -258,7 +258,7 @@ export const findTextBetweenCoordinates = (
  * @param direction 搜索方向
  * @param options 搜索选项
  * @param config 识别对象配置
- * @returns 如果找到匹配的文本区域，则返回该区域
+ * @returns 如果找到匹配的文本区域，则返回该区域，否则返回 undefined
  */
 export const findTextInDirection = (
   text: string,

@@ -67,7 +67,7 @@ export const useStoreWithDefaults = <T extends Record<string, any>>(
   name: string,
   defaults: Partial<T>
 ): T => {
-  const store = useStore<T>(name);
-  Object.assign(store, deepMerge(defaults, store));
-  return store;
+  const newStore = useStore<T>(name);
+  Object.assign(newStore, deepMerge(defaults, newStore));
+  return newStore;
 };
