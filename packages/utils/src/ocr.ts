@@ -343,7 +343,14 @@ export const findWithinListView = async (
     { maxAttempts, retryInterval }
   );
 
-  return isFoundOrReachedBottom ? condition(captureListViewRegion()) : undefined;
+  if (isFoundOrReachedBottom) {
+    const targetRegion = condition(captureListViewRegion());
+    if (targetRegion) {
+      const { item1, item2 } = targetRegion.convertPositionToGameCaptureRegion(0, 0);
+      Object.assign(targetRegion, { x: item1, y: item2 });
+      return targetRegion;
+    }
+  }
 };
 
 /**
