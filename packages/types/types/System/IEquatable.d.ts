@@ -5,4 +5,5 @@ declare global {
     }
   }
 }
+
 export {};

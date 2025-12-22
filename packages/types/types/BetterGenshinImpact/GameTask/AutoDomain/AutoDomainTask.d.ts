@@ -1,5 +1,6 @@
 import "../../../System/Collections/Generic/List";
 import "../../../System/Threading/CancellationToken";
+import "../../../System/Tuple";
 import "../../GameTask/Model/Area/ImageRegion";
 import "../../GameTask/Model/Area/Region";
 import "../ISoloTask";
@@ -20,7 +21,7 @@ declare global {
       static pressUseResin(
         ra: BetterGenshinImpact.GameTask.Model.Area.ImageRegion,
         resinName: string
-      ): [boolean, number];
+      ): System.Tuple2<boolean, number>;
 
       /**
        * 点击使用树脂
@@ -30,7 +31,7 @@ declare global {
       static pressUseResin(
         regionList: System.Collections.Generic.List<BetterGenshinImpact.GameTask.Model.Area.Region>,
         resinName: string
-      ): [boolean, number];
+      ): System.Tuple2<boolean, number>;
 
       constructor(taskParam: BetterGenshinImpact.GameTask.AutoDomain.AutoDomainParam);
     }

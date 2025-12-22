@@ -1,6 +1,7 @@
 import { Rect } from "mirada/dist/src/types/opencv";
 import "../../../../System/Drawing/Pen";
 import "../../../../System/IDisposable";
+import "../../../../System/Tuple";
 import "../../../GameTask/Model/Area/Converter/INodeConverter";
 import "../../../GameTask/Model/Area/ImageRegion";
 import "../../../View/Drawable/LineDrawable";
@@ -165,10 +166,10 @@ declare global {
       convertPositionToGameCaptureRegion(x: number, y: number, w: number, h: number): Rect;
 
       /** 将指定区域的截图转换成位置元组 */
-      convertPositionToGameCaptureRegion(x: number, y: number): [number, number];
+      convertPositionToGameCaptureRegion(x: number, y: number): System.Tuple2<number, number>;
 
       /** 将指定桌面区域的截图转换成位置元组 */
-      convertPositionToDesktopRegion(x: number, y: number): [number, number];
+      convertPositionToDesktopRegion(x: number, y: number): System.Tuple2<number, number>;
 
       /** 生成一个新的矩形类型的区域 */
       toRect(): Rect;

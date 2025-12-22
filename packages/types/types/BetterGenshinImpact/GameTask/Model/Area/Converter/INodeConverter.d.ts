@@ -1,7 +1,14 @@
+import "../../../../../System/Tuple";
+
 declare global {
   namespace BetterGenshinImpact.GameTask.Model.Area.Converter {
     interface INodeConverter {
-      toPrev(x: number, y: number, w: number, h: number): [number, number, number, number];
+      toPrev(
+        x: number,
+        y: number,
+        w: number,
+        h: number
+      ): System.Tuple4<number, number, number, number>;
     }
   }
 }
