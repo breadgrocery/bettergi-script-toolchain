@@ -333,8 +333,12 @@ export const findWithinListView = async (
     };
   })();
 
-  const isFoundOrReachedBottom = await waitForAction(
-    () => condition(captureListViewRegion())?.isExist() || isReachedBottom(),
+  let targetRegion: Region | undefined;
+  await waitForAction(
+    () => {
+      targetRegion = condition(captureListViewRegion());
+      return targetRegion?.isExist() || isReachedBottom();
+    },
     async () => {
       moveMouseTo(x + w - paddingX, y + paddingY); // 移动到滚动条附近
       await sleep(50);
@@ -343,13 +347,10 @@ export const findWithinListView = async (
     { maxAttempts, retryInterval }
   );
 
-  if (isFoundOrReachedBottom) {
-    const targetRegion = condition(captureListViewRegion());
-    if (targetRegion) {
-      const { item1, item2 } = targetRegion.convertPositionToGameCaptureRegion(0, 0);
-      Object.assign(targetRegion, { x: item1, y: item2 });
-      return targetRegion;
-    }
+  if (targetRegion?.isExist()) {
+    const { item1, item2 } = targetRegion.convertPositionToGameCaptureRegion(0, 0);
+    Object.assign(targetRegion, { x: item1, y: item2 });
+    return targetRegion;
   }
 };
 
