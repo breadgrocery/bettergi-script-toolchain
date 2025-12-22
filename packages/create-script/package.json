@@ -30,7 +30,8 @@
   ],
   "scripts": {
     "dev": "tsc && create-script",
-    "build": "rimraf dist && tsc"
+    "build": "rimraf dist && tsc",
+    "release": "pnpm build && pnpm publish --access public"
   },
   "dependencies": {
     "@clack/prompts": "^0.11.0",

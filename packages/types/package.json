@@ -19,6 +19,9 @@
     "bettergi",
     "types"
   ],
+  "scripts": {
+    "release": "pnpm build && pnpm publish --access public"
+  },
   "dependencies": {
     "mirada": "^0.0.15"
   }

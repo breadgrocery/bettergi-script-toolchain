@@ -30,10 +30,13 @@
   ],
   "scripts": {
     "dev": "tsc --watch",
-    "build": "rimraf dist && tsc"
+    "build": "rimraf dist && tsc",
+    "release": "pnpm build && pnpm publish --access public"
+  },
+  "dependencies": {
+    "@bettergi/types": "workspace:^"
   },
   "devDependencies": {
-    "@bettergi/types": "workspace:^",
     "rimraf": "^6.1.2",
     "typescript": "^5.9.3"
   }
