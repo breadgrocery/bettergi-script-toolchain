@@ -41,3 +41,11 @@ export const deepMerge = (...objects: any[]): any => {
     }, result);
   }, {});
 };
+
+/**
+ * 同步休眠执行指定时长
+ * @param duration - 休眠时长（毫秒）
+ */
+export const sleepSync = (duration: number) => {
+  duration > 0 && Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, duration);
+};
