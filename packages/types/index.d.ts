@@ -19,9 +19,6 @@
 // 消息通知
 /// <reference path="./objects/notification.d.ts" />
 
-// 键鼠回调
-/// <reference path="./objects/keyMouseHook.d.ts" />
-
 // 任务调用
 /// <reference path="./objects/dispatcher.d.ts" />
 
@@ -58,6 +55,9 @@
 // 任务参数
 /// <reference path="./types/BetterGenshinImpact/GameTask/AutoDomain/AutoDomainParam.d.ts" />
 /// <reference path="./types/BetterGenshinImpact/GameTask/AutoFight/AutoFightParam.d.ts" />
+
+// 键鼠回调
+/// <reference path="./types/BetterGenshinImpact/Core/Script/Dependence/KeyMouseHook.d.ts" />
 
 /// 设置
 /// <reference path="./objects/settings.d.ts" />

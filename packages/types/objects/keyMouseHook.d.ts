@@ -44,7 +44,7 @@ declare global {
      * @param callback 回调函数
      * @param interval 回调节流间隔（单位：毫秒，默认值：200）
      */
-    function onMouseMove(callback: (x: number, y: number) => void, interval: number = 200): void;
+    function onMouseMove(callback: (x: number, y: number) => void, interval?: number): void;
 
     /**
      * 注册鼠标滚轮事件回调
