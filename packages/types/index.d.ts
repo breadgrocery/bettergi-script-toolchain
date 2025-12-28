@@ -19,6 +19,9 @@
 // 消息通知
 /// <reference path="./objects/notification.d.ts" />
 
+// 键鼠回调
+/// <reference path="./objects/keyMouseHook.d.ts" />
+
 // 任务调用
 /// <reference path="./objects/dispatcher.d.ts" />
 

@@ -1,6 +1,6 @@
 {
   "name": "@bettergi/types",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "BetterGI TypeScript 类型定义",
   "type": "module",
   "author": "Bread Grocery<https://github.com/breadgrocery>",
@@ -20,7 +20,7 @@
     "types"
   ],
   "scripts": {
-    "release": "pnpm build && pnpm publish --access public"
+    "release": "pnpm publish --access public"
   },
   "dependencies": {
     "mirada": "^0.0.15"
