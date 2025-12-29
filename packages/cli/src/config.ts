@@ -1,31 +1,4 @@
-namespace bettergi {
-  export interface BetterGI {
-    /**
-     * 是否启用 BetterGI 脚本安装
-     * @default true
-     */
-    enable?: boolean;
-
-    /**
-     * BetterGI 安装位置，用于输出脚本到其 `User/JsScript` 目录下
-     * @default 读取系统注册表获取
-     */
-    installPath?: string;
-
-    /**
-     * BetterGI 脚本位置，用于输出脚本到该目录下
-     * @default ${installPath}/User/JsScript
-     */
-    scriptPath?: string;
-
-    /**
-     * 输出脚本文件夹
-     * @default package.json 的 `name` 字段
-     */
-    outDir?: string;
-  }
-}
-namespace manifest {
+export namespace manifest {
   export interface Manifest {
     /**
      * 清单版本
@@ -65,7 +38,7 @@ namespace manifest {
      */
     scripts?: string[];
 
-    /** external 类库（仅支持 CommonJS ） */
+    /** external 类库 */
     library?: string[];
 
     /** 脚本升级时需保留还原的 文件/文件夹 列表（支持正则表达式与通配符） */
@@ -75,7 +48,7 @@ namespace manifest {
     http_allowed_urls?: string[];
   }
 
-  interface Author {
+  export interface Author {
     /** 作者名称 */
     name: string;
 
@@ -84,7 +57,7 @@ namespace manifest {
   }
 }
 
-namespace settings {
+export namespace settings {
   export type SettingItem = Separator | TextBox | ComboBox | CheckBox | MultiCheckbox;
 
   export interface Component {
@@ -146,6 +119,34 @@ namespace settings {
   }
 }
 
+export namespace bettergi {
+  export interface BetterGI {
+    /**
+     * 是否安装脚本到 BetterGI 脚本目录
+     * @default true
+     */
+    enable?: boolean;
+
+    /**
+     * BetterGI 安装位置，用于输出脚本到其 `User/JsScript` 目录下
+     * @default 读取系统注册表获取
+     */
+    installPath?: string;
+
+    /**
+     * BetterGI 脚本目录，用于输出脚本到该目录下
+     * @default ${installPath}/User/JsScript
+     */
+    scriptPath?: string;
+
+    /**
+     * 输出脚本文件夹
+     * @default package.json 的 `name` 字段
+     */
+    outDir?: string;
+  }
+}
+
 export interface ScriptConfig {
   /**
    * 脚本文件
@@ -160,7 +161,7 @@ export interface ScriptConfig {
   assetsDir?: string;
 
   /**
-   * 输出路径
+   * 构建输出路径
    * @default `dist`
    */
   outDir?: string;
@@ -207,14 +208,20 @@ export interface ScriptConfig {
    */
   banner?: boolean | string;
 
-  /** BetterGI 调试配置 */
-  bettergi?: bettergi.BetterGI;
+  /**
+   * 监听文件变化（支持通配符）
+   * 固定监听文件：[ `脚本入口文件`, `package.json`, `资源文件目录` ]
+   */
+  watch?: string[];
 
   /** Manifest 信息 */
   manifest?: manifest.Manifest;
 
   /** UI 配置 */
   settings?: settings.SettingItem[];
+
+  /** BetterGI 调试配置 */
+  bettergi?: bettergi.BetterGI;
 }
 
 export const defineConfig = (config: ScriptConfig): ScriptConfig => {
