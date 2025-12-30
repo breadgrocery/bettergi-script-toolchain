@@ -1,9 +1,8 @@
-import debounce from "debounce";
 import { type ConfigManager } from "../config/index.js";
 import { installScript } from "./bettergi.js";
 import { emitAdditionalFiles, emitAssets, emitManifestFile, emitSettingsFile } from "./emit.js";
 
-const postProcess = async (manager: ConfigManager) => {
+export const postBuild = async (manager: ConfigManager) => {
   try {
     // 重载配置
     await manager.reload();
@@ -21,5 +20,3 @@ const postProcess = async (manager: ConfigManager) => {
     console.warn(`Error post-processing build: ${err}`);
   }
 };
-
-export const postBuild = debounce(postProcess, 500, { immediate: true });

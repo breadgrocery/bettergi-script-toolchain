@@ -23,6 +23,9 @@ import { lookupPackageInfo } from "./utils/pkg.js";
       PostBuildProcessor(manager) // 构建后处理
     ],
     treeshake: true,
+    watch: {
+      buildDelay: 500 // 防抖
+    },
     output: {
       dir: config.outDir,
       format: "esm",
@@ -52,6 +55,7 @@ import { lookupPackageInfo } from "./utils/pkg.js";
                   return `${virtual}@${name}`;
                 }
               },
+              // 将 rolldown 运行时代码拆分到单独的chunk中
               {
                 test: /rolldown:runtime/,
                 name: "rolldown-runtime"
