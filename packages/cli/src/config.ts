@@ -197,6 +197,12 @@ export interface ScriptConfig {
   };
 
   /**
+   * 启用代码分割
+   * @default true
+   */
+  codeSplitting?: boolean;
+
+  /**
    * 启用脚本压缩
    * @default false
    */

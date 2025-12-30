@@ -1,62 +1,85 @@
-import chokidar from "chokidar";
-import esbuild from "esbuild";
-import fs from "fs-extra";
+import { type BuildOptions, build, watch } from "rolldown";
 import { postBuild } from "./build/index.js";
 import { ConfigManager } from "./config/index.js";
-import ImageMatLoader from "./plugins/image-mat-loader.js";
+import FileWatcher from "./plugins/file-watcher.js";
+import ImageMatLoader from "./plugins/loaders/image-mat-loader.js";
+import JSONLoader from "./plugins/loaders/json-loader.js";
+import TextLoader from "./plugins/loaders/text-loader.js";
+import PostBuildProcessor from "./plugins/post-build-processor.js";
+import { lookupPackageInfo } from "./utils/pkg.js";
 
 (async () => {
   const manager = await ConfigManager.create();
-  const { config, configFile } = manager.configData;
+  const { config } = manager.configData;
 
   // 配置构建选项
-  const context = await esbuild.context({
-    outdir: config.outDir,
-    entryPoints: config.main,
-    format: "esm",
-    target: "es2022",
-    bundle: true,
-    minify: config.minify,
-    legalComments: config.minify ? "none" : "inline",
-    charset: "utf8",
-    banner: { js: config.banner },
+  const buildOptions: BuildOptions = {
+    input: config.main,
     plugins: [
-      ImageMatLoader({
-        outDir: config.outDir,
-        baseDir: config.loaders.image.baseDir
-      }),
-      {
-        name: "rebuild",
-        setup: build => {
-          build.onEnd(async () => {
-            await postBuild(manager);
-          });
-        }
-      }
-    ]
-  });
-
-  // 清理输出目录
-  fs.removeSync(config.outDir);
+      TextLoader(), // 文本文件加载器
+      JSONLoader(), // JSON 文件加载器
+      ImageMatLoader(manager), // 图像文件加载器
+      FileWatcher(manager), // 监听文件变更
+      PostBuildProcessor(manager) // 构建后处理
+    ],
+    treeshake: true,
+    output: {
+      dir: config.outDir,
+      format: "esm",
+      banner: ({ isEntry }) => (isEntry ? config.banner : ""),
+      chunkFileNames: "libs/[name].js",
+      minify: config.minify,
+      advancedChunks: config.codeSplitting
+        ? {
+            groups: [
+              // 将所有外部依赖包拆分到单独的chunk中
+              {
+                priority: 1,
+                test: /node_modules|bettergi-script-toolchain[\\/]packages/,
+                name(moduleId) {
+                  const pkgInfo = lookupPackageInfo(moduleId);
+                  return typeof pkgInfo?.name === "string"
+                    ? pkgInfo.name.toLowerCase().replace("/", "+")
+                    : undefined;
+                }
+              },
+              // 将虚拟模块拆分到单独的chunk中
+              {
+                priority: 2,
+                test: /^virtual:.+:/,
+                name(moduleId) {
+                  const [virtual, name] = moduleId.split(":");
+                  return `${virtual}@${name}`;
+                }
+              },
+              {
+                test: /rolldown:runtime/,
+                name: "rolldown-runtime"
+              }
+            ]
+          }
+        : undefined,
+      legalComments: config.minify ? "none" : "inline",
+      preserveModules: false, // 不保留原始模块结构
+      topLevelVar: false, // ESM 顶层不使用 var 声明
+      minifyInternalExports: false, // 禁用导出重命名
+      cleanDir: true, // 清理输出目录
+      keepNames: true // 保留原始函数和类名
+    },
+    checks: {
+      pluginTimings: false
+    },
+    tsconfig: true
+  };
 
   // 根据命令行参数决定是否启用监听模式
   if (process.argv.includes("--watch")) {
-    await context.watch();
-    // 监听文件变化
-    const watchPaths = [
-      ...new Set([configFile, "package.json", config.assetsDir, ...config.watch])
-    ];
-    chokidar.watch(watchPaths).on("all", async (event, path, state) => {
-      if (state && state.isFile()) {
-        console.debug(`[${new Date().toISOString()}][${event}]: ${path}`);
-        await postBuild(manager);
-      }
-    });
     console.log("👀 Watching for changes...");
+    const watcher = watch(buildOptions);
+    await watcher.close();
   } else {
-    await context.rebuild();
+    await build(buildOptions);
     await postBuild(manager);
-    await context.dispose();
     console.log("✅ Build completed.");
   }
 })();

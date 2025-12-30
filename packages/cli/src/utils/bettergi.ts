@@ -21,7 +21,7 @@ export const getInstallPath = (() => {
       const match = item?.value?.match(/[a-zA-Z]:\\(?:[^\/:*?"<>|\r\n]+\\)*[^\/:*?"<>|\r\n]*/g);
       installPath = match?.[0] && path.dirname(match[0]);
     } catch (err) {
-      console.warn(`⚠️ Error reading registry path ${reg.path}: ${err}`);
+      console.warn(`⚠️ Error reading registry path: ${reg.path}: ${err}`);
       return undefined;
     }
 
@@ -39,10 +39,10 @@ export const getVersion = (() => {
       if (!installPath) return;
 
       const configFilePath = path.join(installPath, "User/config.json");
-      const config = fs.readJSONSync(configFilePath);
+      const config = fs.readJSONSync(configFilePath, { encoding: "utf-8" });
       version = config["commonConfig"]?.["runForVersion"] as string;
     } catch {
-      console.warn("⚠️ Error determining BetterGI version");
+      console.warn("⚠️ Error determining BetterGI version.");
     }
 
     return version;

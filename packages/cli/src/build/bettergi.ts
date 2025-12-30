@@ -7,7 +7,13 @@ export const installScript = (config: Config) => {
   if (!bettergi.enable) return;
 
   if (bettergi.scriptPath) {
-    const dest = path.join(bettergi.scriptPath, bettergi.outDir || manifest.name);
+    const scriptDir = bettergi.outDir || manifest.name;
+    if (!scriptDir) {
+      console.warn(`⚠️ Error determining script directory for BetterGI installation.`);
+      return;
+    }
+
+    const dest = path.join(bettergi.scriptPath, scriptDir);
     fs.existsSync(outDir) && fs.copySync(outDir, dest);
   } else {
     console.warn(`⚠️ Auto-detect BetterGI failed. Set "bettergi.installPath" manually.`);

@@ -18,7 +18,7 @@ const postProcess = async (manager: ConfigManager) => {
     // 安装脚本到 BetterGI 脚本目录
     installScript(config);
   } catch (err) {
-    console.error(err);
+    console.warn(`Error post-processing build: ${err}`);
   }
 };
 

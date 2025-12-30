@@ -1,8 +1,13 @@
 import path from "node:path";
-import { type ScriptConfig, type manifest } from "../config.js";
+import { type manifest } from "../config.js";
 import { getVersion } from "../utils/bettergi.js";
+import { ConfigContext } from "./index.js";
 
-export const parseManifestConfig = async (config: ScriptConfig, pkg: any) => {
+type Context = Pick<ConfigContext, "config" | "configFile" | "pkg" | "build">;
+
+export const parseManifestConfig = async (context: Context) => {
+  const { config, pkg, build } = context;
+
   // 清单版本
   const manifest_version = config.manifest?.manifest_version || 1;
 
@@ -13,26 +18,27 @@ export const parseManifestConfig = async (config: ScriptConfig, pkg: any) => {
   const version: string | undefined = config.manifest?.version || pkg.version;
 
   // 适用于 BetterGI 的最低版本
-  const v = (config.bettergi?.enable ?? true) ? await getVersion() : undefined;
-  const bgi_version: string | undefined = config.manifest?.bgi_version || v;
+  const bgi_version: string | undefined = config.manifest?.bgi_version || (await getVersion());
 
   // 脚本描述
   const description: string | undefined = config.manifest?.description || pkg.description;
 
   // 作者信息
-  const authors: manifest.Author[] = config.manifest?.authors || [
-    typeof pkg.author === "object"
-      ? {
-          name: pkg.author.name,
-          ...(pkg.author.url && { link: pkg.author.url })
-        }
-      : {
-          ...(pkg.author && { name: pkg.author })
-        }
-  ];
+  const authors: manifest.Author[] =
+    config.manifest?.authors ||
+    [
+      typeof pkg.author === "object"
+        ? {
+            name: pkg.author.name,
+            ...(pkg.author.url && { link: pkg.author.url })
+          }
+        : {
+            ...(pkg.author && { name: pkg.author })
+          }
+    ].filter(item => Object.keys(item).includes("name"));
 
   // 脚本入口文件
-  const main = `${path.parse(config.main || "main.ts").name}.js`;
+  const main = `${path.parse(build.main).name}.js`;
 
   // UI 配置
   const settings_ui: string | undefined =
@@ -42,7 +48,10 @@ export const parseManifestConfig = async (config: ScriptConfig, pkg: any) => {
   const scripts = config.manifest?.scripts && [...config.manifest.scripts];
 
   // external 类库
-  const library = config.manifest?.library && [...config.manifest.library];
+  const libs = build.codeSplitting
+    ? ["./", "./libs/"].concat(config.manifest?.library || [])
+    : config.manifest?.library;
+  const library = libs && [...libs];
 
   // 脚本升级时需保留还原的 文件/文件夹 列表（支持正则表达式与通配符）
   const saved_files = config.manifest?.saved_files && [...config.manifest.saved_files];

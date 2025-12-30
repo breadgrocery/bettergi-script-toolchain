@@ -1,10 +1,14 @@
 import path from "node:path";
 import glob from "tiny-glob";
-import { type ScriptConfig } from "../config.js";
+import { type ConfigContext } from "./index.js";
 
-export const parseBuildConfig = async (config: ScriptConfig, pkg: any) => {
+type Context = Pick<ConfigContext, "config" | "configFile" | "pkg">;
+
+export const parseBuildConfig = async (context: Context) => {
+  const { config, configFile } = context;
+
   // 脚本入口文件
-  const main = [config.main || "main.ts"];
+  const main = config.main || "main.ts";
 
   // 资源文件目录
   const assetsDir = config.assetsDir || "assets";
@@ -45,6 +49,9 @@ export const parseBuildConfig = async (config: ScriptConfig, pkg: any) => {
     }
   };
 
+  // 启用代码分割
+  const codeSplitting = config.codeSplitting ?? true;
+
   // 启用脚本压缩
   const minify = config.minify ?? false;
 
@@ -63,7 +70,19 @@ export const parseBuildConfig = async (config: ScriptConfig, pkg: any) => {
         : defaultBanner;
 
   // 监听文件变化（支持通配符）
-  const watch = config.watch || [];
+  const include = [configFile, "package.json", assetsDir].concat(config.watch || []);
+  const watches = include.map(item => glob(item, { cwd: path.resolve("."), absolute: true }));
+  const watch = (await Promise.all(watches)).flat().filter(Boolean) as string[];
 
-  return { main, assetsDir, outDir, additionalFiles, loaders, minify, banner, watch };
+  return {
+    main,
+    assetsDir,
+    outDir,
+    additionalFiles,
+    loaders,
+    codeSplitting,
+    minify,
+    banner,
+    watch
+  };
 };

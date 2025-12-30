@@ -14,3 +14,8 @@ export const sanitizeVariableName = (str: string) => {
   const { name } = path.parse(str);
   return pinyin(name, { toneType: "none", separator: "" }).replace(/[^a-zA-Z0-9_$]/g, "_");
 };
+
+export const hashFile = (source: string) => {
+  const { name, ext } = path.parse(source);
+  return `${name}-${sha256(source)}${ext}`;
+};
