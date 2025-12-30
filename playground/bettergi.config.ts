@@ -8,6 +8,7 @@ export default defineConfig({
     enable: true,
     outDir: "开发"
   },
+  codeSplitting: true,
   // 清单信息
   manifest: {},
   // 配置UI

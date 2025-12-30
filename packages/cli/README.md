@@ -33,14 +33,26 @@ pnpm create @bettergi/script@latest
   const merged = merge({}, obj1, obj2);
   ```
 
+- 支持 ESM 代码分割，打包生成符合 BetterGI 规范的外部库（要求 `bgi_version` >= `0.54.0`）。
+
+  ```
+  📁 MyScript
+   ├─ 📄 main.js
+   ├─ 📄 manifest.json
+   ├─ 📄 settings.json
+   ├─ 📁 libs
+   │  ├─ 📄 @bettergi_utils.js
+   │  └─ 📄 rolldown-runtime.js
+  ```
+
 - 支持使用 `import` 导入文本文件（`.txt`、`.json`），大文本/预定义数据与脚本逻辑分离。
 
   ```ts
-  import foo1 from "./foo1.txt";
-  import foo2 from "./foo2.json";
+  import bar from "./bar.json";
+  import foo from "./foo.txt";
 
-  log.info(`${foo1}`);
-  log.info(`${JSON.stringify(foo2)}`);
+  log.info(`${foo}`);
+  log.info(`${JSON.stringify(bar)}`);
   ```
 
 - 支持使用 `import` 导入图片文件（`.png`、`.jpg`、`.jpeg`、`.bmp`、`.tiff`、`.webp`），自动导入为 `Mat` 对象实例。
@@ -58,26 +70,6 @@ pnpm create @bettergi/script@latest
   ```ts
   <!-- 构建结果 -->
   var mat_foo = file.readImageMatSync("assets/foo-d3036d20a653.png");
-
-  var ir = captureGameRegion();
-  var ro = RecognitionObject.templateMatch(mat_foo);
-  var result = ir.find(ro);
-  ```
-
-  - 导入为 Mat 对象，并调整图像尺寸。
-
-  ```ts
-  <!-- 示例代码 -->
-  import mat from "./foo.png" with { width: "100", height: "100" };
-
-  const ir = captureGameRegion();
-  const ro = RecognitionObject.templateMatch(mat);
-  const result = ir.find(ro);
-  ```
-
-  ```ts
-  <!-- 构建结果 -->
-  var mat_foo = file.readImageMatWithResizeSync("assets/foo-d3036d20a653.png", 100, 100, 1);
 
   var ir = captureGameRegion();
   var ro = RecognitionObject.templateMatch(mat_foo);
@@ -143,17 +135,18 @@ export default defineConfig({
   // assetsDir: "assets",
   // outDir: "dist",
   // additionalFiles: ["README.md", "LICENSE"], // 需要额外打包的文件
+  // codeSplitting: true,
   // minify: false,
   // banner: true,
-
-  // 调试配置
-  bettergi: {},
 
   // 清单信息
   manifest: {},
 
   // UI配置
-  settings: []
+  settings: [],
+
+  // 调试配置
+  bettergi: {}
 });
 ```
 
