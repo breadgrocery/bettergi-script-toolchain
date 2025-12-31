@@ -1,5 +1,5 @@
 import { type RolldownPlugin } from "rolldown";
-import { ConfigManager } from "../config/index.js";
+import { type ConfigManager } from "../config/index.js";
 
 const FileWatcher = (manager: ConfigManager): RolldownPlugin => {
   return {
@@ -9,7 +9,7 @@ const FileWatcher = (manager: ConfigManager): RolldownPlugin => {
       config.watch.forEach(id => this.addWatchFile(id));
     },
     async watchChange(id, { event }) {
-      console.debug(`[${new Date().toISOString()}][${event}]: ${id}`);
+      console.debug(`[${new Date().toLocaleString("zh-CN")}][${event}]: ${id}`);
     }
   };
 };

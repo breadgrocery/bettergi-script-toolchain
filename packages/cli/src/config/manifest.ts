@@ -1,7 +1,7 @@
 import path from "node:path";
 import { type manifest } from "../config.js";
 import { getVersion } from "../utils/bettergi.js";
-import { ConfigContext } from "./index.js";
+import { type ConfigContext } from "./index.js";
 
 type Context = Pick<ConfigContext, "config" | "configFile" | "pkg" | "build">;
 

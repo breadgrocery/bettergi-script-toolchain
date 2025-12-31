@@ -2,7 +2,7 @@ import { id, include } from "@rolldown/pluginutils";
 import fs from "fs-extra";
 import path from "node:path";
 import { type RolldownPlugin } from "rolldown";
-import { ConfigManager } from "../../config/index.js";
+import { type ConfigManager } from "../../config/index.js";
 import { hashFile, sanitizeVariableName } from "../../utils/string.js";
 
 const ImageMatLoader = (manager: ConfigManager): RolldownPlugin => {

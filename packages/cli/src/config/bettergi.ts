@@ -1,6 +1,6 @@
 import path from "node:path";
 import { getInstallPath } from "../utils/bettergi.js";
-import { ConfigContext } from "./index.js";
+import { type ConfigContext } from "./index.js";
 
 type Context = Omit<ConfigContext, "bettergi">;
 

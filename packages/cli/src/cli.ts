@@ -27,6 +27,9 @@ import { lookupPackageInfo } from "./utils/pkg.js";
     watch: {
       buildDelay: 500 // 防抖
     },
+    checks: {
+      pluginTimings: false
+    },
     tsconfig: true,
     /******************************** 输出选项 ********************************/
     output: {
