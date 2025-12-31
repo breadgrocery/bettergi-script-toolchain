@@ -61,6 +61,10 @@ export const parseManifestConfig = async (context: Context) => {
     ...config.manifest.http_allowed_urls
   ];
 
+  // 网页渲染组件：标签列表
+  const keywords: string[] | undefined = Array.isArray(pkg.keywords) ? pkg.keywords : undefined;
+  const tags = config.manifest?.tags ? config.manifest.tags : keywords;
+
   return {
     manifest_version,
     name,
@@ -73,6 +77,8 @@ export const parseManifestConfig = async (context: Context) => {
     scripts,
     library,
     saved_files,
-    http_allowed_urls
+    http_allowed_urls,
+    // 网页渲染组件
+    tags
   };
 };

@@ -1,5 +1,5 @@
 export namespace manifest {
-  export interface Manifest {
+  export interface Manifest extends ScriptWebRenderItem {
     /**
      * 清单版本
      * @default 1
@@ -46,6 +46,15 @@ export namespace manifest {
 
     /** 允许请求的 URL 列表（支持通配符） */
     http_allowed_urls?: string[];
+  }
+
+  // https://github.com/zaodonganqi/bettergi-script-web
+  export interface ScriptWebRenderItem {
+    /**
+     * 标签列表
+     * @default package.json 的 `keywords` 字段
+     */
+    tags?: string[];
   }
 
   export interface Author {
