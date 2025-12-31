@@ -41,7 +41,7 @@ pnpm create @bettergi/script@latest
    ├─ 📄 manifest.json
    ├─ 📄 settings.json
    ├─ 📁 libs
-   │  ├─ 📄 @bettergi_utils.js
+   │  ├─ 📄 @bettergi+utils.js
    │  └─ 📄 rolldown-runtime.js
   ```
 

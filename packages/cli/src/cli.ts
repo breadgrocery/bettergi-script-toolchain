@@ -14,6 +14,7 @@ import { lookupPackageInfo } from "./utils/pkg.js";
 
   // 配置构建选项
   const buildOptions: BuildOptions = {
+    /******************************** 输入选项 ********************************/
     input: config.main,
     plugins: [
       TextLoader(), // 文本文件加载器
@@ -26,11 +27,19 @@ import { lookupPackageInfo } from "./utils/pkg.js";
     watch: {
       buildDelay: 500 // 防抖
     },
+    tsconfig: true,
+    /******************************** 输出选项 ********************************/
     output: {
       dir: config.outDir,
       format: "esm",
+      sourcemap: false,
       banner: ({ isEntry }) => (isEntry ? config.banner : ""),
       chunkFileNames: "libs/[name].js",
+      sanitizeFileName(name) {
+        return name
+          .replace(/[\u0000-\u001F\u007F]/g, "_")
+          .replace(/["#$%&*,:/;<=>?\[\]^`{|}]/g, "_");
+      },
       minify: config.minify,
       advancedChunks: config.codeSplitting
         ? {
@@ -42,7 +51,7 @@ import { lookupPackageInfo } from "./utils/pkg.js";
                 name(moduleId) {
                   const pkgInfo = lookupPackageInfo(moduleId);
                   return typeof pkgInfo?.name === "string"
-                    ? pkgInfo.name.toLowerCase().replace("/", "+")
+                    ? pkgInfo.name.replace("/", "+")
                     : undefined;
                 }
               },
@@ -69,11 +78,7 @@ import { lookupPackageInfo } from "./utils/pkg.js";
       minifyInternalExports: false, // 禁用导出重命名
       cleanDir: true, // 清理输出目录
       keepNames: true // 保留原始函数和类名
-    },
-    checks: {
-      pluginTimings: false
-    },
-    tsconfig: true
+    }
   };
 
   // 根据命令行参数决定是否启用监听模式
