@@ -5,7 +5,6 @@ import ImageMatLoader from "./plugins/loaders/image-mat-loader.js";
 import JSONLoader from "./plugins/loaders/json-loader.js";
 import TextLoader from "./plugins/loaders/text-loader.js";
 import PostBuildProcessor from "./plugins/post-build-processor.js";
-import { lookupPackageInfo } from "./utils/pkg.js";
 
 (async () => {
   const manager = await ConfigManager.create();
@@ -40,41 +39,10 @@ import { lookupPackageInfo } from "./utils/pkg.js";
       sanitizeFileName(name) {
         return name
           .replace(/[\u0000-\u001F\u007F]/g, "_")
-          .replace(/["#$%&*,:/;<=>?\[\]^`{|}]/g, "_");
+          .replace(/["#$%&*,:;<=>?\[\]^`{|}]/g, "_");
       },
       minify: config.minify,
-      advancedChunks: config.codeSplitting
-        ? {
-            groups: [
-              // 外部依赖包
-              {
-                priority: 0,
-                test: /node_modules|bettergi-script-toolchain[\\/]packages/,
-                name(moduleId) {
-                  const pkgInfo = lookupPackageInfo(moduleId);
-                  return typeof pkgInfo?.name === "string"
-                    ? pkgInfo.name.replace("/", "+")
-                    : undefined;
-                }
-              },
-              // 虚拟模块
-              {
-                priority: 999,
-                test: /^virtual:.+:/,
-                name(moduleId) {
-                  const [virtual, name] = moduleId.split(":");
-                  return `${virtual}@${name}`;
-                }
-              },
-              // rolldown
-              {
-                priority: 999,
-                test: /rolldown:runtime/,
-                name: "rolldown-runtime"
-              }
-            ]
-          }
-        : undefined,
+      advancedChunks: config.codeSplitting ? config.advancedChunks : undefined,
       legalComments: config.minify ? "none" : "inline",
       preserveModules: false, // 不保留原始模块结构
       topLevelVar: false, // ESM 顶层不使用 var 声明

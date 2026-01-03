@@ -1,10 +1,32 @@
 import path from "node:path";
+import { type OutputOptions } from "rolldown";
 import glob from "tiny-glob";
+import { lookupPackageInfo } from "../utils/pkg.js";
 import { type ConfigContext } from "./index.js";
 
 type Context = Pick<ConfigContext, "config" | "configFile" | "pkg">;
 
-export const parseBuildConfig = async (context: Context) => {
+export interface BuildConfig {
+  main: string;
+  assetsDir: string;
+  outDir: string;
+  additionalFiles: {
+    from: string;
+    to: string;
+  }[];
+  loaders: {
+    image: {
+      baseDir: string;
+    };
+  };
+  codeSplitting: boolean;
+  advancedChunks: OutputOptions["advancedChunks"];
+  minify: boolean;
+  banner: string;
+  watch: string[];
+}
+
+export const parseBuildConfig = async (context: Context): Promise<BuildConfig> => {
   const { config, configFile } = context;
 
   // 脚本入口文件
@@ -52,6 +74,38 @@ export const parseBuildConfig = async (context: Context) => {
   // 启用代码分割
   const codeSplitting = config.codeSplitting ?? true;
 
+  // 代码分割分组
+  const advancedChunks: NonNullable<OutputOptions["advancedChunks"]> = {
+    groups: [
+      // 外部依赖包
+      {
+        priority: Number.MAX_SAFE_INTEGER,
+        test: /node_modules|bettergi-script-toolchain[\\/]packages/,
+        name(moduleId) {
+          const pkgInfo = lookupPackageInfo(moduleId);
+          return typeof pkgInfo?.name === "string" ? pkgInfo.name.replace("/", "+") : undefined;
+        }
+      },
+      // 虚拟模块
+      {
+        priority: Number.MAX_SAFE_INTEGER,
+        test: /^virtual:.+:/,
+        name(moduleId) {
+          const [virtual, name] = moduleId.split(":");
+          return `${virtual}@${name}`;
+        }
+      },
+      // rolldown
+      {
+        priority: Number.MAX_SAFE_INTEGER,
+        test: /rolldown:runtime/,
+        name: "rolldown-runtime"
+      },
+      // 自定义分组
+      ...(config.chunkGroups || [])
+    ]
+  };
+
   // 启用脚本压缩
   const minify = config.minify ?? false;
 
@@ -81,6 +135,7 @@ export const parseBuildConfig = async (context: Context) => {
     additionalFiles,
     loaders,
     codeSplitting,
+    advancedChunks,
     minify,
     banner,
     watch

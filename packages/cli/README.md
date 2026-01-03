@@ -33,7 +33,8 @@ pnpm create @bettergi/script@latest
   const merged = merge({}, obj1, obj2);
   ```
 
-- 支持 ESM 代码分割，打包生成符合 BetterGI 规范的外部库（要求 `bgi_version` >= `0.54.0`）。
+- 支持 ESM 代码分割，打包生成符合 BetterGI 规范的外部库（要求 `bgi_version` ≥ `0.54.0`）。
+  - 默认代码分割：将 `node_modules` 外部库分别打包成单独的chunk。
 
   ```
   📁 MyScript
@@ -43,6 +44,17 @@ pnpm create @bettergi/script@latest
    ├─ 📁 libs
    │  ├─ 📄 @bettergi+utils.js
    │  └─ 📄 rolldown-runtime.js
+  ```
+
+  - 自定义代码分割：`src` 目录下的 `js/ts` 按照原目录结构打包。
+
+  ```
+  chunkGroups: [
+    {
+      test: /src[\\/](.*)\.(js|ts)$/,
+      name: moduleId => moduleId.match(/src[\\/](.*)\.(js|ts)$/)?.[1]
+    }
+  ]
   ```
 
 - 支持使用 `import` 导入文本文件（`.txt`、`.json`），大文本/预定义数据与脚本逻辑分离。

@@ -1,3 +1,5 @@
+import { type OutputOptions } from "rolldown";
+
 export namespace manifest {
   export interface Manifest extends ScriptWebRenderItem {
     /**
@@ -210,6 +212,11 @@ export interface ScriptConfig {
    * @default true
    */
   codeSplitting?: boolean;
+
+  /**
+   * 代码分割分组
+   */
+  chunkGroups?: NonNullable<OutputOptions["advancedChunks"]>["groups"];
 
   /**
    * 启用脚本压缩

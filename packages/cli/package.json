@@ -43,12 +43,12 @@
   },
   "dependencies": {
     "@bettergi/types": "workspace:^",
-    "@rolldown/pluginutils": "1.0.0-beta.57",
+    "@rolldown/pluginutils": "1.0.0-beta.58",
     "c12": "^3.3.3",
     "fs-extra": "^11.3.3",
     "pinyin-pro": "^3.27.0",
     "resolve-package-path": "^4.0.3",
-    "rolldown": "1.0.0-beta.57",
+    "rolldown": "1.0.0-beta.58",
     "tiny-glob": "^0.2.9",
     "winreg": "^1.2.5"
   },
