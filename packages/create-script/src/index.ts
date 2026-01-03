@@ -6,6 +6,7 @@ import {
   authorLinkInput,
   descriptionInput,
   intro,
+  keywordsInput,
   outro,
   overwriteSelect,
   projectNameInput,
@@ -52,6 +53,9 @@ const cancel = () => prompts.cancel("操作已取消");
   const description = await descriptionInput();
   if (prompts.isCancel(description)) return cancel();
 
+  // 获取脚本标签
+  const keywords = await keywordsInput();
+
   // 获取脚本作者和链接
   const author = await authorInput();
   if (prompts.isCancel(author)) return cancel();
@@ -64,6 +68,7 @@ const cancel = () => prompts.cancel("操作已取消");
     name: projectName.toString(),
     version: version.toString(),
     description: description.toString(),
+    keywords: keywords.toString(),
     author: author.toString(),
     authorLink: authorLink?.toString()
   };

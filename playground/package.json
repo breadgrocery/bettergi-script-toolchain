@@ -9,12 +9,10 @@
     "dev": "bettergi-cli --watch",
     "build": "bettergi-cli"
   },
-  "dependencies": {
-    "@bettergi/utils": "workspace:^"
-  },
   "devDependencies": {
     "@bettergi/cli": "workspace:^",
     "@bettergi/types": "workspace:^",
+    "@bettergi/utils": "workspace:^",
     "@eslint/js": "^9.39.2",
     "eslint": "^9.39.2",
     "typescript": "^5.9.3",

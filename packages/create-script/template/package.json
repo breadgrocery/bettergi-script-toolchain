@@ -6,17 +6,16 @@
     "name": "users.noreply",
     "url": "https://github.com/users.noreply"
   },
+  "keywords": [],
   "type": "module",
   "scripts": {
     "dev": "bettergi-cli --watch",
     "build": "bettergi-cli"
   },
-  "dependencies": {
-    "@bettergi/utils": "^0.1.25"
-  },
   "devDependencies": {
     "@bettergi/cli": "^0.2.2",
     "@bettergi/types": "^0.1.9",
+    "@bettergi/utils": "^0.1.25",
     "@eslint/js": "^9.39.2",
     "eslint": "^9.39.2",
     "typescript": "^5.9.3",

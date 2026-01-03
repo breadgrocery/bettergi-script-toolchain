@@ -53,6 +53,14 @@ export const descriptionInput = () => {
   });
 };
 
+export const keywordsInput = () => {
+  return prompts.text({
+    message: "脚本标签（分类）:",
+    placeholder: "可选，多个标签用逗号分隔",
+    defaultValue: ""
+  });
+};
+
 export const authorInput = async () => {
   const author = await (async () => {
     try {

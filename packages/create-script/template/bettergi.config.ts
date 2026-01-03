@@ -8,6 +8,13 @@ export default defineConfig({
   outDir: "dist",
   additionalFiles: ["README.md", "LICENSE"], // 需要额外打包的文件
   codeSplitting: true, // 启用代码分割（要求 `bgi_version` >= `0.54.0`）
+  chunkGroups: [
+    // src 目录下的 js/ts 按照原目录结构打包
+    {
+      test: /src[\\/](.*)\.(js|ts)$/,
+      name: moduleId => moduleId.match(/src[\\/](.*)\.(js|ts)$/)?.[1]
+    }
+  ],
   minify: false,
   banner: true,
   // 清单信息

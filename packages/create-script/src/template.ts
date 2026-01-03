@@ -7,6 +7,7 @@ export interface UserInput {
   name: string;
   version: string;
   description: string;
+  keywords: string;
   author: string;
   authorLink?: string;
 }
@@ -21,6 +22,12 @@ export const createTemplate = (targetRoot: string, input: UserInput) => {
   pkg.name = kebabize(input.name);
   pkg.version = input.version;
   pkg.description = input.description;
+  if (input.keywords) {
+    pkg.keywords = input.keywords
+      .replace("，", ",")
+      .split(",")
+      .map(keyword => keyword.trim());
+  }
   if (input.authorLink) {
     pkg.author = {
       name: input.author,
