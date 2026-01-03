@@ -1,5 +1,4 @@
 import { type BuildOptions, build, watch } from "rolldown";
-import { postBuild } from "./build/index.js";
 import { ConfigManager } from "./config/index.js";
 import FileWatcher from "./plugins/file-watcher.js";
 import ImageMatLoader from "./plugins/loaders/image-mat-loader.js";
@@ -47,9 +46,9 @@ import { lookupPackageInfo } from "./utils/pkg.js";
       advancedChunks: config.codeSplitting
         ? {
             groups: [
-              // 将所有外部依赖包拆分到单独的chunk中
+              // 外部依赖包
               {
-                priority: 1,
+                priority: 0,
                 test: /node_modules|bettergi-script-toolchain[\\/]packages/,
                 name(moduleId) {
                   const pkgInfo = lookupPackageInfo(moduleId);
@@ -58,17 +57,18 @@ import { lookupPackageInfo } from "./utils/pkg.js";
                     : undefined;
                 }
               },
-              // 将虚拟模块拆分到单独的chunk中
+              // 虚拟模块
               {
-                priority: 2,
+                priority: 999,
                 test: /^virtual:.+:/,
                 name(moduleId) {
                   const [virtual, name] = moduleId.split(":");
                   return `${virtual}@${name}`;
                 }
               },
-              // 将 rolldown 运行时代码拆分到单独的chunk中
+              // rolldown
               {
+                priority: 999,
                 test: /rolldown:runtime/,
                 name: "rolldown-runtime"
               }
@@ -91,7 +91,6 @@ import { lookupPackageInfo } from "./utils/pkg.js";
     await watcher.close();
   } else {
     await build(buildOptions);
-    await postBuild(manager);
     console.log("✅ Build completed.");
   }
 })();
