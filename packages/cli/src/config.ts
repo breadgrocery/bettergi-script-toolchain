@@ -224,7 +224,7 @@ export interface ScriptConfig {
   /**
    * Tree Shaking
    */
-  treeshake: BuildOptions["treeshake"];
+  treeshake?: BuildOptions["treeshake"];
 
   /**
    * 启用脚本压缩
