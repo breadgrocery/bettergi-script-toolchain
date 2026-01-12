@@ -9,6 +9,7 @@ export default defineConfig({
     outDir: "开发"
   },
   codeSplitting: true,
+  watch: ["src/settings.ts"],
   // 清单信息
   manifest: {},
   // 配置UI
