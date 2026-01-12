@@ -11,7 +11,7 @@
     "@commitlint/cli": "^20.3.1",
     "@commitlint/config-conventional": "^20.3.1",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
-    "lefthook": "^2.0.13",
+    "lefthook": "^2.0.14",
     "prettier": "^3.7.4"
   },
   "commitlint": {
@@ -20,7 +20,7 @@
     ]
   },
   "engines": {
-    "node": "^20.9.0 || >=21.1.0",
+    "node": ">=20.19.0 || >=22.12.0",
     "pnpm": ">=9"
   },
   "packageManager": "pnpm@9.15.9"

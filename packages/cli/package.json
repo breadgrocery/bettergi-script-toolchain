@@ -1,6 +1,6 @@
 {
   "name": "@bettergi/cli",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "构建 BetterGI 脚本的脚手架",
   "type": "module",
   "author": "Bread Grocery<https://github.com/breadgrocery>",
@@ -46,6 +46,7 @@
     "@rolldown/pluginutils": "1.0.0-beta.59",
     "c12": "^3.3.3",
     "fs-extra": "^11.3.3",
+    "oxfmt": "^0.24.0",
     "pinyin-pro": "^3.27.0",
     "resolve-package-path": "^4.0.3",
     "rolldown": "1.0.0-beta.59",
