@@ -1,5 +1,5 @@
 import "../types/BetterGenshinImpact/GameTask/Model/Area/ImageRegion";
-import { KeyCode } from "../types/BetterGenshinImpact/Helpers/User32Helper";
+import type { KeyCode } from "../types/BetterGenshinImpact/Helpers/User32Helper";
 
 declare global {
   /**

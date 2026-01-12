@@ -1,4 +1,4 @@
-import { Mat, Size } from "mirada/dist/src/types/opencv";
+import type { Mat, Size } from "mirada/dist/src/types/opencv";
 import "../../../../Fischless/WindowsInput/IMouseSimulator";
 import "../../../../System/Drawing/Pen";
 import "../../../View/Drawable/DrawContent";

@@ -1,4 +1,4 @@
-import { Rect } from "mirada/dist/src/types/opencv";
+import type { Rect } from "mirada/dist/src/types/opencv";
 import "../../../../System/DateTime";
 import "../../../../System/Exception";
 import "../../../../System/Threading/CancellationToken";

@@ -1,4 +1,4 @@
-import { Mat, Rect } from "mirada/dist/src/types/opencv";
+import type { Mat, Rect } from "mirada/dist/src/types/opencv";
 import "../../../../BetterGenshinImpact/Core/Recognition/RecognitionObject";
 import "../../../../BetterGenshinImpact/GameTask/Model/Area/Converter/INodeConverter";
 import "../../../../BetterGenshinImpact/GameTask/Model/Area/Region";

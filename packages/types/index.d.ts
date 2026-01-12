@@ -24,6 +24,7 @@
 
 // 实时任务
 /// <reference path="./types/BetterGenshinImpact/Core/Script/Dependence/Model/RealtimeTimer.d.ts" />
+/// <reference path="./types/BetterGenshinImpact/GameTask/AutoSkip/AutoSkipConfig.d.ts" />
 
 // 独立任务
 /// <reference path="./types/BetterGenshinImpact/Core/Script/Dependence/Model/SoloTask.d.ts" />

@@ -1,4 +1,4 @@
-import { type KeyCodeString, type KeyDataString } from "../../../../System/Windows/Forms/Keys";
+import type { KeyCodeString, KeyDataString } from "../../../../System/Windows/Forms/Keys";
 
 type MouseButton = "Left" | "Right" | "Middle" | "XButton1" | "XButton2";
 

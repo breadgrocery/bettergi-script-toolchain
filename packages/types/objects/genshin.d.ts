@@ -1,5 +1,5 @@
-import { Point2f } from "mirada/dist/src/types/opencv";
-import { Area, BigMap, Country } from "../enums/country";
+import type { Point2f } from "mirada/dist/src/types/opencv";
+import type { Area, BigMap, Country } from "../enums/country";
 
 declare global {
   /** @since 0.32.0 */

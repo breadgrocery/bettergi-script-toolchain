@@ -1,4 +1,4 @@
-import { Mat } from "mirada/dist/src/types/opencv";
+import type { Mat } from "mirada/dist/src/types/opencv";
 
 declare global {
   /** @since 0.32.3 */
