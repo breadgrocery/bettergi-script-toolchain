@@ -1,5 +1,5 @@
 import path from "node:path";
-import { type OutputOptions } from "rolldown";
+import { type BuildOptions, type OutputOptions } from "rolldown";
 import glob from "tiny-glob";
 import { lookupPackageInfo } from "../utils/pkg.js";
 import { type ConfigContext } from "./index.js";
@@ -21,6 +21,7 @@ export interface BuildConfig {
   };
   codeSplitting: boolean;
   advancedChunks: OutputOptions["advancedChunks"];
+  treeshake: BuildOptions["treeshake"];
   minify: boolean;
   banner: string;
   watch: string[];
@@ -106,6 +107,12 @@ export const parseBuildConfig = async (context: Context): Promise<BuildConfig> =
     ]
   };
 
+  // Tree Shaking
+  const treeshake = config.treeshake ?? {
+    moduleSideEffects: false,
+    propertyReadSideEffects: false
+  };
+
   // 启用脚本压缩
   const minify = config.minify ?? false;
 
@@ -136,6 +143,7 @@ export const parseBuildConfig = async (context: Context): Promise<BuildConfig> =
     loaders,
     codeSplitting,
     advancedChunks,
+    treeshake,
     minify,
     banner,
     watch

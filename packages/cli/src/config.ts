@@ -1,4 +1,4 @@
-import { type OutputOptions } from "rolldown";
+import { type BuildOptions, type OutputOptions } from "rolldown";
 
 export namespace manifest {
   export interface Manifest extends ScriptWebRenderItem {
@@ -220,6 +220,11 @@ export interface ScriptConfig {
    * 代码分割分组
    */
   chunkGroups?: NonNullable<OutputOptions["advancedChunks"]>["groups"];
+
+  /**
+   * Tree Shaking
+   */
+  treeshake: BuildOptions["treeshake"];
 
   /**
    * 启用脚本压缩

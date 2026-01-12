@@ -21,7 +21,7 @@ import PostBuildProcessor from "./plugins/post-build-processor.js";
       FileWatcher(manager), // 监听文件变更
       PostBuildProcessor(manager) // 构建后处理
     ],
-    treeshake: true,
+    treeshake: config.treeshake,
     watch: {
       buildDelay: 500 // 防抖
     },
