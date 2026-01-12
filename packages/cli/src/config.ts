@@ -32,7 +32,10 @@ export namespace manifest {
      *  */
     description?: string;
 
-    /** 作者信息 */
+    /**
+     * 作者信息
+     * @default package.json 的 `author` 和 `contributors` 字段
+     */
     authors?: Author[];
 
     /**

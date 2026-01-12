@@ -24,18 +24,25 @@ export const parseManifestConfig = async (context: Context) => {
   const description: string | undefined = config.manifest?.description || pkg.description;
 
   // 作者信息
-  const authors: manifest.Author[] =
-    config.manifest?.authors ||
-    [
-      typeof pkg.author === "object"
-        ? {
-            name: pkg.author.name,
-            ...(pkg.author.url && { link: pkg.author.url })
-          }
-        : {
-            ...(pkg.author && { name: pkg.author })
-          }
-    ].filter(item => Object.keys(item).includes("name"));
+  const parseAuthors = (author: any): { name: string; link?: string }[] => {
+    const authors = Array.isArray(author)
+      ? author.map(parseAuthors).flat()
+      : [
+          typeof author === "object"
+            ? {
+                name: author.name,
+                ...(author.url && { link: author.url })
+              }
+            : {
+                ...(author && { name: author })
+              }
+        ];
+    return authors.filter(item => Object.keys(item).includes("name"));
+  };
+  const authors: manifest.Author[] = config.manifest?.authors || [
+    ...parseAuthors(pkg.author),
+    ...parseAuthors(pkg.contributors)
+  ];
 
   // 脚本入口文件
   const main = `${path.parse(build.main).name}.js`;
