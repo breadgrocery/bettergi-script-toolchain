@@ -260,21 +260,22 @@ export const defineConfig = (config: ScriptConfig): ScriptConfig => {
 
 export type Settings = settings.SettingItem[];
 
-export type BaseType<T> = T extends string
-  ? string
-  : T extends number
-    ? number
-    : T extends boolean
-      ? boolean
-      : T extends bigint
-        ? bigint
-        : T;
-
+export type BaseType<T> = T extends readonly (infer U)[]
+  ? BaseType<U>[]
+  : T extends string
+    ? string
+    : T extends number
+      ? number
+      : T extends boolean
+        ? boolean
+        : T extends bigint
+          ? bigint
+          : T;
 /**
  * 提取设置参数类型映射
  */
 export type ExtractSettingsMap<T extends readonly settings.Component[]> = Partial<{
-  [K in T[number] extends settings.Control<any> ? T[number] : never as K["name"]]: BaseType<
+  [K in Extract<T[number], settings.Control<any>> as Extract<K["name"], PropertyKey>]: BaseType<
     K["default"]
   >;
 }>;
