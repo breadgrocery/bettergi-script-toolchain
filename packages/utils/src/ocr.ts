@@ -349,7 +349,12 @@ export const findWithinListView = async (
 
   if (targetRegion?.isExist()) {
     const { item1, item2 } = targetRegion.convertPositionToGameCaptureRegion(0, 0);
-    Object.assign(targetRegion, { x: item1, y: item2 });
+    const scale = genshin.width / 1920;
+    const [x, y] = [
+      Math.floor(scale <= 1 ? item1 : item1 / scale),
+      Math.floor(scale <= 1 ? item2 : item2 / scale)
+    ];
+    Object.assign(targetRegion, { x, y });
     return targetRegion;
   }
 };
