@@ -43,7 +43,10 @@ export namespace manifest {
      */
     scripts?: string[];
 
-    /** external 类库 */
+    /**
+     * 类库
+     * @since 0.54.0
+     */
     library?: string[];
 
     /** 脚本升级时需保留还原的 文件/文件夹 列表（支持正则表达式与通配符） */

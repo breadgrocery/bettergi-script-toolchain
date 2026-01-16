@@ -54,11 +54,10 @@ export const parseManifestConfig = async (context: Context) => {
   // 脚本配置（已弃用）
   const scripts = config.manifest?.scripts && [...config.manifest.scripts];
 
-  // external 类库
-  const libs = build.codeSplitting
+  // 类库
+  const library = build.codeSplitting
     ? ["./", "./libs/"].concat(config.manifest?.library || [])
     : config.manifest?.library;
-  const library = libs && [...libs];
 
   // 脚本升级时需保留还原的 文件/文件夹 列表（支持正则表达式与通配符）
   const saved_files = config.manifest?.saved_files && [...config.manifest.saved_files];

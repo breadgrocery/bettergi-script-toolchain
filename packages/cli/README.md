@@ -143,9 +143,9 @@ import { defineConfig } from "@bettergi/cli";
 
 export default defineConfig({
   // 构建配置
-  main: "main.ts",
+  // main: "main.ts",
   // assetsDir: "assets",
-  // outDir: "dist",
+  outDir: "dist",
   // additionalFiles: ["README.md", "LICENSE"], // 需要额外打包的文件
   // codeSplitting: true,
   // minify: false,

@@ -56,11 +56,15 @@ import PostBuildProcessor from "./plugins/post-build-processor.js";
 
   // 根据命令行参数决定是否启用监听模式
   if (process.argv.includes("--watch")) {
-    console.log("👀 Watching for changes...");
     const watcher = watch(buildOptions);
+    watcher.on("event", event => {
+      if (event.code === "START") {
+        console.info("👀 Watching for changes...");
+      }
+    });
     await watcher.close();
   } else {
     await build(buildOptions);
-    console.log("✅ Build completed.");
+    console.info("✅ Build completed.");
   }
 })();
