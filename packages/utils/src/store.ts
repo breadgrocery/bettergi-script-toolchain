@@ -9,8 +9,8 @@ import { deepMerge } from "./misc";
 export const useStore = <T extends Record<string, any>>(name: string): T => {
   const filePath = `store/${name}.json`;
 
-  // 读取文件数据
-  const obj = (() => {
+  // 从文件读取数据
+  const storeData = (() => {
     try {
       const storeFiles = [...file.readPathSync("store")].map(path => path.replace(/\\/g, "/"));
       if (!storeFiles.includes(filePath)) throw new Error("File does not exist");
@@ -23,22 +23,22 @@ export const useStore = <T extends Record<string, any>>(name: string): T => {
   })();
 
   // 创建代理函数
-  const createProxy = (target: any, parentPath: string[] = []) => {
-    if (typeof target !== "object" || target === null) {
-      return target;
+  const createProxy = (targetObject: any, parentPath: string[] = []) => {
+    if (typeof targetObject !== "object" || targetObject === null) {
+      return targetObject;
     }
-    return new Proxy(target, {
+    return new Proxy(targetObject, {
       get: (target, key) => {
         const value = Reflect.get(target, key);
         return typeof value === "object" && value !== null
-          ? createProxy(value, [...parentPath, key as string]) // 递归创建代理
+          ? createProxy(value, [...parentPath, key as string])
           : value;
       },
       set: (target, key, value) => {
         const success = Reflect.set(target, key, value);
         if (success) {
           Promise.resolve().then(() => {
-            file.writeTextSync(filePath, JSON.stringify(obj, null, 2));
+            file.writeTextSync(filePath, JSON.stringify(storeData, null, 2));
           });
         }
         return success;
@@ -47,7 +47,7 @@ export const useStore = <T extends Record<string, any>>(name: string): T => {
         const success = Reflect.deleteProperty(target, key);
         if (success) {
           Promise.resolve().then(() => {
-            file.writeTextSync(filePath, JSON.stringify(obj, null, 2));
+            file.writeTextSync(filePath, JSON.stringify(storeData, null, 2));
           });
         }
         return success;
@@ -55,7 +55,7 @@ export const useStore = <T extends Record<string, any>>(name: string): T => {
     });
   };
 
-  return createProxy(obj);
+  return createProxy(storeData);
 };
 
 /**

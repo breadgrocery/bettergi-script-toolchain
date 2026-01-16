@@ -1,17 +1,18 @@
-import { libDemo } from "./src/demos/lib";
-import { nativeDemo } from "./src/demos/native";
+import { findTextWithinListView } from "@bettergi/utils";
 
 (async function () {
-  //! 返回主界面
-  await genshin.returnMainUi();
+  const t5 = await findTextWithinListView(
+    "哈哈",
+    {
+      x: 120,
+      y: 95,
+      w: 1045,
+      h: 865,
+      lineHeight: 115,
+      scrollLines: 7
+    },
+    { contains: true }
+  );
 
-  //! 原生JS代码示例
-  await nativeDemo();
-
-  //! @bettergi/utils 工具库代码示例
-  //! 函数清单详见：https://github.com/breadgrocery/bettergi-script-toolchain/tree/main/packages/utils
-  await libDemo();
-
-  //! @bettergi/cli 同时支持 loaders
-  //! 详见：https://github.com/breadgrocery/bettergi-script-toolchain/tree/main/packages/cli
+  t5?.drawSelf("result.png");
 })();

@@ -21,17 +21,16 @@ export type MatchDirection =
   | "west" /** 左半边 */
   | "north-west"; /** 左上四分之一 */
 
+const scaleTo1080P = (n: number) => {
+  return genshin.scaleTo1080PRatio <= 1 ? n : Math.floor(n / genshin.scaleTo1080PRatio);
+};
+
 const directionToBounds = (direction: MatchDirection) => {
   const x = direction.includes("east") ? genshin.width / 2 : 0;
   const y = direction.includes("south") ? genshin.height / 2 : 0;
   const w = direction === "north" || direction === "south" ? genshin.width : genshin.width / 2;
   const h = direction === "west" || direction === "east" ? genshin.height : genshin.height / 2;
-  const scale = genshin.width / 1920;
-  if (scale <= 1) {
-    return { x, y, w, h };
-  } else {
-    return { x: x / scale, y: y / scale, w: w / scale, h: h / scale };
-  }
+  return { x: scaleTo1080P(x), y: scaleTo1080P(y), w: scaleTo1080P(w), h: scaleTo1080P(h) };
 };
 
 /**
@@ -291,44 +290,40 @@ export type ListView = {
  * @param condition 查找条件
  * @param listView 列表视图参数
  * @param retryOptions 重试选项
- * @param sampling 区域采样函数，通过采样区域画面变化判断列表是否触底（默认：底半区）
- * @param threshold 采样区域匹配阈值（默认：0.9）
+ * @param threshold 列表视图变化匹配阈值（默认：0.9）
  * @returns 如果找到匹配的区域，则返回该区域，否则返回 undefined
  */
 export const findWithinListView = async (
   condition: (listViewRegion: ImageRegion) => Region | undefined,
   listView: ListView,
   retryOptions?: RetryOptions,
-  sampling?: (listViewRegion: ImageRegion) => ImageRegion,
   threshold: number = 0.9
 ) => {
   const { x, y, w, h, lineHeight, scrollLines = 1, paddingX = 10, paddingY = 10 } = listView;
   const { maxAttempts = 99, retryInterval = 1200 } = retryOptions || {};
-  sampling ??= r => r.deriveCrop(1, r.height * 0.5, r.width - 1, r.height * 0.5);
 
   const captureListViewRegion = () => captureGameRegion().deriveCrop(x, y, w, h);
 
   const isReachedBottom = (() => {
+    let captured: ImageRegion | undefined;
     let lastCaptured: ImageRegion | undefined;
     return () => {
-      const newRegion = captureListViewRegion();
-      if (!newRegion?.isExist()) return true;
-
       try {
+        captured = captureListViewRegion();
         if (!lastCaptured) return false;
 
-        const oldRegion = sampling(lastCaptured);
-        if (!oldRegion?.isExist()) return true;
-
-        // 根据采样区域画面是否变化，判断列表是否触底
-        const ro = RecognitionObject.templateMatch(oldRegion.srcMat);
+        // 根据列表视图区域画面是否变化，判断列表是否触底
+        const lc = lastCaptured.deriveCrop(1, 1, lastCaptured.width - 2, lastCaptured.height - 2);
+        const ro = RecognitionObject.templateMatch(lc.srcMat);
         ro.threshold = threshold;
         ro.use3Channels = true;
         ro.initTemplate();
 
-        return newRegion.find(ro)?.isExist();
+        return captured.find(ro).isExist();
+      } catch {
+        return true;
       } finally {
-        lastCaptured = newRegion;
+        lastCaptured = captured;
       }
     };
   })();
@@ -341,7 +336,7 @@ export const findWithinListView = async (
     },
     async () => {
       moveMouseTo(x + w - paddingX, y + paddingY); // 移动到滚动条附近
-      await sleep(50);
+      await sleep(200); // 等待画面稳定
       await mouseScrollDownLines(scrollLines, lineHeight); // 滚动指定行数
     },
     { maxAttempts, retryInterval }
@@ -349,12 +344,7 @@ export const findWithinListView = async (
 
   if (targetRegion?.isExist()) {
     const { item1, item2 } = targetRegion.convertPositionToGameCaptureRegion(0, 0);
-    const scale = genshin.width / 1920;
-    const [x, y] = [
-      Math.floor(scale <= 1 ? item1 : item1 / scale),
-      Math.floor(scale <= 1 ? item2 : item2 / scale)
-    ];
-    Object.assign(targetRegion, { x, y });
+    Object.assign(targetRegion, { x: scaleTo1080P(item1), y: scaleTo1080P(item2) });
     return targetRegion;
   }
 };
@@ -366,8 +356,7 @@ export const findWithinListView = async (
  * @param matchOptions 搜索选项
  * @param retryOptions 重试选项
  * @param config 识别对象配置
- * @param sampling 区域采样函数，通过采样区域画面变化判断列表是否触底（默认：底半区）
- * @param threshold 采样区域匹配阈值（默认：0.9）
+ * @param threshold 列表视图变化匹配阈值（默认：0.9）
  * @returns 如果找到匹配的文本区域，则返回该区域，否则返回 undefined
  */
 export const findTextWithinListView = async (
@@ -376,7 +365,6 @@ export const findTextWithinListView = async (
   matchOptions?: TextMatchOptions,
   retryOptions?: RetryOptions,
   config: ROConfig = {},
-  sampling?: (listViewRegion: ImageRegion) => ImageRegion,
   threshold: number = 0.9
 ) => {
   const ro = RecognitionObject.ocrThis;
@@ -391,7 +379,6 @@ export const findTextWithinListView = async (
     },
     listView,
     retryOptions,
-    sampling,
     threshold
   );
 };
@@ -402,8 +389,7 @@ export const findTextWithinListView = async (
  * @param listView 列表视图参数
  * @param retryOptions 重试选项
  * @param config 识别对象配置
- * @param sampling 区域采样函数，通过采样区域画面变化判断列表是否触底（默认：底半区）
- * @param threshold 采样区域匹配阈值（默认：0.9）
+ * @param threshold 列表视图变化匹配阈值（默认：0.9）
  * @returns 如果找到匹配的区域，则返回该区域，否则返回 undefined
  */
 export const findImageWithinListView = async (
@@ -411,7 +397,6 @@ export const findImageWithinListView = async (
   listView: ListView,
   retryOptions?: RetryOptions,
   config: ROConfig = {},
-  sampling?: (listViewRegion: ImageRegion) => ImageRegion,
   threshold: number = 0.9
 ) => {
   const mat = typeof image === "string" ? file.readImageMatSync(image) : image;
@@ -426,7 +411,6 @@ export const findImageWithinListView = async (
     },
     listView,
     retryOptions,
-    sampling,
     threshold
   );
 };
