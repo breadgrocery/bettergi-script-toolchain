@@ -1,6 +1,6 @@
-import { type ExtractSettingsMap, type Settings } from "@bettergi/cli";
+import { defineSettings } from "@bettergi/cli";
 
-const settings = [
+const settings = defineSettings([
   {
     type: "checkbox",
     name: "welcome",
@@ -13,13 +13,12 @@ const settings = [
     label: "用户名",
     default: "开发者"
   }
-] as const satisfies Settings;
+]);
 
-export default settings as Settings;
-
-/** 覆写设置类型定义 */
-export type SettingsMap = ExtractSettingsMap<typeof settings>;
-
+/** 覆写脚本设置类型定义 */
+type GlobalSettings = typeof settings & Record<string, any>;
 declare global {
-  var settings: Record<string, any> & SettingsMap;
+  var settings: GlobalSettings;
 }
+
+export default settings;
