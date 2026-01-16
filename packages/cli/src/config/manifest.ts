@@ -69,7 +69,8 @@ export const parseManifestConfig = async (context: Context) => {
   ];
 
   // 网页渲染组件：标签列表
-  const keywords: string[] | undefined = Array.isArray(pkg.keywords) ? pkg.keywords : undefined;
+  const keywords: string[] | undefined =
+    Array.isArray(pkg.keywords) && pkg.keywords.length > 0 ? pkg.keywords : undefined;
   const tags = config.manifest?.tags ? config.manifest.tags : keywords;
 
   return {
