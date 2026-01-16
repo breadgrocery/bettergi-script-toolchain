@@ -254,8 +254,14 @@ export interface ScriptConfig {
   bettergi?: bettergi.BetterGI;
 }
 
+/** 定义脚本配置类型提示函数 */
 export const defineConfig = (config: ScriptConfig): ScriptConfig => {
   return config;
+};
+
+/** 定义设置项类型提示函数 */
+export const defineSettings = <const T extends readonly settings.SettingItem[]>(items: T) => {
+  return items as unknown as ExtractSettingsMap<T>;
 };
 
 export type Settings = settings.SettingItem[];
@@ -271,9 +277,8 @@ export type BaseType<T> = T extends readonly (infer U)[]
         : T extends bigint
           ? bigint
           : T;
-/**
- * 提取设置参数类型映射
- */
+
+/** 提取设置参数类型映射 */
 export type ExtractSettingsMap<T extends readonly settings.Component[]> = Partial<{
   [K in Extract<T[number], settings.Control<any>> as Extract<K["name"], PropertyKey>]: BaseType<
     K["default"]
