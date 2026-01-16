@@ -44,7 +44,7 @@ import PostBuildProcessor from "./plugins/post-build-processor.js";
           .replace(/["#$%&*,:;<=>?\[\]^`{|}]/g, "_");
       },
       minify: config.minify,
-      advancedChunks: config.codeSplitting ? config.advancedChunks : undefined,
+      codeSplitting: config.codeSplitting ? config.manualCodeSplitting : undefined,
       legalComments: config.minify ? "none" : "inline",
       preserveModules: false, // 不保留原始模块结构
       topLevelVar: false, // ESM 顶层不使用 var 声明

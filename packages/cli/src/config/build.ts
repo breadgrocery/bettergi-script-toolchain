@@ -20,7 +20,7 @@ export interface BuildConfig {
     };
   };
   codeSplitting: boolean;
-  advancedChunks: OutputOptions["advancedChunks"];
+  manualCodeSplitting: OutputOptions["codeSplitting"];
   treeshake: BuildOptions["treeshake"];
   minify: boolean;
   banner: string;
@@ -76,7 +76,7 @@ export const parseBuildConfig = async (context: Context): Promise<BuildConfig> =
   const codeSplitting = config.codeSplitting ?? true;
 
   // 代码分割分组
-  const advancedChunks: NonNullable<OutputOptions["advancedChunks"]> = {
+  const manualCodeSplitting: NonNullable<OutputOptions["codeSplitting"]> = {
     groups: [
       // 外部依赖包
       {
@@ -142,7 +142,7 @@ export const parseBuildConfig = async (context: Context): Promise<BuildConfig> =
     additionalFiles,
     loaders,
     codeSplitting,
-    advancedChunks,
+    manualCodeSplitting,
     treeshake,
     minify,
     banner,

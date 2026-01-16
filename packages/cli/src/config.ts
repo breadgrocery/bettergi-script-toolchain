@@ -219,7 +219,7 @@ export interface ScriptConfig {
   /**
    * 代码分割分组
    */
-  chunkGroups?: NonNullable<OutputOptions["advancedChunks"]>["groups"];
+  chunkGroups?: NonNullable<OutputOptions["codeSplitting"]>["groups"];
 
   /**
    * Tree Shaking
