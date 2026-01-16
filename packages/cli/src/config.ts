@@ -260,13 +260,13 @@ export const defineConfig = (config: ScriptConfig): ScriptConfig => {
 };
 
 /** 定义设置项类型提示函数 */
-export const defineSettings = <const T extends readonly settings.SettingItem[]>(items: T) => {
-  return items as unknown as ExtractSettingsMap<T>;
+export const defineSettings = <const T extends settings.SettingItem[]>(items: T) => {
+  return items;
 };
 
 export type Settings = settings.SettingItem[];
 
-export type BaseType<T> = T extends readonly (infer U)[]
+export type BaseType<T> = T extends (infer U)[]
   ? BaseType<U>[]
   : T extends string
     ? string
@@ -279,7 +279,7 @@ export type BaseType<T> = T extends readonly (infer U)[]
           : T;
 
 /** 提取设置参数类型映射 */
-export type ExtractSettingsMap<T extends readonly settings.Component[]> = Partial<{
+export type ExtractSettingsMap<T extends settings.Component[]> = Partial<{
   [K in Extract<T[number], settings.Control<any>> as Extract<K["name"], PropertyKey>]: BaseType<
     K["default"]
   >;

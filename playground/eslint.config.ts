@@ -17,7 +17,6 @@ export default defineConfig(
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-floating-promises": ["error", { ignoreIIFE: true }],
-      "@typescript-eslint/no-redundant-type-constituents": "off",
       "@typescript-eslint/no-unsafe-assignment": "off",
       "@typescript-eslint/no-unsafe-call": "off",
       "@typescript-eslint/no-unsafe-member-access": "off",

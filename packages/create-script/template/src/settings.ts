@@ -1,4 +1,4 @@
-import { defineSettings } from "@bettergi/cli";
+import { type ExtractSettingsMap, defineSettings } from "@bettergi/cli";
 
 const settings = defineSettings([
   {
@@ -16,7 +16,7 @@ const settings = defineSettings([
 ]);
 
 /** 覆写脚本设置类型定义 */
-type GlobalSettings = typeof settings & Record<string, any>;
+type GlobalSettings = ExtractSettingsMap<typeof settings> & Record<string, any>;
 declare global {
   var settings: GlobalSettings;
 }
