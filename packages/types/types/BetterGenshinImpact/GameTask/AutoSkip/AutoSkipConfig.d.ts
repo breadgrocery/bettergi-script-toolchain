@@ -98,6 +98,13 @@ declare global {
        * @default true
        */
       closePopupPagedEnabled: boolean;
+
+      /**
+       * JS调用时跳过内置默认点击选项
+       * @default false
+       * @since 0.56.0
+       */
+      skipBuiltInClickOptions: boolean;
     }
   }
   export import AutoSkipConfig = BetterGenshinImpact.GameTask.AutoSkip.AutoSkipConfig;
