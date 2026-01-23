@@ -75,7 +75,13 @@ export namespace manifest {
 }
 
 export namespace settings {
-  export type SettingItem = Separator | TextBox | ComboBox | CheckBox | MultiCheckbox;
+  export type SettingItem =
+    | Separator
+    | TextBox
+    | ComboBox
+    | CheckBox
+    | MultiCheckbox
+    | CascadeSelect;
 
   export interface Component {
     type: string;
@@ -133,6 +139,15 @@ export namespace settings {
      */
     type: "multi-checkbox";
     options: string[];
+  }
+
+  export interface CascadeSelect extends Control<string> {
+    /**
+     * 级联选择框
+     * @since 0.56.0
+     */
+    type: "cascade-select";
+    cascadeOptions: Record<string, string[]>;
   }
 }
 
