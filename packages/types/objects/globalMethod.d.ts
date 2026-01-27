@@ -10,6 +10,12 @@ declare global {
   function sleep(duration: number): Promise<void>;
 
   /**
+   * 获取 BetterGI 版本号
+   * @since 0.56.0
+   */
+  function getVersion(): string;
+
+  /**
    * 模拟按下键盘按键（持续按住状态）
    * @param key - 要按下的按键
    * @since 0.34.5
