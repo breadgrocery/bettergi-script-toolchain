@@ -237,7 +237,7 @@ export interface ScriptConfig {
   /**
    * 代码分割分组
    */
-  chunkGroups?: NonNullable<OutputOptions["codeSplitting"]>["groups"];
+  chunkGroups?: Exclude<NonNullable<OutputOptions["codeSplitting"]>, boolean>["groups"];
 
   /**
    * Tree Shaking

@@ -11,8 +11,8 @@
     "@commitlint/cli": "^20.3.1",
     "@commitlint/config-conventional": "^20.3.1",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
-    "lefthook": "^2.0.15",
-    "prettier": "^3.8.0"
+    "lefthook": "^2.0.16",
+    "prettier": "^3.8.1"
   },
   "commitlint": {
     "extends": [
