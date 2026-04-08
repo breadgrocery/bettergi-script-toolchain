@@ -14,13 +14,13 @@
     "build": "bettergi-cli"
   },
   "devDependencies": {
-    "@bettergi/cli": "^0.2.10",
-    "@bettergi/types": "^0.1.10",
-    "@bettergi/utils": "^0.1.27",
-    "@eslint/js": "^9.39.2",
-    "eslint": "^9.39.2",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.53.0"
+    "@bettergi/cli": "^0.2.13",
+    "@bettergi/types": "^0.1.12",
+    "@bettergi/utils": "^0.1.30",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.2.0",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.58.1"
   },
   "engines": {
     "node": ">=20.19.0 || >=22.13.0 || >=24"

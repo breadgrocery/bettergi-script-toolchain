@@ -12,7 +12,7 @@ export const projectNameInput = () => {
     message: "脚本名称:",
     initialValue: "MyScript",
     placeholder: "MyScript",
-    validate: value => (value.length === 0 ? `脚本名称不能为空！` : undefined)
+    validate: value => (!value || value.length === 0 ? `脚本名称不能为空！` : undefined)
   });
 };
 
@@ -41,7 +41,7 @@ export const versionInput = () => {
     message: "脚本版本:",
     initialValue: "0.1.0",
     placeholder: "0.1.0",
-    validate: value => (value.length === 0 ? `脚本版本不能为空！` : undefined)
+    validate: value => (!value || value.length === 0 ? `脚本版本不能为空！` : undefined)
   });
 };
 
@@ -49,7 +49,7 @@ export const descriptionInput = () => {
   return prompts.text({
     message: "脚本描述:",
     initialValue: "我的脚本",
-    validate: value => (value.length === 0 ? `脚本描述不能为空！` : undefined)
+    validate: value => (!value || value.length === 0 ? `脚本描述不能为空！` : undefined)
   });
 };
 
@@ -78,7 +78,7 @@ export const authorInput = async () => {
     ...(author && {
       initialValue: author,
       placeholder: author,
-      validate: value => (value.length === 0 ? `脚本作者不能为空！` : undefined)
+      validate: value => (!value || value.length === 0 ? `脚本作者不能为空！` : undefined)
     })
   });
 };
