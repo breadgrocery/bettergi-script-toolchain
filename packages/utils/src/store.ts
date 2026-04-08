@@ -36,21 +36,11 @@ export const useStore = <T extends Record<string, any>>(name: string): T => {
       },
       set: (target, key, value) => {
         const success = Reflect.set(target, key, value);
-        if (success) {
-          Promise.resolve().then(() => {
-            file.writeTextSync(filePath, JSON.stringify(storeData, null, 2));
-          });
-        }
-        return success;
+        return success && file.writeTextSync(filePath, JSON.stringify(storeData, null, 2));
       },
       deleteProperty: (target, key) => {
         const success = Reflect.deleteProperty(target, key);
-        if (success) {
-          Promise.resolve().then(() => {
-            file.writeTextSync(filePath, JSON.stringify(storeData, null, 2));
-          });
-        }
-        return success;
+        return success && file.writeTextSync(filePath, JSON.stringify(storeData, null, 2));
       }
     });
   };
