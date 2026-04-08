@@ -9,7 +9,6 @@
     "declaration": false,
     "skipLibCheck": true,
     "strict": true,
-    "alwaysStrict": false,
     "removeComments": false,
     "noEmitOnError": true
   }

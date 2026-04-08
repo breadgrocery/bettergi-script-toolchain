@@ -45,7 +45,11 @@ import PostBuildProcessor from "./plugins/post-build-processor.js";
       },
       minify: config.minify,
       codeSplitting: config.codeSplitting ? config.manualCodeSplitting : undefined,
-      legalComments: config.minify ? "none" : "inline",
+      comments: {
+        legal: !config.minify,
+        annotation: false,
+        jsdoc: !config.minify
+      },
       preserveModules: false, // 不保留原始模块结构
       topLevelVar: false, // ESM 顶层不使用 var 声明
       minifyInternalExports: false, // 禁用导出重命名

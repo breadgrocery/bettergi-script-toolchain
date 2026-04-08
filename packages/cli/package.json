@@ -43,21 +43,21 @@
   },
   "dependencies": {
     "@bettergi/types": "workspace:^",
-    "@rolldown/pluginutils": "1.0.0-rc.1",
-    "c12": "^3.3.3",
-    "fs-extra": "^11.3.3",
-    "oxfmt": "^0.27.0",
+    "@rolldown/pluginutils": "^1.0.0-rc.14",
+    "c12": "^3.3.4",
+    "fs-extra": "^11.3.4",
+    "oxfmt": "^0.44.0",
     "pinyin-pro": "^3.28.0",
     "resolve-package-path": "^4.0.3",
-    "rolldown": "1.0.0-rc.1",
+    "rolldown": "^1.0.0-rc.14",
     "tiny-glob": "^0.2.9",
     "winreg": "^1.2.5"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^25.0.10",
+    "@types/node": "^25.5.2",
     "@types/winreg": "^1.2.36",
-    "rimraf": "^6.1.2",
-    "typescript": "^5.9.3"
+    "rimraf": "^6.1.3",
+    "typescript": "^6.0.2"
   }
 }

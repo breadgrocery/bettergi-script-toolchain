@@ -13,9 +13,9 @@
     "@bettergi/cli": "workspace:^",
     "@bettergi/types": "workspace:^",
     "@bettergi/utils": "workspace:^",
-    "@eslint/js": "^9.39.2",
-    "eslint": "^9.39.2",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.54.0"
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.2.0",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.58.1"
   }
 }

@@ -178,7 +178,6 @@ export default defineConfig({
     "lib": ["ESNext"],
     "skipLibCheck": true,
     "strict": true,
-    "alwaysStrict": false,
     "removeComments": false,
     "noEmitOnError": true,
     "types": ["@bettergi/types", "@bettergi/cli/loaders"]

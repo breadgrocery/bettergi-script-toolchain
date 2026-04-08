@@ -1,6 +1,7 @@
 {
   "include": ["./src/**/*.ts", "./loaders.d.ts"],
   "compilerOptions": {
+    "rootDir": "./src",
     "outDir": "dist",
     "target": "ESNext",
     "module": "NodeNext",
@@ -9,7 +10,6 @@
     "declaration": true,
     "skipLibCheck": true,
     "strict": true,
-    "alwaysStrict": false,
     "removeComments": false,
     "noEmitOnError": true,
     "types": ["@bettergi/types"]

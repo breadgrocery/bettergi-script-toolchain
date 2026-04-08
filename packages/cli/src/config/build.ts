@@ -96,12 +96,6 @@ export const parseBuildConfig = async (context: Context): Promise<BuildConfig> =
           return `${virtual}@${name}`;
         }
       },
-      // rolldown
-      {
-        priority: Number.MAX_SAFE_INTEGER,
-        test: /rolldown:runtime/,
-        name: "rolldown-runtime"
-      },
       // 自定义分组
       ...(config.chunkGroups || [])
     ]
