@@ -18,6 +18,20 @@ declare global {
     function isFolder(path: string): boolean;
 
     /**
+     * 判断指定路径是否为文件
+     * @param path 文件路径（相对于脚本根目录）
+     * @since 0.58.0
+     */
+    function isFile(path: string): boolean;
+
+    /**
+     * 判断指定的文件或目录是否存在
+     * @param path 文件路径（相对于脚本根目录）
+     * @since 0.58.0
+     */
+    function isExists(path: string): boolean;
+
+    /**
      * 读取文件文本（支持文件扩展名：`.txt`, `.json`, `.log`, `.csv`, `.xml`, `.html`, `.css`, `.png`, `.jpg`, `.jpeg`, `.bmp`, `.tiff`, `.webp`）
      * @param path 文件路径（相对于脚本根目录）
      * @since 0.32.3
@@ -110,6 +124,14 @@ declare global {
      * @since 0.48.2
      */
     function writeImageSync(path: string, mat: Mat): boolean;
+
+    /**
+     * 重命名文件或文件夹（相对于根目录）
+     * @param oldPath 旧文件路径
+     * @param newPath 新文件路径
+     * @since 0.59.1
+     */
+    function renamePathSync(oldPath: string, newPath: string): boolean;
   }
 }
 

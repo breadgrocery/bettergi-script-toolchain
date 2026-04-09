@@ -2,6 +2,8 @@ import "../types/BetterGenshinImpact/Core/Script/Dependence/Model/RealtimeTimer"
 import "../types/BetterGenshinImpact/Core/Script/Dependence/Model/SoloTask";
 import "../types/BetterGenshinImpact/GameTask/AutoDomain/AutoDomainParam";
 import "../types/BetterGenshinImpact/GameTask/AutoFight/AutoFightParam";
+import "../types/BetterGenshinImpact/GameTask/AutoLeyLineOutcrop/AutoLeyLineOutcropParam";
+import "../types/BetterGenshinImpact/GameTask/AutoStygianOnslaught/AutoStygianOnslaughtParam";
 import "../types/System/Threading/CancellationToken";
 import "../types/System/Threading/CancellationTokenSource";
 
@@ -82,7 +84,7 @@ declare global {
 
     /**
      * 运行自动战斗任务
-     * @param param 战斗任务参数
+     * @param param 任务参数
      * @since 0.52.0
      */
     function runAutoFightTask(
@@ -91,6 +93,34 @@ declare global {
     // overload
     function runAutoFightTask(
       param: BetterGenshinImpact.GameTask.AutoFight.AutoFightParam,
+      customCt: System.Threading.CancellationToken | null
+    ): Promise<void>;
+
+    /**
+     * 运行自动地脉花任务
+     * @param param 任务参数
+     * @since 0.57.0
+     */
+    function runAutoLeyLineOutcropTask(
+      param: BetterGenshinImpact.GameTask.AutoLeyLineOutcrop.AutoLeyLineOutcropParam
+    ): Promise<void>;
+    // overload
+    function runAutoLeyLineOutcropTask(
+      param: BetterGenshinImpact.GameTask.AutoLeyLineOutcrop.AutoLeyLineOutcropParam,
+      customCt: System.Threading.CancellationToken | null
+    ): Promise<void>;
+
+    /**
+     * 运行自动幽境危战任务
+     * @param param 任务参数
+     * @since 0.58.0
+     */
+    function runAutoStygianOnslaughtTask(
+      param: BetterGenshinImpact.GameTask.AutoStygianOnslaught.AutoStygianOnslaughtParam
+    ): Promise<void>;
+    // overload
+    function runAutoStygianOnslaughtTask(
+      param: BetterGenshinImpact.GameTask.AutoStygianOnslaught.AutoStygianOnslaughtParam,
       customCt: System.Threading.CancellationToken | null
     ): Promise<void>;
   }

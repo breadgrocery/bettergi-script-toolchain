@@ -35,6 +35,12 @@ declare global {
       /** 使用原粹树脂刷取副本次数 */
       originalResinUseCount: number;
 
+      /** 使用原粹树脂(20)刷取副本次数 */
+      originalResin20UseCount: number;
+
+      /** 使用原粹树脂(40)刷取副本次数 */
+      originalResin40UseCount: number;
+
       /** 使用浓缩树脂刷取副本次数 */
       condensedResinUseCount: number;
 

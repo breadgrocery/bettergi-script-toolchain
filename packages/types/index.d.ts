@@ -56,9 +56,16 @@
 // 任务参数
 /// <reference path="./types/BetterGenshinImpact/GameTask/AutoDomain/AutoDomainParam.d.ts" />
 /// <reference path="./types/BetterGenshinImpact/GameTask/AutoFight/AutoFightParam.d.ts" />
+/// <reference path="./types/BetterGenshinImpact/GameTask/AutoLeyLineOutcrop/AutoLeyLineOutcropParam.d.ts" />
+/// <reference path="./types/BetterGenshinImpact/GameTask/AutoStygianOnslaught/AutoStygianOnslaughtParam.d.ts" />
 
 // 键鼠回调
 /// <reference path="./types/BetterGenshinImpact/Core/Script/Dependence/KeyMouseHook.d.ts" />
+
+// BvPage类
+/// <reference path="./types/BetterGenshinImpact/Core/BgiVision/BvPage.d.ts" />
+/// <reference path="./types/BetterGenshinImpact/Core/BgiVision/BvLocator.d.ts" />
+/// <reference path="./types/BetterGenshinImpact/Core/BgiVision/BvImage.d.ts" />
 
 /// 设置
 /// <reference path="./objects/settings.d.ts" />

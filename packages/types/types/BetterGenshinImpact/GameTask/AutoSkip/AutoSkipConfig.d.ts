@@ -76,6 +76,12 @@ declare global {
       runBackgroundEnabled: boolean;
 
       /**
+       * 后台剧情结束后切回游戏前台
+       * @default false
+       */
+      bringGameToFrontAfterBackgroundDialogEnabled: boolean;
+
+      /**
        * 提交物品
        * @default true
        */
