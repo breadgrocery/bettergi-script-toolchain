@@ -1,27 +1,33 @@
 import fs from "fs-extra";
 import path from "node:path";
-import util from "node:util";
-import Registry from "winreg";
+import {
+  HKEY,
+  type RegistryStringEntry,
+  RegistryValueType,
+  enumerateValuesSafe
+} from "registry-js";
 
 export const getInstallPath = (() => {
   let installPath: string | undefined = undefined;
-  return async () => {
+  return () => {
     if (installPath) return installPath;
 
-    const defaultKey = Registry.DEFAULT_VALUE;
-    const reg = new Registry({
-      hive: Registry.HKCU,
-      key: "\\Software\\Classes\\BetterGI\\shell\\open\\command"
-    });
+    const subkey = "Software\\Classes\\BetterGI\\shell\\open\\command";
     try {
-      const exists = await util.promisify(reg.valueExists.bind(reg))(defaultKey);
-      if (!exists) return undefined;
+      const values = enumerateValuesSafe(HKEY.HKEY_CURRENT_USER, subkey);
 
-      const item = await util.promisify(reg.get.bind(reg))(defaultKey);
-      const match = item?.value?.match(/[a-zA-Z]:\\(?:[^\/:*?"<>|\r\n]+\\)*[^\/:*?"<>|\r\n]*/g);
+      // 查找默认值（名称为空字符串的条目）
+      const defaultEntry = values.find(
+        v => v.name === "" && v.type === RegistryValueType.REG_SZ
+      ) as RegistryStringEntry | undefined;
+      if (!defaultEntry?.data) return undefined;
+
+      const match = defaultEntry.data.match(
+        /[a-zA-Z]:\\(?:[^\/:*?"<>|\r\n]+\\)*[^\/:*?"<>|\r\n]*/g
+      );
       installPath = match?.[0] && path.dirname(match[0]);
     } catch (err) {
-      console.warn(`⚠️ Error reading registry path: ${reg.path}: ${err}`);
+      console.warn(`⚠️ Error reading registry path: ${subkey}: ${err}`);
       return undefined;
     }
 
@@ -35,7 +41,7 @@ export const getVersion = (() => {
     if (version) return version;
 
     try {
-      const installPath = await getInstallPath();
+      const installPath = getInstallPath();
       if (!installPath) return;
 
       const configFilePath = path.join(installPath, "User/config.json");
