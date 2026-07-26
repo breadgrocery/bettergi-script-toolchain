@@ -1,59 +1,58 @@
+import type { ClrHostValue, HostType, ValueTypeTrait } from "../../Microsoft/ClearScript/HostType";
+import type { VoidResult } from "../../Microsoft/ClearScript/VoidResult";
+import "../Action";
 import "../IEquatable";
+import "../ValueType";
 import "./CancellationTokenRegistration";
 import "./WaitHandle";
 
+declare const cancellationTokenBrand: unique symbol;
+export interface CancellationToken extends ClrHostValue {
+  readonly [cancellationTokenBrand]: true;
+  equals(other: System.Threading.CancellationToken): boolean;
+  equals(other: unknown | null): boolean;
+  getHashCode(): number;
+  readonly canBeCanceled: boolean;
+  readonly isCancellationRequested: boolean;
+  readonly waitHandle: System.Threading.WaitHandle;
+  register(callback: System.Action): System.Threading.CancellationTokenRegistration;
+  register(
+    callback: System.Action,
+    useSynchronizationContext: boolean
+  ): System.Threading.CancellationTokenRegistration;
+  register(
+    callback: System.Action<unknown, System.Threading.CancellationToken>,
+    state: unknown | null
+  ): System.Threading.CancellationTokenRegistration;
+  register(
+    callback: System.Action<unknown>,
+    state: unknown | null
+  ): System.Threading.CancellationTokenRegistration;
+  register(
+    callback: System.Action<unknown>,
+    state: unknown | null,
+    useSynchronizationContext: boolean
+  ): System.Threading.CancellationTokenRegistration;
+  throwIfCancellationRequested(): VoidResult;
+  unsafeRegister(
+    callback: System.Action<unknown, System.Threading.CancellationToken>,
+    state: unknown | null
+  ): System.Threading.CancellationTokenRegistration;
+  unsafeRegister(
+    callback: System.Action<unknown>,
+    state: unknown | null
+  ): System.Threading.CancellationTokenRegistration;
+}
+
 declare global {
   namespace System.Threading {
-    class CancellationToken implements System.IEquatable<CancellationToken> {
-      isCancellationRequested: boolean;
-
-      canBeCanceled: boolean;
-
-      waitHandle: System.Threading.WaitHandle;
-
-      register(callback: () => void): System.Threading.CancellationTokenRegistration;
-
-      register(
-        callback: () => void,
-        useSynchronizationContext: boolean
-      ): System.Threading.CancellationTokenRegistration;
-
-      register(
-        callback: (obj: any) => void,
-        state: any
-      ): System.Threading.CancellationTokenRegistration;
-
-      register(
-        callback: (obj: any) => System.Threading.CancellationToken,
-        state: any
-      ): System.Threading.CancellationTokenRegistration;
-
-      register(
-        callback: (obj: any) => void,
-        state: any,
-        useSynchronizationContext: boolean
-      ): System.Threading.CancellationTokenRegistration;
-
-      unsafeRegister(
-        callback: (obj: any) => void,
-        state: any
-      ): System.Threading.CancellationTokenRegistration;
-
-      unsafeRegister(
-        callback: (obj: any) => System.Threading.CancellationToken,
-        state: any
-      ): System.Threading.CancellationTokenRegistration;
-
-      equals(other: CancellationToken | null): boolean;
-
-      throwIfCancellationRequested(): void;
-
-      static readonly none: System.Threading.CancellationToken;
-
-      constructor(canceled: boolean);
-    }
+    type CancellationToken = import("./CancellationToken").CancellationToken;
   }
-  export import CancellationToken = System.Threading.CancellationToken;
+}
+
+export interface CancellationTokenHostType extends HostType<CancellationToken, ValueTypeTrait> {
+  new (canceled: boolean): CancellationToken;
+  readonly none: System.Threading.CancellationToken;
 }
 
 export {};

@@ -1,6 +1,6 @@
 {
   "name": "@bettergi/types",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "BetterGI TypeScript 类型定义",
   "type": "module",
   "author": "Bread Grocery<https://github.com/breadgrocery>",
@@ -14,15 +14,27 @@
     "url": "https://github.com/breadgrocery/bettergi-script-toolchain/issues"
   },
   "homepage": "https://github.com/breadgrocery/bettergi-script-toolchain/tree/main/packages/types",
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts"
+    }
+  },
+  "files": [
+    "index.d.ts",
+    "bindings",
+    "types",
+    "README.md"
+  ],
   "keywords": [
     "bettergi",
     "types"
   ],
   "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
     "release": "pnpm publish --access public"
   },
-  "dependencies": {
-    "mirada": "^0.0.15"
+  "devDependencies": {
+    "typescript": "6.0.3"
   }
 }

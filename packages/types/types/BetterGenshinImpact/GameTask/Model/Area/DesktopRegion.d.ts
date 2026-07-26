@@ -1,59 +1,142 @@
-import type { Mat, Rect } from "mirada/dist/src/types/opencv";
 import "../../../../Fischless/WindowsInput/IMouseSimulator";
-import "../Area/Region";
+import type {
+  DoubleHost,
+  HostType,
+  Int32Host,
+  PublicDefaultConstructorTrait,
+  ReferenceTypeTrait,
+  StrongNumeric
+} from "../../../../Microsoft/ClearScript/HostType";
+import type { VoidResult } from "../../../../Microsoft/ClearScript/VoidResult";
+import "../../../../OpenCvSharp/Mat";
+import "../../../../System/IDisposable";
+import "./GameCaptureRegion";
+import "./Region";
+
+/**
+ * 桌面区域，对应无缩放的桌面屏幕尺寸，主要用于点击与鼠标移动
+ * @since 0.43.1
+ */
+declare const desktopRegionBrand: unique symbol;
+export interface DesktopRegion
+  extends
+    Omit<
+      BetterGenshinImpact.GameTask.Model.Area.Region,
+      "derive" | "desktopRegionClick" | "desktopRegionMove"
+    >,
+    System.IDisposableInput {
+  readonly [desktopRegionBrand]: true;
+  /**
+   * 在桌面坐标系点击指定矩形中心
+   * @param x 桌面横坐标
+   * @param y 桌面纵坐标
+   * @param w 矩形宽度
+   * @param h 矩形高度
+   * @returns ClearScript 宿主空结果
+   * @since 0.43.1
+   */
+  desktopRegionClick(
+    x: number | StrongNumeric<Int32Host>,
+    y: number | StrongNumeric<Int32Host>,
+    w: number | StrongNumeric<Int32Host>,
+    h: number | StrongNumeric<Int32Host>
+  ): VoidResult;
+  /**
+   * 在桌面坐标系移动鼠标到指定矩形中心
+   * @param x 桌面横坐标
+   * @param y 桌面纵坐标
+   * @param w 矩形宽度
+   * @param h 矩形高度
+   * @returns ClearScript 宿主空结果
+   * @since 0.43.1
+   */
+  desktopRegionMove(
+    x: number | StrongNumeric<Int32Host>,
+    y: number | StrongNumeric<Int32Host>,
+    w: number | StrongNumeric<Int32Host>,
+    h: number | StrongNumeric<Int32Host>
+  ): VoidResult;
+  /**
+   * 由截图矩阵派生游戏截图区域
+   * @param captureMat 游戏窗口截图矩阵
+   * @param x 游戏窗口在桌面上的横坐标
+   * @param y 游戏窗口在桌面上的纵坐标
+   * @since 0.45.1
+   */
+  derive(
+    captureMat: OpenCvSharp.Mat,
+    x: number | StrongNumeric<Int32Host>,
+    y: number | StrongNumeric<Int32Host>
+  ): BetterGenshinImpact.GameTask.Model.Area.GameCaptureRegion;
+}
 
 declare global {
   namespace BetterGenshinImpact.GameTask.Model.Area {
-    class DesktopRegion extends BetterGenshinImpact.GameTask.Model.Area.Region {
-      desktopRegionClick(x: number, y: number, w: number, h: number): void;
-
-      desktopRegionMove(x: number, y: number, w: number, h: number): void;
-
-      /**
-       * 派生一个点类型的区域
-       * @param x 水平位置（像素）
-       * @param y 垂直位置（像素）
-       */
-      derive(x: number, y: number): BetterGenshinImpact.GameTask.Model.Area.Region;
-
-      /**
-       * 派生一个点类型的区域
-       * @param x 水平位置（像素）
-       * @param y 垂直位置（像素）
-       * @param w 宽度
-       * @param h 高度
-       */
-      derive(
-        x: number,
-        y: number,
-        w: number,
-        h: number
-      ): BetterGenshinImpact.GameTask.Model.Area.Region;
-
-      /**
-       * 派生一个矩形类型的区域
-       * @param rect 矩形
-       */
-      derive(rect: Rect): BetterGenshinImpact.GameTask.Model.Area.Region;
-
-      derive(captureMat: Mat, x: number, y: number): void;
-
-      constructor(w: number, h: number);
-      // overload
-      constructor(w: number, h: number, iMouse: Fischless.WindowsInput.IMouseSimulator | null);
-
-      constructor();
-
-      constructor(iMouse: Fischless.WindowsInput.IMouseSimulator);
-
-      static desktopRegionClick(cx: number, cy: number): void;
-
-      static desktopRegionMove(cx: number, cy: number): void;
-
-      static desktopRegionMoveBy(dx: number, dy: number): void;
-    }
+    type DesktopRegion = import("./DesktopRegion").DesktopRegion;
   }
-  export import DesktopRegion = BetterGenshinImpact.GameTask.Model.Area.DesktopRegion;
+}
+
+export interface DesktopRegionHostType extends HostType<
+  DesktopRegion,
+  ReferenceTypeTrait & PublicDefaultConstructorTrait
+> {
+  /**
+   * 按指定桌面尺寸构造桌面区域
+   * @param w 桌面宽度
+   * @param h 桌面高度
+   * @param iMouse 鼠标模拟器；省略时使用默认实现
+   * @since 0.52.0
+   */
+  new (w: number | StrongNumeric<Int32Host>, h: number | StrongNumeric<Int32Host>): DesktopRegion;
+  new (
+    w: number | StrongNumeric<Int32Host>,
+    h: number | StrongNumeric<Int32Host>,
+    iMouse: Fischless.WindowsInput.IMouseSimulator | null
+  ): DesktopRegion;
+  /**
+   * 按主屏幕工作区构造桌面区域
+   * @since 0.52.0
+   */
+  new (): DesktopRegion;
+  /**
+   * 按主屏幕工作区与指定鼠标模拟器构造桌面区域
+   * @param mouse 鼠标模拟器
+   * @since 0.52.0
+   */
+  new (mouse: Fischless.WindowsInput.IMouseSimulator): DesktopRegion;
+  /**
+   * 按桌面坐标点击；每次重新计算屏幕大小
+   * @param cx 桌面横坐标
+   * @param cy 桌面纵坐标
+   * @returns ClearScript 宿主空结果
+   * @since 0.43.1
+   */
+  desktopRegionClick(
+    cx: number | StrongNumeric<DoubleHost>,
+    cy: number | StrongNumeric<DoubleHost>
+  ): VoidResult;
+  /**
+   * 按桌面坐标移动鼠标；每次重新计算屏幕大小
+   * @param cx 桌面横坐标
+   * @param cy 桌面纵坐标
+   * @returns ClearScript 宿主空结果
+   * @since 0.43.1
+   */
+  desktopRegionMove(
+    cx: number | StrongNumeric<DoubleHost>,
+    cy: number | StrongNumeric<DoubleHost>
+  ): VoidResult;
+  /**
+   * 按桌面像素偏移移动鼠标
+   * @param dx 水平偏移
+   * @param dy 垂直偏移
+   * @returns ClearScript 宿主空结果
+   * @since 0.43.1
+   */
+  desktopRegionMoveBy(
+    dx: number | StrongNumeric<DoubleHost>,
+    dy: number | StrongNumeric<DoubleHost>
+  ): VoidResult;
 }
 
 export {};

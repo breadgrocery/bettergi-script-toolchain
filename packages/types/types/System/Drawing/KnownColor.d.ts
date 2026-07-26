@@ -1,357 +1,197 @@
+import type { ClrHostValue, EnumTypeTrait, HostType } from "../../Microsoft/ClearScript/HostType";
+import "../Enum";
+import "../IComparable";
+import "../IConvertible";
+import "../IFormattable";
+import "../ISpanFormattable";
+
+declare const knownColorBrand: unique symbol;
+export interface KnownColor extends ClrHostValue {
+  readonly [knownColorBrand]: true;
+}
+
 declare global {
   namespace System.Drawing {
-    enum KnownColor {
-      ActiveBorder,
-
-      ActiveCaption,
-
-      ActiveCaptionText,
-
-      AppWorkspace,
-
-      Control,
-
-      ControlDark,
-
-      ControlDarkDark,
-
-      ControlLight,
-
-      ControlLightLight,
-
-      ControlText,
-
-      Desktop,
-
-      GrayText,
-
-      Highlight,
-
-      HighlightText,
-
-      HotTrack,
-
-      InactiveBorder,
-
-      InactiveCaption,
-
-      InactiveCaptionText,
-
-      Info,
-
-      InfoText,
-
-      Menu,
-
-      MenuText,
-
-      ScrollBar,
-
-      Window,
-
-      WindowFrame,
-
-      WindowText,
-
-      Transparent,
-
-      AliceBlue,
-
-      AntiqueWhite,
-
-      Aqua,
-
-      Aquamarine,
-
-      Azure,
-
-      Beige,
-
-      Bisque,
-
-      Black,
-
-      BlanchedAlmond,
-
-      Blue,
-
-      BlueViolet,
-
-      Brown,
-
-      BurlyWood,
-
-      CadetBlue,
-
-      Chartreuse,
-
-      Chocolate,
-
-      Coral,
-
-      CornflowerBlue,
-
-      Cornsilk,
-
-      Crimson,
-
-      Cyan,
-
-      DarkBlue,
-
-      DarkCyan,
-
-      DarkGoldenrod,
-
-      DarkGray,
-
-      DarkGreen,
-
-      DarkKhaki,
-
-      DarkMagenta,
-
-      DarkOliveGreen,
-
-      DarkOrange,
-
-      DarkOrchid,
-
-      DarkRed,
-
-      DarkSalmon,
-
-      DarkSeaGreen,
-
-      DarkSlateBlue,
-
-      DarkSlateGray,
-
-      DarkTurquoise,
-
-      DarkViolet,
-
-      DeepPink,
-
-      DeepSkyBlue,
-
-      DimGray,
-
-      DodgerBlue,
-
-      Firebrick,
-
-      FloralWhite,
-
-      ForestGreen,
-
-      Fuchsia,
-
-      Gainsboro,
-
-      GhostWhite,
-
-      Gold,
-
-      Goldenrod,
-
-      Gray,
-
-      Green,
-
-      GreenYellow,
-
-      Honeydew,
-
-      HotPink,
-
-      IndianRed,
-
-      Indigo,
-
-      Ivory,
-
-      Khaki,
-
-      Lavender,
-
-      LavenderBlush,
-
-      LawnGreen,
-
-      LemonChiffon,
-
-      LightBlue,
-
-      LightCoral,
-
-      LightCyan,
-
-      LightGoldenrodYellow,
-
-      LightGray,
-
-      LightGreen,
-
-      LightPink,
-
-      LightSalmon,
-
-      LightSeaGreen,
-
-      LightSkyBlue,
-
-      LightSlateGray,
-
-      LightSteelBlue,
-
-      LightYellow,
-
-      Lime,
-
-      LimeGreen,
-
-      Linen,
-
-      Magenta,
-
-      Maroon,
-
-      MediumAquamarine,
-
-      MediumBlue,
-
-      MediumOrchid,
-
-      MediumPurple,
-
-      MediumSeaGreen,
-
-      MediumSlateBlue,
-
-      MediumSpringGreen,
-
-      MediumTurquoise,
-
-      MediumVioletRed,
-
-      MidnightBlue,
-
-      MintCream,
-
-      MistyRose,
-
-      Moccasin,
-
-      NavajoWhite,
-
-      Navy,
-
-      OldLace,
-
-      Olive,
-
-      OliveDrab,
-
-      Orange,
-
-      OrangeRed,
-
-      Orchid,
-
-      PaleGoldenrod,
-
-      PaleGreen,
-
-      PaleTurquoise,
-
-      PaleVioletRed,
-
-      PapayaWhip,
-
-      PeachPuff,
-
-      Peru,
-
-      Pink,
-
-      Plum,
-
-      PowderBlue,
-
-      Purple,
-
-      Red,
-
-      RosyBrown,
-
-      RoyalBlue,
-
-      SaddleBrown,
-
-      Salmon,
-
-      SandyBrown,
-
-      SeaGreen,
-
-      SeaShell,
-
-      Sienna,
-
-      Silver,
-
-      SkyBlue,
-
-      SlateBlue,
-
-      SlateGray,
-
-      Snow,
-
-      SpringGreen,
-
-      SteelBlue,
-
-      Tan,
-
-      Teal,
-
-      Thistle,
-
-      Tomato,
-
-      Turquoise,
-
-      Violet,
-
-      Wheat,
-
-      White,
-
-      WhiteSmoke,
-
-      Yellow,
-
-      YellowGreen,
-
-      ButtonFace,
-
-      ButtonHighlight,
-
-      ButtonShadow,
-
-      GradientActiveCaption,
-
-      GradientInactiveCaption,
-
-      MenuBar,
-
-      MenuHighlight,
-
-      RebeccaPurple
-    }
+    type KnownColor = import("./KnownColor").KnownColor;
   }
+}
+
+export interface KnownColorHostType extends HostType<KnownColor, EnumTypeTrait> {
+  readonly activeBorder: KnownColor;
+  readonly activeCaption: KnownColor;
+  readonly activeCaptionText: KnownColor;
+  readonly appWorkspace: KnownColor;
+  readonly control: KnownColor;
+  readonly controlDark: KnownColor;
+  readonly controlDarkDark: KnownColor;
+  readonly controlLight: KnownColor;
+  readonly controlLightLight: KnownColor;
+  readonly controlText: KnownColor;
+  readonly desktop: KnownColor;
+  readonly grayText: KnownColor;
+  readonly highlight: KnownColor;
+  readonly highlightText: KnownColor;
+  readonly hotTrack: KnownColor;
+  readonly inactiveBorder: KnownColor;
+  readonly inactiveCaption: KnownColor;
+  readonly inactiveCaptionText: KnownColor;
+  readonly info: KnownColor;
+  readonly infoText: KnownColor;
+  readonly menu: KnownColor;
+  readonly menuText: KnownColor;
+  readonly scrollBar: KnownColor;
+  readonly window: KnownColor;
+  readonly windowFrame: KnownColor;
+  readonly windowText: KnownColor;
+  readonly transparent: KnownColor;
+  readonly aliceBlue: KnownColor;
+  readonly antiqueWhite: KnownColor;
+  readonly aqua: KnownColor;
+  readonly aquamarine: KnownColor;
+  readonly azure: KnownColor;
+  readonly beige: KnownColor;
+  readonly bisque: KnownColor;
+  readonly black: KnownColor;
+  readonly blanchedAlmond: KnownColor;
+  readonly blue: KnownColor;
+  readonly blueViolet: KnownColor;
+  readonly brown: KnownColor;
+  readonly burlyWood: KnownColor;
+  readonly cadetBlue: KnownColor;
+  readonly chartreuse: KnownColor;
+  readonly chocolate: KnownColor;
+  readonly coral: KnownColor;
+  readonly cornflowerBlue: KnownColor;
+  readonly cornsilk: KnownColor;
+  readonly crimson: KnownColor;
+  readonly cyan: KnownColor;
+  readonly darkBlue: KnownColor;
+  readonly darkCyan: KnownColor;
+  readonly darkGoldenrod: KnownColor;
+  readonly darkGray: KnownColor;
+  readonly darkGreen: KnownColor;
+  readonly darkKhaki: KnownColor;
+  readonly darkMagenta: KnownColor;
+  readonly darkOliveGreen: KnownColor;
+  readonly darkOrange: KnownColor;
+  readonly darkOrchid: KnownColor;
+  readonly darkRed: KnownColor;
+  readonly darkSalmon: KnownColor;
+  readonly darkSeaGreen: KnownColor;
+  readonly darkSlateBlue: KnownColor;
+  readonly darkSlateGray: KnownColor;
+  readonly darkTurquoise: KnownColor;
+  readonly darkViolet: KnownColor;
+  readonly deepPink: KnownColor;
+  readonly deepSkyBlue: KnownColor;
+  readonly dimGray: KnownColor;
+  readonly dodgerBlue: KnownColor;
+  readonly firebrick: KnownColor;
+  readonly floralWhite: KnownColor;
+  readonly forestGreen: KnownColor;
+  readonly fuchsia: KnownColor;
+  readonly gainsboro: KnownColor;
+  readonly ghostWhite: KnownColor;
+  readonly gold: KnownColor;
+  readonly goldenrod: KnownColor;
+  readonly gray: KnownColor;
+  readonly green: KnownColor;
+  readonly greenYellow: KnownColor;
+  readonly honeydew: KnownColor;
+  readonly hotPink: KnownColor;
+  readonly indianRed: KnownColor;
+  readonly indigo: KnownColor;
+  readonly ivory: KnownColor;
+  readonly khaki: KnownColor;
+  readonly lavender: KnownColor;
+  readonly lavenderBlush: KnownColor;
+  readonly lawnGreen: KnownColor;
+  readonly lemonChiffon: KnownColor;
+  readonly lightBlue: KnownColor;
+  readonly lightCoral: KnownColor;
+  readonly lightCyan: KnownColor;
+  readonly lightGoldenrodYellow: KnownColor;
+  readonly lightGray: KnownColor;
+  readonly lightGreen: KnownColor;
+  readonly lightPink: KnownColor;
+  readonly lightSalmon: KnownColor;
+  readonly lightSeaGreen: KnownColor;
+  readonly lightSkyBlue: KnownColor;
+  readonly lightSlateGray: KnownColor;
+  readonly lightSteelBlue: KnownColor;
+  readonly lightYellow: KnownColor;
+  readonly lime: KnownColor;
+  readonly limeGreen: KnownColor;
+  readonly linen: KnownColor;
+  readonly magenta: KnownColor;
+  readonly maroon: KnownColor;
+  readonly mediumAquamarine: KnownColor;
+  readonly mediumBlue: KnownColor;
+  readonly mediumOrchid: KnownColor;
+  readonly mediumPurple: KnownColor;
+  readonly mediumSeaGreen: KnownColor;
+  readonly mediumSlateBlue: KnownColor;
+  readonly mediumSpringGreen: KnownColor;
+  readonly mediumTurquoise: KnownColor;
+  readonly mediumVioletRed: KnownColor;
+  readonly midnightBlue: KnownColor;
+  readonly mintCream: KnownColor;
+  readonly mistyRose: KnownColor;
+  readonly moccasin: KnownColor;
+  readonly navajoWhite: KnownColor;
+  readonly navy: KnownColor;
+  readonly oldLace: KnownColor;
+  readonly olive: KnownColor;
+  readonly oliveDrab: KnownColor;
+  readonly orange: KnownColor;
+  readonly orangeRed: KnownColor;
+  readonly orchid: KnownColor;
+  readonly paleGoldenrod: KnownColor;
+  readonly paleGreen: KnownColor;
+  readonly paleTurquoise: KnownColor;
+  readonly paleVioletRed: KnownColor;
+  readonly papayaWhip: KnownColor;
+  readonly peachPuff: KnownColor;
+  readonly peru: KnownColor;
+  readonly pink: KnownColor;
+  readonly plum: KnownColor;
+  readonly powderBlue: KnownColor;
+  readonly purple: KnownColor;
+  readonly red: KnownColor;
+  readonly rosyBrown: KnownColor;
+  readonly royalBlue: KnownColor;
+  readonly saddleBrown: KnownColor;
+  readonly salmon: KnownColor;
+  readonly sandyBrown: KnownColor;
+  readonly seaGreen: KnownColor;
+  readonly seaShell: KnownColor;
+  readonly sienna: KnownColor;
+  readonly silver: KnownColor;
+  readonly skyBlue: KnownColor;
+  readonly slateBlue: KnownColor;
+  readonly slateGray: KnownColor;
+  readonly snow: KnownColor;
+  readonly springGreen: KnownColor;
+  readonly steelBlue: KnownColor;
+  readonly tan: KnownColor;
+  readonly teal: KnownColor;
+  readonly thistle: KnownColor;
+  readonly tomato: KnownColor;
+  readonly turquoise: KnownColor;
+  readonly violet: KnownColor;
+  readonly wheat: KnownColor;
+  readonly white: KnownColor;
+  readonly whiteSmoke: KnownColor;
+  readonly yellow: KnownColor;
+  readonly yellowGreen: KnownColor;
+  readonly buttonFace: KnownColor;
+  readonly buttonHighlight: KnownColor;
+  readonly buttonShadow: KnownColor;
+  readonly gradientActiveCaption: KnownColor;
+  readonly gradientInactiveCaption: KnownColor;
+  readonly menuBar: KnownColor;
+  readonly menuHighlight: KnownColor;
+  readonly rebeccaPurple: KnownColor;
 }
 
 export {};

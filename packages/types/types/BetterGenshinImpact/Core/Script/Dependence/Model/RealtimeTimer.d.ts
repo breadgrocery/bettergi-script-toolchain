@@ -1,35 +1,62 @@
-export type RealtimeTimerName =
-  | "RecognitionTest" // 自定义占位触发器（一个用于开发测试的识别、或者全局占位触发器 这个触发器启动的时候，直接独占）
-  | "GameLoading" // 自动开门
-  | "AutoPick" // 自动拾取
-  | "QuickTeleport" // 快速传送
-  | "AutoSkip" // 自动剧情
-  | "AutoFish" // 自动钓鱼
-  | "AutoCook" // 自动烹饪
-  | "AutoEat" // 自动吃药
-  | (string & {});
+import type {
+  ClrHostValue,
+  HostType,
+  PublicDefaultConstructorTrait,
+  ReferenceTypeTrait
+} from "../../../../../Microsoft/ClearScript/HostType";
+
+/**
+ * 实时任务触发器
+ * @since 0.43.1
+ */
+declare const realtimeTimerBrand: unique symbol;
+export interface RealtimeTimer extends ClrHostValue {
+  readonly [realtimeTimerBrand]: true;
+  /**
+   * 实时任务触发器名称
+   * @since 0.43.1
+   */
+  name: string;
+  /**
+   * 实时任务触发间隔，单位毫秒，默认 50
+   * @since 0.43.1
+   */
+  interval: number;
+  /**
+   * 实时任务配置
+   * @since 0.43.1
+   */
+  config: unknown;
+}
 
 declare global {
   namespace BetterGenshinImpact.Core.Script.Dependence.Model {
-    class RealtimeTimer {
-      /** 任务名称 */
-      name: RealtimeTimerName | null;
-
-      /**
-       * 触发间隔（毫秒）
-       * @default 50
-       */
-      interval: number;
-
-      /** 任务配置 */
-      config: any | null;
-
-      constructor(name: RealtimeTimerName);
-
-      constructor(name: RealtimeTimerName, config: any);
-    }
+    type RealtimeTimer = import("./RealTimeTimer").RealtimeTimer;
   }
-  export import RealtimeTimer = BetterGenshinImpact.Core.Script.Dependence.Model.RealtimeTimer;
+}
+
+export interface RealtimeTimerHostType extends HostType<
+  RealtimeTimer,
+  ReferenceTypeTrait & PublicDefaultConstructorTrait
+> {
+  /**
+   * 构造实例
+   * @since 0.43.1
+   */
+  new (): RealtimeTimer;
+  /**
+   * 构造实例
+   * @param name 实时任务触发器名称
+   * @since 0.43.1
+   */
+  new (name: string): RealtimeTimer;
+  /**
+   * 构造实例
+   * @param name 实时任务触发器名称
+   * @param config 实时任务配置
+   * @since 0.43.1
+   */
+  new (name: string, config: unknown): RealtimeTimer;
 }
 
 export {};
