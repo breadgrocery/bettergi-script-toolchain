@@ -221,10 +221,6 @@ export type Key =
   | "OEM_CLEAR";
 
 export type KeyCode =
-  | Uppercase<Key>
-  | Lowercase<Key>
-  | Uppercase<`VK_${Key}`>
-  | Lowercase<`VK_${Key}`>
-  | (string & {});
+  Uppercase<Key> | Lowercase<Key> | Uppercase<`VK_${Key}`> | Lowercase<`VK_${Key}`> | (string & {});
 
 export {};

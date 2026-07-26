@@ -39,7 +39,7 @@ const directionToBounds = (direction: MatchDirection) => {
  * @param config 识别对象配置
  * @returns 如果找到匹配的图片区域，则返回该区域，否则返回 undefined
  */
-export const findImage = (image: string | ImageMat, config: ROConfig = {}) => {
+export const findImage = (image: string | ImageMat, config: ROConfig = {}): Region | undefined => {
   const ir = captureGameRegion();
   try {
     const mat = typeof image === "string" ? file.readImageMatSync(image) : image;
@@ -73,7 +73,7 @@ export const findImageWithinBounds = (
   w: number,
   h: number,
   config: ROConfig = {}
-) => {
+): Region | undefined => {
   const ir = captureGameRegion();
   try {
     const mat = typeof image === "string" ? file.readImageMatSync(image) : image;
@@ -107,7 +107,7 @@ export const findImageBetweenCoordinates = (
   right: number,
   bottom: number,
   config: ROConfig = {}
-) => {
+): Region | undefined => {
   return findImageWithinBounds(image, left, top, right - left, bottom - top, config);
 };
 
@@ -122,7 +122,7 @@ export const findImageInDirection = (
   image: string | ImageMat,
   direction: MatchDirection,
   config: ROConfig = {}
-) => {
+): Region | undefined => {
   const { x, y, w, h } = directionToBounds(direction);
   return findImageWithinBounds(image, x, y, w, h, config);
 };
@@ -175,7 +175,11 @@ const textMatch = (text: string, searchText: string, options?: TextMatchOptions)
  * @param config 识别对象配置
  * @returns 如果找到匹配的文本区域，则返回该区域，否则返回 undefined
  */
-export const findText = (text: string, options?: TextMatchOptions, config: ROConfig = {}) => {
+export const findText = (
+  text: string,
+  options?: TextMatchOptions,
+  config: ROConfig = {}
+): Region | undefined => {
   const ir = captureGameRegion();
   try {
     const ro = RecognitionObject.ocrThis;
@@ -211,7 +215,7 @@ export const findTextWithinBounds = (
   h: number,
   options?: TextMatchOptions,
   config: ROConfig = {}
-) => {
+): Region | undefined => {
   const ir = captureGameRegion();
   try {
     const ro = RecognitionObject.ocr(x, y, w, h);
@@ -247,7 +251,7 @@ export const findTextBetweenCoordinates = (
   bottom: number,
   options?: TextMatchOptions,
   config: ROConfig = {}
-) => {
+): Region | undefined => {
   return findTextWithinBounds(text, left, top, right - left, bottom - top, options, config);
 };
 
@@ -264,7 +268,7 @@ export const findTextInDirection = (
   direction: MatchDirection,
   options?: TextMatchOptions,
   config: ROConfig = {}
-) => {
+): Region | undefined => {
   const { x, y, w, h } = directionToBounds(direction);
   return findTextWithinBounds(text, x, y, w, h, options, config);
 };
@@ -298,7 +302,7 @@ export const findWithinListView = async (
   listView: ListView,
   retryOptions?: RetryOptions,
   threshold: number = 0.9
-) => {
+): Promise<Region | undefined> => {
   const { x, y, w, h, lineHeight, scrollLines = 1, paddingX = 10, paddingY = 10 } = listView;
   const { maxAttempts = 99, retryInterval = 1200 } = retryOptions || {};
 
@@ -366,7 +370,7 @@ export const findTextWithinListView = async (
   retryOptions?: RetryOptions,
   config: ROConfig = {},
   threshold: number = 0.9
-) => {
+): Promise<Region | undefined> => {
   const ro = RecognitionObject.ocrThis;
   if (Object.keys(config).length > 0) {
     Object.assign(ro, config) && ro.initTemplate();
@@ -398,7 +402,7 @@ export const findImageWithinListView = async (
   retryOptions?: RetryOptions,
   config: ROConfig = {},
   threshold: number = 0.9
-) => {
+): Promise<Region | undefined> => {
   const mat = typeof image === "string" ? file.readImageMatSync(image) : image;
   const ro = RecognitionObject.templateMatch(mat);
   if (Object.keys(config).length > 0) {

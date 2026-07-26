@@ -12,11 +12,7 @@ import "../../../System/ComponentModel/INotifyPropertyChanging";
  * @since 0.55.0
  */
 export type ClickChatOption =
-  | "优先选择第一个选项"
-  | "随机选择选项"
-  | "优先选择最后一个选项"
-  | "不选择选项"
-  | (string & {});
+  "优先选择第一个选项" | "随机选择选项" | "优先选择最后一个选项" | "不选择选项" | (string & {});
 
 /**
  * 画中画图像源

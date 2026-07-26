@@ -76,12 +76,7 @@ export namespace manifest {
 
 export namespace settings {
   export type SettingItem =
-    | Separator
-    | TextBox
-    | ComboBox
-    | CheckBox
-    | MultiCheckbox
-    | CascadeSelect;
+    Separator | TextBox | ComboBox | CheckBox | MultiCheckbox | CascadeSelect;
 
   export interface Component {
     type: string;

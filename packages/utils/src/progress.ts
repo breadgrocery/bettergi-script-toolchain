@@ -90,7 +90,7 @@ export class ProgressTracker {
     this.lastPrintTime = 0;
   }
 
-  public print(message: string, force: boolean = false, logger = log.info) {
+  public print(message: string, force: boolean = false, logger: typeof log.info = log.info) {
     if (force || this.shouldPrint()) {
       this.formatter(logger, message, this.getProgress());
       this.printed();

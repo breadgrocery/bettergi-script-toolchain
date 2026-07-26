@@ -1,4 +1,5 @@
-export type Action = () => Promise<void> | void;
+/** 可同步返回宿主空结果（如 keyPress），与 Promise/void 一并接受 */
+export type Action = () => Promise<void> | void | Microsoft.ClearScript.VoidResult;
 
 /** 重试选项 */
 export type RetryOptions = {

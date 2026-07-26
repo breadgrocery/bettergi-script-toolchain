@@ -23,8 +23,7 @@
   "files": [
     "index.d.ts",
     "bindings",
-    "types",
-    "README.md"
+    "types"
   ],
   "keywords": [
     "bettergi",

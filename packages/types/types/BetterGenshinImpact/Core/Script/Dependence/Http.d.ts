@@ -11,14 +11,7 @@ import "../../../../System/Collections/Generic/Dictionary";
  * @since 0.52.0
  */
 export type HttpMethod =
-  | "GET"
-  | "POST"
-  | "PUT"
-  | "DELETE"
-  | "PATCH"
-  | "HEAD"
-  | "OPTIONS"
-  | (string & {});
+  "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD" | "OPTIONS" | (string & {});
 
 /**
  * 脚本 HTTP 客户端
