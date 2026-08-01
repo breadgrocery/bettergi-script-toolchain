@@ -1,3 +1,8 @@
+declare module "*?assets" {
+  const path: string;
+  export default path;
+}
+
 declare module "*.txt" {
   const text: string;
   export default text;
@@ -94,6 +99,6 @@ declare module "*.webp?lazy" {
 }
 
 declare module "*.webp?path" {
-  const mat: ReturnType<typeof file.readImageMatSync>;
-  export default mat;
+  const path: string;
+  export default path;
 }

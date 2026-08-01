@@ -213,10 +213,18 @@ export interface ScriptConfig {
 
   /** 加载器配置 */
   loaders?: {
+    /** 资源加载器配置 */
+    assets?: {
+      /**
+       * 资源输出基础目录
+       * @default `assets`
+       */
+      baseDir?: string;
+    };
     /** 图片加载器配置 */
     image?: {
       /**
-       * 图片基础目录
+       * 图片输出基础目录
        * @default `assets`
        */
       baseDir?: string;

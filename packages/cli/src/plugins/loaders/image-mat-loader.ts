@@ -1,31 +1,39 @@
 import { id, include } from "@rolldown/pluginutils";
-import fs from "fs-extra";
-import path from "node:path";
 import { type RolldownPlugin } from "rolldown";
 import { type ConfigManager } from "../../config/index.js";
-import { hashFile, sanitizeVariableName } from "../../utils/string.js";
+import { sanitizeVariableName } from "../../utils/string.js";
+import {
+  copyEmittedAssets,
+  emitDefaultConst,
+  emitDefaultFunction,
+  ensureExists,
+  isVirtualId,
+  parseImportSource,
+  resolveEmittedPaths,
+  virtualId
+} from "./shared.js";
+
+const MODULE_ID = "virtual:image-mat";
+const IMAGE_RE = /\.(png|jpg|jpeg|bmp|tiff|webp)/;
 
 const ImageMatLoader = (manager: ConfigManager): RolldownPlugin => {
-  const moduleId = "virtual:image-mat";
   return {
     name: "image-mat-loader",
     resolveId: {
-      filter: [include(id(/\.(png|jpg|jpeg|bmp|tiff|webp)/, { cleanUrl: false }))],
+      filter: [include(id(IMAGE_RE, { cleanUrl: false }))],
       handler(source, importer) {
         if (!importer) return;
 
-        const [filePath, queryString] = source.split("?");
-        const file = path.resolve(path.dirname(importer), filePath);
+        // TODO: 等待 rolldown `import attributes support` 落地，修改 readImageMatWithResizeSync 所需参数的传递方式
+        const { queryString, query, file } = parseImportSource(source, importer);
+        ensureExists(this, file);
 
         const { config } = manager.configData;
-        const rel = `${config.loaders.image.baseDir}/${hashFile(file)}`;
-        const abs = path.join(config.outDir, rel);
-
-        // TODO: 等待 import attributes support 落地，修改 resize 参数的传递方式
-        const query = new URLSearchParams(queryString);
+        const { rel, abs } = resolveEmittedPaths(config.outDir, config.loaders.image.baseDir, file);
+        const key = queryString ? `${rel}?${queryString}` : rel;
 
         return {
-          id: `${moduleId}:${source.replace(filePath, rel)}`,
+          id: virtualId(MODULE_ID, key),
           meta: {
             file,
             rel,
@@ -40,56 +48,32 @@ const ImageMatLoader = (manager: ConfigManager): RolldownPlugin => {
       }
     },
     load(id) {
-      if (!id.startsWith(moduleId)) return null;
+      if (!isVirtualId(id, MODULE_ID)) return undefined;
 
       const meta = this.getModuleInfo(id)?.meta!;
-      const variableName = sanitizeVariableName(meta.file);
+      const baseName = sanitizeVariableName(meta.file);
 
-      // 处理 ?path 后缀，返回文件路径
+      // ?path → 返回构建后路径字符串
       if (meta.path) {
-        const pathVarName = `path_${variableName}`;
-        return {
-          code: `const ${pathVarName} = "${meta.rel}";export { ${pathVarName} as default };`,
-          moduleType: "js"
-        };
+        return emitDefaultConst(`path_${baseName}`, JSON.stringify(meta.rel));
       }
 
       const { width, height, interpolation = "1" } = meta;
-      const resize = Number(meta.width) > 0 && Number(meta.height) > 0;
+      const resize = Number(width) > 0 && Number(height) > 0;
+      const readCall = resize
+        ? `file.readImageMatWithResizeSync(${JSON.stringify(meta.rel)}, ${width}, ${height}, ${interpolation})`
+        : `file.readImageMatSync(${JSON.stringify(meta.rel)})`;
 
-      // 处理 ?lazy 后缀，返回Mat对象延迟加载函数
+      // ?lazy → 返回延迟加载函数
       if (meta.lazy) {
-        const funcVarName = `readImageMatSync_${variableName}`;
-        return resize
-          ? {
-              code: `export default function ${funcVarName}() { return file.readImageMatWithResizeSync("${meta.rel}", ${width}, ${height}, ${interpolation}); }`,
-              moduleType: "js"
-            }
-          : {
-              code: `export default function ${funcVarName}() { return file.readImageMatSync("${meta.rel}"); }`,
-              moduleType: "js"
-            };
+        return emitDefaultFunction(`readImageMatSync_${baseName}`, `return ${readCall};`);
       }
 
-      // 返回Mat对象
-      const matVarName = `mat_${variableName}`;
-      return resize
-        ? {
-            code: `const ${matVarName} = /* @__PURE__ */ file.readImageMatWithResizeSync("${meta.rel}", ${width}, ${height}, ${interpolation});export { ${matVarName} as default };`,
-            moduleType: "js"
-          }
-        : {
-            code: `const ${matVarName} = /* @__PURE__ */ file.readImageMatSync("${meta.rel}");export { ${matVarName} as default };`,
-            moduleType: "js"
-          };
+      // 默认 → 立即加载 Mat
+      return emitDefaultConst(`mat_${baseName}`, `/* @__PURE__ */ ${readCall}`);
     },
     writeBundle() {
-      // 复制图像文件到输出目录
-      Array.from(this.getModuleIds())
-        .filter(id => id.startsWith(moduleId))
-        .map(id => this.getModuleInfo(id)?.meta!)
-        .filter(Boolean)
-        .forEach(({ file, abs }) => fs.copySync(file, abs));
+      copyEmittedAssets(this, MODULE_ID);
     }
   };
 };

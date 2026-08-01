@@ -1,11 +1,18 @@
 import { id, include } from "@rolldown/pluginutils";
 import fs from "fs-extra";
-import path from "node:path";
 import { type RolldownPlugin } from "rolldown";
 import { hashFile, sanitizeVariableName } from "../../utils/string.js";
+import {
+  emitDefaultConst,
+  ensureExists,
+  isVirtualId,
+  parseImportSource,
+  virtualId
+} from "./shared.js";
+
+const MODULE_ID = "virtual:json";
 
 const JSONLoader = (): RolldownPlugin => {
-  const moduleId = "virtual:json";
   return {
     name: "json-loader",
     resolveId: {
@@ -13,25 +20,23 @@ const JSONLoader = (): RolldownPlugin => {
       handler(source, importer) {
         if (!importer) return;
 
-        const file = path.resolve(path.dirname(importer), source);
+        const { file } = parseImportSource(source, importer);
+        ensureExists(this, file);
 
         return {
-          id: `${moduleId}:${hashFile(file)}`,
+          id: virtualId(MODULE_ID, hashFile(file)),
           meta: { file }
         };
       }
     },
     load(id) {
-      if (!id.startsWith(moduleId)) return null;
+      if (!isVirtualId(id, MODULE_ID)) return undefined;
 
-      const meta = this.getModuleInfo(id)?.meta!;
-      const variableName = `json_${sanitizeVariableName(meta.file)}`;
-      const json = fs.readJsonSync(meta.file, { encoding: "utf-8" });
+      const { file } = this.getModuleInfo(id)?.meta!;
+      const name = `json_${sanitizeVariableName(file)}`;
+      const json = fs.readJsonSync(file, { encoding: "utf-8" });
 
-      return {
-        code: `const ${variableName} = ${JSON.stringify(json)};export { ${variableName} as default };`,
-        moduleType: "js"
-      };
+      return emitDefaultConst(name, JSON.stringify(json));
     }
   };
 };

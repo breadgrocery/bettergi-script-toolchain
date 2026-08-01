@@ -2,6 +2,7 @@ import { type BuildOptions, build, watch } from "rolldown";
 import { ConfigManager } from "./config/index.js";
 import CodeFormatter from "./plugins/code-formatter.js";
 import FileWatcher from "./plugins/file-watcher.js";
+import AssetsLoader from "./plugins/loaders/assets-loader.js";
 import ImageMatLoader from "./plugins/loaders/image-mat-loader.js";
 import JSONLoader from "./plugins/loaders/json-loader.js";
 import TextLoader from "./plugins/loaders/text-loader.js";
@@ -16,9 +17,12 @@ import PostBuildProcessor from "./plugins/post-build-processor.js";
     /******************************** 输入选项 ********************************/
     input: config.main,
     plugins: [
+      // loaders
+      AssetsLoader(manager), // 资源文件加载器
       TextLoader(), // 文本文件加载器
       JSONLoader(), // JSON 文件加载器
       ImageMatLoader(manager), // 图像文件加载器
+      // build pipeline
       CodeFormatter(), // 代码格式化
       FileWatcher(manager), // 监听文件变更
       PostBuildProcessor(manager) // 构建后处理

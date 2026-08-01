@@ -1,11 +1,18 @@
 import { id, include } from "@rolldown/pluginutils";
 import fs from "fs-extra";
-import path from "node:path";
 import { type RolldownPlugin } from "rolldown";
 import { hashFile, sanitizeVariableName } from "../../utils/string.js";
+import {
+  emitDefaultConst,
+  ensureExists,
+  isVirtualId,
+  parseImportSource,
+  virtualId
+} from "./shared.js";
+
+const MODULE_ID = "virtual:text";
 
 const TextLoader = (): RolldownPlugin => {
-  const moduleId = "virtual:text";
   return {
     name: "text-loader",
     resolveId: {
@@ -13,25 +20,23 @@ const TextLoader = (): RolldownPlugin => {
       handler(source, importer) {
         if (!importer) return;
 
-        const file = path.resolve(path.dirname(importer), source);
+        const { file } = parseImportSource(source, importer);
+        ensureExists(this, file);
 
         return {
-          id: `${moduleId}:${hashFile(file)}`,
+          id: virtualId(MODULE_ID, hashFile(file)),
           meta: { file }
         };
       }
     },
     load(id) {
-      if (!id.startsWith(moduleId)) return null;
+      if (!isVirtualId(id, MODULE_ID)) return undefined;
 
-      const meta = this.getModuleInfo(id)?.meta!;
-      const variableName = `text_${sanitizeVariableName(meta.file)}`;
-      const text = fs.readFileSync(meta.file, "utf-8");
+      const { file } = this.getModuleInfo(id)?.meta!;
+      const name = `text_${sanitizeVariableName(file)}`;
+      const text = fs.readFileSync(file, "utf-8");
 
-      return {
-        code: `const ${variableName} = "${text}";export { ${variableName} as default };`,
-        moduleType: "js"
-      };
+      return emitDefaultConst(name, JSON.stringify(text));
     }
   };
 };

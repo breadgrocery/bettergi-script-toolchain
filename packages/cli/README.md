@@ -126,6 +126,14 @@ pnpm create @bettergi/script@latest
   log.info(path_foo);
   ```
 
+- 支持使用 `import` 导入资源文件到 `assets` 目录。
+
+  ```ts
+  import path from "./foo.png?assets";
+
+  log.info(path);
+  ```
+
 ## 用法
 
 ### 手动安装

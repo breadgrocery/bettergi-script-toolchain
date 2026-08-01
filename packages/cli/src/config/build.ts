@@ -18,6 +18,9 @@ export interface BuildConfig {
     image: {
       baseDir: string;
     };
+    assets: {
+      baseDir: string;
+    };
   };
   codeSplitting: boolean;
   manualCodeSplitting: OutputOptions["codeSplitting"];
@@ -67,6 +70,9 @@ export const parseBuildConfig = async (context: Context): Promise<BuildConfig> =
 
   // 加载器配置
   const loaders = {
+    assets: {
+      baseDir: config.loaders?.assets?.baseDir || "assets"
+    },
     image: {
       baseDir: config.loaders?.image?.baseDir || "assets"
     }

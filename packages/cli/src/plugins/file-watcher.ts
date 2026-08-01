@@ -6,9 +6,11 @@ const FileWatcher = (manager: ConfigManager): RolldownPlugin => {
     name: "file-watcher",
     buildStart() {
       const { config } = manager.configData;
-      config.watch.forEach(id => this.addWatchFile(id));
+      for (const id of config.watch) {
+        this.addWatchFile(id);
+      }
     },
-    async watchChange(id, { event }) {
+    watchChange(id, { event }) {
       console.debug(`[${new Date().toLocaleString("zh-CN")}][${event}]: ${id}`);
     }
   };
