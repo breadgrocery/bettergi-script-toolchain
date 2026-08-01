@@ -10,7 +10,6 @@ import "../../../../OpenCvSharp/Mat";
 import "../../../../OpenCvSharp/Rect";
 import "../../../../SixLabors/ImageSharp/Image";
 import "../../../../SixLabors/ImageSharp/PixelFormats/Rgb24";
-import "../../../../System/Action";
 import "../../../../System/Collections/Generic/List";
 import "../../../../System/IDisposable";
 import "../../../Core/Recognition/RecognitionObject";
@@ -83,8 +82,8 @@ export interface ImageRegion
   /**
    * 在本区域内查找最优识别结果；支持模板匹配、OCR 匹配与 OCR 识别
    * @param ro 识别对象
-   * @param successAction 找到时的回调
-   * @param failAction 未找到时的回调
+   * @param successAction 找到时的脚本回调
+   * @param failAction 未找到时的脚本回调
    * @returns 最优识别区域；未找到时为空区域
    * @since 0.43.1
    */
@@ -93,18 +92,18 @@ export interface ImageRegion
   ): BetterGenshinImpact.GameTask.Model.Area.Region;
   find(
     ro: BetterGenshinImpact.Core.Recognition.RecognitionObject,
-    successAction: System.Action<BetterGenshinImpact.GameTask.Model.Area.Region> | null
+    successAction: ((region: BetterGenshinImpact.GameTask.Model.Area.Region) => void) | null
   ): BetterGenshinImpact.GameTask.Model.Area.Region;
   find(
     ro: BetterGenshinImpact.Core.Recognition.RecognitionObject,
-    successAction: System.Action<BetterGenshinImpact.GameTask.Model.Area.Region> | null,
-    failAction: System.Action | null
+    successAction: ((region: BetterGenshinImpact.GameTask.Model.Area.Region) => void) | null,
+    failAction: (() => void) | null
   ): BetterGenshinImpact.GameTask.Model.Area.Region;
   /**
    * 在本区域内查找全部识别结果；仅支持模板匹配与 OCR
    * @param ro 识别对象
-   * @param successAction 找到时的回调
-   * @param failAction 未找到时的回调
+   * @param successAction 找到时的脚本回调
+   * @param failAction 未找到时的脚本回调
    * @returns 识别区域列表，不含内嵌图像
    * @since 0.43.1
    */
@@ -113,16 +112,20 @@ export interface ImageRegion
   ): System.Collections.Generic.List<BetterGenshinImpact.GameTask.Model.Area.Region>;
   findMulti(
     ro: BetterGenshinImpact.Core.Recognition.RecognitionObject,
-    successAction: System.Action<
-      System.Collections.Generic.List<BetterGenshinImpact.GameTask.Model.Area.Region>
-    > | null
+    successAction:
+      | ((
+          regions: System.Collections.Generic.List<BetterGenshinImpact.GameTask.Model.Area.Region>
+        ) => void)
+      | null
   ): System.Collections.Generic.List<BetterGenshinImpact.GameTask.Model.Area.Region>;
   findMulti(
     ro: BetterGenshinImpact.Core.Recognition.RecognitionObject,
-    successAction: System.Action<
-      System.Collections.Generic.List<BetterGenshinImpact.GameTask.Model.Area.Region>
-    > | null,
-    failAction: System.Action | null
+    successAction:
+      | ((
+          regions: System.Collections.Generic.List<BetterGenshinImpact.GameTask.Model.Area.Region>
+        ) => void)
+      | null,
+    failAction: (() => void) | null
   ): System.Collections.Generic.List<BetterGenshinImpact.GameTask.Model.Area.Region>;
   /**
    * 释放资源

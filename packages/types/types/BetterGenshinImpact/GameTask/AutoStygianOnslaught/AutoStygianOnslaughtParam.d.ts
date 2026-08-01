@@ -6,6 +6,8 @@ import type {
 } from "../../../Microsoft/ClearScript/HostType";
 import type { VoidResult } from "../../../Microsoft/ClearScript/VoidResult";
 import "../../../System/Collections/Generic/List";
+import type { ResinName } from "../AutoDomain/AutoDomainTask";
+import type { CombatStrategyName } from "../AutoFight/AutoFightConfig";
 import "../Model/BaseTaskParam";
 import "./AutoStygianOnslaughtConfig";
 import "./AutoStygianOnslaughtTask";
@@ -52,7 +54,7 @@ export interface AutoStygianOnslaughtParam extends Omit<
    * 使用树脂的优先级列表，默认浓缩树脂优先于原粹树脂
    * @since 0.58.0
    */
-  resinPriorityList: System.Collections.Generic.List<string>;
+  resinPriorityList: System.Collections.Generic.List<ResinName>;
   /**
    * 使用原粹树脂刷取的次数
    * @since 0.58.0
@@ -104,8 +106,8 @@ export interface AutoStygianOnslaughtParam extends Omit<
    * @returns ClearScript 宿主空结果
    * @since 0.58.0
    */
-  setResinPriorityList(priorities: HostArray<string>): VoidResult;
-  setResinPriorityList(...priorities: string[]): VoidResult;
+  setResinPriorityList(priorities: HostArray<ResinName>): VoidResult;
+  setResinPriorityList(...priorities: ResinName[]): VoidResult;
   /**
    * 设置战斗策略路径
    * @param strategyName 策略名称，省略或为空时使用全局自动战斗配置中的策略名称
@@ -113,7 +115,7 @@ export interface AutoStygianOnslaughtParam extends Omit<
    * @since 0.58.0
    */
   setCombatStrategyPath(): VoidResult;
-  setCombatStrategyPath(strategyName: string | null): VoidResult;
+  setCombatStrategyPath(strategyName: CombatStrategyName | null): VoidResult;
 }
 
 declare global {

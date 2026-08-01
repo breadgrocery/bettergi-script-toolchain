@@ -1,4 +1,4 @@
-import type { RealtimeTimerHostType } from "../types/BetterGenshinImpact/Core/Script/Dependence/Model/RealTimeTimer";
+import type { RealtimeTimerHostType } from "../types/BetterGenshinImpact/Core/Script/Dependence/Model/RealtimeTimer";
 
 declare global {
   /**

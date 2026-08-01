@@ -7,6 +7,8 @@ import type {
 import "../../../System/Collections/Generic/List";
 import "../../../System/ComponentModel/INotifyPropertyChanged";
 import "../../../System/ComponentModel/INotifyPropertyChanging";
+import type { ResinName } from "../AutoDomain/AutoDomainTask";
+import type { CombatStrategyName } from "../AutoFight/AutoFightConfig";
 
 /**
  * 自动幽境危战配置
@@ -65,17 +67,17 @@ export interface AutoStygianOnslaughtConfig
    * 使用树脂的优先级列表，默认浓缩树脂优先于原粹树脂
    * @since 0.58.0
    */
-  resinPriorityList: System.Collections.Generic.List<string>;
+  resinPriorityList: System.Collections.Generic.List<ResinName>;
   /**
    * 是否启用指定树脂使用次数模式
    * @since 0.58.0
    */
   specifyResinUse: boolean;
   /**
-   * 战斗策略名称
+   * 战斗策略名称，`根据队伍自动选择` 表示按当前队伍匹配策略
    * @since 0.58.0
    */
-  strategyName: string;
+  strategyName: CombatStrategyName;
   /**
    * 使用须臾树脂刷取的次数
    * @since 0.58.0

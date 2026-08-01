@@ -43,4 +43,13 @@ export type MapMatchMethod =
   | "SIFT" // SIFT 特征匹配
   | (string & {});
 
+declare global {
+  namespace BetterGenshinImpact.GameTask.Common.Map {
+    type Area = import("./MapScriptNames").Area;
+    type CountryName = import("./MapScriptNames").CountryName;
+    type MapMatchMethod = import("./MapScriptNames").MapMatchMethod;
+    type MapName = import("./MapScriptNames").MapName;
+  }
+}
+
 export {};

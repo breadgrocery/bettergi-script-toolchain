@@ -9,7 +9,6 @@ import type { VoidResult } from "../../../../Microsoft/ClearScript/VoidResult";
 import "../../../../OpenCvSharp/Mat";
 import "../../../../OpenCvSharp/Size";
 import "../../../../System/Drawing/Pen";
-import "../../../../System/Func";
 import "../../../../System/IDisposable";
 import "../../../../System/ValueTuple";
 import "../../../View/Drawable/DrawContent";
@@ -146,30 +145,30 @@ export interface GameCaptureRegionHostType extends HostType<GameCaptureRegion, R
   ): GameCaptureRegion;
   /**
    * 在游戏截图坐标系点击；回调参数为当前捕获尺寸与到 1080P 的缩放比，魔法数字须按 1080P 编写
-   * @param posFunc 根据捕获尺寸与 1080P 缩放比计算点击坐标的回调
+   * @param posFunc 根据捕获尺寸与 1080P 缩放比计算点击坐标的脚本回调，返回坐标 ValueTuple 宿主对象
    * @returns ClearScript 宿主空结果
    * @since 0.43.1
    */
   gameRegionClick(
-    posFunc: System.Func<OpenCvSharp.Size, number, System.ValueTuple<number, number>>
+    posFunc: (size: OpenCvSharp.Size, scale: number) => System.ValueTuple<number, number>
   ): VoidResult;
   /**
    * 在游戏截图坐标系移动鼠标；回调参数为当前捕获尺寸与到 1080P 的缩放比
-   * @param posFunc 根据捕获尺寸与 1080P 缩放比计算目标坐标的回调
+   * @param posFunc 根据捕获尺寸与 1080P 缩放比计算目标坐标的脚本回调，返回坐标 ValueTuple 宿主对象
    * @returns ClearScript 宿主空结果
    * @since 0.43.1
    */
   gameRegionMove(
-    posFunc: System.Func<OpenCvSharp.Size, number, System.ValueTuple<number, number>>
+    posFunc: (size: OpenCvSharp.Size, scale: number) => System.ValueTuple<number, number>
   ): VoidResult;
   /**
    * 在游戏截图坐标系按偏移移动鼠标；回调参数为当前捕获尺寸与到 1080P 的缩放比
-   * @param deltaFunc 根据捕获尺寸与 1080P 缩放比计算偏移量的回调
+   * @param deltaFunc 根据捕获尺寸与 1080P 缩放比计算偏移量的脚本回调，返回偏移 ValueTuple 宿主对象
    * @returns ClearScript 宿主空结果
    * @since 0.43.1
    */
   gameRegionMoveBy(
-    deltaFunc: System.Func<OpenCvSharp.Size, number, System.ValueTuple<number, number>>
+    deltaFunc: (size: OpenCvSharp.Size, scale: number) => System.ValueTuple<number, number>
   ): VoidResult;
   /**
    * 按 1080P 坐标点击，自动换算到当前捕获分辨率

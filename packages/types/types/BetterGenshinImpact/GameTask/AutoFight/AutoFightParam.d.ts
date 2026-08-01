@@ -8,7 +8,12 @@ import type { VoidResult } from "../../../Microsoft/ClearScript/VoidResult";
 import "../../../System/ValueTuple";
 import "../Model/BaseTaskParam";
 import "./AutoFightConfig";
-import type { OnlyPickEliteDropsMode } from "./AutoFightConfig";
+import type {
+  CombatStrategyName,
+  OnlyPickEliteDropsMode,
+  PartySlotIndex,
+  StrategyFileKind
+} from "./AutoFightConfig";
 import "./AutoFightTask";
 
 /**
@@ -101,7 +106,7 @@ export interface AutoFightParam extends Omit<
    * 盾奶位角色队伍序号，从 1 开始，空字符串表示不指定
    * @since 0.52.0
    */
-  guardianAvatar: string;
+  guardianAvatar: PartySlotIndex;
   /**
    * 是否跳过盾奶位自身的战斗策略脚本
    * @since 0.52.0
@@ -149,7 +154,7 @@ export interface AutoFightParam extends Omit<
    * @since 0.52.0
    */
   setCombatStrategyPath(): VoidResult;
-  setCombatStrategyPath(strategyName: string | null): VoidResult;
+  setCombatStrategyPath(strategyName: CombatStrategyName | null): VoidResult;
   /**
    * 从当前全局自动战斗配置填充默认参数
    * @returns ClearScript 宿主空结果
@@ -243,7 +248,7 @@ export interface AutoFightParamHostType extends HostType<AutoFightParam, Referen
    * @since 0.52.0
    */
   new (): AutoFightParam;
-  new (strategyName: string | null): AutoFightParam;
+  new (strategyName: CombatStrategyName | null): AutoFightParam;
   /**
    * 是否启用游泳脱困检测
    * @since 0.52.0
@@ -252,10 +257,12 @@ export interface AutoFightParamHostType extends HostType<AutoFightParam, Referen
   /**
    * 解析策略文件路径，优先检测 `.json`，未命中则回退 `.txt`
    * @param strategyName 策略名称（不含扩展名）
-   * @returns 完整路径与类型标识组成的元组，类型为 `json` 或 `txt`
+   * @returns 完整路径与策略文件种类组成的元组
    * @since 0.52.0
    */
-  resolveStrategyPath(strategyName: string): System.ValueTuple<string, string>;
+  resolveStrategyPath(
+    strategyName: CombatStrategyName
+  ): System.ValueTuple<string, StrategyFileKind>;
   readonly FightFinishDetectConfig: AutoFightParam_FightFinishDetectConfigHostType;
 }
 

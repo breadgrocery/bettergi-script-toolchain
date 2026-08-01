@@ -11,10 +11,11 @@ import "../../../../System/Threading/CancellationTokenSource";
 import "../../../GameTask/AutoBoss/AutoBossParam";
 import "../../../GameTask/AutoDomain/AutoDomainParam";
 import "../../../GameTask/AutoFight/AutoFightParam";
+import type { AvatarName } from "../../../GameTask/AutoFight/Model/Avatar";
 import "../../../GameTask/AutoLeyLineOutcrop/AutoLeyLineOutcropParam";
 import "../../../GameTask/AutoStygianOnslaught/AutoStygianOnslaughtParam";
 import "../../../GameTask/Common/Job/CountInventoryItemParam";
-import "./Model/RealTimeTimer";
+import "./Model/RealtimeTimer";
 import "./Model/SoloTask";
 
 /**
@@ -135,10 +136,10 @@ export interface Dispatcher extends ClrHostValue {
    * @since unreleased
    */
   runCombatScript(script: string): Promise<void>;
-  runCombatScript(script: string, avatarName: string | null): Promise<void>;
+  runCombatScript(script: string, avatarName: AvatarName | null): Promise<void>;
   runCombatScript(
     script: string,
-    avatarName: string | null,
+    avatarName: AvatarName | null,
     customCt: System.Threading.CancellationToken | null | null
   ): Promise<void>;
   /**

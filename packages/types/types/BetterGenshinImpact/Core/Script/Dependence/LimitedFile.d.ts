@@ -64,11 +64,14 @@ export interface LimitedFile extends ClrHostValue {
    * 异步读取文件全部文本
    * 读取失败时通过回调传入错误并返回空字符串
    * @param path 相对工作区的文件路径
-   * @param callbackFunc 回调函数，签名为 (error, text)
+   * @param callbackFunc 脚本回调 `(error, text)`；成功时 `error` 为 null，失败时 `text` 为 null
    * @returns 在任务完成后兑现文件文本的 Promise
    * @since 0.43.1
    */
-  readText(path: string, callbackFunc: unknown): Promise<string>;
+  readText(
+    path: string,
+    callbackFunc: (error: string | null, text: string | null) => void
+  ): Promise<string>;
   /**
    * 异步读取文件全部文本
    * 读取失败时返回空字符串
@@ -130,17 +133,21 @@ export interface LimitedFile extends ClrHostValue {
    * 异步写入文本到文件并触发回调
    * @param path 相对工作区的文件路径
    * @param content 要写入的内容
-   * @param callbackFunc 回调函数，签名为 (error, success)
+   * @param callbackFunc 脚本回调 `(error, success)`；成功时 `error` 为 null，失败时 `success` 为 null
    * @param append 是否追加到文件末尾，默认为 false（覆盖）
    * @returns 在任务完成后兑现是否写入成功的 Promise
    * @since 0.44.4
    */
-  writeText(path: string, content: string, callbackFunc: unknown): Promise<boolean>;
+  writeText(
+    path: string,
+    content: string,
+    callbackFunc: (error: string | null, success: boolean | null) => void
+  ): Promise<boolean>;
   writeText(path: string, content: string, append: boolean): Promise<boolean>;
   writeText(
     path: string,
     content: string,
-    callbackFunc: unknown,
+    callbackFunc: (error: string | null, success: boolean | null) => void,
     append: boolean
   ): Promise<boolean>;
   /**

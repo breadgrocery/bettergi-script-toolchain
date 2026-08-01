@@ -24,6 +24,41 @@ export type MoveMode =
   | (string & {});
 
 /**
+ * 路径追踪赶路模式（`PathingPartyConfig.TravelMode`）
+ * 上游 UI 列表为 `精准靠近` / `连续赶路`；空串运行时会回退为 `精准靠近`
+ * @since 0.43.1
+ */
+export type TravelMode =
+  | "精准靠近" // 适合采集，节点间减速
+  | "连续赶路" // 适合锄地
+  | (string & {});
+
+/**
+ * 路径追踪队伍角色槽位序号（字符串）
+ * 上游 `PathingPartyConfig.AvatarIndexList`：`""` / `1`–`4`
+ * 用于 `MainAvatarIndex`、`GuardianAvatarIndex` 等
+ * @since 0.43.1
+ */
+export type MainAvatarIndex = "" | "1" | "2" | "3" | "4" | (string & {});
+
+/**
+ * 路径追踪自动赶路角色
+ * 上游 `PathingPartyConfig.HurryOnAvatarList`
+ * @since 0.43.1
+ */
+export type HurryOnAvatar =
+  | "" // 未指定 / 关闭列表首项
+  | "自动" // 按名单与主C自动挑选
+  | "玛薇卡"
+  | "闲云"
+  | "桑多涅"
+  | "恰斯卡"
+  | "流浪者"
+  | "伊法"
+  | "希诺宁"
+  | (string & {});
+
+/**
  * 路径点到达动作
  * @since 0.43.1
  */
@@ -78,5 +113,20 @@ export type MonsterTag =
   | "elite" // 精英
   | "legendary" // 传奇
   | (string & {});
+
+declare global {
+  namespace BetterGenshinImpact.GameTask.AutoPathing {
+    type HurryOnAvatar = import("./PathingScriptNames").HurryOnAvatar;
+    type MainAvatarIndex = import("./PathingScriptNames").MainAvatarIndex;
+    type MisidentificationHandlingMode =
+      import("./PathingScriptNames").MisidentificationHandlingMode;
+    type MisidentificationTriggerType = import("./PathingScriptNames").MisidentificationTriggerType;
+    type MonsterTag = import("./PathingScriptNames").MonsterTag;
+    type MoveMode = import("./PathingScriptNames").MoveMode;
+    type TravelMode = import("./PathingScriptNames").TravelMode;
+    type WaypointAction = import("./PathingScriptNames").WaypointAction;
+    type WaypointPointType = import("./PathingScriptNames").WaypointPointType;
+  }
+}
 
 export {};

@@ -8,6 +8,7 @@ import type { VoidResult } from "../../../Microsoft/ClearScript/VoidResult";
 import "../../../System/ComponentModel/INotifyPropertyChanged";
 import "../../../System/ComponentModel/INotifyPropertyChanging";
 import "../AutoFight/AutoFightConfig";
+import type { CombatStrategyName, PartySlotIndex } from "../AutoFight/AutoFightConfig";
 
 /**
  * 地脉花独立战斗配置
@@ -84,7 +85,7 @@ export interface AutoLeyLineOutcropFightConfig
    * 盾奶位角色队伍序号，从 1 开始，空字符串表示不指定
    * @since 0.58.0
    */
-  guardianAvatar: string;
+  guardianAvatar: PartySlotIndex;
   /**
    * 是否跳过盾奶位自身的战斗策略脚本
    * @since 0.58.0
@@ -116,10 +117,10 @@ export interface AutoLeyLineOutcropFightConfig
    */
   seekEnemyRotaryFactor: number;
   /**
-   * 战斗策略名称
+   * 战斗策略名称，`根据队伍自动选择` 表示按当前队伍匹配策略
    * @since 0.58.0
    */
-  strategyName: string;
+  strategyName: CombatStrategyName;
   /**
    * 是否启用游泳脱困检测
    * @since 0.58.0

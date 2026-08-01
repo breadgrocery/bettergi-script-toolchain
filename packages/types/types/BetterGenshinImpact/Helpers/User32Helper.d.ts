@@ -223,4 +223,11 @@ export type Key =
 export type KeyCode =
   Uppercase<Key> | Lowercase<Key> | Uppercase<`VK_${Key}`> | Lowercase<`VK_${Key}`> | (string & {});
 
+declare global {
+  namespace BetterGenshinImpact.Helpers {
+    type Key = import("./User32Helper").Key;
+    type KeyCode = import("./User32Helper").KeyCode;
+  }
+}
+
 export {};

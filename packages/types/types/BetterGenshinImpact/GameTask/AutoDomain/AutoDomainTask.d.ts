@@ -20,6 +20,63 @@ export type ResinName =
   "浓缩树脂" | "原粹树脂" | "原粹树脂20" | "原粹树脂40" | "须臾树脂" | "脆弱树脂" | (string & {});
 
 /**
+ * 分解圣遗物最大星级（字符串）；上游 `int.TryParse` 后按 1–4 使用
+ * @since 0.52.0
+ */
+export type ArtifactStar = "1" | "2" | "3" | "4" | (string & {});
+
+/**
+ * 可自动刷取的秘境名称
+ * 来源：`MapLazyAssets` 从 `tp.json` 提取的 BlessDomain / ForgeryDomain / MasteryDomain 点位名
+ * @since 0.52.0
+ */
+export type DomainName =
+  | "铭记之谷"
+  | "忘却之峡"
+  | "仲夏庭园"
+  | "塞西莉亚苗圃"
+  | "无妄引咎密宫"
+  | "太山府"
+  | "震雷连山密宫"
+  | "孤云凌霄之处"
+  | "华池岩岫"
+  | "芬德尼尔之顶"
+  | "山脊守望"
+  | "菫色之庭"
+  | "椛染之庭"
+  | "砂流之庭"
+  | "沉眠之庭"
+  | "昏识塔"
+  | "缘觉塔"
+  | "有顶塔"
+  | "岩中幽谷"
+  | "赤金的城墟"
+  | "熔铁的孤塞"
+  | "深潮的余响"
+  | "苍白的遗荣"
+  | "罪祸的终末"
+  | "临瀑之城"
+  | "褪色的剧场"
+  | "蕴火的幽墟"
+  | "深古瞭望所"
+  | "虹灵的净土"
+  | "荒废砌造坞"
+  | "无光的深都"
+  | "霜凝的机枢"
+  | "失落的月庭"
+  | "月童的库藏"
+  | "山风的荆冕"
+  | "" // 未指定
+  | (string & {});
+
+/**
+ * 周日 / 限时全开秘境奖励选项序号
+ * UI 列表为 `""` / `1` / `2` / `3`；任务内 `switch` 仅处理 1–3
+ * @since 0.52.0
+ */
+export type SundaySelectedValue = "" | "1" | "2" | "3" | (string & {});
+
+/**
  * 自动秘境独立任务
  * @since 0.52.0
  */
@@ -51,6 +108,10 @@ export interface AutoDomainTask
 declare global {
   namespace BetterGenshinImpact.GameTask.AutoDomain {
     type AutoDomainTask = import("./AutoDomainTask").AutoDomainTask;
+    type ArtifactStar = import("./AutoDomainTask").ArtifactStar;
+    type DomainName = import("./AutoDomainTask").DomainName;
+    type ResinName = import("./AutoDomainTask").ResinName;
+    type SundaySelectedValue = import("./AutoDomainTask").SundaySelectedValue;
   }
 }
 

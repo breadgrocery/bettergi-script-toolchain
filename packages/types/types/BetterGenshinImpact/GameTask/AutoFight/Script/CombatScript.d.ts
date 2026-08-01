@@ -5,6 +5,7 @@ import type {
 } from "../../../../Microsoft/ClearScript/HostType";
 import "../../../../System/Collections/Generic/HashSet";
 import "../../../../System/Collections/Generic/List";
+import type { AvatarName } from "../Model/Avatar";
 import "./CombatCommand";
 
 /**
@@ -28,7 +29,7 @@ export interface CombatScript extends ClrHostValue {
    * 脚本涉及的角色名称集合
    * @since 0.50.0
    */
-  avatarNames: System.Collections.Generic.HashSet<string>;
+  avatarNames: System.Collections.Generic.HashSet<"当前角色" | AvatarName>;
   /**
    * 解析后的战斗指令列表
    * @since 0.50.0
@@ -55,7 +56,7 @@ export interface CombatScriptHostType extends HostType<CombatScript, ReferenceTy
    * @since 0.50.0
    */
   new (
-    avatarNames: System.Collections.Generic.HashSet<string>,
+    avatarNames: System.Collections.Generic.HashSet<"当前角色" | AvatarName>,
     combatCommands: System.Collections.Generic.List<BetterGenshinImpact.GameTask.AutoFight.Script.CombatCommand>
   ): CombatScript;
 }

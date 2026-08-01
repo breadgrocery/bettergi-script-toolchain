@@ -10,6 +10,22 @@ import "../../../../System/Collections/Generic/List";
 import "../Reward/RewardItem";
 
 /**
+ * 合成台材料筛选类型
+ * 来源：`Assets/Model/ItemV2/item.csv` 的 `material_type` 去重集合
+ * @since 0.62.0
+ */
+export type CraftMaterialType =
+  | "武器突破素材"
+  | "消耗品"
+  | "药剂"
+  | "角色与武器培养素材"
+  | "角色天赋素材"
+  | "角色突破素材"
+  | "食物"
+  | "鱼饵"
+  | (string & {});
+
+/**
  * 合成指定材料的执行结果
  * @since 0.62.0
  */
@@ -40,7 +56,7 @@ export interface CraftMaterialResult extends ClrHostValue {
    * 本次使用的材料筛选类型
    * @since 0.62.0
    */
-  materialType: string;
+  materialType: CraftMaterialType;
   /**
    * 本次合成产物汇总
    * @since 0.62.0
@@ -51,6 +67,7 @@ export interface CraftMaterialResult extends ClrHostValue {
 declare global {
   namespace BetterGenshinImpact.GameTask.Common.Job {
     type CraftMaterialResult = import("./CraftMaterialTask").CraftMaterialResult;
+    type CraftMaterialType = import("./CraftMaterialTask").CraftMaterialType;
   }
 }
 
@@ -77,7 +94,7 @@ export interface CraftMaterialResultHostType extends HostType<
     materialName: string,
     targetQuantity: number | StrongNumeric<Int32Host>,
     actualQuantity: number | StrongNumeric<Int32Host>,
-    materialType: string,
+    materialType: CraftMaterialType,
     rewards: System.Collections.Generic.List<BetterGenshinImpact.GameTask.Common.Reward.RewardItem>
   ): BetterGenshinImpact.GameTask.Common.Job.CraftMaterialResult;
 }

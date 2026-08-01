@@ -201,6 +201,8 @@ export interface AutoSkipConfig
 declare global {
   namespace BetterGenshinImpact.GameTask.AutoSkip {
     type AutoSkipConfig = import("./AutoSkipConfig").AutoSkipConfig;
+    type ClickChatOption = import("./AutoSkipConfig").ClickChatOption;
+    type PictureInPictureSourceType = import("./AutoSkipConfig").PictureInPictureSourceType;
   }
 }
 

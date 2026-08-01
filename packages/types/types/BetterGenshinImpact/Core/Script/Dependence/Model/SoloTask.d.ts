@@ -3,7 +3,6 @@ import type {
   HostType,
   ReferenceTypeTrait
 } from "../../../../../Microsoft/ClearScript/HostType";
-import "../../../../../Microsoft/ClearScript/ScriptObject";
 import "../../../../GameTask/Common/Job/CountInventoryItemParam";
 import "../../../../GameTask/Model/GameUI/GridScreenName";
 
@@ -109,6 +108,10 @@ export interface SoloTask extends ClrHostValue {
 declare global {
   namespace BetterGenshinImpact.Core.Script.Dependence.Model {
     type SoloTask = import("./SoloTask").SoloTask;
+    type SoloTaskConfigForName<TName extends SoloTaskName> =
+      import("./SoloTask").SoloTaskConfigForName<TName>;
+    type SoloTaskConfigMap = import("./SoloTask").SoloTaskConfigMap;
+    type SoloTaskName = import("./SoloTask").SoloTaskName;
   }
 }
 

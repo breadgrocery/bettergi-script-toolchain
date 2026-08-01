@@ -18,6 +18,28 @@ export type OnlyPickEliteDropsMode =
   | (string & {});
 
 /**
+ * 战斗策略名称；`根据队伍自动选择` 表示按当前队伍匹配策略目录，其余为 `User/AutoFight` 下策略文件名（不含扩展名）
+ * @since 0.52.0
+ */
+export type CombatStrategyName = "根据队伍自动选择" | (string & {});
+
+/**
+ * 战斗策略文件种类标识
+ * 与上游 `AutoFightParam.ResolveStrategyPath` 返回的第二项对齐：优先命中 `.json`，否则回退 `.txt`；自动选队目录亦标为 `txt`
+ * @since 0.52.0
+ */
+export type StrategyFileKind =
+  | "json" // JSON 战斗策略
+  | "txt" // 文本 / 简易策略（含「根据队伍自动选择」目录）
+  | (string & {});
+
+/**
+ * 队伍内角色槽位序号（字符串），从 1 开始；空字符串表示不指定
+ * @since 0.52.0
+ */
+export type PartySlotIndex = "1" | "2" | "3" | "4" | "" | (string & {});
+
+/**
  * 自动战斗配置
  * @since 0.52.0
  */
@@ -89,7 +111,7 @@ export interface AutoFightConfig
    * 盾奶位角色队伍序号，从 1 开始，空字符串表示不指定
    * @since 0.52.0
    */
-  guardianAvatar: string;
+  guardianAvatar: PartySlotIndex;
   /**
    * 是否跳过盾奶位自身的战斗策略脚本
    * @since 0.52.0
@@ -134,7 +156,7 @@ export interface AutoFightConfig
    * 战斗策略名称，`根据队伍自动选择` 表示按当前队伍匹配策略
    * @since 0.52.0
    */
-  strategyName: string;
+  strategyName: CombatStrategyName;
   /**
    * 是否启用游泳脱困检测
    * @since 0.52.0
@@ -248,6 +270,10 @@ declare global {
 declare global {
   namespace BetterGenshinImpact.GameTask.AutoFight {
     type AutoFightConfig = import("./AutoFightConfig").AutoFightConfig;
+    type CombatStrategyName = import("./AutoFightConfig").CombatStrategyName;
+    type OnlyPickEliteDropsMode = import("./AutoFightConfig").OnlyPickEliteDropsMode;
+    type PartySlotIndex = import("./AutoFightConfig").PartySlotIndex;
+    type StrategyFileKind = import("./AutoFightConfig").StrategyFileKind;
   }
 }
 

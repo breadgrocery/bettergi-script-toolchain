@@ -84,6 +84,7 @@ declare global {
 declare global {
   namespace BetterGenshinImpact.Core.Script.Dependence {
     type Http = import("./Http").Http;
+    type HttpMethod = import("./Http").HttpMethod;
   }
 }
 

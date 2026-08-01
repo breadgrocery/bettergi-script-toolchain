@@ -7,3 +7,5 @@
 **重载与顺序**：不同 CLR 重载按源码顺序保留，不合并。默认参数按可省略尾部展开为相邻 arity。实例一侧与 HostType 一侧分别保持各自源码相对顺序；partial 聚合到主声明文件；同一上游源文件中的多个已纳入类型共置且按源码顺序。
 
 **脚本名**：无 `ScriptMember` 时用 `JsonNamingPolicy.CamelCase`；有 `ScriptMember` 用其脚本名；binding 注入名保持原大小写。TypeScript 允许作为属性/方法名的保留字**不加** `_` 后缀（运行时是 `.type`、`.switch()`，不是 `.type_`）；不能作为参数名的保留字可保留后缀；方法名 `new` 写作 `"new"(...)`。
+
+**脚本字符串域**：见 [0009](./0009-script-string-domains.md)。

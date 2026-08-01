@@ -100,6 +100,7 @@ export interface KeyMouseHook extends ClrHostValue, System.IDisposableInput {
 declare global {
   namespace BetterGenshinImpact.Core.Script.Dependence {
     type KeyMouseHook = import("./KeyMouseHook").KeyMouseHook;
+    type MouseButton = import("./KeyMouseHook").MouseButton;
   }
 }
 

@@ -5,7 +5,7 @@ import type {
 } from "../../../../Microsoft/ClearScript/HostType";
 import type { VoidResult } from "../../../../Microsoft/ClearScript/VoidResult";
 import "../../../../System/Collections/Generic/List";
-import "../Model/Avatar";
+import type { AvatarName } from "../Model/Avatar";
 import "../Model/CombatScenes";
 import "./Method";
 
@@ -20,7 +20,7 @@ export interface CombatCommand extends ClrHostValue {
    * 执行该指令的角色名称
    * @since 0.50.0
    */
-  name: string;
+  name: "当前角色" | AvatarName;
   /**
    * 指令动作方法
    * @since 0.50.0
@@ -76,7 +76,7 @@ export interface CombatCommandHostType extends HostType<CombatCommand, Reference
    * @param command 指令文本，如 `skill` 或 `walk(s, 0.2)`
    * @since 0.50.0
    */
-  new (name: string, command: string): CombatCommand;
+  new (name: "当前角色" | AvatarName, command: string): CombatCommand;
 }
 
 export {};

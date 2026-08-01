@@ -12,8 +12,10 @@ import type { VoidResult } from "../../../../Microsoft/ClearScript/VoidResult";
 import "../../../../OpenCvSharp/Point2f";
 import "../../../../System/Lazy";
 import "../../../../System/Nullable";
+import type { AvatarName } from "../../../GameTask/AutoFight/Model/Avatar";
 import "../../../GameTask/AutoPathing/NavigationInstance";
 import "../../../GameTask/Common/Job/CraftMaterialTask";
+import type { CraftMaterialType } from "../../../GameTask/Common/Job/CraftMaterialTask";
 import type {
   Area,
   CountryName,
@@ -281,18 +283,27 @@ export interface Genshin extends ClrHostValue {
    * 按槽位重组当前队伍角色
    * 未传入或空字符串的槽位跳过；重组队伍槽位角色，不是按数字键切换当前出战角色
    * 示例：`await genshin.switchCharacter("胡桃", "夜兰", "", "钟离")`
-   * @param slot1 1 号位角色名
-   * @param slot2 2 号位角色名
-   * @param slot3 3 号位角色名
-   * @param slot4 4 号位角色名
+   * @param slot1 1 号位角色名，空字符串表示跳过
+   * @param slot2 2 号位角色名，空字符串表示跳过
+   * @param slot3 3 号位角色名，空字符串表示跳过
+   * @param slot4 4 号位角色名，空字符串表示跳过
    * @returns 在任务完成后兑现是否成功的 Promise；完成保存并返回主界面为 true，参数无效、目标角色未找到或流程失败为 false
    * @since unreleased
    */
   switchCharacter(): Promise<boolean>;
-  switchCharacter(slot1: string): Promise<boolean>;
-  switchCharacter(slot1: string, slot2: string): Promise<boolean>;
-  switchCharacter(slot1: string, slot2: string, slot3: string): Promise<boolean>;
-  switchCharacter(slot1: string, slot2: string, slot3: string, slot4: string): Promise<boolean>;
+  switchCharacter(slot1: "" | AvatarName): Promise<boolean>;
+  switchCharacter(slot1: "" | AvatarName, slot2: "" | AvatarName): Promise<boolean>;
+  switchCharacter(
+    slot1: "" | AvatarName,
+    slot2: "" | AvatarName,
+    slot3: "" | AvatarName
+  ): Promise<boolean>;
+  switchCharacter(
+    slot1: "" | AvatarName,
+    slot2: "" | AvatarName,
+    slot3: "" | AvatarName,
+    slot4: "" | AvatarName
+  ): Promise<boolean>;
   /**
    * 清除当前调度器的队伍缓存
    * @returns ClearScript 宿主空结果
@@ -361,7 +372,7 @@ export interface Genshin extends ClrHostValue {
   craftMaterial(
     materialName: string,
     quantity: number | StrongNumeric<Int32Host>,
-    materialType: string | null
+    materialType: CraftMaterialType | null
   ): Promise<BetterGenshinImpact.GameTask.Common.Job.CraftMaterialResult>;
   /**
    * 返回主界面

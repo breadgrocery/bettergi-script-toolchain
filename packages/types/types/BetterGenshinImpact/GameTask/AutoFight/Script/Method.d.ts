@@ -7,6 +7,65 @@ import "../../../../System/Collections/Generic/IEnumerable";
 import "../../../../System/Collections/Generic/List";
 
 /**
+ * 战斗策略脚本中的动作方法名或别名
+ * 与上游 `Method` 静态实例的 `Alias` 对齐；未知写法仍可经 `(string & {})` 传入
+ * @since 0.50.0
+ */
+export type CombatMethodCode =
+  // Skill
+  | "skill"
+  | "e"
+  // Burst
+  | "burst"
+  | "q"
+  // Attack
+  | "attack"
+  | "普攻"
+  | "普通攻击"
+  // Charge
+  | "charge"
+  | "重击"
+  // Wait
+  | "wait"
+  | "after"
+  | "等待"
+  // Ready
+  | "ready"
+  | "完成"
+  // Check
+  | "check"
+  | "检测"
+  // Walk / 方向
+  | "walk"
+  | "行走"
+  | "w"
+  | "a"
+  | "s"
+  | "d"
+  // Aim（已注册静态成员；GetEnumByCode 的 Values 当前未 yield）
+  | "aim"
+  | "r"
+  | "瞄准"
+  // Dash / Jump
+  | "dash"
+  | "冲刺"
+  | "jump"
+  | "j"
+  | "跳跃"
+  // 宏
+  | "mousedown"
+  | "mouseup"
+  | "click"
+  | "moveby"
+  | "keydown"
+  | "keyup"
+  | "keypress"
+  | "scroll"
+  | "verticalscroll"
+  | "round"
+  | (string & {});
+
+/**
  * 战斗策略脚本中的动作方法
  * @since 0.50.0
  */
@@ -17,12 +76,13 @@ export interface Method extends ClrHostValue {
    * 方法别名列表，脚本中可使用其中任一写法
    * @since 0.50.0
    */
-  readonly alias: System.Collections.Generic.List<string>;
+  readonly alias: System.Collections.Generic.List<CombatMethodCode>;
 }
 
 declare global {
   namespace BetterGenshinImpact.GameTask.AutoFight.Script {
     type Method = import("./Method").Method;
+    type CombatMethodCode = import("./Method").CombatMethodCode;
   }
 }
 
@@ -32,7 +92,7 @@ export interface MethodHostType extends HostType<Method, ReferenceTypeTrait> {
    * @param alias 方法别名列表
    * @since 0.50.0
    */
-  new (alias: System.Collections.Generic.List<string>): Method;
+  new (alias: System.Collections.Generic.List<CombatMethodCode>): Method;
   /**
    * 元素战技，别名含 `skill`、`e`
    * @since 0.50.0
@@ -165,7 +225,7 @@ export interface MethodHostType extends HostType<Method, ReferenceTypeTrait> {
    * @throws 方法名未知时抛出参数异常
    * @since 0.50.0
    */
-  getEnumByCode(method: string): BetterGenshinImpact.GameTask.AutoFight.Script.Method;
+  getEnumByCode(method: CombatMethodCode): BetterGenshinImpact.GameTask.AutoFight.Script.Method;
 }
 
 export {};

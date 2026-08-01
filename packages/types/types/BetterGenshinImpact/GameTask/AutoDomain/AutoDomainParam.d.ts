@@ -7,7 +7,9 @@ import type {
 } from "../../../Microsoft/ClearScript/HostType";
 import type { VoidResult } from "../../../Microsoft/ClearScript/VoidResult";
 import "../../../System/Collections/Generic/List";
+import type { CombatStrategyName } from "../AutoFight/AutoFightConfig";
 import "../Model/BaseTaskParam";
+import type { ArtifactStar, DomainName, ResinName, SundaySelectedValue } from "./AutoDomainTask";
 import "./AutoDomainTask";
 
 /**
@@ -54,15 +56,15 @@ export interface AutoDomainParam extends Omit<
    */
   partyName: string;
   /**
-   * 需要刷取的秘境名称
+   * 需要刷取的秘境名称；空字符串表示未指定
    * @since 0.52.0
    */
-  domainName: string;
+  domainName: DomainName;
   /**
-   * 周日秘境奖励选项
+   * 周日 / 限时全开秘境奖励选项序号；空字符串表示不指定
    * @since 0.52.0
    */
-  sundaySelectedValue: string;
+  sundaySelectedValue: SundaySelectedValue;
   /**
    * 是否在结束后自动分解圣遗物
    * @since 0.52.0
@@ -72,7 +74,7 @@ export interface AutoDomainParam extends Omit<
    * 分解圣遗物的最大星级，取值 1–4，默认 `4`
    * @since 0.52.0
    */
-  maxArtifactStar: string;
+  maxArtifactStar: ArtifactStar;
   /**
    * 是否启用指定树脂使用次数模式
    * @since 0.52.0
@@ -82,7 +84,7 @@ export interface AutoDomainParam extends Omit<
    * 使用树脂的优先级列表，默认浓缩树脂优先于原粹树脂
    * @since 0.52.0
    */
-  resinPriorityList: System.Collections.Generic.List<string>;
+  resinPriorityList: System.Collections.Generic.List<ResinName>;
   /**
    * 使用原粹树脂刷取副本的次数
    * @since 0.52.0
@@ -131,15 +133,15 @@ export interface AutoDomainParam extends Omit<
    * @since 0.52.0
    */
   setCombatStrategyPath(): string;
-  setCombatStrategyPath(strategyName: string | null): string;
+  setCombatStrategyPath(strategyName: CombatStrategyName | null): string;
   /**
    * 设置使用树脂的优先级列表
    * @param priorities 树脂名称数组，顺序即优先级
    * @returns ClearScript 宿主空结果
    * @since 0.52.0
    */
-  setResinPriorityList(priorities: HostArray<string>): VoidResult;
-  setResinPriorityList(...priorities: string[]): VoidResult;
+  setResinPriorityList(priorities: HostArray<ResinName>): VoidResult;
+  setResinPriorityList(...priorities: ResinName[]): VoidResult;
 }
 
 declare global {

@@ -27,4 +27,4 @@
 - 取「符号存在」与「自脚本根可达或已注册」两者中较晚的版本；继承成员还要看宿主对象首次暴露
 - 同一 CLR 符号派生的默认 arity、params、泛型 HostType 实参形态、accessor 提示共用同一 `@since`，正文各自适配
 
-脚本字符串域（字面量联合 + `(string & {})`）与 `KeyCode` 等是脚本可用性增强，注释仍按 BetterGI 成员规则书写。
+脚本字符串域与 `KeyCode` 等为可用性增强，注释仍按 BetterGI 成员规则；定义处注明真源（见 [0009](./0009-script-string-domains.md)）。

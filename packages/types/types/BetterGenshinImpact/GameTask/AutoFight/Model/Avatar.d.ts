@@ -19,11 +19,138 @@ import "../../Model/Area/ImageRegion";
 import "../Config/CombatAvatar";
 import "./CombatScenes";
 
+export type AvatarName =
+  | "未知角色"
+  | "神里绫华"
+  | "琴"
+  | "旅行者"
+  | "荧"
+  | "空"
+  | "丽莎"
+  | "芭芭拉"
+  | "凯亚"
+  | "迪卢克"
+  | "雷泽"
+  | "安柏"
+  | "温迪"
+  | "香菱"
+  | "北斗"
+  | "行秋"
+  | "魈"
+  | "凝光"
+  | "可莉"
+  | "钟离"
+  | "菲谢尔"
+  | "班尼特"
+  | "达达利亚"
+  | "诺艾尔"
+  | "七七"
+  | "重云"
+  | "甘雨"
+  | "阿贝多"
+  | "迪奥娜"
+  | "莫娜"
+  | "刻晴"
+  | "砂糖"
+  | "辛焱"
+  | "罗莎莉亚"
+  | "胡桃"
+  | "枫原万叶"
+  | "烟绯"
+  | "宵宫"
+  | "托马"
+  | "优菈"
+  | "雷电将军"
+  | "早柚"
+  | "珊瑚宫心海"
+  | "五郎"
+  | "九条裟罗"
+  | "荒泷一斗"
+  | "八重神子"
+  | "鹿野院平藏"
+  | "夜兰"
+  | "绮良良"
+  | "埃洛伊"
+  | "申鹤"
+  | "云堇"
+  | "久岐忍"
+  | "神里绫人"
+  | "柯莱"
+  | "多莉"
+  | "提纳里"
+  | "妮露"
+  | "赛诺"
+  | "坎蒂丝"
+  | "纳西妲"
+  | "莱依拉"
+  | "流浪者"
+  | "珐露珊"
+  | "瑶瑶"
+  | "艾尔海森"
+  | "迪希雅"
+  | "米卡"
+  | "卡维"
+  | "白术"
+  | "琳妮特"
+  | "林尼"
+  | "菲米尼"
+  | "莱欧斯利"
+  | "那维莱特"
+  | "夏洛蒂"
+  | "芙宁娜"
+  | "夏沃蕾"
+  | "娜维娅"
+  | "嘉明"
+  | "闲云"
+  | "千织"
+  | "希格雯"
+  | "阿蕾奇诺"
+  | "赛索斯"
+  | "克洛琳德"
+  | "艾梅莉埃"
+  | "卡齐娜"
+  | "基尼奇"
+  | "玛拉妮"
+  | "希诺宁"
+  | "恰斯卡"
+  | "欧洛伦"
+  | "玛薇卡"
+  | "茜特菈莉"
+  | "蓝砚"
+  | "梦见月瑞希"
+  | "伊安珊"
+  | "瓦雷莎"
+  | "爱可菲"
+  | "伊法"
+  | "丝柯克"
+  | "塔利雅"
+  | "伊涅芙"
+  | "奇偶(男)"
+  | "奇偶(女)"
+  | "菈乌玛"
+  | "菲林斯"
+  | "爱诺"
+  | "奈芙尔"
+  | "杜林"
+  | "雅珂达"
+  | "哥伦比娅"
+  | "兹白"
+  | "叶洛亚"
+  | "法尔伽"
+  | "莉奈娅"
+  | "洛恩"
+  | "尼可"
+  | "布伦妮"
+  | "桑多涅"
+  | "阿罗夏"
+  | "奥黛塔"
+  | (string & {});
+
 /**
  * 角色行走方向键
  * @since 0.50.0
  */
-type WalkKey =
+export type WalkKey =
   | "w" // 前
   | "s" // 后
   | "a" // 左
@@ -31,10 +158,10 @@ type WalkKey =
   | (string & {});
 
 /**
- * 角色模拟用鼠标按键
+ * 角色模拟用鼠标按键（小写；与 `KeyMouseHook.MouseButton` 的 PascalCase 不同）
  * @since 0.50.0
  */
-type MouseButtonName =
+export type MouseButtonName =
   | "left" // 左键
   | "right" // 右键
   | "middle" // 中键
@@ -56,7 +183,7 @@ export interface Avatar extends ClrHostValue {
    * 角色名称（中文）
    * @since 0.50.0
    */
-  name: string;
+  name: AvatarName;
   /**
    * 队伍内序号，从 1 开始
    * @since 0.50.0
@@ -303,6 +430,9 @@ export interface Avatar extends ClrHostValue {
 declare global {
   namespace BetterGenshinImpact.GameTask.AutoFight.Model {
     type Avatar = import("./Avatar").Avatar;
+    type AvatarName = import("./Avatar").AvatarName;
+    type MouseButtonName = import("./Avatar").MouseButtonName;
+    type WalkKey = import("./Avatar").WalkKey;
   }
 }
 
@@ -318,13 +448,13 @@ export interface AvatarHostType extends HostType<Avatar, ReferenceTypeTrait> {
    */
   new (
     combatScenes: BetterGenshinImpact.GameTask.AutoFight.Model.CombatScenes,
-    name: string,
+    name: AvatarName,
     index: number | StrongNumeric<Int32Host>,
     nameRect: OpenCvSharp.Rect
   ): Avatar;
   new (
     combatScenes: BetterGenshinImpact.GameTask.AutoFight.Model.CombatScenes,
-    name: string,
+    name: AvatarName,
     index: number | StrongNumeric<Int32Host>,
     nameRect: OpenCvSharp.Rect,
     manualSkillCd: number | StrongNumeric<DoubleHost>
@@ -355,7 +485,7 @@ export interface AvatarHostType extends HostType<Avatar, ReferenceTypeTrait> {
    * @returns 仅有角色名时返回 -1，未找到角色返回 null，否则返回冷却秒数
    * @since 0.50.0
    */
-  parseActionSchedulerByCd(avatarName: string, input: string): number | null;
+  parseActionSchedulerByCd(avatarName: AvatarName, input: string): number | null;
   /**
    * 识别屏幕上的血条位置列表
    * @param existingCapture 可选的已有截图区域，省略时重新截图

@@ -20,7 +20,7 @@ import "../../Model/Area/ImageRegion";
 import "../../Model/ISystemInfo";
 import "../Assets/AutoFightAssets";
 import "../AutoFightConfig";
-import "./Avatar";
+import type { AvatarName } from "./Avatar";
 import "./AvatarActiveCheckContext";
 import "./MultiGameStatus";
 
@@ -104,12 +104,12 @@ export interface CombatScenes extends ClrHostValue, System.IDisposableInput {
   classifyAvatarCnName(
     img: SixLabors.ImageSharp.Image<SixLabors.ImageSharp.PixelFormats.Rgb24>,
     index: number | StrongNumeric<Int32Host>
-  ): System.ValueTuple<string, string>;
+  ): System.ValueTuple<AvatarName, string>;
   /**
    * 对角色头像图像进行名称分类
    * @param img 角色头像图像
    * @param index 队伍内序号，从 1 开始
-   * @returns 角色名称
+   * @returns YOLO 英文分类名（可含 `Costume` 后缀），不是中文角色名
    * @since 0.48.0
    */
   classifyAvatarName(
@@ -128,7 +128,7 @@ export interface CombatScenes extends ClrHostValue, System.IDisposableInput {
    * @returns 配置中有效的角色名列表
    * @since 0.48.0
    */
-  updateActionSchedulerByCd(cdConfig: string): System.Collections.Generic.List<string>;
+  updateActionSchedulerByCd(cdConfig: string): System.Collections.Generic.List<AvatarName>;
   /**
    * 在战斗任务开始前绑定取消令牌等运行时上下文
    * @param ct 取消令牌
@@ -154,29 +154,29 @@ export interface CombatScenes extends ClrHostValue, System.IDisposableInput {
   /**
    * 按角色名称选择角色
    * @param name 角色名称（中文）
-   * @returns 对应角色
+   * @returns 对应角色，未找到时为 null
    * @since 0.48.0
    */
-  selectAvatar(name: string): BetterGenshinImpact.GameTask.AutoFight.Model.Avatar;
+  selectAvatar(name: AvatarName): BetterGenshinImpact.GameTask.AutoFight.Model.Avatar | null;
   /**
    * 获取当前出战角色名，不刷新编号框位置，不推荐使用
    * @param force 是否强制重新识别
    * @param region 可选的图像区域
    * @param ct 取消令牌
-   * @returns 出战角色名称
+   * @returns 出战角色名称，未识别时为 null
    * @since 0.48.0
    */
-  currentAvatar(): string;
-  currentAvatar(force: boolean): string;
+  currentAvatar(): AvatarName | null;
+  currentAvatar(force: boolean): AvatarName | null;
   currentAvatar(
     force: boolean,
     region: BetterGenshinImpact.GameTask.Model.Area.ImageRegion | null
-  ): string;
+  ): AvatarName | null;
   currentAvatar(
     force: boolean,
     region: BetterGenshinImpact.GameTask.Model.Area.ImageRegion | null,
     ct: System.Threading.CancellationToken
-  ): string;
+  ): AvatarName | null;
   /**
    * 获取当前出战角色编号，失败后自动刷新编号框位置，推荐使用
    * @param imageRegion 完整游戏画面的图像区域
@@ -201,11 +201,11 @@ export interface CombatScenes extends ClrHostValue, System.IDisposableInput {
   /**
    * 对 OCR 识别结果进行纠错；单字名称（如魈、琴）仍可能无法识别
    * @param name OCR 原始名称
-   * @returns 纠错后的角色名称
+   * @returns 纠错后的角色名称；未命中纠错规则时原样返回
    * @deprecated 已过时
    * @since 0.48.0
    */
-  errorOcrCorrection(name: string): string;
+  errorOcrCorrection(name: string): AvatarName;
   /**
    * 释放资源
    * @returns ClearScript 宿主空结果

@@ -6,13 +6,19 @@ import type {
   StrongNumeric
 } from "../../../Microsoft/ClearScript/HostType";
 import "../../../OpenCvSharp/Rect";
-import "../../../System/Action";
 import "../../../System/Collections/Generic/List";
-import "../../../System/Func";
 import "../../../System/Nullable";
 import "../../../System/Threading/CancellationToken";
 import "../../GameTask/Model/Area/Region";
 import "../Recognition/RecognitionObject";
+
+/**
+ * 重试前回调：收到当前匹配区域列表；可为同步或返回 Promise 的异步脚本函数
+ * @since 0.61.0
+ */
+export type BvLocatorRetryAction = (
+  regions: System.Collections.Generic.List<BetterGenshinImpact.GameTask.Model.Area.Region>
+) => void | Promise<void>;
 
 /**
  * BgiVision 定位器，按识别配置查找并操作匹配区域
@@ -27,13 +33,10 @@ export interface BvLocator extends ClrHostValue {
    */
   readonly recognitionObject: BetterGenshinImpact.Core.Recognition.RecognitionObject;
   /**
-   * 每次重试前执行的回调
+   * 每次重试前执行的回调；脚本侧可直接赋函数，`null` 清除
    * @since 0.57.0
    */
-  retryAction: System.Func<
-    System.Collections.Generic.List<BetterGenshinImpact.GameTask.Model.Area.Region>,
-    Promise<void>
-  >;
+  retryAction: BvLocatorRetryAction | null;
   /**
    * 按当前识别配置查找全部匹配区域；不建议脚本直接调用
    * @returns 匹配到的区域列表
@@ -118,12 +121,12 @@ export interface BvLocator extends ClrHostValue {
   tryWaitForDisappear(timeout: number | StrongNumeric<Int32Host> | null | null): Promise<void>;
   /**
    * 设置感兴趣区域（ROI），覆盖识别配置中的 RegionOfInterest
-   * @param deltaFunc 由当前最大 1080P 捕获矩形计算 ROI 的回调
+   * @param deltaFunc 由当前最大 1080P 捕获矩形计算 ROI 的脚本回调
    * @returns 当前定位器，便于链式调用
    * @since 0.57.0
    */
   withRoi(
-    deltaFunc: System.Func<OpenCvSharp.Rect, OpenCvSharp.Rect>
+    deltaFunc: (captureRect: OpenCvSharp.Rect) => OpenCvSharp.Rect
   ): BetterGenshinImpact.Core.BgiVision.BvLocator;
   /**
    * 设置感兴趣区域（ROI），覆盖识别配置中的 RegionOfInterest
@@ -151,28 +154,20 @@ export interface BvLocator extends ClrHostValue {
     retryInterval: number | StrongNumeric<Int32Host>
   ): BetterGenshinImpact.Core.BgiVision.BvLocator;
   /**
-   * 设置每次重试前执行的回调；支持同步与异步脚本函数
-   * @param action 收到当前匹配区域列表时调用的回调；传入 null 清除回调
+   * 设置每次重试前执行的回调；支持同步与异步脚本函数（对应上游 `Action` 与 `dynamic` 重载）
+   * @param action 收到当前匹配区域列表时调用的脚本回调；传入 null 清除回调
    * @returns 当前定位器，便于链式调用
    * @since 0.61.0
    */
   withRetryAction(
-    action: System.Action<
-      System.Collections.Generic.List<BetterGenshinImpact.GameTask.Model.Area.Region>
-    > | null
+    action: BvLocatorRetryAction | null
   ): BetterGenshinImpact.Core.BgiVision.BvLocator;
-  /**
-   * 设置每次重试前执行的回调；供脚本传入无法隐式转为 Action 的函数
-   * @param action 脚本回调；可为同步函数或返回 Promise 的异步函数
-   * @returns 当前定位器，便于链式调用
-   * @since 0.61.0
-   */
-  withRetryAction(action: unknown): BetterGenshinImpact.Core.BgiVision.BvLocator;
 }
 
 declare global {
   namespace BetterGenshinImpact.Core.BgiVision {
     type BvLocator = import("./BvLocator").BvLocator;
+    type BvLocatorRetryAction = import("./BvLocator").BvLocatorRetryAction;
   }
 }
 

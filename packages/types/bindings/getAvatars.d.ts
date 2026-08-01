@@ -1,8 +1,9 @@
+import type { AvatarName } from "../types/BetterGenshinImpact/GameTask/AutoFight/Model/Avatar";
 import type { HostArray, HostDelegate } from "../types/Microsoft/ClearScript/HostType";
 
 interface getAvatarsHostDelegate extends HostDelegate {
-  (): HostArray<string>;
-  invoke(): HostArray<string>;
+  (): HostArray<AvatarName>;
+  invoke(): HostArray<AvatarName>;
 }
 
 declare global {

@@ -145,6 +145,7 @@ export interface AutoLeyLineOutcropParam extends Omit<
 declare global {
   namespace BetterGenshinImpact.GameTask.AutoLeyLineOutcrop {
     type AutoLeyLineOutcropParam = import("./AutoLeyLineOutcropParam").AutoLeyLineOutcropParam;
+    type LeyLineOutcropType = import("./AutoLeyLineOutcropParam").LeyLineOutcropType;
   }
 }
 

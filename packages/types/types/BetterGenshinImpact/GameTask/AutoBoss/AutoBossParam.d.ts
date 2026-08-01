@@ -4,7 +4,9 @@ import type {
   ReferenceTypeTrait
 } from "../../../Microsoft/ClearScript/HostType";
 import type { VoidResult } from "../../../Microsoft/ClearScript/VoidResult";
+import type { CombatStrategyName } from "../AutoFight/AutoFightConfig";
 import "../Model/BaseTaskParam";
+import type { BossName } from "./AutoBossConfig";
 import "./AutoBossConfig";
 import "./AutoBossTask";
 
@@ -32,15 +34,15 @@ export interface AutoBossParam extends Omit<
 > {
   readonly [autoBossParamBrand]: true;
   /**
-   * 需要讨伐的 Boss 名称
+   * 需要讨伐的 Boss 名称；空字符串表示未指定，启动前须为受支持名单内名称
    * @since 0.62.0
    */
-  bossName: string;
+  bossName: BossName;
   /**
    * 界面中选择的战斗策略名称；无自定义策略路径时会同步更新实际策略路径
    * @since 0.62.0
    */
-  strategyName: string;
+  strategyName: CombatStrategyName;
   /**
    * 实际用于解析自动战斗脚本的路径，脚本可直接设置该路径以覆盖界面选择
    * @since 0.62.0
@@ -106,7 +108,7 @@ export interface AutoBossParam extends Omit<
    * @since 0.62.0
    */
   setCombatStrategyPath(): VoidResult;
-  setCombatStrategyPath(strategyName: string | null): VoidResult;
+  setCombatStrategyPath(strategyName: CombatStrategyName | null): VoidResult;
 }
 
 declare global {
