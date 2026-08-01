@@ -12,6 +12,9 @@ export const useStore = <T extends Record<string, any>>(name: string): T => {
   // 从文件读取数据
   const storeData = (() => {
     try {
+      // 新 API 支持
+      if (file.isExists && !file.isExists(filePath)) throw new Error("File does not exist");
+      // 旧 API 兼容
       const storeFiles = [...file.readPathSync("store")].map(path => path.replace(/\\/g, "/"));
       if (!storeFiles.includes(filePath)) throw new Error("File does not exist");
 
