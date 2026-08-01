@@ -1,6 +1,6 @@
 {
   "name": "@bettergi/types",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "BetterGI TypeScript 类型定义",
   "type": "module",
   "author": "Bread Grocery<https://github.com/breadgrocery>",
@@ -18,6 +18,12 @@
   "exports": {
     ".": {
       "types": "./index.d.ts"
+    },
+    "./htmlMask/host": {
+      "types": "./bindings/htmlMask.d.ts"
+    },
+    "./htmlMask/webview": {
+      "types": "./bindings/htmlMask.webview.d.ts"
     }
   },
   "files": [

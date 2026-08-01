@@ -6,15 +6,16 @@ import type {
   ReferenceTypeTrait,
   StrongNumeric
 } from "../../../../Microsoft/ClearScript/HostType";
-import "../../../../Microsoft/ClearScript/ScriptObject";
 import type { VoidResult } from "../../../../Microsoft/ClearScript/VoidResult";
 import "../../../../System/IDisposable";
+import type { Keys } from "../../../../System/Windows/Forms/Keys";
 
 /**
  * 钩子回报的鼠标按键
  * @since 0.55.0
  */
 export type MouseButton =
+  | "None"
   | "Left" // 左键
   | "Right" // 右键
   | "Middle" // 中键
@@ -36,8 +37,9 @@ export interface KeyMouseHook extends ClrHostValue, System.IDisposableInput {
    * @returns ClearScript 宿主空结果
    * @since 0.55.0
    */
-  onKeyDown(callback: Microsoft.ClearScript.ScriptObject): VoidResult;
-  onKeyDown(callback: Microsoft.ClearScript.ScriptObject, useCodeOnly: boolean): VoidResult;
+  onKeyDown(callback: (keyCode: Keys) => void): VoidResult;
+  onKeyDown(callback: (keyCode: Keys) => void, useCodeOnly: true): VoidResult;
+  onKeyDown(callback: string, useCodeOnly: false): VoidResult;
   /**
    * 注册键盘释放事件回调
    * @param callback 回调函数
@@ -45,22 +47,23 @@ export interface KeyMouseHook extends ClrHostValue, System.IDisposableInput {
    * @returns ClearScript 宿主空结果
    * @since 0.55.0
    */
-  onKeyUp(callback: Microsoft.ClearScript.ScriptObject): VoidResult;
-  onKeyUp(callback: Microsoft.ClearScript.ScriptObject, useCodeOnly: boolean): VoidResult;
+  onKeyUp(callback: (keyCode: Keys) => void): VoidResult;
+  onKeyUp(callback: (keyCode: Keys) => void, useCodeOnly: true): VoidResult;
+  onKeyUp(callback: string, useCodeOnly: false): VoidResult;
   /**
    * 注册鼠标按下事件回调
    * @param callback 回调，参数为按键名与游戏窗口局部坐标
    * @returns ClearScript 宿主空结果
    * @since 0.55.0
    */
-  onMouseDown(callback: (button: MouseButton, x: number, y: number) => void): VoidResult;
+  onMouseDown(callback: (button: MouseButton, localX: number, localY: number) => void): VoidResult;
   /**
    * 注册鼠标抬起事件回调
    * @param callback 回调，参数为按键名与游戏窗口局部坐标
    * @returns ClearScript 宿主空结果
    * @since 0.55.0
    */
-  onMouseUp(callback: (button: MouseButton, x: number, y: number) => void): VoidResult;
+  onMouseUp(callback: (button: MouseButton, localX: number, localY: number) => void): VoidResult;
   /**
    * 注册鼠标移动事件回调
    * @param callback 回调函数
