@@ -140,7 +140,7 @@ export interface Genshin extends ClrHostValue {
    * @param y 目标 Y 坐标
    * @param forceCountry 强制先切换的大地图区域（`SwitchArea` OCR 文案），默认为 null
    * @returns 在任务完成后兑现的 Promise
-   * @since unreleased
+   * @since 0.63.0
    */
   clickMapPoint(
     x: number | StrongNumeric<DoubleHost>,
@@ -288,7 +288,7 @@ export interface Genshin extends ClrHostValue {
    * @param slot3 3 号位角色名，空字符串表示跳过
    * @param slot4 4 号位角色名，空字符串表示跳过
    * @returns 在任务完成后兑现是否成功的 Promise；完成保存并返回主界面为 true，参数无效、目标角色未找到或流程失败为 false
-   * @since unreleased
+   * @since 0.63.0
    */
   switchCharacter(): Promise<boolean>;
   switchCharacter(slot1: "" | AvatarName): Promise<boolean>;
@@ -357,6 +357,13 @@ export interface Genshin extends ClrHostValue {
    * @since 0.43.1
    */
   goToCraftingBench(country: CountryName): Promise<void>;
+  /**
+   * 前往合成台并合成浓缩树脂
+   * @param country 国家名称
+   * @returns 在任务完成后兑现的 Promise
+   * @since 0.63.0
+   */
+  goCraftResin(country: CountryName): Promise<void>;
   /**
    * 在当前已打开的合成界面中合成指定材料
    * @param materialName 目标成品材料名

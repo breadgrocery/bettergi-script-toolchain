@@ -46,17 +46,17 @@ export interface RecognitionObject extends ClrHostValue {
   name: string;
   /**
    * 模板图或识别区域所在捕获画布的尺寸，例如 1920×1080、3840×2160，对应模板截取来源图像大小
-   * @since unreleased
+   * @since 0.63.0
    */
   referenceImageSize: OpenCvSharp.Size | null;
   /**
    * 模板图或识别区域在截取来源图像中的位置与大小；模板匹配时宽高通常等于模板图尺寸，语义接近 bbox
-   * @since unreleased
+   * @since 0.63.0
    */
   referenceBoundingBox: OpenCvSharp.Rect | null;
   /**
    * 查找位置时的搜索选项；未指定时使用默认机制
-   * @since unreleased
+   * @since 0.63.0
    */
   searchOptions: BetterGenshinImpact.Core.Recognition.SearchOptions;
   /**

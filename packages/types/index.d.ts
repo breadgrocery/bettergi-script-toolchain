@@ -4,6 +4,7 @@
 import "./bindings/keyMouseScript"; // 录制回放
 import "./bindings/pathingScript"; // 地图追踪
 import "./bindings/genshin"; // 游戏相关
+import "./bindings/characterDevelopmentTask"; // 角色养成信息识别
 import "./bindings/log"; // 日志
 import "./bindings/file"; // 受限文件读写
 import "./bindings/http"; // 受限 HTTP 请求
@@ -63,6 +64,8 @@ import "./bindings/DesktopRegion"; // 桌面区域
 import "./bindings/GameCaptureRegion"; // 游戏截图区域
 import "./bindings/ImageRegion"; // 图像区域
 import "./bindings/Region"; // 通用屏幕区域
+import "./bindings/Pen"; // System.Drawing 画笔
+import "./bindings/Color"; // System.Drawing 颜色
 
 // 战斗场景与角色宿主类型
 import "./bindings/CombatScenes";

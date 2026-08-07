@@ -87,7 +87,7 @@ export interface GridScreenNameHostType extends HostType<GridScreenName, EnumTyp
   readonly crafting: GridScreenName;
   /**
    * 队伍配置快速编队界面的左侧角色头像网格
-   * @since unreleased
+   * @since 0.63.0
    */
   readonly partySetupCharacters: GridScreenName;
 }

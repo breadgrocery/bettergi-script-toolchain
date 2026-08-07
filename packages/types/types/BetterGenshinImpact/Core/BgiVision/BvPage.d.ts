@@ -10,11 +10,13 @@ import type {
 } from "../../../Microsoft/ClearScript/HostType";
 import type { VoidResult } from "../../../Microsoft/ClearScript/VoidResult";
 import "../../../OpenCvSharp/Rect";
+import "../../../System/Collections/Generic/IEnumerable";
 import "../../../System/Collections/Generic/List";
 import "../../../System/Threading/CancellationToken";
 import "../../GameTask/Model/Area/ImageRegion";
 import "../../GameTask/Model/Area/Region";
 import "../Recognition/RecognitionObject";
+import "./BvFlow";
 import "./BvImage";
 import "./BvLocator";
 
@@ -45,6 +47,12 @@ export interface BvPage extends ClrHostValue {
    * @since 0.57.0
    */
   defaultRetryInterval: number;
+  /**
+   * 创建使用当前超时与重试间隔的链式流程
+   * @returns 新的空流程
+   * @since 0.63.0
+   */
+  flow(): BetterGenshinImpact.Core.BgiVision.BvFlow;
   /**
    * 截取当前游戏画面为图像区域
    * @returns 当前游戏画面的图像区域
@@ -97,6 +105,20 @@ export interface BvPage extends ClrHostValue {
   getByText(): BetterGenshinImpact.Core.BgiVision.BvLocator;
   getByText(text: string): BetterGenshinImpact.Core.BgiVision.BvLocator;
   getByText(text: string, rect: OpenCvSharp.Rect): BetterGenshinImpact.Core.BgiVision.BvLocator;
+  /**
+   * 按任一指定文本创建定位器
+   * @param texts 字符串集合或 ClearScript JS Array
+   * @param rect 感兴趣区域；省略时搜索整幅画面
+   * @returns 对应目标的定位器
+   * @since 0.63.0
+   */
+  getByAnyText(
+    texts: readonly string[] | System.Collections.Generic.IEnumerableInput<string>
+  ): BetterGenshinImpact.Core.BgiVision.BvLocator;
+  getByAnyText(
+    texts: readonly string[] | System.Collections.Generic.IEnumerableInput<string>,
+    rect: OpenCvSharp.Rect
+  ): BetterGenshinImpact.Core.BgiVision.BvLocator;
   /**
    * 按图像创建定位器
    * @param image BgiVision 模板图像

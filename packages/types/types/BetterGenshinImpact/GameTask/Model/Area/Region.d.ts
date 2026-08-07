@@ -71,6 +71,11 @@ export interface Region extends ClrHostValue, System.IDisposableInput {
    */
   text: string;
   /**
+   * 模板匹配得分，值越大表示匹配程度越高；非模板匹配结果为 null
+   * @since 0.63.0
+   */
+  matchScore: number | null;
+  /**
    * 上一层区域节点
    * @since 0.43.1
    */

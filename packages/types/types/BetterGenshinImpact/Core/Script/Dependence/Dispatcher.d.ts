@@ -133,7 +133,7 @@ export interface Dispatcher extends ClrHostValue {
    * @param avatarName 指定操作的角色名，省略时操作当前角色
    * @param customCt 自定义取消令牌
    * @returns 在任务完成后兑现的 Promise
-   * @since unreleased
+   * @since 0.63.0
    */
   runCombatScript(script: string): Promise<void>;
   runCombatScript(script: string, avatarName: AvatarName | null): Promise<void>;

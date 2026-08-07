@@ -67,7 +67,7 @@ export interface AutoPathingScript extends ClrHostValue {
    * 读取 AutoPathing 目录下指定文件的文本内容
    * @param subPath 相对于 User\AutoPathing 的文件路径
    * @returns 文件文本内容，读取失败时返回空字符串
-   * @since unreleased
+   * @since 0.63.0
    */
   readTextSync(subPath: string): string;
 }

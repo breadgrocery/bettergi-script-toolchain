@@ -8,11 +8,9 @@ import type {
 } from "../../../../Microsoft/ClearScript/HostType";
 import type { VoidResult } from "../../../../Microsoft/ClearScript/VoidResult";
 import "../../../../OpenCvSharp/Rect";
-import "../../../../System/Collections/Generic/List";
 import "../../../../System/DateTime";
 import "../../../../System/Nullable";
 import "../../../../System/Threading/CancellationToken";
-import "../../../../System/ValueTuple";
 import "../../../../System/WebSocket";
 import type { KeyCode } from "../../../Helpers/User32Helper";
 import "../../Model/Area/ImageRegion";
@@ -486,28 +484,6 @@ export interface AvatarHostType extends HostType<Avatar, ReferenceTypeTrait> {
    * @since 0.50.0
    */
   parseActionSchedulerByCd(avatarName: AvatarName, input: string): number | null;
-  /**
-   * 识别屏幕上的血条位置列表
-   * @param existingCapture 可选的已有截图区域，省略时重新截图
-   * @returns 血条边界框元组列表
-   * @since 0.50.0
-   */
-  findBloodBars(): System.Collections.Generic.List<
-    System.ValueTuple<number, number, number, number>
-  >;
-  findBloodBars(
-    existingCapture: BetterGenshinImpact.GameTask.Model.Area.ImageRegion | null
-  ): System.Collections.Generic.List<System.ValueTuple<number, number, number, number>>;
-  /**
-   * 通过 OCR 寻找伤害数字或反应文字作为追踪目标（备用寻敌）；在 450,240–1600,900 区域 OCR，过滤纯数字 ≥4 位或含反应关键词的文本，按 `h²×文本字数` 加权得到中心坐标
-   * @param existingCapture 可选的已有截图区域，省略时重新截图
-   * @returns 离加权中心最近的有效项坐标与文本，未找到时为 null
-   * @since 0.50.0
-   */
-  findDamageNumber(): System.ValueTuple<number, number, string> | null;
-  findDamageNumber(
-    existingCapture: BetterGenshinImpact.GameTask.Model.Area.ImageRegion | null
-  ): System.ValueTuple<number, number, string> | null;
 }
 
 export {};

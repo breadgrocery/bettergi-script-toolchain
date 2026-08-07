@@ -10,6 +10,7 @@ import "../Model/BaseTaskParam";
 import "./AutoFightConfig";
 import type {
   CombatStrategyName,
+  DamageNumberRecognitionMode,
   OnlyPickEliteDropsMode,
   PartySlotIndex,
   StrategyFileKind
@@ -28,6 +29,9 @@ export interface AutoFightParam extends Omit<
   | "burstEnabled"
   | "checkBeforeBurst"
   | "combatStrategyPath"
+  | "damageNumberRecognitionMode"
+  | "drawRecognitionResults"
+  | "enableCombatTargeting"
   | "expBasedPickupEnabled"
   | "fightFinishDetectEnabled"
   | "finishDetectConfig"
@@ -37,6 +41,7 @@ export interface AutoFightParam extends Omit<
   | "isFirstCheck"
   | "kazuhaPartyName"
   | "kazuhaPickupEnabled"
+  | "lockLostWaitTime"
   | "onlyPickEliteDropsMode"
   | "pickDropsAfterFightEnabled"
   | "pickDropsAfterFightSeconds"
@@ -44,6 +49,7 @@ export interface AutoFightParam extends Omit<
   | "rotaryFactor"
   | "setCombatStrategyPath"
   | "setDefault"
+  | "targetingDetectionInterval"
   | "timeout"
 > {
   readonly [autoFightParamBrand]: true;
@@ -143,6 +149,31 @@ export interface AutoFightParam extends Omit<
    */
   qinDoublePickUp: boolean;
   /**
+   * 是否在战斗中持续尝试面朝敌人
+   * @since 0.63.0
+   */
+  enableCombatTargeting: boolean;
+  /**
+   * 索敌识别间隔，单位毫秒，默认 50
+   * @since 0.63.0
+   */
+  targetingDetectionInterval: number;
+  /**
+   * 是否在遮罩窗口绘制血条、伤害数字等识别结果
+   * @since 0.63.0
+   */
+  drawRecognitionResults: boolean;
+  /**
+   * 敌人不可见后开始旋转索敌前的等待时长，单位秒，默认 0.5
+   * @since 0.63.0
+   */
+  lockLostWaitTime: number;
+  /**
+   * 伤害数字识别模式
+   * @since 0.63.0
+   */
+  damageNumberRecognitionMode: DamageNumberRecognitionMode;
+  /**
    * 是否仅在检测到精英怪经验值图标时执行战后拾取
    * @since 0.61.0
    */
@@ -205,6 +236,11 @@ export interface AutoFightParam_FightFinishDetectConfig extends ClrHostValue {
    * @since 0.52.0
    */
   rotateFindEnemyEnabled: boolean;
+  /**
+   * 是否在敌人可见时跳过战斗结束检查
+   * @since 0.63.0
+   */
+  skipFightEndCheckWhenEnemyVisible: boolean;
 }
 
 export interface AutoFightParam_FightFinishDetectConfigHostType extends HostType<

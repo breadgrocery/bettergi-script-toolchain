@@ -1,11 +1,18 @@
 import "../../../CommunityToolkit/Mvvm/ComponentModel/ObservableObject";
 import type {
+  ClrHostValue,
+  EnumTypeTrait,
   HostType,
   PublicDefaultConstructorTrait,
   ReferenceTypeTrait
 } from "../../../Microsoft/ClearScript/HostType";
 import "../../../System/ComponentModel/INotifyPropertyChanged";
 import "../../../System/ComponentModel/INotifyPropertyChanging";
+import "../../../System/Enum";
+import "../../../System/IComparable";
+import "../../../System/IConvertible";
+import "../../../System/IFormattable";
+import "../../../System/ISpanFormattable";
 
 /**
  * 精英掉落拾取模式
@@ -51,6 +58,9 @@ export interface AutoFightConfig
       | "actionSchedulerByCd"
       | "battleThresholdForLoot"
       | "burstEnabled"
+      | "damageNumberRecognitionMode"
+      | "drawRecognitionResults"
+      | "enableCombatTargeting"
       | "expBasedPickupEnabled"
       | "fightFinishDetectEnabled"
       | "finishDetectConfig"
@@ -59,6 +69,7 @@ export interface AutoFightConfig
       | "guardianCombatSkip"
       | "kazuhaPartyName"
       | "kazuhaPickupEnabled"
+      | "lockLostWaitTime"
       | "onlyPickEliteDropsMode"
       | "pickDropsAfterFightEnabled"
       | "pickDropsAfterFightSeconds"
@@ -67,6 +78,7 @@ export interface AutoFightConfig
       | "strategyName"
       | "swimmingEnabled"
       | "teamNames"
+      | "targetingDetectionInterval"
       | "timeout"
     >,
     System.ComponentModel.INotifyPropertyChangedInput,
@@ -172,6 +184,31 @@ export interface AutoFightConfig
    * @since 0.52.0
    */
   timeout: number;
+  /**
+   * 是否在战斗中持续尝试面朝敌人
+   * @since 0.63.0
+   */
+  enableCombatTargeting: boolean;
+  /**
+   * 敌人不可见后开始旋转索敌前的等待时长，单位秒，默认 0.5
+   * @since 0.63.0
+   */
+  lockLostWaitTime: number;
+  /**
+   * 索敌识别间隔，单位毫秒，默认 50
+   * @since 0.63.0
+   */
+  targetingDetectionInterval: number;
+  /**
+   * 伤害数字识别模式
+   * @since 0.63.0
+   */
+  damageNumberRecognitionMode: DamageNumberRecognitionMode;
+  /**
+   * 是否在遮罩窗口绘制血条、伤害数字等识别结果
+   * @since 0.63.0
+   */
+  drawRecognitionResults: boolean;
 }
 
 /**
@@ -193,6 +230,7 @@ export interface AutoFightConfig_FightFinishDetectConfig
       | "isFirstCheck"
       | "rotaryFactor"
       | "rotateFindEnemyEnabled"
+      | "skipFightEndCheckWhenEnemyVisible"
     >,
     System.ComponentModel.INotifyPropertyChangedInput,
     System.ComponentModel.INotifyPropertyChangingInput {
@@ -247,6 +285,11 @@ export interface AutoFightConfig_FightFinishDetectConfig
    * @since 0.52.0
    */
   rotateFindEnemyEnabled: boolean;
+  /**
+   * 是否在敌人可见时跳过战斗结束检查；与旋转寻找敌人互斥
+   * @since 0.63.0
+   */
+  skipFightEndCheckWhenEnemyVisible: boolean;
 }
 
 export interface AutoFightConfig_FightFinishDetectConfigHostType extends HostType<
@@ -271,6 +314,7 @@ declare global {
   namespace BetterGenshinImpact.GameTask.AutoFight {
     type AutoFightConfig = import("./AutoFightConfig").AutoFightConfig;
     type CombatStrategyName = import("./AutoFightConfig").CombatStrategyName;
+    type DamageNumberRecognitionMode = import("./AutoFightConfig").DamageNumberRecognitionMode;
     type OnlyPickEliteDropsMode = import("./AutoFightConfig").OnlyPickEliteDropsMode;
     type PartySlotIndex = import("./AutoFightConfig").PartySlotIndex;
     type StrategyFileKind = import("./AutoFightConfig").StrategyFileKind;
@@ -287,6 +331,36 @@ export interface AutoFightConfigHostType extends HostType<
    */
   new (): AutoFightConfig;
   readonly FightFinishDetectConfig: AutoFightConfig_FightFinishDetectConfigHostType;
+}
+
+/**
+ * 战斗索敌使用的伤害数字识别模式
+ * @since 0.63.0
+ */
+declare const damageNumberRecognitionModeBrand: unique symbol;
+export interface DamageNumberRecognitionMode extends ClrHostValue {
+  readonly [damageNumberRecognitionModeBrand]: true;
+}
+
+export interface DamageNumberRecognitionModeHostType extends HostType<
+  DamageNumberRecognitionMode,
+  EnumTypeTrait
+> {
+  /**
+   * 禁用伤害数字识别
+   * @since 0.63.0
+   */
+  readonly disabled: DamageNumberRecognitionMode;
+  /**
+   * 使用 OCR 识别伤害数字
+   * @since 0.63.0
+   */
+  readonly ocr: DamageNumberRecognitionMode;
+  /**
+   * 使用颜色识别伤害数字
+   * @since 0.63.0
+   */
+  readonly color: DamageNumberRecognitionMode;
 }
 
 export {};

@@ -82,6 +82,7 @@ export interface AutoBossConfig
       | "specifyRunCount"
       | "strategyName"
       | "teamName"
+      | "timeout"
       | "useFragileResin"
       | "useTransientResin"
     >,
@@ -108,6 +109,11 @@ export interface AutoBossConfig
    * @since 0.62.0
    */
   rewardRecognitionEnabled: boolean;
+  /**
+   * 战斗超时时长，单位秒，默认 240
+   * @since 0.63.0
+   */
+  timeout: number;
   /**
    * 指定模式下成功领取奖励的目标次数
    * @since 0.62.0

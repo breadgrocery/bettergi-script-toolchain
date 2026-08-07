@@ -15,17 +15,31 @@ BetterGI ClearScript 脚本运行时的 **types-only** 声明包（无 JS 入口
 
 ## 上游基线
 
-| 项                   | 值                                         |
-| -------------------- | ------------------------------------------ |
-| BetterGI 源码 commit | `5a38fc6aa4fe30c00af3a213ab9690934d66d8fb` |
-| ClearScript          | 7.4.5                                      |
-| 包开发 TypeScript    | 6.0.3                                      |
+| 项                | 值    |
+| ----------------- | ----- |
+| ClearScript       | 7.4.5 |
+| 包开发 TypeScript | 6.0.3 |
 
-该 commit 是当前声明面声称对齐的上游快照。增量同步时：
+声明包不在本文件固定 BetterGI commit。执行增量同步时，在声明包仓库中按提交时间从新到旧检查 `git log --format='%H%n%B%n%x00' -- packages/types` 的结果，取最近一条作用于该目录且提交消息恰好包含一个完整 trailer 的提交：
 
-1. 对照 BetterGI 自该 hash 起的变更修改 `.d.ts`（含脚本字符串域字面量与挂接）
-2. 将上表 commit 更新为新的完整 40 位 hash
-3. 提交 message 正文仅使用 trailer：`Upstream-Commit: <完整 40 位 hash>`
+```text
+Upstream-Commit: <完整 40 位 hash>
+```
+
+读取该 trailer 作为基线，并在 `D:\projects\better-genshin-impact` 中验证对象存在且为当前 `HEAD` 的祖先；随后用 `git log --ancestry-path <baseline>..HEAD` 与 `git diff <baseline>..HEAD` 审计上游变化。没有 trailer、基线不是目标祖先或对象不存在时，不得猜测基线。
+
+对新增或变更的 `@since unreleased` 符号，使用 `git log -S/-G` 定位首次引入提交，再用 `git tag --contains <commit> --sort=version:refname` 过滤出形如 `v?MAJOR.MINOR.PATCH` 的稳定 tag 并选择第一个；首次引入提交尚未包含于任何稳定发布 tag 时才保留 `unreleased`，不得预测未来版本。无法定位首次引入或 tag 有歧义时停止该符号的版本更新并报告证据缺口。
+
+同步提交信息必须保留唯一 trailer：`Upstream-Commit: <当前目标 HEAD 的完整 40 位 hash>`；该 trailer 是下一次同步的唯一基线来源。
+
+## 同步时的脚本边界复核
+
+对每个新增或变更的脚本可达成员，声明前必须沿“上游 CLR 签名 → ClearScript 投影 → 现有同类 binding → 用户脚本调用”逐段核对：
+
+1. 先查找并复用现有同类 binding 的签名和字符串域。键盘、鼠标等输入必须复用已有 `Key` / `KeyCode` / `MouseButton` 及其委托声明；不能仅因调用表面看起来像字符串就退化为 `string`
+2. 按实际脚本边界区分 JS 基元、宿主对象、`ClrInput`、宿主数组、`IEnumerableInput`、`Promise` 和 CLR 泛型容器；集合参数至少验证 JS `readonly` 数组与源码允许的 CLR `List` / `IEnumerable` 形态
+3. `unknown` 只有在源码明确为 `object`、`dynamic`、开放泛型或按任务分支返回不同结果时才允许。若用户脚本侧边界已确定（例如文本集合是字符串集合），必须声明为具体类型；每个保留的 `unknown` 都要在复查中给出源码依据
+4. 为新增边界补充正向和反向类型夹具：验证合法脚本参数可传入，并验证字符串/数字/错误集合元素等越界值会被拒绝
 
 ## 改动入口
 
@@ -53,26 +67,27 @@ BetterGI ClearScript 脚本运行时的 **types-only** 声明包（无 JS 入口
 
 路径相对 `types/BetterGenshinImpact/`；真源相对 BetterGI 的 `BetterGenshinImpact/`（或所列 Assets）。
 
-| 定义文件                                                   | 类型                                                                                    | 上游真源                                                              |
-| ---------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| `GameTask/AutoFight/Model/Avatar.d.ts`                     | `AvatarName`                                                                            | `GameTask/AutoFight/Assets/combat_avatar.json` → `name`               |
-| 同上                                                       | `WalkKey` / `MouseButtonName`                                                           | `Avatar` 行走与鼠标；`MouseButtonName` 为小写，异于钩子 `MouseButton` |
-| `GameTask/AutoFight/Config/CombatAvatar.d.ts`              | `CombatAvatarNameEn`                                                                    | 同上 JSON → `nameEn`（与 `AvatarName` 同序）                          |
-| 同上                                                       | `CombatAvatarWeaponCode`                                                                | 同上 JSON → `weapon`                                                  |
-| `GameTask/AutoFight/Script/Method.d.ts`                    | `CombatMethodCode`                                                                      | `GameTask/AutoFight/Script/Method.cs` → `Alias`                       |
-| `GameTask/AutoFight/AutoFightConfig.d.ts`                  | `OnlyPickEliteDropsMode` / `CombatStrategyName` / `StrategyFileKind` / `PartySlotIndex` | 战斗配置与 `AutoFightParam.ResolveStrategyPath`                       |
-| `GameTask/AutoBoss/AutoBossConfig.d.ts`                    | `BossName`                                                                              | `GameTask/AutoBoss/AutoBossData.cs` → `CountryToBosses`               |
-| `GameTask/AutoDomain/AutoDomainTask.d.ts`                  | `ResinName` / `ArtifactStar` / `DomainName` / `SundaySelectedValue`                     | 树脂 API；`tp.json` Domain 点；周日选项 `""`/`1`–`3`                  |
-| `GameTask/AutoLeyLineOutcrop/AutoLeyLineOutcropParam.d.ts` | `LeyLineOutcropType`                                                                    | 启示之花 / 藏金之花                                                   |
-| `GameTask/AutoSkip/AutoSkipConfig.d.ts`                    | `ClickChatOption` / `PictureInPictureSourceType`                                        | 剧情跳过配置定值                                                      |
-| `GameTask/AutoPathing/PathingScriptNames.d.ts`             | 路径点域 + `TravelMode` / `MainAvatarIndex` / `HurryOnAvatar`                           | `AutoPathing/Model/Enum/*`；`PathingPartyConfig` 列表                 |
-| `GameTask/Common/Map/MapScriptNames.d.ts`                  | `MapName` / `CountryName` / `Area` / `MapMatchMethod`                                   | 地图切换与匹配                                                        |
-| `GameTask/Common/Job/CraftMaterialTask.d.ts`               | `CraftMaterialType`                                                                     | `Assets/Model/ItemV2/item.csv` → `material_type`                      |
-| `Core/Script/Dependence/Model/SoloTask.d.ts`               | `SoloTaskName` 等                                                                       | `Dispatcher` 独立任务                                                 |
-| `Core/Script/Dependence/Model/RealtimeTimer.d.ts`          | `RealtimeTriggerName` 等                                                                | `GameTaskManager.AddTrigger`                                          |
-| `Core/Script/Dependence/Http.d.ts`                         | `HttpMethod`                                                                            | HTTP 方法                                                             |
-| `Core/Script/Dependence/KeyMouseHook.d.ts`                 | `MouseButton`                                                                           | 钩子按键（PascalCase）                                                |
-| `Helpers/User32Helper.d.ts`                                | `Key` / `KeyCode`                                                                       | 虚拟键名                                                              |
+| 定义文件                                                      | 类型                                                                                    | 上游真源                                                              |
+| ------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `GameTask/AutoFight/Model/Avatar.d.ts`                        | `AvatarName`                                                                            | `GameTask/AutoFight/Assets/combat_avatar.json` → `name`               |
+| 同上                                                          | `WalkKey` / `MouseButtonName`                                                           | `Avatar` 行走与鼠标；`MouseButtonName` 为小写，异于钩子 `MouseButton` |
+| `GameTask/AutoFight/Config/CombatAvatar.d.ts`                 | `CombatAvatarNameEn`                                                                    | 同上 JSON → `nameEn`（与 `AvatarName` 同序）                          |
+| 同上                                                          | `CombatAvatarWeaponCode`                                                                | 同上 JSON → `weapon`                                                  |
+| `GameTask/AutoFight/Script/Method.d.ts`                       | `CombatMethodCode`                                                                      | `GameTask/AutoFight/Script/Method.cs` → `Alias`                       |
+| `GameTask/AutoFight/AutoFightConfig.d.ts`                     | `OnlyPickEliteDropsMode` / `CombatStrategyName` / `StrategyFileKind` / `PartySlotIndex` | 战斗配置与 `AutoFightParam.ResolveStrategyPath`                       |
+| `GameTask/AutoBoss/AutoBossConfig.d.ts`                       | `BossName`                                                                              | `GameTask/AutoBoss/AutoBossData.cs` → `CountryToBosses`               |
+| `GameTask/AutoDomain/AutoDomainTask.d.ts`                     | `ResinName` / `ArtifactStar` / `DomainName` / `SundaySelectedValue`                     | 树脂 API；`tp.json` Domain 点；周日选项 `""`/`1`–`3`                  |
+| `GameTask/AutoLeyLineOutcrop/AutoLeyLineOutcropParam.d.ts`    | `LeyLineOutcropType`                                                                    | 启示之花 / 藏金之花                                                   |
+| `GameTask/AutoSkip/AutoSkipConfig.d.ts`                       | `ClickChatOption` / `PictureInPictureSourceType`                                        | 剧情跳过配置定值                                                      |
+| `GameTask/AutoPathing/PathingScriptNames.d.ts`                | 路径点域 + `TravelMode` / `MainAvatarIndex` / `HurryOnAvatar`                           | `AutoPathing/Model/Enum/*`；`PathingPartyConfig` 列表                 |
+| `GameTask/Common/Map/MapScriptNames.d.ts`                     | `MapName` / `CountryName` / `Area` / `MapMatchMethod`                                   | 地图切换与匹配                                                        |
+| `GameTask/Common/Job/CraftMaterialTask.d.ts`                  | `CraftMaterialType`                                                                     | `Assets/Model/ItemV2/item.csv` → `material_type`                      |
+| `GameTask/CharacterDevelopment/CharacterDevelopmentTask.d.ts` | `CharacterElementType`                                                                  | `Assets/Model/AvatarGridIcon/avatar.csv` → `element_type`             |
+| `Core/Script/Dependence/Model/SoloTask.d.ts`                  | `SoloTaskName` 等                                                                       | `Dispatcher` 独立任务                                                 |
+| `Core/Script/Dependence/Model/RealtimeTimer.d.ts`             | `RealtimeTriggerName` 等                                                                | `GameTaskManager.AddTrigger`                                          |
+| `Core/Script/Dependence/Http.d.ts`                            | `HttpMethod`                                                                            | HTTP 方法                                                             |
+| `Core/Script/Dependence/KeyMouseHook.d.ts`                    | `MouseButton`                                                                           | 钩子按键（PascalCase）                                                |
+| `Helpers/User32Helper.d.ts`                                   | `Key` / `KeyCode`                                                                       | 虚拟键名                                                              |
 
 易混：`classifyAvatarName` 为 YOLO class，保持 `string`。DSL 整串（`teamNames`、`actionSchedulerByCd` 等）与路径/用户队伍名保持 `string`。
 

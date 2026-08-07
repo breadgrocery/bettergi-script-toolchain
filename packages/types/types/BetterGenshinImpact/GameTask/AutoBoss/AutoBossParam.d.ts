@@ -29,6 +29,7 @@ export interface AutoBossParam extends Omit<
   | "specifyRunCount"
   | "strategyName"
   | "teamName"
+  | "timeout"
   | "useFragileResin"
   | "useTransientResin"
 > {
@@ -88,6 +89,11 @@ export interface AutoBossParam extends Omit<
    * @since 0.62.0
    */
   rewardRecognitionEnabled: boolean;
+  /**
+   * 战斗超时时长，单位秒，默认 240
+   * @since 0.63.0
+   */
+  timeout: number;
   /**
    * 从当前全局自动首领讨伐配置填充默认参数
    * @returns ClearScript 宿主空结果

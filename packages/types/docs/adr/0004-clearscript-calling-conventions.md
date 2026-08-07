@@ -6,6 +6,6 @@
 
 **返回**：同步 CLR `void` / Action 返回可观察的 `Microsoft.ClearScript.VoidResult`，不用 TypeScript `void` 抹掉该值。已启用 Task↔Promise 时，`Task`/`Task<T>` 分别为 `Promise<void>`/`Promise<T>`；无结果 Task 的完成值归为 `void`，与 VoidResult 分开建模。
 
-**标量与集合**：Boolean/String → boolean/string；常见数值与 char 的返回侧为 number（承认精度损失），精确传参用 `host.toXxx` 强类型包装。枚举为名义宿主值，不是 number。数组为宿主数组，不是 `T[]`；`params` 提供「一个宿主数组」与「rest 打包」两种相邻调用形态。
+**标量与集合**：Boolean/String → boolean/string；常见数值与 char 的返回侧为 number（承认精度损失），精确传参用 `host.toXxx` 强类型包装。枚举为名义宿主值，不是 number；键盘、鼠标输入复用项目已有 `Key` / `KeyCode` / `MouseButton` 域，不因表面字符串化而改成 `string`。数组为宿主数组，不是 `T[]`；`params` 提供「一个宿主数组」与「rest 打包」两种相邻调用形态。CLR `IEnumerable<T>` / `List<T>` 等集合输入使用对应的 `IEnumerableInput<T>` / 宿主容器投影，并以用户脚本实际可传边界为准。
 
-**泛型与其它**：显式 CLR 泛型实参用前置 HostType。同名多 arity 族在单一 FQN 下用 family owner 与 conditional alias，不发明 `Tuple1` 等假名。Tuple / ValueTuple / record 按 CLR 宿主表面建模。`object` → `unknown`，`dynamic` → `any`。未启用 DateTime 等转换时，对应类型保持宿主对象。
+**泛型与其它**：显式 CLR 泛型实参用前置 HostType。同名多 arity 族在单一 FQN 下用 family owner 与 conditional alias，不发明 `Tuple1` 等假名。Tuple / ValueTuple / record 按 CLR 宿主表面建模。`object` → `unknown`，`dynamic` → `any`，但只在上游边界确实如此时使用；如果用户脚本侧已经由源码分支、调用者或序列化约定确定具体类型，必须声明具体类型并补充证据。未启用 DateTime 等转换时，对应类型保持宿主对象。
