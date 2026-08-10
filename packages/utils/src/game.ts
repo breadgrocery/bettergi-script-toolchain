@@ -1,6 +1,7 @@
 import { assertRegionAppearing, assertRegionDisappearing } from "./asserts";
 import { mouseMoveAlongWaypoints } from "./mouse";
 import { type ListView, findTextWithinBounds, findTextWithinListView } from "./ocr";
+import { type MaybePromise } from "./workflow";
 
 /**
  * 临时设置游戏分辨率和DPI缩放比例，执行指定动作后恢复
@@ -246,7 +247,10 @@ export type TabNavigationOptions = {
  * @returns - true  条件满足
  *          - false 达到最大重试次数
  */
-export const navigateToTab = async (condition: () => boolean, options?: TabNavigationOptions) => {
+export const navigateToTab = async (
+  condition: () => MaybePromise<boolean>,
+  options?: TabNavigationOptions
+) => {
   const {
     tabIconWidth = 96,
     verticalOffset = 540,
@@ -258,10 +262,10 @@ export const navigateToTab = async (condition: () => boolean, options?: TabNavig
   const attempts = Math.floor(options?.maxAttempts ?? 1920 / tabIconWidth);
 
   for (let i = 0; i < attempts; i++) {
-    if (i === 0 && condition()) return true; // fast path
+    if (i === 0 && (await condition())) return true; // fast path
     click(backwards ? paddingLeft : 1920 - paddingRight, verticalOffset); // prev or next
     await sleep(retryInterval);
-    if (condition()) return true;
+    if (await condition()) return true;
   }
   return false;
 };

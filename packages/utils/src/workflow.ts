@@ -1,5 +1,6 @@
-/** 可同步返回宿主空结果（如 keyPress），与 Promise/void 一并接受 */
-export type Action = () => Promise<void> | void | Microsoft.ClearScript.VoidResult;
+export type MaybePromise<T> = T | Promise<T>;
+export type Action = () => MaybePromise<void | Microsoft.ClearScript.VoidResult>;
+export type RegionProvider = () => MaybePromise<Region | null | undefined>;
 
 /** 重试选项 */
 export type RetryOptions = {
@@ -24,16 +25,16 @@ const defaultRetryInterval = 1000;
  *          - false 达到最大重试次数
  */
 export const waitForAction = async (
-  condition: () => boolean,
+  condition: () => MaybePromise<boolean>,
   retryAction?: Action,
   options?: RetryOptions
 ): Promise<boolean> => {
   const { maxAttempts = defaultMaxAttempts, retryInterval = defaultRetryInterval } = options || {};
   for (let i = 0; i < maxAttempts; i++) {
-    if (i === 0 && condition()) return true; // fast path
+    if (i === 0 && (await condition())) return true; // fast path
     await retryAction?.();
     await sleep(retryInterval);
-    if (condition()) return true;
+    if (await condition()) return true;
   }
   return false;
 };
@@ -47,13 +48,13 @@ export const waitForAction = async (
  *          - false 达到最大重试次数
  */
 export const waitForRegionAppear = async (
-  regionProvider: () => Region | null | undefined,
+  regionProvider: RegionProvider,
   retryAction?: Action,
   options?: RetryOptions
 ): Promise<boolean> => {
   return waitForAction(
-    () => {
-      const region = regionProvider();
+    async () => {
+      const region = await regionProvider();
       return region != null && region.isExist();
     },
     retryAction,
@@ -70,13 +71,13 @@ export const waitForRegionAppear = async (
  *          - false 达到最大重试次数
  */
 export const waitForRegionDisappear = async (
-  regionProvider: () => Region | null | undefined,
+  regionProvider: RegionProvider,
   retryAction?: Action,
   options?: RetryOptions
 ): Promise<boolean> => {
   return waitForAction(
-    () => {
-      const region = regionProvider();
+    async () => {
+      const region = await regionProvider();
       return !region || !region.isExist();
     },
     retryAction,

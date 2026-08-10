@@ -1,5 +1,6 @@
 import {
   type Action,
+  type RegionProvider,
   type RetryOptions,
   waitForElementAppear,
   waitForElementDisappear,
@@ -12,14 +13,9 @@ import {
  * @param regionProvider 返回区域的函数
  * @param message 错误信息
  */
-export const assertRegionPresent = async (
-  regionProvider: () => Region | null | undefined,
-  message: string
-) => {
-  const region = regionProvider();
-  if (region == null || !region.isExist()) {
-    throw new Error(message);
-  }
+export const assertRegionPresent = async (regionProvider: RegionProvider, message: string) => {
+  const region = await regionProvider();
+  if (region == null || !region.isExist()) throw new Error(message);
 };
 
 /**
@@ -27,14 +23,9 @@ export const assertRegionPresent = async (
  * @param regionProvider 返回区域的函数
  * @param message 错误信息
  */
-export const assertRegionAbsent = async (
-  regionProvider: () => Region | null | undefined,
-  message: string
-) => {
-  const region = regionProvider();
-  if (region != null && region.isExist()) {
-    throw new Error(message);
-  }
+export const assertRegionAbsent = async (regionProvider: RegionProvider, message: string) => {
+  const region = await regionProvider();
+  if (region != null && region.isExist()) throw new Error(message);
 };
 
 /**
@@ -69,15 +60,13 @@ export const assertElementAbsent = async (
  * @param options 配置选项
  */
 export const assertRegionAppearing = async (
-  regionProvider: () => Region | null | undefined,
+  regionProvider: RegionProvider,
   message: string,
   retryAction?: Action,
   options?: RetryOptions
 ) => {
   const isAppeared = await waitForRegionAppear(regionProvider, retryAction, options);
-  if (!isAppeared) {
-    throw new Error(message);
-  }
+  if (!isAppeared) throw new Error(message);
 };
 
 /**
@@ -88,15 +77,13 @@ export const assertRegionAppearing = async (
  * @param options 配置选项
  */
 export const assertRegionDisappearing = async (
-  regionProvider: () => Region | null | undefined,
+  regionProvider: RegionProvider,
   message: string,
   retryAction?: Action,
   options?: RetryOptions
 ) => {
   const isDisappeared = await waitForRegionDisappear(regionProvider, retryAction, options);
-  if (!isDisappeared) {
-    throw new Error(message);
-  }
+  if (!isDisappeared) throw new Error(message);
 };
 
 /**
@@ -113,9 +100,7 @@ export const assertElementAppearing = async (
   options?: RetryOptions
 ) => {
   const isAppeared = await waitForElementAppear(recognitionObject, retryAction, options);
-  if (!isAppeared) {
-    throw new Error(message);
-  }
+  if (!isAppeared) throw new Error(message);
 };
 
 /**
@@ -132,7 +117,5 @@ export const assertElementDisappearing = async (
   options?: RetryOptions
 ) => {
   const isDisappeared = await waitForElementDisappear(recognitionObject, retryAction, options);
-  if (!isDisappeared) {
-    throw new Error(message);
-  }
+  if (!isDisappeared) throw new Error(message);
 };
