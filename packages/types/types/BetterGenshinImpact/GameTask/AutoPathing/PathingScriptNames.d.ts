@@ -56,6 +56,8 @@ export type HurryOnAvatar =
   | "流浪者"
   | "伊法"
   | "希诺宁"
+  | "法尔伽"
+  | "夜兰"
   | (string & {});
 
 /**

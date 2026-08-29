@@ -8,4 +8,6 @@
 
 **脚本名**：无 `ScriptMember` 时用 `JsonNamingPolicy.CamelCase`；有 `ScriptMember` 用其脚本名；binding 注入名保持原大小写。TypeScript 允许作为属性/方法名的保留字**不加** `_` 后缀（运行时是 `.type`、`.switch()`，不是 `.type_`）；不能作为参数名的保留字可保留后缀；方法名 `new` 写作 `"new"(...)`。
 
+**类型引用**：实例成员、以及 HostType 上对**其他** CLR 类型的参数/返回，一律写 ambient 全限定名（`BetterGenshinImpact.…`、`OpenCvSharp.Size`、`System.DateTime`）。同文件的兄弟类型也如此，例如 `SearchOptions.expandPercent` 写 `BetterGenshinImpact.Core.Recognition.SearchExpandRatio`，不写 `SearchExpandRatio`。仅在声明**该类型自身**时用模块导出短名：`export interface X`、`HostType<X>`、`new (): X`。嵌套类型的模块接口名为 `Parent_Nested`，namespace 名为 `Parent.Nested`；HostType 上的 `readonly Nested: NestedHostType` 用模块短名，新增方法参数写全限定名。同文件父类型上既有的嵌套实例属性可仍为 `Parent_Nested`。脚本字符串域是 TS 联合，可 `import type { AvatarName }` 后在签名中用短别名；CLR 类型不得沿用这种缩短。
+
 **脚本字符串域**：见 [0009](./0009-script-string-domains.md)。

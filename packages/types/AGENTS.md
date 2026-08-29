@@ -26,11 +26,23 @@ BetterGI ClearScript 脚本运行时的 **types-only** 声明包（无 JS 入口
 Upstream-Commit: <完整 40 位 hash>
 ```
 
-读取该 trailer 作为基线，并在 `D:\projects\better-genshin-impact` 中验证对象存在且为当前 `HEAD` 的祖先；随后用 `git log --ancestry-path <baseline>..HEAD` 与 `git diff <baseline>..HEAD` 审计上游变化。没有 trailer、基线不是目标祖先或对象不存在时，不得猜测基线。
+读取该 trailer 作为基线，并在 `D:\projects\better-genshin-impact` 中验证对象存在且为目标对象的祖先；随后用 `git log --ancestry-path <baseline>..<目标>` 与 `git diff <baseline>..<目标>` 审计上游变化。没有 trailer、基线不是目标祖先或对象不存在时，不得猜测基线。
 
 对新增或变更的 `@since unreleased` 符号，使用 `git log -S/-G` 定位首次引入提交，再用 `git tag --contains <commit> --sort=version:refname` 过滤出形如 `v?MAJOR.MINOR.PATCH` 的稳定 tag 并选择第一个；首次引入提交尚未包含于任何稳定发布 tag 时才保留 `unreleased`，不得预测未来版本。无法定位首次引入或 tag 有歧义时停止该符号的版本更新并报告证据缺口。
 
-同步提交信息必须保留唯一 trailer：`Upstream-Commit: <当前目标 HEAD 的完整 40 位 hash>`；该 trailer 是下一次同步的唯一基线来源。
+默认同步目标是上游当前 `HEAD`。当轮点名稳定 SemVer tag 时，trailer 写该 tag 对象的完整 hash，不以本地领先 `HEAD` 上的默认值/注释漂移冒充该版本。
+
+同步提交信息必须保留唯一 trailer：`Upstream-Commit: <当前目标对象的完整 40 位 hash>`；该 trailer 是下一次同步的唯一基线来源。
+
+## 增量同步核对
+
+在脚本边界复核之外，对 `baseline..目标` 至少核对这些，避免只看 `EngineExtend` / `Dependence`：
+
+1. 已声明 BetterGI 类型的 public 成员面（含嵌套类型）。同一份战斗结束检测字段会同时出现在 `AutoFightConfig`、`AutoFightParam`、地脉花战斗配置，以及 `AutoFightTask` 运行时配置上，改一处须扫其余副本
+2. 可见性提升：已纳入类型上的嵌套类型从 `private`/`internal` 变为 `public` 即进入闭包，按完整成员面声明
+3. 成员签名里的 CLR 类型用 ambient 全限定名；同文件兄弟类型不得写成模块短名。`pnpm --filter @bettergi/types typecheck` 不会抓住这种缩短
+4. 未纳入闭包的上游类型（如 `PathingPartyConfig`）本身不声明，但其名单仍可能是字符串域真源
+5. BetterGI `record struct` 按值类型投影（`ValueTypeTrait`、解构 `HostVariableOut`）；实例成员仍写全限定名
 
 ## 同步时的脚本边界复核
 
@@ -59,8 +71,8 @@ Upstream-Commit: <完整 40 位 hash>
 
 规则见 [ADR 0009](./docs/adr/0009-script-string-domains.md)。同步上游时与成员变更一并：
 
-1. 下表真源是否变更字面量或校验
-2. `AvatarName` 与 `CombatAvatarNameEn` 是否同序
+1. 下表真源是否变更字面量或校验；`combat_avatar.json` 以 `name` / `nameEn` 字段为准，不用 `alias`
+2. `AvatarName` 与 `CombatAvatarNameEn` 是否同序；核对本对相对顺序与字面量集合，不按 JSON 数组重排既有联合（现有声明以「未知角色」居前等顺序为准）
 3. 挂接是否仍用该域（含集合元素）
 4. 新域：定义 + 挂接 + namespace re-export + 本表
 5. `pnpm --filter @bettergi/types typecheck`

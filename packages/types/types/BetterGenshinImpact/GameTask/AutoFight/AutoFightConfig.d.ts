@@ -223,11 +223,15 @@ export interface AutoFightConfig_FightFinishDetectConfig
       | "battleEndProgressBarColor"
       | "battleEndProgressBarColorTolerance"
       | "beforeDetectDelay"
+      | "blockCheckBeforeBattleSeconds"
+      | "checkAfterSwitchAvatar"
       | "checkBeforeBurst"
       | "checkEndDelay"
       | "fastCheckEnabled"
       | "fastCheckParams"
       | "isFirstCheck"
+      | "paimonEndCheckDelay"
+      | "paimonEndCheckEnabled"
       | "rotaryFactor"
       | "rotateFindEnemyEnabled"
       | "skipFightEndCheckWhenEnemyVisible"
@@ -256,20 +260,25 @@ export interface AutoFightConfig_FightFinishDetectConfig
    */
   checkBeforeBurst: boolean;
   /**
-   * 检查战斗结束前的延时，单位秒，可指定角色，格式如 `2.5;白术,1.5;钟离,1.0;`
+   * 触发战斗结束检查前的延时，单位秒，确保动作后摇结束；也可为角色单独指定，格式如 `0.4` 或 `0.4;钟离,1.5`
    * @since 0.52.0
    */
   checkEndDelay: string;
   /**
-   * 是否启用快速检查战斗结束
+   * 是否启用快速检查战斗结束；完成一轮动作后若满足条件则触发一次检查，默认关闭
    * @since 0.52.0
    */
   fastCheckEnabled: boolean;
   /**
-   * 快速检查参数，数字为间隔秒数，人名为该角色执行一轮后检查，分号分隔，例如 `15,白术;钟离;`
+   * 快速检查参数；数字为距上次检查的间隔秒数，人名为对应角色动作后触发，多项用分号分隔，格式如 `5` 或 `5;白术;`
    * @since 0.52.0
    */
   fastCheckParams: string;
+  /**
+   * 是否在切人后再执行战斗结束检查；无需等待上一动作后摇，目前仅 JSON 策略下生效
+   * @since 0.64.0
+   */
+  checkAfterSwitchAvatar: boolean;
   /**
    * 是否在首次检查时进行面敌
    * @since 0.52.0
@@ -286,10 +295,25 @@ export interface AutoFightConfig_FightFinishDetectConfig
    */
   rotateFindEnemyEnabled: boolean;
   /**
-   * 是否在敌人可见时跳过战斗结束检查；与旋转寻找敌人互斥
+   * 是否在敌人可见时跳过战斗结束检查；检测到敌人血条时跳过，与旋转寻找敌人互斥
    * @since 0.63.0
    */
   skipFightEndCheckWhenEnemyVisible: boolean;
+  /**
+   * 开战后阻断战斗结束检查的时长，单位秒；默认 0 不阻断，大于 0 时该时间内的检查视为战斗未结束
+   * @since 0.64.0
+   */
+  blockCheckBeforeBattleSeconds: number;
+  /**
+   * 是否启用派蒙辅助检测；按 L 后当派蒙头像可见时提前跳出战斗结束检测
+   * @since 0.64.0
+   */
+  paimonEndCheckEnabled: boolean;
+  /**
+   * 派蒙辅助检测延时，单位秒
+   * @since 0.64.0
+   */
+  paimonEndCheckDelay: number;
 }
 
 export interface AutoFightConfig_FightFinishDetectConfigHostType extends HostType<

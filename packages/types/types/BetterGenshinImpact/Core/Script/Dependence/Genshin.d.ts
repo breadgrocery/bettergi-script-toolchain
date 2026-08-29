@@ -282,7 +282,7 @@ export interface Genshin extends ClrHostValue {
   /**
    * 按槽位重组当前队伍角色
    * 未传入或空字符串的槽位跳过；重组队伍槽位角色，不是按数字键切换当前出战角色
-   * 示例：`await genshin.switchCharacter("胡桃", "夜兰", "", "钟离")`
+   * 默认按队伍物理槽位解释；物理槽位示例：`await genshin.switchCharacter("胡桃", "夜兰", "", "钟离")`
    * @param slot1 1 号位角色名，空字符串表示跳过
    * @param slot2 2 号位角色名，空字符串表示跳过
    * @param slot3 3 号位角色名，空字符串表示跳过
@@ -303,6 +303,25 @@ export interface Genshin extends ClrHostValue {
     slot2: "" | AvatarName,
     slot3: "" | AvatarName,
     slot4: "" | AvatarName
+  ): Promise<boolean>;
+  /**
+   * 按槽位重组当前队伍角色
+   * `usePhysicalSlots` 为 true 时按队伍物理槽位解释 slot1-slot4，为 false 时按当前玩家可控角色顺序解释
+   * 可控顺序示例：`await genshin.switchCharacter("胡桃", "夜兰", "", "", false)`
+   * @param slot1 1 号位角色名，空字符串表示跳过
+   * @param slot2 2 号位角色名，空字符串表示跳过
+   * @param slot3 3 号位角色名，空字符串表示跳过
+   * @param slot4 4 号位角色名，空字符串表示跳过
+   * @param usePhysicalSlots 是否按队伍物理槽位解释，默认 true
+   * @returns 在任务完成后兑现是否成功的 Promise；完成保存并返回主界面为 true，参数无效、目标角色未找到或流程失败为 false
+   * @since 0.64.0
+   */
+  switchCharacter(
+    slot1: "" | AvatarName,
+    slot2: "" | AvatarName,
+    slot3: "" | AvatarName,
+    slot4: "" | AvatarName,
+    usePhysicalSlots: boolean
   ): Promise<boolean>;
   /**
    * 清除当前调度器的队伍缓存

@@ -150,13 +150,18 @@ export interface AutoLeyLineOutcropFightConfig_FightFinishDetectConfig
       | "battleEndProgressBarColor"
       | "battleEndProgressBarColorTolerance"
       | "beforeDetectDelay"
+      | "blockCheckBeforeBattleSeconds"
+      | "checkAfterSwitchAvatar"
       | "checkBeforeBurst"
       | "checkEndDelay"
       | "fastCheckEnabled"
       | "fastCheckParams"
       | "isFirstCheck"
+      | "paimonEndCheckDelay"
+      | "paimonEndCheckEnabled"
       | "rotaryFactor"
       | "rotateFindEnemyEnabled"
+      | "skipFightEndCheckWhenEnemyVisible"
     >,
     System.ComponentModel.INotifyPropertyChangedInput,
     System.ComponentModel.INotifyPropertyChangingInput {
@@ -197,6 +202,11 @@ export interface AutoLeyLineOutcropFightConfig_FightFinishDetectConfig
    */
   fastCheckParams: string;
   /**
+   * 是否在切人后再执行战斗结束检查；无需等待上一动作后摇，目前仅 JSON 策略下生效
+   * @since 0.64.0
+   */
+  checkAfterSwitchAvatar: boolean;
+  /**
    * 是否在首次检查时进行面敌
    * @since 0.58.0
    */
@@ -211,6 +221,26 @@ export interface AutoLeyLineOutcropFightConfig_FightFinishDetectConfig
    * @since 0.58.0
    */
   rotateFindEnemyEnabled: boolean;
+  /**
+   * 是否在敌人可见时跳过战斗结束检查；检测到敌人血条时跳过，与旋转寻找敌人互斥
+   * @since 0.64.0
+   */
+  skipFightEndCheckWhenEnemyVisible: boolean;
+  /**
+   * 开战后阻断战斗结束检查的时长，单位秒；默认 0 不阻断，大于 0 时该时间内的检查视为战斗未结束
+   * @since 0.64.0
+   */
+  blockCheckBeforeBattleSeconds: number;
+  /**
+   * 是否启用派蒙辅助检测；按 L 后当派蒙头像可见时提前跳出战斗结束检测
+   * @since 0.64.0
+   */
+  paimonEndCheckEnabled: boolean;
+  /**
+   * 派蒙辅助检测延时，单位秒
+   * @since 0.64.0
+   */
+  paimonEndCheckDelay: number;
 }
 
 export interface AutoLeyLineOutcropFightConfig_FightFinishDetectConfigHostType extends HostType<

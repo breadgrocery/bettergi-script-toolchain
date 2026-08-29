@@ -217,12 +217,17 @@ export interface AutoFightParam_FightFinishDetectConfig extends ClrHostValue {
    */
   fastCheckEnabled: boolean;
   /**
-   * 快速检查参数，数字为间隔秒数，人名为该角色执行一轮后检查，分号分隔
+   * 快速检查参数；数字为距上次检查的间隔秒数，人名为对应角色动作后触发，多项用分号分隔
    * @since 0.52.0
    */
   fastCheckParams: string;
   /**
-   * 检查战斗结束前的延时，单位秒，可指定角色
+   * 是否在切人后再执行战斗结束检查；无需等待上一动作后摇，目前仅 JSON 策略下生效
+   * @since 0.64.0
+   */
+  checkAfterSwitchAvatar: boolean;
+  /**
+   * 触发战斗结束检查前的延时，单位秒，确保动作后摇结束；也可为角色单独指定
    * @since 0.52.0
    */
   checkEndDelay: string;
@@ -237,10 +242,25 @@ export interface AutoFightParam_FightFinishDetectConfig extends ClrHostValue {
    */
   rotateFindEnemyEnabled: boolean;
   /**
-   * 是否在敌人可见时跳过战斗结束检查
+   * 是否在敌人可见时跳过战斗结束检查；检测到敌人血条时跳过，与旋转寻找敌人互斥
    * @since 0.63.0
    */
   skipFightEndCheckWhenEnemyVisible: boolean;
+  /**
+   * 开战后阻断战斗结束检查的时长，单位秒；默认 0 不阻断，大于 0 时该时间内的检查视为战斗未结束
+   * @since 0.64.0
+   */
+  blockCheckBeforeBattleSeconds: number;
+  /**
+   * 是否启用派蒙辅助检测；按 L 后当派蒙头像可见时提前跳出战斗结束检测
+   * @since 0.64.0
+   */
+  paimonEndCheckEnabled: boolean;
+  /**
+   * 派蒙辅助检测延时，单位秒
+   * @since 0.64.0
+   */
+  paimonEndCheckDelay: number;
 }
 
 export interface AutoFightParam_FightFinishDetectConfigHostType extends HostType<
