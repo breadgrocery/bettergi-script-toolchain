@@ -8,11 +8,11 @@
     "dev": "pnpm run -C playground dev"
   },
   "devDependencies": {
-    "@commitlint/cli": "^21.2.1",
-    "@commitlint/config-conventional": "^21.2.0",
+    "@commitlint/cli": "^21.2.3",
+    "@commitlint/config-conventional": "^21.2.3",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
-    "lefthook": "^2.1.10",
-    "prettier": "^3.9.6"
+    "lefthook": "^2.1.14",
+    "prettier": "^3.9.8"
   },
   "commitlint": {
     "extends": [
@@ -23,5 +23,5 @@
     "node": ">=20.19.0 || >=22.13.0 || >=24",
     "pnpm": ">=9"
   },
-  "packageManager": "pnpm@9.15.9"
+  "packageManager": "pnpm@12.5.1"
 }

@@ -1,0 +1,45 @@
+name: publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      package_name:
+        type: choice
+        description: "Package to publish"
+        required: true
+        options:
+          - cli
+          - create-script
+          - types
+          - utils
+
+permissions:
+  id-token: write # Required for OIDC
+  contents: write
+
+concurrency:
+  group: "${{ github.workflow }} - ${{ github.head_ref || github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v5
+
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+          cache: "pnpm"
+
+      - name: Build
+        run: |
+          cd packages/${{ github.event.inputs.package_name }}
+          pnpm install --frozen-lockfile
+          pnpm run release --no-git-checks

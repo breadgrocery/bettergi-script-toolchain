@@ -1,3 +1,7 @@
 packages:
   - "packages/*"
   - "playground/**"
+allowBuilds:
+  lefthook: true
+  registry-js: true
+minimumReleaseAge: 0

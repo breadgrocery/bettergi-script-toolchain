@@ -1,0 +1,3 @@
+allowBuilds:
+  registry-js: true
+minimumReleaseAge: 0
