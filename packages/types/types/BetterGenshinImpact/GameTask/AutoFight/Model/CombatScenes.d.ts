@@ -246,6 +246,12 @@ export interface CombatScenesHostType extends HostType<CombatScenes, ReferenceTy
     logger: Microsoft.Extensions.Logging.ILogger | null,
     systemInfo: BetterGenshinImpact.GameTask.Model.ISystemInfo | null
   ): CombatScenes;
+  /**
+   * 截屏识别队伍角色并初始化战斗场景，失败时最多重试 5 次，间隔 1 秒
+   * @returns 已初始化的战斗场景
+   * @since 0.65.0
+   */
+  getCombatScenesWithRetry(): CombatScenes;
 }
 
 export {};

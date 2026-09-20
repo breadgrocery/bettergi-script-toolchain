@@ -27,10 +27,11 @@ export type ArtifactStar = "1" | "2" | "3" | "4" | (string & {});
 
 /**
  * 可自动刷取的秘境名称
- * 来源：`MapLazyAssets` 从 `tp.json` 提取的 BlessDomain / ForgeryDomain / MasteryDomain 点位名
+ * 来源：`MapLazyAssets` 从 `tp.json` 提取的 BlessDomain / ForgeryDomain / MasteryDomain 点位名；`根据提升指南选择秘境` 为 `AutoDomainTask.DevelopmentGuideOption` 固定选项
  * @since 0.52.0
  */
 export type DomainName =
+  | "根据提升指南选择秘境"
   | "铭记之谷"
   | "忘却之峡"
   | "仲夏庭园"
@@ -119,6 +120,11 @@ declare global {
 }
 
 export interface AutoDomainTaskHostType extends HostType<AutoDomainTask, ReferenceTypeTrait> {
+  /**
+   * 按提升指南选择秘境的固定选项名
+   * @since 0.65.0
+   */
+  readonly developmentGuideOption: "根据提升指南选择秘境";
   /**
    * 使用自动秘境参数创建任务
    * @param taskParam 自动秘境参数

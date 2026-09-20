@@ -11,8 +11,8 @@ import "../../../../OpenCvSharp/Rect";
 import "../../../../System/DateTime";
 import "../../../../System/Nullable";
 import "../../../../System/Threading/CancellationToken";
-import "../../../../System/WebSocket";
 import type { KeyCode } from "../../../Helpers/User32Helper";
+import "../../AutoGeniusInvokation/Exception/RetryException";
 import "../../Model/Area/ImageRegion";
 import "../Config/CombatAvatar";
 import "./CombatScenes";
@@ -469,13 +469,16 @@ export interface AvatarHostType extends HostType<Avatar, ReferenceTypeTrait> {
     ct: System.Threading.CancellationToken
   ): VoidResult;
   /**
-   * 传送到七天神像恢复角色状态
+   * 传送到七天神像恢复角色状态；完成后抛出传入的重试异常
    * @param ct 取消令牌
-   * @param ex 触发恢复的异常
+   * @param retryException 触发恢复后用于重试当前任务的异常
    * @returns ClearScript 宿主空结果
    * @since 0.50.0
    */
-  tpForRecover(ct: System.Threading.CancellationToken, ex: System.Exception): VoidResult;
+  tpForRecover(
+    ct: System.Threading.CancellationToken,
+    retryException: BetterGenshinImpact.GameTask.AutoGeniusInvokation.Exception.RetryException
+  ): VoidResult;
   /**
    * 从配置字符串中查找角色冷却秒数
    * @param avatarName 角色名称

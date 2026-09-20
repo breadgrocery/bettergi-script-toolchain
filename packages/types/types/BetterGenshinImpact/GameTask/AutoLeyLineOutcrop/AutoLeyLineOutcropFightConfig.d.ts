@@ -147,8 +147,6 @@ export interface AutoLeyLineOutcropFightConfig_FightFinishDetectConfig
   extends
     Omit<
       CommunityToolkit.Mvvm.ComponentModel.ObservableObject,
-      | "battleEndProgressBarColor"
-      | "battleEndProgressBarColorTolerance"
       | "beforeDetectDelay"
       | "blockCheckBeforeBattleSeconds"
       | "checkAfterSwitchAvatar"
@@ -166,16 +164,6 @@ export interface AutoLeyLineOutcropFightConfig_FightFinishDetectConfig
     System.ComponentModel.INotifyPropertyChangedInput,
     System.ComponentModel.INotifyPropertyChangingInput {
   readonly [autoLeyLineOutcropFightConfig_FightFinishDetectConfigBrand]: true;
-  /**
-   * 战斗结束进度条颜色容差，`6` 表示三通道相同容差，`6,6,6` 可分别设置
-   * @since 0.58.0
-   */
-  battleEndProgressBarColorTolerance: string;
-  /**
-   * 判断战斗结束的进度条颜色，`RGB` 格式
-   * @since 0.58.0
-   */
-  battleEndProgressBarColor: string;
   /**
    * 按下切换队伍后检测屏幕色块的延迟，单位秒
    * @since 0.58.0

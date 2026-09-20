@@ -69,12 +69,12 @@ export interface AutoFightParam extends Omit<
    */
   fightFinishDetectEnabled: boolean;
   /**
-   * 是否在战斗结束后拾取掉落物
+   * 是否在战斗结束后光柱扫描掉落物，默认开启
    * @since 0.52.0
    */
   pickDropsAfterFightEnabled: boolean;
   /**
-   * 战斗结束后拾取掉落物的等待时长，单位秒，默认 15
+   * 战斗结束后光柱扫描掉落物的持续时长，单位秒，默认 15
    * @since 0.52.0
    */
   pickDropsAfterFightSeconds: number;
@@ -202,16 +202,6 @@ declare const autoFightParam_FightFinishDetectConfigBrand: unique symbol;
 export interface AutoFightParam_FightFinishDetectConfig extends ClrHostValue {
   readonly [autoFightParam_FightFinishDetectConfigBrand]: true;
   /**
-   * 判断战斗结束的进度条颜色，`RGB` 格式，默认 `95,235,255`
-   * @since 0.52.0
-   */
-  battleEndProgressBarColor: string;
-  /**
-   * 战斗结束进度条颜色容差，`6` 表示三通道相同容差，`6,6,6` 可分别设置
-   * @since 0.52.0
-   */
-  battleEndProgressBarColorTolerance: string;
-  /**
    * 是否启用快速检查战斗结束
    * @since 0.52.0
    */
@@ -289,6 +279,11 @@ declare global {
 
 export interface AutoFightParamHostType extends HostType<AutoFightParam, ReferenceTypeTrait> {
   /**
+   * 自动连招（LLM 行为树）策略的固定名称；不对应策略文件，命中时路由到自动连招任务
+   * @since 0.65.0
+   */
+  readonly comboStrategyName: "自动连招（实验）";
+  /**
    * 使用指定策略路径与自动战斗配置构造参数
    * @param path 战斗策略文件或策略目录路径
    * @param autoFightConfig 自动战斗配置
@@ -311,7 +306,7 @@ export interface AutoFightParamHostType extends HostType<AutoFightParam, Referen
    */
   swimmingEnabled: boolean;
   /**
-   * 解析策略文件路径，优先检测 `.json`，未命中则回退 `.txt`
+   * 解析策略文件路径，优先检测 `.json`，未命中则回退 `.txt`；`自动连招（实验）` 返回策略名本身且种类为 `combo`
    * @param strategyName 策略名称（不含扩展名）
    * @returns 完整路径与策略文件种类组成的元组
    * @since 0.52.0

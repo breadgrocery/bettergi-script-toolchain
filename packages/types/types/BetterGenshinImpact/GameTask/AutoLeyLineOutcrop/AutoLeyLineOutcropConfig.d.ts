@@ -24,7 +24,6 @@ export interface AutoLeyLineOutcropConfig
       | "fightConfig"
       | "friendshipTeam"
       | "isGoToSynthesizer"
-      | "isNotification"
       | "isResinExhaustionMode"
       | "leyLineOutcropType"
       | "openModeCountMin"
@@ -32,7 +31,6 @@ export interface AutoLeyLineOutcropConfig
       | "scanDropsAfterRewardSeconds"
       | "team"
       | "timeout"
-      | "useAdventurerHandbook"
       | "useFragileResin"
       | "useTransientResin"
     >,
@@ -64,11 +62,6 @@ export interface AutoLeyLineOutcropConfig
    * @since 0.58.0
    */
   isGoToSynthesizer: boolean;
-  /**
-   * 是否通过 BetterGI 通知系统发送详细通知
-   * @since 0.58.0
-   */
-  isNotification: boolean;
   /**
    * 是否开启树脂耗尽模式
    * @since 0.58.0
@@ -104,11 +97,6 @@ export interface AutoLeyLineOutcropConfig
    * @since 0.58.0
    */
   timeout: number;
-  /**
-   * 是否使用冒险之证寻找地脉花
-   * @since 0.58.0
-   */
-  useAdventurerHandbook: boolean;
   /**
    * 是否允许使用脆弱树脂
    * @since 0.58.0

@@ -11,11 +11,9 @@ import "../../../System/Collections/Generic/Dictionary";
 import "../../../System/Collections/Generic/List";
 import "../../../System/DateTime";
 import "../../../System/Threading/CancellationToken";
-import "../../../System/ValueTuple";
 import "../AutoPathing/Model/WaypointForTrack";
 import "../ISoloTask";
 import "./AutoFightParam";
-import "./Model/CombatScenes";
 
 /**
  * 自动战斗独立任务
@@ -29,12 +27,6 @@ export interface AutoFightTask extends ClrHostValue, BetterGenshinImpact.GameTas
    * @since 0.52.0
    */
   readonly name: string;
-  /**
-   * 识别当前队伍战斗场景，失败时最多重试 5 次
-   * @returns 已初始化的战斗场景
-   * @since 0.52.0
-   */
-  getCombatScenesWithRetry(): BetterGenshinImpact.GameTask.AutoFight.Model.CombatScenes;
   /**
    * 启动自动战斗任务
    * @param ct 取消令牌
@@ -124,16 +116,6 @@ export interface AutoFightTask_TaskFightFinishDetectConfig extends ClrHostValue 
    * @since 0.64.0
    */
   paimonEndCheckDelayMs: number;
-  /**
-   * 判断战斗结束的进度条颜色，RGB 三元组
-   * @since 0.64.0
-   */
-  readonly battleEndProgressBarColor: System.ValueTuple<number, number, number>;
-  /**
-   * 战斗结束进度条颜色容差，RGB 三元组
-   * @since 0.64.0
-   */
-  readonly battleEndProgressBarColorTolerance: System.ValueTuple<number, number, number>;
 }
 
 export interface AutoFightTask_TaskFightFinishDetectConfigHostType extends HostType<

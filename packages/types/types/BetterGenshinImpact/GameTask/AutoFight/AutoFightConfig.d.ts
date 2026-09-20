@@ -25,19 +25,20 @@ export type OnlyPickEliteDropsMode =
   | (string & {});
 
 /**
- * 战斗策略名称；`根据队伍自动选择` 表示按当前队伍匹配策略目录，其余为 `User/AutoFight` 下策略文件名（不含扩展名）
+ * 战斗策略名称；`根据队伍自动选择` 表示按当前队伍匹配策略目录，`自动连招（实验）` 为 LLM 行为树固定名且不对应策略文件，其余为 `User/AutoFight` 下策略文件名（不含扩展名）
  * @since 0.52.0
  */
-export type CombatStrategyName = "根据队伍自动选择" | (string & {});
+export type CombatStrategyName = "根据队伍自动选择" | "自动连招（实验）" | (string & {});
 
 /**
  * 战斗策略文件种类标识
- * 与上游 `AutoFightParam.ResolveStrategyPath` 返回的第二项对齐：优先命中 `.json`，否则回退 `.txt`；自动选队目录亦标为 `txt`
+ * 与上游 `AutoFightParam.ResolveStrategyPath` 返回的第二项对齐：优先命中 `.json`，否则回退 `.txt`；自动选队目录亦标为 `txt`；`自动连招（实验）` 标为 `combo`
  * @since 0.52.0
  */
 export type StrategyFileKind =
   | "json" // JSON 战斗策略
   | "txt" // 文本 / 简易策略（含「根据队伍自动选择」目录）
+  | "combo" // 自动连招（LLM 行为树），不对应策略文件
   | (string & {});
 
 /**
@@ -74,7 +75,6 @@ export interface AutoFightConfig
       | "pickDropsAfterFightEnabled"
       | "pickDropsAfterFightSeconds"
       | "qinDoublePickUp"
-      | "skipModel"
       | "strategyName"
       | "swimmingEnabled"
       | "teamNames"
@@ -145,12 +145,12 @@ export interface AutoFightConfig
    */
   onlyPickEliteDropsMode: OnlyPickEliteDropsMode;
   /**
-   * 是否在战斗结束后拾取掉落物
+   * 是否在战斗结束后光柱扫描掉落物，默认开启
    * @since 0.52.0
    */
   pickDropsAfterFightEnabled: boolean;
   /**
-   * 战斗结束后拾取掉落物的等待时长，单位秒，默认 15
+   * 战斗结束后光柱扫描掉落物的持续时长，单位秒，默认 15
    * @since 0.52.0
    */
   pickDropsAfterFightSeconds: number;
@@ -160,12 +160,7 @@ export interface AutoFightConfig
    */
   qinDoublePickUp: boolean;
   /**
-   * 是否启用跳过模型
-   * @since 0.52.0
-   */
-  skipModel: boolean;
-  /**
-   * 战斗策略名称，`根据队伍自动选择` 表示按当前队伍匹配策略
+   * 战斗策略名称，`根据队伍自动选择` 表示按当前队伍匹配策略，`自动连招（实验）` 为 LLM 行为树固定名
    * @since 0.52.0
    */
   strategyName: CombatStrategyName;
@@ -220,8 +215,6 @@ export interface AutoFightConfig_FightFinishDetectConfig
   extends
     Omit<
       CommunityToolkit.Mvvm.ComponentModel.ObservableObject,
-      | "battleEndProgressBarColor"
-      | "battleEndProgressBarColorTolerance"
       | "beforeDetectDelay"
       | "blockCheckBeforeBattleSeconds"
       | "checkAfterSwitchAvatar"
@@ -239,16 +232,6 @@ export interface AutoFightConfig_FightFinishDetectConfig
     System.ComponentModel.INotifyPropertyChangedInput,
     System.ComponentModel.INotifyPropertyChangingInput {
   readonly [autoFightConfig_FightFinishDetectConfigBrand]: true;
-  /**
-   * 战斗结束进度条颜色容差，`6` 表示三通道相同容差，`6,6,6` 可分别设置，格式为 RGB
-   * @since 0.52.0
-   */
-  battleEndProgressBarColorTolerance: string;
-  /**
-   * 判断战斗结束的进度条颜色，`RGB` 格式，默认 `95,235,255`
-   * @since 0.52.0
-   */
-  battleEndProgressBarColor: string;
   /**
    * 按下切换队伍后检测屏幕色块的延迟，单位秒，默认 `0.4`，频繁误判时可适当提高
    * @since 0.52.0
@@ -305,12 +288,12 @@ export interface AutoFightConfig_FightFinishDetectConfig
    */
   blockCheckBeforeBattleSeconds: number;
   /**
-   * 是否启用派蒙辅助检测；按 L 后当派蒙头像可见时提前跳出战斗结束检测
+   * 是否启用派蒙辅助检测；按 L 后当派蒙头像可见时提前跳出战斗结束检测，默认关闭
    * @since 0.64.0
    */
   paimonEndCheckEnabled: boolean;
   /**
-   * 派蒙辅助检测延时，单位秒
+   * 派蒙辅助检测延时，单位秒，默认 0.2
    * @since 0.64.0
    */
   paimonEndCheckDelay: number;

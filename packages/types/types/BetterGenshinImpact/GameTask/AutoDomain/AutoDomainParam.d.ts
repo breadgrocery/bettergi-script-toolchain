@@ -56,7 +56,7 @@ export interface AutoDomainParam extends Omit<
    */
   partyName: string;
   /**
-   * 需要刷取的秘境名称；空字符串表示未指定
+   * 需要刷取的秘境名称；空字符串表示未指定，`根据提升指南选择秘境` 表示按冒险手册提升指南选择
    * @since 0.52.0
    */
   domainName: DomainName;
