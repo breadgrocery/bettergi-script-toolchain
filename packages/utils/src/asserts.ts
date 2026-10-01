@@ -62,7 +62,7 @@ export const assertElementAbsent = async (
 export const assertRegionAppearing = async (
   regionProvider: RegionProvider,
   message: string,
-  retryAction?: Action,
+  retryAction?: Action<number>,
   options?: RetryOptions
 ) => {
   const isAppeared = await waitForRegionAppear(regionProvider, retryAction, options);
@@ -79,7 +79,7 @@ export const assertRegionAppearing = async (
 export const assertRegionDisappearing = async (
   regionProvider: RegionProvider,
   message: string,
-  retryAction?: Action,
+  retryAction?: Action<number>,
   options?: RetryOptions
 ) => {
   const isDisappeared = await waitForRegionDisappear(regionProvider, retryAction, options);
@@ -96,7 +96,7 @@ export const assertRegionDisappearing = async (
 export const assertElementAppearing = async (
   recognitionObject: RecognitionObject,
   message: string,
-  retryAction?: Action,
+  retryAction?: Action<number>,
   options?: RetryOptions
 ) => {
   const isAppeared = await waitForElementAppear(recognitionObject, retryAction, options);
@@ -113,7 +113,7 @@ export const assertElementAppearing = async (
 export const assertElementDisappearing = async (
   recognitionObject: RecognitionObject,
   message: string,
-  retryAction?: Action,
+  retryAction?: Action<number>,
   options?: RetryOptions
 ) => {
   const isDisappeared = await waitForElementDisappear(recognitionObject, retryAction, options);

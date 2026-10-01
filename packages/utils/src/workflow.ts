@@ -1,5 +1,5 @@
 export type MaybePromise<T> = T | Promise<T>;
-export type Action = () => MaybePromise<void | Microsoft.ClearScript.VoidResult>;
+export type Action<T = void> = (obj: T) => MaybePromise<void | Microsoft.ClearScript.VoidResult>;
 export type RegionProvider = () => MaybePromise<Region | null | undefined>;
 
 /** 重试选项 */
@@ -26,13 +26,13 @@ const defaultRetryInterval = 1000;
  */
 export const waitForAction = async (
   condition: () => MaybePromise<boolean>,
-  retryAction?: Action,
+  retryAction?: Action<number>,
   options?: RetryOptions
 ): Promise<boolean> => {
   const { maxAttempts = defaultMaxAttempts, retryInterval = defaultRetryInterval } = options || {};
   for (let i = 0; i < maxAttempts; i++) {
     if (i === 0 && (await condition())) return true; // fast path
-    await retryAction?.();
+    await retryAction?.(i + 1);
     await sleep(retryInterval);
     if (await condition()) return true;
   }
@@ -49,7 +49,7 @@ export const waitForAction = async (
  */
 export const waitForRegionAppear = async (
   regionProvider: RegionProvider,
-  retryAction?: Action,
+  retryAction?: Action<number>,
   options?: RetryOptions
 ): Promise<boolean> => {
   return waitForAction(
@@ -72,7 +72,7 @@ export const waitForRegionAppear = async (
  */
 export const waitForRegionDisappear = async (
   regionProvider: RegionProvider,
-  retryAction?: Action,
+  retryAction?: Action<number>,
   options?: RetryOptions
 ): Promise<boolean> => {
   return waitForAction(
@@ -95,7 +95,7 @@ export const waitForRegionDisappear = async (
  */
 export const waitForElementAppear = async (
   recognitionObject: RecognitionObject,
-  retryAction?: Action,
+  retryAction?: Action<number>,
   options?: RetryOptions
 ): Promise<boolean> => {
   return waitForRegionAppear(
@@ -115,7 +115,7 @@ export const waitForElementAppear = async (
  */
 export const waitForElementDisappear = async (
   recognitionObject: RecognitionObject,
-  retryAction?: Action,
+  retryAction?: Action<number>,
   options?: RetryOptions
 ): Promise<boolean> => {
   return waitForRegionDisappear(
