@@ -1,5 +1,4 @@
-import "../../../../Fischless/WindowsInput/IMouseSimulator";
-import type {
+﻿import type {
   DoubleHost,
   HostType,
   Int32Host,
@@ -10,6 +9,7 @@ import type {
 import type { VoidResult } from "../../../../Microsoft/ClearScript/VoidResult";
 import "../../../../OpenCvSharp/Mat";
 import "../../../../System/IDisposable";
+import "../../../Core/Mask/IMaskWindowDrawingBoard";
 import "./GameCaptureRegion";
 import "./Region";
 
@@ -84,26 +84,20 @@ export interface DesktopRegionHostType extends HostType<
    * 按指定桌面尺寸构造桌面区域
    * @param w 桌面宽度
    * @param h 桌面高度
-   * @param iMouse 鼠标模拟器；省略时使用默认实现
    * @since 0.52.0
    */
   new (w: number | StrongNumeric<Int32Host>, h: number | StrongNumeric<Int32Host>): DesktopRegion;
-  new (
-    w: number | StrongNumeric<Int32Host>,
-    h: number | StrongNumeric<Int32Host>,
-    iMouse: Fischless.WindowsInput.IMouseSimulator | null
-  ): DesktopRegion;
   /**
    * 按主屏幕工作区构造桌面区域
    * @since 0.52.0
    */
   new (): DesktopRegion;
   /**
-   * 按主屏幕工作区与指定鼠标模拟器构造桌面区域
-   * @param mouse 鼠标模拟器
-   * @since 0.52.0
+   * 按主屏幕工作区与指定遮罩窗口绘制入口构造桌面区域
+   * @param drawingBoard 遮罩窗口绘制入口
+   * @since 0.67.0
    */
-  new (mouse: Fischless.WindowsInput.IMouseSimulator): DesktopRegion;
+  new (drawingBoard: BetterGenshinImpact.Core.Mask.IMaskWindowDrawingBoard | null): DesktopRegion;
   /**
    * 按桌面坐标点击；每次重新计算屏幕大小
    * @param cx 桌面横坐标

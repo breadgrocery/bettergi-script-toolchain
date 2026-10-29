@@ -1,11 +1,10 @@
-import type {
+﻿import type {
   ClrHostValue,
   HostType,
   PublicDefaultConstructorTrait,
   ReferenceTypeTrait
 } from "../../../../Microsoft/ClearScript/HostType";
 import type { VoidResult } from "../../../../Microsoft/ClearScript/VoidResult";
-import "../../../../System/Collections/Generic/IEnumerable";
 import "../../../../System/Collections/Generic/List";
 import "../../Model/GameUI/GridScreenName";
 import "./ItemIconRecognitionMode";
@@ -18,17 +17,12 @@ declare const countInventoryItemParamBrand: unique symbol;
 export interface CountInventoryItemParam extends ClrHostValue {
   readonly [countInventoryItemParamBrand]: true;
   /**
-   * 目标网格界面名称
+   * 目标网格界面名称；可选，为 null 时按物品自动分组多页扫描
    * @since 0.62.0
    */
-  gridScreenName: BetterGenshinImpact.GameTask.Model.GameUI.GridScreenName;
+  gridScreenName: BetterGenshinImpact.GameTask.Model.GameUI.GridScreenName | null;
   /**
-   * 单个物品名称；与 `itemNames` 互斥
-   * @since 0.62.0
-   */
-  itemName: string;
-  /**
-   * 多个物品名称列表；与 `itemName` 互斥
+   * 物品名称列表
    * @since 0.62.0
    */
   itemNames: System.Collections.Generic.List<string>;
@@ -38,12 +32,12 @@ export interface CountInventoryItemParam extends ClrHostValue {
    */
   iconRecognitionMode: BetterGenshinImpact.GameTask.Common.Job.ItemIconRecognitionMode;
   /**
-   * 获取物品名称列表；列表为空时返回 null
-   * @since 0.62.0
+   * 是否启用按物品排序提前停止；默认 false
+   * @since 0.67.0
    */
-  getItemNamesOrNull(): System.Collections.Generic.IEnumerable<string>;
+  stopByItemSort: boolean;
   /**
-   * 校验参数；`itemName` 与 `itemNames` 不可同时设置或同时为空
+   * 校验参数；`itemNames` 不能为空
    * @returns ClearScript 宿主空结果
    * @since 0.62.0
    */

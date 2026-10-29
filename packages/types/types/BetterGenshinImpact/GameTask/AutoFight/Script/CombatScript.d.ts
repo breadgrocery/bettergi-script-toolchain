@@ -35,11 +35,6 @@ export interface CombatScript extends ClrHostValue {
    * @since 0.50.0
    */
   combatCommands: System.Collections.Generic.List<BetterGenshinImpact.GameTask.AutoFight.Script.CombatCommand>;
-  /**
-   * 与当前队伍角色匹配到的数量
-   * @since 0.50.0
-   */
-  matchCount: number;
 }
 
 declare global {

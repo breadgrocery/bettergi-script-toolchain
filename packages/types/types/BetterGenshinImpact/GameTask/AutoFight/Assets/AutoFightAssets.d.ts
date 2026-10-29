@@ -55,6 +55,11 @@ export interface AutoFightAssets extends ClrHostValue {
    */
   readonly eCooldownRect: OpenCvSharp.Rect;
   /**
+   * 用于战技就绪分类的元素战技图标区域
+   * @since 0.66.0
+   */
+  readonly eRectForClassify: OpenCvSharp.Rect;
+  /**
    * 元素爆发图标区域
    * @since 0.50.0
    */

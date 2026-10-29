@@ -1,4 +1,4 @@
-import type {
+﻿import type {
   ClrHostValue,
   DoubleHost,
   HostType,
@@ -9,12 +9,12 @@ import type {
 } from "../../../../Microsoft/ClearScript/HostType";
 import type { VoidResult } from "../../../../Microsoft/ClearScript/VoidResult";
 import "../../../../OpenCvSharp/Rect";
+import "../../../../OpenCvSharp/Size";
 import "../../../../System/Drawing/Pen";
 import "../../../../System/IDisposable";
 import "../../../../System/ValueTuple";
-import "../../../View/Drawable/DrawContent";
-import "../../../View/Drawable/LineDrawable";
-import "../../../View/Drawable/RectDrawable";
+import "../../../Core/Mask/IMaskWindowDrawingBoard";
+import "../../../Core/Mask/MaskWindowDrawingModels";
 import "./Converter/INodeConverter";
 import "./ImageRegion";
 
@@ -85,6 +85,11 @@ export interface Region extends ClrHostValue, System.IDisposableInput {
    * @since 0.43.1
    */
   readonly prevConverter: BetterGenshinImpact.GameTask.Model.Area.Converter.INodeConverter;
+  /**
+   * 遮罩窗口绘制入口。根区域创建时传入，子区域自动继承；不在截图区域树下的 Region 为空实现
+   * @since 0.67.0
+   */
+  readonly drawingBoard: BetterGenshinImpact.Core.Mask.IMaskWindowDrawingBoard;
   /**
    * 后台点击本区域中心
    * @returns ClearScript 宿主空结果
@@ -210,82 +215,55 @@ export interface Region extends ClrHostValue, System.IDisposableInput {
     pen: System.Drawing.Pen | null
   ): VoidResult;
   /**
-   * 将本区域转换为遮罩窗口矩形绘制对象
-   * @param name 绘制项名称
+   * 转换本区域到遮罩窗口绘制矩形
    * @param pen 画笔；省略时使用默认样式
-   * @since 0.43.1
+   * @since 0.67.0
    */
-  selfToRectDrawable(name: string): BetterGenshinImpact.View.Drawable.RectDrawable;
-  selfToRectDrawable(
-    name: string,
-    pen: System.Drawing.Pen | null
-  ): BetterGenshinImpact.View.Drawable.RectDrawable;
+  selfToMaskWindowDrawingRect(
+    pen?: System.Drawing.Pen | null
+  ): BetterGenshinImpact.Core.Mask.MaskWindowDrawingRect;
   /**
-   * 将本区域内指定矩形转换为遮罩窗口绘制对象
+   * 将本区域内指定矩形转换为遮罩窗口绘制矩形
    * @param rect 相对矩形
-   * @param name 绘制项名称
    * @param pen 画笔；省略时使用默认样式
-   * @since 0.43.1
+   * @since 0.67.0
    */
-  toRectDrawable(
+  toMaskWindowDrawingRect(
     rect: OpenCvSharp.Rect,
-    name: string
-  ): BetterGenshinImpact.View.Drawable.RectDrawable;
+    pen?: System.Drawing.Pen | null
+  ): BetterGenshinImpact.Core.Mask.MaskWindowDrawingRect;
   /**
-   * 将本区域内指定矩形转换为遮罩窗口绘制对象
+   * 将本区域内指定矩形转换为遮罩窗口绘制矩形
    * @param x 相对横坐标
    * @param y 相对纵坐标
    * @param w 矩形宽度
    * @param h 矩形高度
-   * @param name 绘制项名称
    * @param pen 画笔；省略时使用默认样式
-   * @since 0.43.1
+   * @since 0.67.0
    */
-  toRectDrawable(
+  toMaskWindowDrawingRect(
     x: number | StrongNumeric<Int32Host>,
     y: number | StrongNumeric<Int32Host>,
     w: number | StrongNumeric<Int32Host>,
     h: number | StrongNumeric<Int32Host>,
-    name: string
-  ): BetterGenshinImpact.View.Drawable.RectDrawable;
-  toRectDrawable(
-    rect: OpenCvSharp.Rect,
-    name: string,
-    pen: System.Drawing.Pen | null
-  ): BetterGenshinImpact.View.Drawable.RectDrawable;
-  toRectDrawable(
-    x: number | StrongNumeric<Int32Host>,
-    y: number | StrongNumeric<Int32Host>,
-    w: number | StrongNumeric<Int32Host>,
-    h: number | StrongNumeric<Int32Host>,
-    name: string,
-    pen: System.Drawing.Pen | null
-  ): BetterGenshinImpact.View.Drawable.RectDrawable;
+    pen?: System.Drawing.Pen | null
+  ): BetterGenshinImpact.Core.Mask.MaskWindowDrawingRect;
   /**
-   * 将本区域内指定直线转换为遮罩窗口绘制对象
+   * 将本区域内指定直线转换为遮罩窗口绘制直线
    * @param x1 起点相对横坐标
    * @param y1 起点相对纵坐标
    * @param x2 终点相对横坐标
    * @param y2 终点相对纵坐标
-   * @param name 绘制项名称
    * @param pen 画笔；省略时使用默认样式
-   * @since 0.43.1
+   * @since 0.67.0
    */
-  toLineDrawable(
+  toMaskWindowDrawingLine(
     x1: number | StrongNumeric<Int32Host>,
     y1: number | StrongNumeric<Int32Host>,
     x2: number | StrongNumeric<Int32Host>,
     y2: number | StrongNumeric<Int32Host>,
-    name: string
-  ): BetterGenshinImpact.View.Drawable.LineDrawable;
-  toLineDrawable(
-    x1: number | StrongNumeric<Int32Host>,
-    y1: number | StrongNumeric<Int32Host>,
-    x2: number | StrongNumeric<Int32Host>,
-    y2: number | StrongNumeric<Int32Host>,
-    name: string,
-    pen: System.Drawing.Pen | null
-  ): BetterGenshinImpact.View.Drawable.LineDrawable;
+    pen?: System.Drawing.Pen | null
+  ): BetterGenshinImpact.Core.Mask.MaskWindowDrawingLine;
   /**
    * 在遮罩窗口绘制本区域内指定直线
    * @param x1 起点相对横坐标
@@ -356,6 +334,21 @@ export interface Region extends ClrHostValue, System.IDisposableInput {
    * @since 0.43.1
    */
   toRect(): OpenCvSharp.Rect;
+  /**
+   * 所在截图帧（游戏捕获区域）到 1080P 的缩放比例
+   * @since 0.67.0
+   */
+  getScaleTo1080PRatio(): number;
+  /**
+   * 所在截图帧以 1080P 为标准的素材缩放比例，不会大于 1
+   * @since 0.67.0
+   */
+  getAssetScale(): number;
+  /**
+   * 所在截图帧归一到 1080P 后的尺寸
+   * @since 0.67.0
+   */
+  getScaleMax1080PFrameSize(): OpenCvSharp.Size;
   /**
    * 派生为图像区域；调用方应使用 `using` 及时释放
    * @since 0.43.1
@@ -463,7 +456,7 @@ export interface RegionHostType extends HostType<
     height: number | StrongNumeric<Int32Host>,
     owner: BetterGenshinImpact.GameTask.Model.Area.Region | null,
     converter: BetterGenshinImpact.GameTask.Model.Area.Converter.INodeConverter | null,
-    drawContent: BetterGenshinImpact.View.Drawable.DrawContent | null
+    drawingBoard: BetterGenshinImpact.Core.Mask.IMaskWindowDrawingBoard | null
   ): Region;
   /**
    * 按 OpenCV 矩形构造区域

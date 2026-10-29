@@ -1,10 +1,14 @@
-import type {
+﻿import type {
   HostType,
   PublicDefaultConstructorTrait,
   ReferenceTypeTrait
 } from "../../../Microsoft/ClearScript/HostType";
 import type { VoidResult } from "../../../Microsoft/ClearScript/VoidResult";
+import "../../../System/Collections/Generic/List";
 import type { CombatStrategyName } from "../AutoFight/AutoFightConfig";
+import "../AutoFight/AutoFightConfig";
+import "../Common/Resin/ResinUsage";
+import "../Common/Reward/TargetItem";
 import "../Model/BaseTaskParam";
 import type { BossName } from "./AutoBossConfig";
 import "./AutoBossConfig";
@@ -49,6 +53,21 @@ export interface AutoBossParam extends Omit<
    * @since 0.62.0
    */
   combatStrategyPath: string;
+  /**
+   * 统一树脂设置
+   * @since 0.67.0
+   */
+  resinUsage: BetterGenshinImpact.GameTask.Common.Resin.ResinUsage;
+  /**
+   * 本次运行使用的自动战斗配置
+   * @since 0.67.0
+   */
+  fightConfig: BetterGenshinImpact.GameTask.AutoFight.AutoFightConfig | null;
+  /**
+   * 材料目标列表：按物品名与数量提前停止
+   * @since 0.67.0
+   */
+  targetItems: System.Collections.Generic.List<BetterGenshinImpact.GameTask.Common.Reward.TargetItem>;
   /**
    * 讨伐前需要切换到的队伍名称，为空时保持当前队伍
    * @since 0.62.0

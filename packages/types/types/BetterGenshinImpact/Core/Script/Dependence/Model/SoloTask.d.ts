@@ -58,14 +58,16 @@ export type SoloTaskConfigMap = {
   };
   /** 统计背包物品 */
   CountInventoryItem: {
-    /**  gridScreenName 必填 */
-    gridScreenName:
+    /** 目标网格界面名称；可选，省略或为 null 时按物品自动分组多页扫描 */
+    gridScreenName?:
       | BetterGenshinImpact.GameTask.Common.Job.CountInventoryItemParam["gridScreenName"]
       | number
-      | BetterGenshinImpact.GameTask.Model.GameUI.GridScreenName;
-    /** itemName 与 itemNames 互斥 */
-    itemName?: string | null;
-    itemNames?: readonly string[] | string[];
+      | BetterGenshinImpact.GameTask.Model.GameUI.GridScreenName
+      | null;
+    /** 物品名称列表 */
+    itemNames: readonly string[] | string[];
+    /** 是否启用按物品排序提前停止；默认 false */
+    stopByItemSort?: boolean;
   };
 };
 

@@ -15,7 +15,10 @@ import "../../../../System/Nullable";
 import type { AvatarName } from "../../../GameTask/AutoFight/Model/Avatar";
 import "../../../GameTask/AutoPathing/NavigationInstance";
 import "../../../GameTask/Common/Job/CraftMaterialTask";
-import type { CraftMaterialType } from "../../../GameTask/Common/Job/CraftMaterialTask";
+import type {
+  CraftBonusType,
+  CraftMaterialType
+} from "../../../GameTask/Common/Job/CraftMaterialTask";
 import type {
   Area,
   CountryName,
@@ -399,6 +402,12 @@ export interface Genshin extends ClrHostValue {
     materialName: string,
     quantity: number | StrongNumeric<Int32Host>,
     materialType: CraftMaterialType | null
+  ): Promise<BetterGenshinImpact.GameTask.Common.Job.CraftMaterialResult>;
+  craftMaterial(
+    materialName: string,
+    quantity: number | StrongNumeric<Int32Host>,
+    materialType: CraftMaterialType | null,
+    bonusType: CraftBonusType | null
   ): Promise<BetterGenshinImpact.GameTask.Common.Job.CraftMaterialResult>;
   /**
    * 返回主界面

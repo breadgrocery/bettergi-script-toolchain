@@ -1,4 +1,4 @@
-import type {
+﻿import type {
   HostType,
   Int32Host,
   PublicDefaultConstructorTrait,
@@ -6,7 +6,10 @@ import type {
   StrongNumeric
 } from "../../../Microsoft/ClearScript/HostType";
 import type { VoidResult } from "../../../Microsoft/ClearScript/VoidResult";
+import "../../../System/Collections/Generic/List";
 import type { CountryName } from "../Common/Map/MapScriptNames";
+import "../Common/Resin/ResinUsage";
+import "../Common/Reward/TargetItem";
 import "../Model/BaseTaskParam";
 import "./AutoLeyLineOutcropConfig";
 import "./AutoLeyLineOutcropFightConfig";
@@ -113,6 +116,26 @@ export interface AutoLeyLineOutcropParam extends Omit<
    * @since 0.59.0
    */
   scanDropsAfterRewardSeconds: number;
+  /**
+   * 统一树脂设置
+   * @since 0.67.0
+   */
+  resinUsage: BetterGenshinImpact.GameTask.Common.Resin.ResinUsage;
+  /**
+   * 将 JS 已赋值的旧模式开关与次数归一化到统一树脂设置
+   * @since 0.67.0
+   */
+  resolveResinUsage(): VoidResult;
+  /**
+   * 是否为一条龙模式：为 true 时开始前不先传送到七天神像，默认 false
+   * @since 0.67.0
+   */
+  oneDragonMode: boolean;
+  /**
+   * 材料目标列表：按物品名与数量提前停止
+   * @since 0.67.0
+   */
+  targetItems: System.Collections.Generic.List<BetterGenshinImpact.GameTask.Common.Reward.TargetItem>;
   /**
    * 从当前全局自动地脉花配置填充默认参数
    * @returns ClearScript 宿主空结果

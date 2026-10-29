@@ -12,8 +12,8 @@ import "../../../../SixLabors/ImageSharp/Image";
 import "../../../../SixLabors/ImageSharp/PixelFormats/Rgb24";
 import "../../../../System/Collections/Generic/List";
 import "../../../../System/IDisposable";
+import "../../../Core/Mask/IMaskWindowDrawingBoard";
 import "../../../Core/Recognition/RecognitionObject";
-import "../../../View/Drawable/DrawContent";
 import "./Converter/INodeConverter";
 import "./Region";
 
@@ -176,7 +176,7 @@ export interface ImageRegionHostType extends HostType<ImageRegion, ReferenceType
     y: number | StrongNumeric<Int32Host>,
     owner: BetterGenshinImpact.GameTask.Model.Area.Region | null,
     converter: BetterGenshinImpact.GameTask.Model.Area.Converter.INodeConverter | null,
-    drawContent: BetterGenshinImpact.View.Drawable.DrawContent | null
+    drawingBoard: BetterGenshinImpact.Core.Mask.IMaskWindowDrawingBoard | null
   ): ImageRegion;
 }
 

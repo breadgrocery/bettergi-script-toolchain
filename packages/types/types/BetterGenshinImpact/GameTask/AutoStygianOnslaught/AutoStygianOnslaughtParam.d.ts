@@ -1,4 +1,4 @@
-import type {
+﻿import type {
   HostArray,
   HostType,
   PublicDefaultConstructorTrait,
@@ -8,6 +8,7 @@ import type { VoidResult } from "../../../Microsoft/ClearScript/VoidResult";
 import "../../../System/Collections/Generic/List";
 import type { ResinName } from "../AutoDomain/AutoDomainTask";
 import type { CombatStrategyName } from "../AutoFight/AutoFightConfig";
+import "../Common/Resin/ResinUsage";
 import "../Model/BaseTaskParam";
 import "./AutoStygianOnslaughtConfig";
 import "./AutoStygianOnslaughtTask";
@@ -85,6 +86,26 @@ export interface AutoStygianOnslaughtParam extends Omit<
    * @since 0.58.0
    */
   combatScriptBagPath: string;
+  /**
+   * 统一树脂设置
+   * @since 0.67.0
+   */
+  resinUsage: BetterGenshinImpact.GameTask.Common.Resin.ResinUsage;
+  /**
+   * 危战勋望目标：达到该值时停止，0 表示不限制
+   * @since 0.67.0
+   */
+  direPrestigeTarget: number;
+  /**
+   * 分解圣遗物的最大星级
+   * @since 0.67.0
+   */
+  maxArtifactStar: string | null;
+  /**
+   * 战斗策略名称
+   * @since 0.67.0
+   */
+  strategyName: string | null;
   /**
    * 从当前全局自动幽境危战配置填充默认参数
    * @returns ClearScript 宿主空结果

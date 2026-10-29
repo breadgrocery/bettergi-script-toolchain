@@ -1,4 +1,4 @@
-import type {
+﻿import type {
   ClrHostValue,
   HostType,
   Int32Host,
@@ -24,6 +24,12 @@ export type CraftMaterialType =
   | "食物"
   | "鱼饵"
   | (string & {});
+
+/**
+ * 合成加成角色类型
+ * @since 0.67.0
+ */
+export type CraftBonusType = "概率返还素材" | "概率额外产出" | (string & {});
 
 /**
  * 合成指定材料的执行结果
@@ -68,6 +74,7 @@ declare global {
   namespace BetterGenshinImpact.GameTask.Common.Job {
     type CraftMaterialResult = import("./CraftMaterialTask").CraftMaterialResult;
     type CraftMaterialType = import("./CraftMaterialTask").CraftMaterialType;
+    type CraftBonusType = import("./CraftMaterialTask").CraftBonusType;
   }
 }
 

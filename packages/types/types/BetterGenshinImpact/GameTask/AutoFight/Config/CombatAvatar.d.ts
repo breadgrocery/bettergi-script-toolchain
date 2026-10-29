@@ -150,6 +150,10 @@ export type CombatAvatarNameEn =
   | "Marionette"
   | "Alyosha"
   | "Odette"
+  | "Vodyanitsa"
+  | "Vesna"
+  | "Valeriy"
+  | "Mitya"
   | (string & {});
 
 /**

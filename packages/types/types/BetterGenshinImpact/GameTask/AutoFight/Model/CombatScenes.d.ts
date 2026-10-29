@@ -1,4 +1,4 @@
-import type {
+﻿import type {
   ClrHostValue,
   HostType,
   Int32Host,
@@ -9,6 +9,7 @@ import type { VoidResult } from "../../../../Microsoft/ClearScript/VoidResult";
 import "../../../../Microsoft/Extensions/Logging/ILogger";
 import "../../../../SixLabors/ImageSharp/Image";
 import "../../../../SixLabors/ImageSharp/PixelFormats/Rgb24";
+import "../../../../System/Collections/Generic/IEnumerable";
 import "../../../../System/Collections/Generic/List";
 import "../../../../System/Collections/ObjectModel/ReadOnlyCollection";
 import "../../../../System/IDisposable";
@@ -252,6 +253,17 @@ export interface CombatScenesHostType extends HostType<CombatScenes, ReferenceTy
    * @since 0.65.0
    */
   getCombatScenesWithRetry(): CombatScenes;
+  /**
+   * 按给定队伍成员构造战斗场景
+   * @param avatars 要接管的队伍成员
+   * @returns 接管这些成员的队伍场景
+   * @since 0.67.0
+   */
+  fromAvatars(
+    avatars:
+      | readonly BetterGenshinImpact.GameTask.AutoFight.Model.Avatar[]
+      | System.Collections.Generic.IEnumerable<BetterGenshinImpact.GameTask.AutoFight.Model.Avatar>
+  ): BetterGenshinImpact.GameTask.AutoFight.Model.CombatScenes;
 }
 
 export {};

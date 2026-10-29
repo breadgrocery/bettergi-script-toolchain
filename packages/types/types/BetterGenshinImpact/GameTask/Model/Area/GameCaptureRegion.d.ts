@@ -8,12 +8,9 @@ import type {
 import type { VoidResult } from "../../../../Microsoft/ClearScript/VoidResult";
 import "../../../../OpenCvSharp/Mat";
 import "../../../../OpenCvSharp/Size";
-import "../../../../System/Drawing/Pen";
 import "../../../../System/IDisposable";
 import "../../../../System/ValueTuple";
-import "../../../View/Drawable/DrawContent";
-import "../../../View/Drawable/LineDrawable";
-import "../../../View/Drawable/RectDrawable";
+import "../../../Core/Mask/IMaskWindowDrawingBoard";
 import "./Converter/INodeConverter";
 import "./ImageRegion";
 import "./Region";
@@ -25,74 +22,9 @@ import "./Region";
 declare const gameCaptureRegionBrand: unique symbol;
 export interface GameCaptureRegion
   extends
-    Omit<
-      BetterGenshinImpact.GameTask.Model.Area.ImageRegion,
-      "convertToLineDrawable" | "convertToRectDrawable" | "deriveTo1080P"
-    >,
+    Omit<BetterGenshinImpact.GameTask.Model.Area.ImageRegion, "deriveTo1080P">,
     System.IDisposableInput {
   readonly [gameCaptureRegionBrand]: true;
-  /**
-   * 将游戏截图坐标的矩形转换为遮罩窗口绘制对象
-   * @param x 截图横坐标
-   * @param y 截图纵坐标
-   * @param w 矩形宽度
-   * @param h 矩形高度
-   * @param pen 画笔；省略时使用默认样式
-   * @param name 绘制项名称
-   * @since 0.43.1
-   */
-  convertToRectDrawable(
-    x: number | StrongNumeric<Int32Host>,
-    y: number | StrongNumeric<Int32Host>,
-    w: number | StrongNumeric<Int32Host>,
-    h: number | StrongNumeric<Int32Host>
-  ): BetterGenshinImpact.View.Drawable.RectDrawable;
-  convertToRectDrawable(
-    x: number | StrongNumeric<Int32Host>,
-    y: number | StrongNumeric<Int32Host>,
-    w: number | StrongNumeric<Int32Host>,
-    h: number | StrongNumeric<Int32Host>,
-    pen: System.Drawing.Pen | null
-  ): BetterGenshinImpact.View.Drawable.RectDrawable;
-  convertToRectDrawable(
-    x: number | StrongNumeric<Int32Host>,
-    y: number | StrongNumeric<Int32Host>,
-    w: number | StrongNumeric<Int32Host>,
-    h: number | StrongNumeric<Int32Host>,
-    pen: System.Drawing.Pen | null,
-    name: string | null
-  ): BetterGenshinImpact.View.Drawable.RectDrawable;
-  /**
-   * 将游戏截图坐标的直线转换为遮罩窗口绘制对象
-   * @param x1 起点截图横坐标
-   * @param y1 起点截图纵坐标
-   * @param x2 终点截图横坐标
-   * @param y2 终点截图纵坐标
-   * @param pen 画笔；省略时使用默认样式
-   * @param name 绘制项名称
-   * @since 0.43.1
-   */
-  convertToLineDrawable(
-    x1: number | StrongNumeric<Int32Host>,
-    y1: number | StrongNumeric<Int32Host>,
-    x2: number | StrongNumeric<Int32Host>,
-    y2: number | StrongNumeric<Int32Host>
-  ): BetterGenshinImpact.View.Drawable.LineDrawable;
-  convertToLineDrawable(
-    x1: number | StrongNumeric<Int32Host>,
-    y1: number | StrongNumeric<Int32Host>,
-    x2: number | StrongNumeric<Int32Host>,
-    y2: number | StrongNumeric<Int32Host>,
-    pen: System.Drawing.Pen | null
-  ): BetterGenshinImpact.View.Drawable.LineDrawable;
-  convertToLineDrawable(
-    x1: number | StrongNumeric<Int32Host>,
-    y1: number | StrongNumeric<Int32Host>,
-    x2: number | StrongNumeric<Int32Host>,
-    y2: number | StrongNumeric<Int32Host>,
-    pen: System.Drawing.Pen | null,
-    name: string | null
-  ): BetterGenshinImpact.View.Drawable.LineDrawable;
   /**
    * 将大于 1080P 的截图统一缩放到 1080P 后返回图像区域
    * @since 0.43.1
@@ -141,7 +73,7 @@ export interface GameCaptureRegionHostType extends HostType<GameCaptureRegion, R
     initY: number | StrongNumeric<Int32Host>,
     owner: BetterGenshinImpact.GameTask.Model.Area.Region | null,
     converter: BetterGenshinImpact.GameTask.Model.Area.Converter.INodeConverter | null,
-    drawContent: BetterGenshinImpact.View.Drawable.DrawContent | null
+    drawingBoard: BetterGenshinImpact.Core.Mask.IMaskWindowDrawingBoard | null
   ): GameCaptureRegion;
   /**
    * 在游戏截图坐标系点击；回调参数为当前捕获尺寸与到 1080P 的缩放比，魔法数字须按 1080P 编写

@@ -1,4 +1,4 @@
-import type {
+﻿import type {
   HostArray,
   HostType,
   Int32Host,
@@ -8,6 +8,8 @@ import type {
 import type { VoidResult } from "../../../Microsoft/ClearScript/VoidResult";
 import "../../../System/Collections/Generic/List";
 import type { CombatStrategyName } from "../AutoFight/AutoFightConfig";
+import "../Common/Resin/ResinUsage";
+import "../Common/Reward/TargetItem";
 import "../Model/BaseTaskParam";
 import type { ArtifactStar, DomainName, ResinName, SundaySelectedValue } from "./AutoDomainTask";
 import "./AutoDomainTask";
@@ -50,6 +52,32 @@ export interface AutoDomainParam extends Omit<
    * @since 0.52.0
    */
   combatStrategyPath: string;
+  /**
+   * 统一树脂设置
+   * @since 0.67.0
+   */
+  resinUsage: BetterGenshinImpact.GameTask.Common.Resin.ResinUsage;
+  /**
+   * 将 JS 已赋值的原粹/20/40 次数组合归一化到统一树脂设置
+   * @since 0.67.0
+   */
+  resolveResinUsage(): VoidResult;
+  /**
+   * 材料目标列表：按物品名与数量提前停止
+   * @since 0.67.0
+   */
+  targetItems: System.Collections.Generic.List<BetterGenshinImpact.GameTask.Common.Reward.TargetItem>;
+  /**
+   * 自定义培养目标 JSON 字符串
+   * @since 0.67.0
+   */
+  trainingTargetsJson: string | null;
+  /**
+   * 设置自定义培养目标 JSON
+   * @param json 培养目标 JSON 数组字符串
+   * @since 0.67.0
+   */
+  setTrainingTargets(json: string): VoidResult;
   /**
    * 刷取秘境使用的队伍名称
    * @since 0.52.0

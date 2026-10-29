@@ -8,6 +8,7 @@ import "./bindings/characterDevelopmentTask"; // 角色养成信息识别
 import "./bindings/log"; // 日志
 import "./bindings/file"; // 受限文件读写
 import "./bindings/http"; // 受限 HTTP 请求
+import "./bindings/yolo"; // YOLO ONNX 推理
 import "./bindings/notification"; // 通知推送
 
 // 任务调度
@@ -85,7 +86,12 @@ import "./bindings/GridScreenName"; // 网格界面名称
 import "./bindings/ItemIconRecognitionMode"; // 物品图标识别模式
 import "./bindings/AutoFightParam"; // 自动战斗
 import "./bindings/AutoLeyLineOutcropParam"; // 自动地脉花
+import "./bindings/TargetItem"; // 目标物品
 import "./bindings/AutoStygianOnslaughtParam"; // 自动幽境危战
+import "./bindings/ResinUsage"; // 统一树脂设置
+import "./bindings/ResinUsageMode"; // 树脂使用方式
+import "./bindings/OriginalResinTier"; // 原粹树脂档位
+import "./bindings/ResinKind"; // 树脂种类
 import "./bindings/strategyFile"; // 战斗策略文件
 
 // 键鼠钩子宿主类型

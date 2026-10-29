@@ -1,5 +1,3 @@
-import "../../../Fischless/WindowsInput/IKeyboardSimulator";
-import "../../../Fischless/WindowsInput/IMouseSimulator";
 import type {
   ClrHostValue,
   DoubleHost,
@@ -15,6 +13,8 @@ import "../../../System/Collections/Generic/List";
 import "../../../System/Threading/CancellationToken";
 import "../../GameTask/Model/Area/ImageRegion";
 import "../../GameTask/Model/Area/Region";
+import "../Input/IKeyboardInput";
+import "../Input/IMouseInput";
 import "../Recognition/RecognitionObject";
 import "./BvFlow";
 import "./BvImage";
@@ -31,12 +31,12 @@ export interface BvPage extends ClrHostValue {
    * 键盘模拟器
    * @since 0.57.0
    */
-  readonly keyboard: Fischless.WindowsInput.IKeyboardSimulator;
+  readonly keyboard: BetterGenshinImpact.Core.Input.IKeyboardInput;
   /**
    * 鼠标模拟器
    * @since 0.57.0
    */
-  readonly mouse: Fischless.WindowsInput.IMouseSimulator;
+  readonly mouse: BetterGenshinImpact.Core.Input.IMouseInput;
   /**
    * 默认超时时间（毫秒）
    * @since 0.57.0

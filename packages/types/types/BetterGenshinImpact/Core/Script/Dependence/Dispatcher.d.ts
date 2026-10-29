@@ -33,7 +33,7 @@ export interface Dispatcher extends ClrHostValue {
    */
   addTimer(timer: BetterGenshinImpact.Core.Script.Dependence.Model.RealtimeTimer): VoidResult;
   /**
-   * 移除全部实时任务
+   * 清理所有实时任务（清空任务期间的启用名单，不销毁触发器实例）
    * @returns ClearScript 宿主空结果
    * @since 0.44.3
    */
@@ -174,16 +174,16 @@ export interface Dispatcher extends ClrHostValue {
    * 运行背包物品计数任务
    * @param param 背包物品计数参数
    * @param customCt 自定义取消令牌
-   * @returns 在任务完成后兑现结果的 Promise；单物品返回数量，多物品返回名称到数量的脚本对象
+   * @returns 在任务完成后兑现名称到数量的脚本对象的 Promise
    * @since 0.62.0
    */
   runCountInventoryItemTask(
     param: BetterGenshinImpact.GameTask.Common.Job.CountInventoryItemParam
-  ): Promise<unknown>;
+  ): Promise<Record<string, number>>;
   runCountInventoryItemTask(
     param: BetterGenshinImpact.GameTask.Common.Job.CountInventoryItemParam,
     customCt: System.Threading.CancellationToken | null | null
-  ): Promise<unknown>;
+  ): Promise<Record<string, number>>;
 }
 
 declare global {

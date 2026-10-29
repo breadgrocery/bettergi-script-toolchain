@@ -1,6 +1,5 @@
-import type { HostType, InterfaceTypeTrait } from "../../../Microsoft/ClearScript/HostType";
+﻿import type { HostType, InterfaceTypeTrait } from "../../../Microsoft/ClearScript/HostType";
 import "../../../OpenCvSharp/Rect";
-import "../../../System/Diagnostics/Process";
 import "../../../System/Drawing/Size";
 import "../../../Vanara/PInvoke/RECT";
 import "./Area/DesktopRegion";
@@ -52,25 +51,15 @@ export interface ISystemInfo
    */
   scaleMax1080PCaptureRect: OpenCvSharp.Rect;
   /**
-   * 游戏进程
-   * @since 0.43.1
-   */
-  readonly gameProcess: System.Diagnostics.Process;
-  /**
-   * 游戏进程名称
-   * @since 0.43.1
-   */
-  readonly gameProcessName: string;
-  /**
-   * 游戏进程 ID
-   * @since 0.43.1
-   */
-  readonly gameProcessId: number;
-  /**
    * 桌面区域
    * @since 0.43.1
    */
   readonly desktopRectArea: BetterGenshinImpact.GameTask.Model.Area.DesktopRegion;
+  /**
+   * 输入坐标缩放比例（绑定时的显示器缩放快照）。Win32 为显示器缩放，网页版固定为 1
+   * @since 0.67.0
+   */
+  readonly dpiScale: number;
 }
 
 declare global {

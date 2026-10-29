@@ -48,6 +48,7 @@ export interface AutoSkipConfig
       | "customPriorityOptions"
       | "customPriorityOptionsEnabled"
       | "dialogueOptionVoiceMaxWaitSeconds"
+      | "dialogueOptionVoiceVadDiagnosticEnabled"
       | "enabled"
       | "isClickFirstChatOption"
       | "isClickNoneChatOption"
@@ -161,6 +162,11 @@ export interface AutoSkipConfig
    * @since 0.55.0
    */
   dialogueOptionVoiceMaxWaitSeconds: number;
+  /**
+   * 持续检测游戏进程音频并在设置页显示 Silero VAD 诊断数据
+   * @since 0.66.0
+   */
+  dialogueOptionVoiceVadDiagnosticEnabled: boolean;
   /**
    * 是否启用自动跳过触发器；启用后可快速跳过对话、自动点击选项，并在黑屏过长时自动跳过
    * @since 0.55.0

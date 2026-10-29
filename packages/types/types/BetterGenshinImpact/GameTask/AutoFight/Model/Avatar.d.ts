@@ -11,11 +11,13 @@ import "../../../../OpenCvSharp/Rect";
 import "../../../../System/DateTime";
 import "../../../../System/Nullable";
 import "../../../../System/Threading/CancellationToken";
+import "../../../../System/ValueTuple";
 import type { KeyCode } from "../../../Helpers/User32Helper";
 import "../../AutoGeniusInvokation/Exception/RetryException";
 import "../../Model/Area/ImageRegion";
 import "../Config/CombatAvatar";
 import "./CombatScenes";
+import "./SkillCdState";
 
 export type AvatarName =
   | "未知角色"
@@ -142,6 +144,10 @@ export type AvatarName =
   | "桑多涅"
   | "阿罗夏"
   | "奥黛塔"
+  | "沃雅妮莎"
+  | "薇斯纳"
+  | "瓦列里"
+  | "米提亚"
   | (string & {});
 
 /**
@@ -192,6 +198,11 @@ export interface Avatar extends ClrHostValue {
    * @since 0.50.0
    */
   manualSkillCd: number;
+  /**
+   * 是否启用基于分类器的 E 战技就绪检测
+   * @since 0.66.0
+   */
+  enableESkillClassify: boolean;
   /**
    * 最近一次使用元素战技的时间
    * @since 0.50.0
@@ -327,6 +338,26 @@ export interface Avatar extends ClrHostValue {
    * @since 0.55.0
    */
   ready(): VoidResult;
+  /**
+   * 基于 ONNX 分类器判定元素战技是否就绪并读取类别编号
+   * @param imageRegion 完整游戏画面的图像区域
+   * @param onlyCode01Ready 仅编号 01 视为就绪；默认 true
+   * @returns 状态与类别编号二元组
+   * @since 0.66.0
+   */
+  isESkillReadyByClassify(
+    imageRegion: BetterGenshinImpact.GameTask.Model.Area.ImageRegion,
+    onlyCode01Ready?: boolean
+  ): System.ValueTuple<BetterGenshinImpact.GameTask.AutoFight.Model.SkillCdState, string | null>;
+  /**
+   * 综合判定当前元素战技冷却状态（场上优先视觉分类，后台走冷却推算）
+   * @param onlyCode01Ready 仅编号 01 视为就绪；默认 true
+   * @returns 战技冷却状态
+   * @since 0.66.0
+   */
+  getSkillCdState(
+    onlyCode01Ready?: boolean
+  ): BetterGenshinImpact.GameTask.AutoFight.Model.SkillCdState;
   /**
    * 根据冷却推算元素战技是否就绪
    * @param printLog 是否输出日志

@@ -1,4 +1,4 @@
-import type {
+﻿import type {
   ClrHostValue,
   DoubleHost,
   HostArray,
@@ -167,6 +167,13 @@ export interface LimitedFile extends ClrHostValue {
    * @since 0.59.1
    */
   renamePathSync(oldPath: string, newPath: string): boolean;
+  /**
+   * 删除文件或文件夹（相对于工作区），文件夹为递归删除
+   * @param path 相对工作区的文件或目录路径
+   * @returns 是否删除成功
+   * @since 0.67.0
+   */
+  deletePathSync(path: string): boolean;
 }
 
 declare global {

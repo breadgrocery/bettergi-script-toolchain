@@ -1,4 +1,4 @@
-import type {
+﻿import type {
   ClrHostValue,
   HostType,
   Int32Host,
@@ -116,6 +116,11 @@ export interface AutoFightTask_TaskFightFinishDetectConfig extends ClrHostValue 
    * @since 0.64.0
    */
   paimonEndCheckDelayMs: number;
+  /**
+   * 旋转寻敌乘数，范围 1–13，默认 6
+   * @since 0.67.0
+   */
+  rotaryFactor: number;
 }
 
 export interface AutoFightTask_TaskFightFinishDetectConfigHostType extends HostType<
@@ -129,6 +134,14 @@ export interface AutoFightTask_TaskFightFinishDetectConfigHostType extends HostT
    */
   new (
     finishDetectConfig: BetterGenshinImpact.GameTask.AutoFight.AutoFightParam.FightFinishDetectConfig
+  ): AutoFightTask_TaskFightFinishDetectConfig;
+  /**
+   * 由完整自动战斗参数构造运行时配置
+   * @param taskParam 自动战斗参数
+   * @since 0.67.0
+   */
+  new (
+    taskParam: BetterGenshinImpact.GameTask.AutoFight.AutoFightParam
   ): AutoFightTask_TaskFightFinishDetectConfig;
   /**
    * 解析快速检查参数字符串
