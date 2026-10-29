@@ -12,10 +12,18 @@ export interface UserInput {
   authorLink?: string;
 }
 
-export const createTemplate = (targetRoot: string, input: UserInput) => {
+export const createTemplate = (targetRoot: string, input: UserInput, pkgManager: string) => {
   // 复制模板文件到目标目录
   const templateDir = path.resolve(url.fileURLToPath(import.meta.url), "../..", "template");
-  fs.copySync(templateDir, targetRoot);
+  fs.copySync(templateDir, targetRoot, {
+    filter: src => {
+      if (pkgManager !== "pnpm") {
+        const { base } = path.parse(src);
+        return base.startsWith("pnpm-") ? false : true;
+      }
+      return true;
+    }
+  });
 
   // 替换 package.json 文件中的模板变量
   const pkg = fs.readJsonSync(path.join(templateDir, "package.json"), "utf-8");

@@ -75,7 +75,7 @@ const cancel = () => prompts.cancel("操作已取消");
 
   // 创建模板
   const targetRoot = path.join(cwd, targetDir);
-  createTemplate(targetRoot, input);
+  createTemplate(targetRoot, input, pkgManager);
 
   // 根据包管理器打印完成信息
   let doneMessage = "";
