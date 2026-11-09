@@ -34,8 +34,10 @@ export const openPaimonMenu = async () => {
   await genshin.returnMainUi();
 
   // 2.打开派蒙菜单
+  const findNameCardText = (text: string) =>
+    findTextWithinBounds(text, 95, 160, 670, 170, { contains: true });
   await assertRegionAppearing(
-    () => findTextWithinBounds("生日", 300, 230, 440, 100),
+    () => findNameCardText("等阶") || findNameCardText("等级") || findNameCardText("生日"),
     "打开派蒙菜单超时",
     () => keyPress("ESCAPE")
   );
@@ -91,8 +93,8 @@ export const openMenuPage = async (
     | "队伍配置"
     | "好友"
     | "成就"
-    | "图鉴"
-    | "角色图鉴"
+    | "千星商城"
+    | "人气奇域"
     | "角色"
     | "提升指南"
     | "背包"
@@ -103,14 +105,14 @@ export const openMenuPage = async (
     | "祈愿"
     | "纪行"
     | "多人游戏"
-    | "千星商城"
-    | "人气奇域"
+    | "图鉴"
+    | "角色图鉴"
+    | "颂愿"
+    | "纪游"
     | "奇域收藏"
     | "我的奇域"
     | "大厅"
     | "装扮搭配"
-    | "颂愿"
-    | "纪游"
     | (string & {}),
   listView?: ListView
 ) => {
@@ -118,7 +120,7 @@ export const openMenuPage = async (
   await openPaimonMenu();
 
   // 2.搜索菜单页面按钮
-  const { x = 95, y = 330, w = 670, h = 730, lineHeight = 142 } = listView || {};
+  const { x = 95, y = 350, w = 670, h = 710, lineHeight = 141 } = listView || {};
   const button = await withGameMetrics(1920, 1080, 1.5, async () => {
     return await findTextWithinListView(name, { x, y, w, h, lineHeight, scrollLines: 5 });
   });
