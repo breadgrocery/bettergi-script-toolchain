@@ -80,7 +80,7 @@ pnpm create @bettergi/script@latest
   ```
 
   ```ts
-  <!-- 构建结果 -->
+  // 构建结果
   const mat_foo = file.readImageMatSync("assets/foo-d3036d20a653.png");
 
   const ir = captureGameRegion();
@@ -100,7 +100,7 @@ pnpm create @bettergi/script@latest
   ```
 
   ```ts
-  <!-- 构建结果 -->
+  // 构建结果
   function readImageMatSync_foo() {
     return file.readImageMatSync("assets/foo-d3036d20a653.png");
   }
@@ -120,7 +120,7 @@ pnpm create @bettergi/script@latest
   ```
 
   ```ts
-  <!-- 构建结果 -->
+  // 构建结果
   const path_foo = "assets/foo-d3036d20a653.png";
 
   log.info(path_foo);
@@ -183,7 +183,7 @@ export default defineConfig({
     "moduleResolution": "bundler",
     "esModuleInterop": true,
     "declaration": false,
-    "lib": ["ESNext"],
+    "lib": ["ES2022"],
     "skipLibCheck": true,
     "strict": true,
     "removeComments": false,
