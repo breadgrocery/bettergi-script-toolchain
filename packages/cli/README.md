@@ -81,11 +81,11 @@ pnpm create @bettergi/script@latest
 
   ```ts
   <!-- 构建结果 -->
-  var mat_foo = file.readImageMatSync("assets/foo-d3036d20a653.png");
+  const mat_foo = file.readImageMatSync("assets/foo-d3036d20a653.png");
 
-  var ir = captureGameRegion();
-  var ro = RecognitionObject.templateMatch(mat_foo);
-  var result = ir.find(ro);
+  const ir = captureGameRegion();
+  const ro = RecognitionObject.templateMatch(mat_foo);
+  const result = ir.find(ro);
   ```
 
   - 导入为 Mat 对象（懒加载）。
@@ -105,9 +105,9 @@ pnpm create @bettergi/script@latest
     return file.readImageMatSync("assets/foo-d3036d20a653.png");
   }
 
-  var ir = captureGameRegion();
-  var ro = RecognitionObject.templateMatch(readImageMatSync_foo());
-  var result = ir.find(ro);
+  const ir = captureGameRegion();
+  const ro = RecognitionObject.templateMatch(readImageMatSync_foo());
+  const result = ir.find(ro);
   ```
 
   - 获取构建后的文件所在位置。
@@ -121,7 +121,7 @@ pnpm create @bettergi/script@latest
 
   ```ts
   <!-- 构建结果 -->
-  var path_foo = "assets/foo-d3036d20a653.png";
+  const path_foo = "assets/foo-d3036d20a653.png";
 
   log.info(path_foo);
   ```
