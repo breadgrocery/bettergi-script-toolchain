@@ -1,4 +1,4 @@
-本项目是一个为[Better Genshin Impact](https://github.com/babalae/better-genshin-impact) 设计的 JavaScript 开发工具集，旨在帮助开发者简化代码、不用重复造轮子。工具函数支持按需引入，轻量依赖。
+本项目是一个为 [Better Genshin Impact](https://github.com/babalae/better-genshin-impact) 设计的 JavaScript 开发工具集，旨在帮助开发者简化代码、不用重复造轮子。工具函数支持按需引入，轻量依赖。
 
 ## 安装
 
@@ -69,16 +69,16 @@ const i5 = await findImageWithinListView("assets/foo.png", {
   scrollLines: 4
 });
 
-// 在整个画面内搜索文本（不包含、忽略大小写），找不到返回 undefined
+// 在整个画面内搜索文本（完全匹配、忽略大小写），找不到返回 undefined
 const t1 = findText("购买");
 
-// 在指定区域内搜索文本（不包含、忽略大小写），找不到返回 undefined
-const t2 = findTextWithinBounds("确认", 960, 540, 960, 540);
+// 在指定区域内搜索文本（子串包含、忽略大小写），找不到返回 undefined
+const t2 = findTextWithinBounds("确认", 960, 540, 960, 540, { contains: true });
 
-// 在指定坐标范围内搜索文本（不包含、忽略大小写），找不到返回 undefined
-const t3 = findTextBetweenCoordinates("确认", 960, 540, 1920, 1080);
+// 在指定坐标范围内搜索文本（完全匹配、忽略大小写、最大允许1个错字），找不到返回 undefined
+const t3 = findTextBetweenCoordinates("确认", 960, 540, 1920, 1080, { maxEditDistance: 1 });
 
-// 在指定方向上搜索文本（包含、忽略大小写），找不到返回 undefined
+// 在指定方向上搜索文本（子串包含、忽略大小写），找不到返回 undefined
 const t4 = findTextInDirection("师傅", "east", { contains: true, ignoreCase: true });
 
 // 在列表视图中查找文本，并滚动列表视图直到找到目标文本 或 列表视图触底
@@ -101,7 +101,7 @@ const t5 = await findTextWithinListView(
 > 对脚本开发过程中常见工作流的抽象，例如: 等待/断言 操作/元素/区域 完成/出现/消失。
 
 ```ts
-// 等待直到找不到 [关闭按钮] ，重试5次，每隔1秒重试一次（默认参数），期间按 Esc 键
+// 等待直到找不到 [关闭按钮]，重试5次，每隔1秒重试一次（默认参数），期间按 Esc 键
 const done = await waitForAction(
   () => findImageInDirection("assets/关闭.png", "north-east") === undefined,
   () => keyPress("ESCAPE")
@@ -266,6 +266,9 @@ for (let i = 0; i < 1000; i++) {
 ```ts
 // 生成UUID（不带连字符）
 const uuid = generateUUID(false);
+
+// 计算两个字符串的 Levenshtein 编辑距离
+const distance = levenshtein("确认购买", "确任购买");
 
 // 数组洗牌
 const arr = [1, 2, 3, 4, 5];

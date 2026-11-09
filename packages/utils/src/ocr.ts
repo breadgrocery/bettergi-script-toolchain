@@ -1,3 +1,4 @@
+import { levenshtein } from "./misc";
 import { mouseScrollDownLines } from "./mouse";
 import { type RetryOptions, waitForAction } from "./workflow";
 
@@ -152,6 +153,8 @@ export type TextMatchOptions = {
   ignoreCase?: boolean;
   /** 是否非完全匹配（默认: 否） */
   contains?: boolean;
+  /** 最大编辑距离（默认: 0）*/
+  maxEditDistance?: number;
 };
 
 /**
@@ -162,10 +165,32 @@ export type TextMatchOptions = {
  * @returns 是否匹配
  */
 const textMatch = (text: string, searchText: string, options?: TextMatchOptions) => {
-  const { ignoreCase = true, contains = false } = options || {};
+  const { ignoreCase = true, contains = false, maxEditDistance = 0 } = options || {};
   text = ignoreCase ? text.toLowerCase() : text;
   searchText = ignoreCase ? searchText.toLowerCase() : searchText;
-  return contains ? text.includes(searchText) : text === searchText;
+
+  if (!maxEditDistance || maxEditDistance <= 0) {
+    return contains ? text.includes(searchText) : text === searchText;
+  }
+
+  if (!contains) {
+    return levenshtein(text, searchText) <= maxEditDistance;
+  } else {
+    const chars = Array.from(text);
+    const length = Array.from(searchText).length;
+    const min = Math.max(0, length - maxEditDistance);
+    const max = Math.min(chars.length, length + maxEditDistance);
+
+    for (let size = min; size <= max; size++) {
+      for (let i = 0; i + size <= chars.length; i++) {
+        if (levenshtein(chars.slice(i, i + size).join(""), searchText) <= maxEditDistance) {
+          return true;
+        }
+      }
+    }
+  }
+
+  return false;
 };
 
 /**

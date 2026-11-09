@@ -12,6 +12,27 @@ export const generateUUID = (withDashes = true) => {
 };
 
 /**
+ * 计算两个字符串的 Levenshtein 编辑距离
+ */
+export const levenshtein = (source: string, target: string): number => {
+  if (source === target) return 0;
+  let sourceArr = Array.from(source);
+  let targetArr = Array.from(target);
+  if (sourceArr.length > targetArr.length) [sourceArr, targetArr] = [targetArr, sourceArr];
+  const row = Array.from({ length: sourceArr.length + 1 }, (_, i) => i);
+  for (const char of targetArr) {
+    let diagonal = row[0];
+    row[0]++;
+    for (let j = 1; j <= sourceArr.length; j++) {
+      const above = row[j];
+      row[j] = Math.min(above + 1, row[j - 1] + 1, diagonal + (sourceArr[j - 1] === char ? 0 : 1));
+      diagonal = above;
+    }
+  }
+  return row[sourceArr.length];
+};
+
+/**
  * Fisher-Yates 洗牌算法
  * @param array 待洗牌数组
  * @returns 洗牌后的新数组
