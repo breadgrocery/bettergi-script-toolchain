@@ -154,6 +154,8 @@ export type CombatAvatarNameEn =
   | "Vesna"
   | "Valeriy"
   | "Mitya"
+  | "Danica"
+  | "Anastasya"
   | (string & {});
 
 /**

@@ -94,6 +94,16 @@ export interface AutoDomainParam extends Omit<
    */
   sundaySelectedValue: SundaySelectedValue;
   /**
+   * 体力计划盛材移涌期间领取双倍的精通或炼武秘境；空字符串表示跟随培养计划（按提升指南选择秘境）
+   * @since 0.67.0
+   */
+  materialOverflowDomainName: DomainName;
+  /**
+   * 体力计划祝圣移涌期间领取双倍的祝圣秘境；空字符串表示跟随培养计划（提升指南中养成角色推荐圣遗物所在的秘境）
+   * @since 0.67.0
+   */
+  blessingOverflowDomainName: DomainName;
+  /**
    * 是否在结束后自动分解圣遗物
    * @since 0.52.0
    */
