@@ -70,23 +70,23 @@ export interface RecognitionObject extends ClrHostValue {
    */
   templateImageGreyMat: OpenCvSharp.Mat;
   /**
-   * 模板匹配阈值。可选，默认 0.8
+   * 模板匹配阈值，默认 0.8
    * @since 0.43.1
    */
   threshold: number;
   /**
-   * 是否使用 3 通道匹配。可选，默认 false
+   * 是否使用 3 通道匹配，默认关闭
    * @since 0.43.1
    */
   use3Channels: boolean;
   /**
-   * 模板匹配算法。可选，默认 CCoeffNormed
+   * 模板匹配算法，默认 CCoeffNormed
    * @see OpenCV TemplateMatchModes：https://docs.opencv.org/4.x/df/dfb/group__imgproc__object.html
    * @since 0.43.1
    */
   templateMatchMode: OpenCvSharp.TemplateMatchModes;
   /**
-   * 是否启用模板遮罩以忽略指定颜色；使用时需将模板背景设为纯绿色 (0, 255, 0)
+   * 是否启用模板遮罩以忽略指定颜色，默认关闭；使用时需将模板背景设为纯绿色 (0, 255, 0)
    * @since 0.43.1
    */
   useMask: boolean;
@@ -101,7 +101,7 @@ export interface RecognitionObject extends ClrHostValue {
    */
   maskMat: OpenCvSharp.Mat;
   /**
-   * 匹配成功时是否在窗口上绘制矩形框。可选，默认 false；为 true 时 name 必须有值
+   * 匹配成功时是否在窗口上绘制矩形框，默认关闭；为 true 时 name 必须有值
    * @since 0.43.1
    */
   drawOnWindow: boolean;
@@ -111,12 +111,12 @@ export interface RecognitionObject extends ClrHostValue {
    */
   drawOnWindowPen: System.Drawing.Pen;
   /**
-   * 单次模板匹配的最大结果数。可选，默认 -1 表示不限制
+   * 单次模板匹配的最大结果数，默认 -1（不限制）
    * @since 0.43.1
    */
   maxMatchCount: number;
   /**
-   * 是否启用二值化后模板匹配
+   * 是否启用二值化后模板匹配，默认关闭
    * @since 0.52.0
    */
   useBinaryMatch: boolean;
@@ -132,7 +132,7 @@ export interface RecognitionObject extends ClrHostValue {
    */
   initTemplate(): BetterGenshinImpact.Core.Recognition.RecognitionObject;
   /**
-   * 颜色匹配使用的色彩空间转换码，对应 cv::ColorConversionCodes。可选，默认 4 (RGB)。常用值：4 (RGB, 3 通道)、40 (HSV, 3 通道)、6 (GRAY, 1 通道)
+   * 颜色匹配使用的色彩空间转换码，对应 cv::ColorConversionCodes，默认 4 (RGB)；常用值：4 (RGB, 3 通道)、40 (HSV, 3 通道)、6 (GRAY, 1 通道)
    * @see OpenCV ColorConversionCodes：https://docs.opencv.org/4.x/d8/d01/group__imgproc__color__conversions.html
    * @since 0.43.1
    */
@@ -148,12 +148,12 @@ export interface RecognitionObject extends ClrHostValue {
    */
   upperColor: OpenCvSharp.Scalar;
   /**
-   * 颜色匹配所需最少点数。可选，默认 1
+   * 颜色匹配所需最少点数，默认 1
    * @since 0.43.1
    */
   matchCount: number;
   /**
-   * OCR 引擎。可选，当前仅支持 Paddle
+   * OCR 引擎，默认 Paddle
    * @since 0.43.1
    */
   ocrEngine: BetterGenshinImpact.Core.Recognition.OcrEngineTypes;
@@ -163,22 +163,22 @@ export interface RecognitionObject extends ClrHostValue {
    */
   replaceDictionary: System.Collections.Generic.Dictionary<string, HostArray<string>>;
   /**
-   * 包含匹配文本列表；全部命中才算成功，用于确认单个目标是否存在。复杂情况请改用正则匹配
+   * 包含匹配文本列表；全部命中才算成功，用于确认单个目标是否存在，复杂情况请改用正则匹配，默认空列表
    * @since 0.43.1
    */
   allContainMatchText: System.Collections.Generic.List<string>;
   /**
-   * 包含匹配文本列表；任一命中即成功，用于确认单个目标是否存在
+   * 包含匹配文本列表；任一命中即成功，用于确认单个目标是否存在，默认空列表
    * @since 0.43.1
    */
   oneContainMatchText: System.Collections.Generic.List<string>;
   /**
-   * 正则匹配文本列表；全部命中才算成功，用于确认单个目标是否存在
+   * 正则匹配文本列表；全部命中才算成功，用于确认单个目标是否存在，默认空列表
    * @since 0.43.1
    */
   regexMatchText: System.Collections.Generic.List<string>;
   /**
-   * 多结果 OCR 匹配使用的目标文本
+   * 多结果 OCR 匹配使用的目标文本，默认空字符串
    * @since 0.48.0
    */
   text: string;

@@ -38,12 +38,12 @@ export interface BvPage extends ClrHostValue {
    */
   readonly mouse: BetterGenshinImpact.Core.Input.IMouseInput;
   /**
-   * 默认超时时间（毫秒）
+   * 默认超时时间，单位毫秒，默认 10000
    * @since 0.57.0
    */
   defaultTimeout: number;
   /**
-   * 默认重试间隔（毫秒）
+   * 默认重试间隔，单位毫秒，默认 1000
    * @since 0.57.0
    */
   defaultRetryInterval: number;

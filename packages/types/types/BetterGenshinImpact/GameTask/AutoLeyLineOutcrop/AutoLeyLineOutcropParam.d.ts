@@ -47,42 +47,42 @@ export interface AutoLeyLineOutcropParam extends Omit<
 > {
   readonly [autoLeyLineOutcropParamBrand]: true;
   /**
-   * 刷取次数
+   * 刷取次数，默认 6
    * @since 0.58.0
    */
   count: number;
   /**
-   * 目标地区名称
+   * 目标地区名称，默认 "蒙德"
    * @since 0.58.0
    */
   country: CountryName;
   /**
-   * 地脉花类型
+   * 地脉花类型，默认 "启示之花"
    * @since 0.58.0
    */
   leyLineOutcropType: LeyLineOutcropType;
   /**
-   * 树脂耗尽模式下是否取配置次数与可刷次数的较小值
+   * 树脂耗尽模式下是否取配置次数与可刷次数的较小值，默认关闭
    * @since 0.58.0
    */
   openModeCountMin: boolean;
   /**
-   * 是否开启树脂耗尽模式
+   * 是否开启树脂耗尽模式，默认关闭
    * @since 0.58.0
    */
   isResinExhaustionMode: boolean;
   /**
-   * 好感队名称
+   * 好感队名称，默认空字符串（不切换）
    * @since 0.58.0
    */
   friendshipTeam: string;
   /**
-   * 战斗队伍名称
+   * 战斗队伍名称，默认空字符串（保持当前队伍）
    * @since 0.58.0
    */
   team: string;
   /**
-   * 战斗超时时长，单位秒
+   * 战斗超时时长，单位秒，默认 120
    * @since 0.58.0
    */
   timeout: number;
@@ -92,27 +92,27 @@ export interface AutoLeyLineOutcropParam extends Omit<
    */
   fightConfig: BetterGenshinImpact.GameTask.AutoLeyLineOutcrop.AutoLeyLineOutcropFightConfig;
   /**
-   * 是否前往合成台合成浓缩树脂
+   * 是否前往合成台合成浓缩树脂，默认关闭
    * @since 0.58.0
    */
   isGoToSynthesizer: boolean;
   /**
-   * 是否允许使用脆弱树脂
+   * 是否允许使用脆弱树脂，默认关闭
    * @since 0.58.0
    */
   useFragileResin: boolean;
   /**
-   * 是否允许使用须臾树脂
+   * 是否允许使用须臾树脂，默认关闭
    * @since 0.58.0
    */
   useTransientResin: boolean;
   /**
-   * 是否在领取奖励后扫描掉落物光柱
+   * 是否在领取奖励后扫描掉落物光柱，默认关闭
    * @since 0.59.0
    */
   scanDropsAfterRewardEnabled: boolean;
   /**
-   * 领取奖励后扫描掉落物光柱的最长时长，单位秒
+   * 领取奖励后扫描掉落物光柱的最长时长，单位秒，默认 12
    * @since 0.59.0
    */
   scanDropsAfterRewardSeconds: number;

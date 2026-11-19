@@ -43,6 +43,8 @@ Upstream-Commit: <完整 40 位 hash>
 3. 成员签名里的 CLR 类型用 ambient 全限定名；同文件兄弟类型不得写成模块短名。`pnpm --filter @bettergi/types typecheck` 不会抓住这种缩短
 4. 未纳入闭包的上游类型（如 `PathingPartyConfig`）本身不声明，但其名单仍可能是字符串域真源
 5. BetterGI `record struct` 按值类型投影（`ValueTypeTrait`、解构 `HostVariableOut`）；实例成员仍写全限定名
+6. **TSDoc 默认值必须显式注明**：核对成员在 C# 中的默认值（属性初始化器、构造函数、`SetDefault()`、可选实参），TSDoc 中必须显式说明（如 `，默认关闭`、`，默认 0`、`，默认空字符串（未指定）`），行末不加句号等句终标点（见 [ADR 0007](./docs/adr/0007-documentation-and-since.md)）
+7. **确定同步范围时严防默认值漂移**：上游更新经常调整既有字段/配置的默认值（如字段初始化表达式、构造函数或 `SetDefault()` 逻辑变动），此类变更在 `git diff` 中不会改变 public API 签名，极易在粗略按成员增删圈定范围时遗漏。在确定同步范围时，必须审计已声明类型对应 C# 源码中的默认值初始化变动，将默认值变动显式纳入待同步改动，并同步更新相关 TSDoc 注释
 
 ## 同步时的脚本边界复核
 
@@ -90,7 +92,7 @@ Upstream-Commit: <完整 40 位 hash>
 | `GameTask/AutoBoss/AutoBossConfig.d.ts`                       | `BossName`                                                                              | `GameTask/AutoBoss/AutoBossData.cs` → `CountryToBosses`                         |
 | `GameTask/AutoDomain/AutoDomainTask.d.ts`                     | `ResinName` / `ArtifactStar` / `DomainName` / `SundaySelectedValue`                     | 树脂 API；`tp.json` Domain 点；周日选项 `""`/`1`–`3`；`DevelopmentGuideOption`  |
 | `GameTask/AutoLeyLineOutcrop/AutoLeyLineOutcropParam.d.ts`    | `LeyLineOutcropType`                                                                    | 启示之花 / 藏金之花                                                             |
-| `GameTask/AutoSkip/AutoSkipConfig.d.ts`                       | `ClickChatOption` / `PictureInPictureSourceType`                                        | 剧情跳过配置定值                                                                |
+| `GameTask/AutoSkip/AutoSkipConfig.d.ts`                       | `ClickChatOption` / `PictureInPictureSourceType` / `HangoutCharacter`                   | 剧情跳过配置定值；`hangout.json` 角色名                                         |
 | `GameTask/AutoPathing/PathingScriptNames.d.ts`                | 路径点域 + `TravelMode` / `MainAvatarIndex` / `HurryOnAvatar`                           | `AutoPathing/Model/Enum/*`；`PathingPartyConfig` 列表                           |
 | `GameTask/Common/Map/MapScriptNames.d.ts`                     | `MapName` / `CountryName` / `Area` / `MapMatchMethod`                                   | 地图切换与匹配                                                                  |
 | `GameTask/Common/Job/CraftMaterialTask.d.ts`                  | `CraftMaterialType` / `CraftBonusType`                                                  | `Assets/Model/ItemV2/item.csv` → `material_type`；`CraftMaterialTask.cs` 常量   |

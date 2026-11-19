@@ -68,7 +68,7 @@ export interface AutoDomainParam extends Omit<
    */
   targetItems: System.Collections.Generic.List<BetterGenshinImpact.GameTask.Common.Reward.TargetItem>;
   /**
-   * 自定义培养目标 JSON 字符串
+   * 自定义培养目标 JSON 字符串，默认 null（沿用游戏培养计划）
    * @since 0.67.0
    */
   trainingTargetsJson: string | null;
@@ -79,32 +79,83 @@ export interface AutoDomainParam extends Omit<
    */
   setTrainingTargets(json: string): VoidResult;
   /**
-   * 刷取秘境使用的队伍名称
+   * 是否启用基于提升指南计算刷取次数，默认开启
+   * @since 0.67.0
+   */
+  trainingGuideCalculateRunsEnabled: boolean;
+  /**
+   * 合成加成偏好：0 预留合成加成；1 忽略合成加成，默认 0（预留合成加成）
+   * @since 0.67.0
+   */
+  trainingGuideRunPreference: number;
+  /**
+   * 合成加成预留比例（0–20），默认 7
+   * @since 0.67.0
+   */
+  trainingGuideCraftingBonusReservePercent: number;
+  /**
+   * 是否使用识别到的奖励更新剩余培养计划，默认开启
+   * @since 0.67.0
+   */
+  trainingGuideRewardRecognitionEnabled: boolean;
+  /**
+   * 是否启用奖励识别失败预算控制，默认关闭
+   * @since 0.67.0
+   */
+  trainingGuideRewardFailureBudgetEnabled: boolean;
+  /**
+   * 是否启用提升指南诊断日志，默认关闭
+   * @since 0.67.0
+   */
+  trainingGuideDiagnosticsEnabled: boolean;
+  /**
+   * 是否启用低冒险等阶自适应，默认关闭
+   * @since 0.67.0
+   */
+  trainingGuideLowARAdaptationEnabled: boolean;
+  /**
+   * 培养目标完成后回退刷取的秘境名称，默认空字符串（禁用回退）
+   * @since 0.67.0
+   */
+  trainingGuideFallbackDomainName: DomainName;
+  /**
+   * 回退秘境的周日 / 限时奖励选项序号，默认空字符串（不指定）
+   * @since 0.67.0
+   */
+  trainingGuideFallbackSundaySelectedValue: SundaySelectedValue;
+  /**
+   * 判断当前运行是否应执行奖励识别
+   * @returns 是否应识别奖励
+   * @since 0.67.0
+   */
+  shouldRecognizeRewards(): boolean;
+  /**
+   * 刷取秘境使用的队伍名称，默认空字符串（保持当前队伍）
    * @since 0.52.0
    */
   partyName: string;
   /**
-   * 需要刷取的秘境名称；空字符串表示未指定，`根据提升指南选择秘境` 表示按冒险手册提升指南选择
+   * 需要刷取的秘境名称，默认空字符串（未指定）；空字符串表示未指定，`根据提升指南选择秘境` 表示按冒险手册提升指南选择
    * @since 0.52.0
    */
   domainName: DomainName;
   /**
-   * 周日 / 限时全开秘境奖励选项序号；空字符串表示不指定
+   * 周日 / 限时全开秘境奖励选项序号，默认空字符串（不指定）
    * @since 0.52.0
    */
   sundaySelectedValue: SundaySelectedValue;
   /**
-   * 体力计划盛材移涌期间领取双倍的精通或炼武秘境；空字符串表示跟随培养计划（按提升指南选择秘境）
+   * 体力计划盛材移涌期间领取双倍的精通或炼武秘境，默认空字符串（跟随培养计划）
    * @since 0.67.0
    */
   materialOverflowDomainName: DomainName;
   /**
-   * 体力计划祝圣移涌期间领取双倍的祝圣秘境；空字符串表示跟随培养计划（提升指南中养成角色推荐圣遗物所在的秘境）
+   * 体力计划祝圣移涌期间领取双倍的祝圣秘境，默认空字符串（跟随培养计划）
    * @since 0.67.0
    */
   blessingOverflowDomainName: DomainName;
   /**
-   * 是否在结束后自动分解圣遗物
+   * 是否在结束后自动分解圣遗物，默认关闭
    * @since 0.52.0
    */
   autoArtifactSalvage: boolean;
@@ -114,7 +165,7 @@ export interface AutoDomainParam extends Omit<
    */
   maxArtifactStar: ArtifactStar;
   /**
-   * 是否启用指定树脂使用次数模式
+   * 是否启用指定树脂使用次数模式，默认关闭
    * @since 0.52.0
    */
   specifyResinUse: boolean;
@@ -124,32 +175,32 @@ export interface AutoDomainParam extends Omit<
    */
   resinPriorityList: System.Collections.Generic.List<ResinName>;
   /**
-   * 使用原粹树脂刷取副本的次数
+   * 使用原粹树脂刷取副本的次数，默认 0
    * @since 0.52.0
    */
   originalResinUseCount: number;
   /**
-   * 使用 20 点原粹树脂刷取副本的次数
+   * 使用 20 点原粹树脂刷取副本的次数，默认 0
    * @since 0.57.0
    */
   originalResin20UseCount: number;
   /**
-   * 使用 40 点原粹树脂刷取副本的次数
+   * 使用 40 点原粹树脂刷取副本的次数，默认 0
    * @since 0.57.0
    */
   originalResin40UseCount: number;
   /**
-   * 使用浓缩树脂刷取副本的次数
+   * 使用浓缩树脂刷取副本的次数，默认 0
    * @since 0.52.0
    */
   condensedResinUseCount: number;
   /**
-   * 使用须臾树脂刷取副本的次数
+   * 使用须臾树脂刷取副本的次数，默认 0
    * @since 0.52.0
    */
   transientResinUseCount: number;
   /**
-   * 使用脆弱树脂刷取副本的次数
+   * 使用脆弱树脂刷取副本的次数，默认 0
    * @since 0.52.0
    */
   fragileResinUseCount: number;

@@ -343,7 +343,7 @@ export interface Avatar extends ClrHostValue {
   /**
    * 基于 ONNX 分类器判定元素战技是否就绪并读取类别编号
    * @param imageRegion 完整游戏画面的图像区域
-   * @param onlyCode01Ready 仅编号 01 视为就绪；默认 true
+   * @param onlyCode01Ready 仅编号 01 视为就绪，默认开启
    * @returns 状态与类别编号二元组
    * @since 0.66.0
    */
@@ -353,7 +353,7 @@ export interface Avatar extends ClrHostValue {
   ): System.ValueTuple<BetterGenshinImpact.GameTask.AutoFight.Model.SkillCdState, string | null>;
   /**
    * 综合判定当前元素战技冷却状态（场上优先视觉分类，后台走冷却推算）
-   * @param onlyCode01Ready 仅编号 01 视为就绪；默认 true
+   * @param onlyCode01Ready 仅编号 01 视为就绪，默认开启
    * @returns 战技冷却状态
    * @since 0.66.0
    */
@@ -362,7 +362,7 @@ export interface Avatar extends ClrHostValue {
   ): BetterGenshinImpact.GameTask.AutoFight.Model.SkillCdState;
   /**
    * 根据冷却推算元素战技是否就绪
-   * @param printLog 是否输出日志
+   * @param printLog 是否输出日志，默认关闭
    * @returns 是否就绪
    * @since 0.50.0
    */

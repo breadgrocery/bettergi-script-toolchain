@@ -38,7 +38,7 @@ export interface CombatScenes extends ClrHostValue, System.IDisposableInput {
    */
   readonly avatarCount: number;
   /**
-   * 最近一次识别出的出战角色编号，从 1 开始，-1 表示未识别
+   * 最近一次识别出的出战角色编号，从 1 开始，默认 -1（未识别）
    * @since 0.52.0
    */
   lastActiveAvatarIndex: number;

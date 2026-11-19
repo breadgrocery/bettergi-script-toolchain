@@ -38,12 +38,12 @@ export interface AutoLeyLineOutcropConfig
     System.ComponentModel.INotifyPropertyChangingInput {
   readonly [autoLeyLineOutcropConfigBrand]: true;
   /**
-   * 刷取次数
+   * 刷取次数，默认 6
    * @since 0.58.0
    */
   count: number;
   /**
-   * 目标地区名称，默认 `蒙德`
+   * 目标地区名称，默认 "蒙德"
    * @since 0.58.0
    */
   country: CountryName;
@@ -53,32 +53,32 @@ export interface AutoLeyLineOutcropConfig
    */
   fightConfig: BetterGenshinImpact.GameTask.AutoLeyLineOutcrop.AutoLeyLineOutcropFightConfig;
   /**
-   * 好感队名称
+   * 好感队名称，默认空字符串（不切换）
    * @since 0.58.0
    */
   friendshipTeam: string;
   /**
-   * 是否前往合成台合成浓缩树脂
+   * 是否前往合成台合成浓缩树脂，默认关闭
    * @since 0.58.0
    */
   isGoToSynthesizer: boolean;
   /**
-   * 是否开启树脂耗尽模式
+   * 是否开启树脂耗尽模式，默认关闭
    * @since 0.58.0
    */
   isResinExhaustionMode: boolean;
   /**
-   * 地脉花类型
+   * 地脉花类型，默认 "启示之花"
    * @since 0.58.0
    */
   leyLineOutcropType: LeyLineOutcropType;
   /**
-   * 树脂耗尽模式下是否取配置次数与可刷次数的较小值
+   * 树脂耗尽模式下是否取配置次数与可刷次数的较小值，默认关闭
    * @since 0.58.0
    */
   openModeCountMin: boolean;
   /**
-   * 是否在领取地脉花奖励后扫描周围掉落物光柱
+   * 是否在领取地脉花奖励后扫描周围掉落物光柱，默认关闭
    * @since 0.58.0
    */
   scanDropsAfterRewardEnabled: boolean;
@@ -88,7 +88,7 @@ export interface AutoLeyLineOutcropConfig
    */
   scanDropsAfterRewardSeconds: number;
   /**
-   * 战斗队伍名称
+   * 战斗队伍名称，默认空字符串（保持当前队伍）
    * @since 0.58.0
    */
   team: string;
@@ -98,12 +98,12 @@ export interface AutoLeyLineOutcropConfig
    */
   timeout: number;
   /**
-   * 是否允许使用脆弱树脂
+   * 是否允许使用脆弱树脂，默认关闭
    * @since 0.58.0
    */
   useFragileResin: boolean;
   /**
-   * 是否允许使用须臾树脂
+   * 是否允许使用须臾树脂，默认关闭
    * @since 0.58.0
    */
   useTransientResin: boolean;

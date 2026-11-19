@@ -85,27 +85,27 @@ export interface AutoFightConfig
     System.ComponentModel.INotifyPropertyChangingInput {
   readonly [autoFightConfigBrand]: true;
   /**
-   * 按技能冷却优化出招的角色配置，英文逗号分隔人名或人名与秒数，多种用分号分隔，例如 `白术;钟离,12;`
+   * 按技能冷却优化出招的角色配置，英文逗号分隔人名或人名与秒数，多种用分号分隔，例如 `白术;钟离,12;`，默认空字符串
    * @since 0.52.0
    */
   actionSchedulerByCd: string;
   /**
-   * 触发战后拾取所需的最低战斗人次，小于该值且不小于 2 时跳过拾取，null 表示不限制
+   * 触发战后拾取所需的最低战斗人次，小于该值且不小于 2 时跳过拾取，默认 null（不限制）
    * @since 0.52.0
    */
   battleThresholdForLoot: number | null;
   /**
-   * 是否优先释放元素爆发
+   * 是否优先释放元素爆发，默认关闭
    * @since 0.52.0
    */
   burstEnabled: boolean;
   /**
-   * 是否仅在检测到精英怪经验值图标时执行战后拾取
+   * 是否仅在检测到精英怪经验值图标时执行战后拾取，默认关闭
    * @since 0.52.0
    */
   expBasedPickupEnabled: boolean;
   /**
-   * 是否启用战斗结束检测
+   * 是否启用战斗结束检测，默认开启
    * @since 0.52.0
    */
   fightFinishDetectEnabled: boolean;
@@ -115,32 +115,32 @@ export interface AutoFightConfig
    */
   finishDetectConfig: AutoFightConfig_FightFinishDetectConfig;
   /**
-   * 盾奶位是否长按元素战技
+   * 盾奶位是否长按元素战技，默认关闭
    * @since 0.52.0
    */
   guardianAvatarHold: boolean;
   /**
-   * 盾奶位角色队伍序号，从 1 开始，空字符串表示不指定
+   * 盾奶位角色队伍序号，从 1 开始，默认空字符串（不指定）
    * @since 0.52.0
    */
   guardianAvatar: PartySlotIndex;
   /**
-   * 是否跳过盾奶位自身的战斗策略脚本
+   * 是否跳过盾奶位自身的战斗策略脚本，默认关闭
    * @since 0.52.0
    */
   guardianCombatSkip: boolean;
   /**
-   * 战后万叶拾取时切换的备用队伍名称，当前队伍无枫原万叶时使用
+   * 战后万叶拾取时切换的备用队伍名称，当前队伍无枫原万叶时使用，默认空字符串
    * @since 0.52.0
    */
   kazuhaPartyName: string;
   /**
-   * 是否在战斗结束后使用枫原万叶聚集并拾取掉落物
+   * 是否在战斗结束后使用枫原万叶聚集并拾取掉落物，默认开启
    * @since 0.52.0
    */
   kazuhaPickupEnabled: boolean;
   /**
-   * 只拾取精英掉落模式：`Closed` 关闭、`AllowAutoPickupForNonElite` 非精英允许脚下自动拾取、`DisableAutoPickupForNonElite` 非精英关闭拾取
+   * 只拾取精英掉落模式：`Closed` 关闭、`AllowAutoPickupForNonElite` 非精英允许脚下自动拾取、`DisableAutoPickupForNonElite` 非精英关闭拾取，默认 "Closed"
    * @since 0.52.0
    */
   onlyPickEliteDropsMode: OnlyPickEliteDropsMode;
@@ -155,22 +155,22 @@ export interface AutoFightConfig
    */
   pickDropsAfterFightSeconds: number;
   /**
-   * 是否在战后使用琴二次长按元素战技拾取
+   * 是否在战后使用琴二次长按元素战技拾取，默认关闭
    * @since 0.52.0
    */
   qinDoublePickUp: boolean;
   /**
-   * 战斗策略名称，`根据队伍自动选择` 表示按当前队伍匹配策略，`自动连招（实验）` 为 LLM 行为树固定名
+   * 战斗策略名称，默认 "根据队伍自动选择"；`根据队伍自动选择` 表示按当前队伍匹配策略，`自动连招（实验）` 为 LLM 行为树固定名
    * @since 0.52.0
    */
   strategyName: CombatStrategyName;
   /**
-   * 是否启用游泳脱困检测
+   * 是否启用游泳脱困检测，默认开启
    * @since 0.52.0
    */
   swimmingEnabled: boolean;
   /**
-   * 强制指定队伍角色名称，英文逗号分隔，空字符串表示不强制
+   * 强制指定队伍角色名称，英文逗号分隔，默认空字符串（不强制）
    * @since 0.52.0
    */
   teamNames: string;
@@ -180,7 +180,7 @@ export interface AutoFightConfig
    */
   timeout: number;
   /**
-   * 是否在战斗中持续尝试面朝敌人
+   * 是否在战斗中持续尝试面朝敌人，默认关闭
    * @since 0.63.0
    */
   enableCombatTargeting: boolean;
@@ -195,12 +195,12 @@ export interface AutoFightConfig
    */
   targetingDetectionInterval: number;
   /**
-   * 伤害数字识别模式
+   * 伤害数字识别模式，默认 "Color"
    * @since 0.63.0
    */
   damageNumberRecognitionMode: DamageNumberRecognitionMode;
   /**
-   * 是否在遮罩窗口绘制血条、伤害数字等识别结果
+   * 是否在遮罩窗口绘制血条、伤害数字等识别结果，默认开启
    * @since 0.63.0
    */
   drawRecognitionResults: boolean;
@@ -233,17 +233,17 @@ export interface AutoFightConfig_FightFinishDetectConfig
     System.ComponentModel.INotifyPropertyChangingInput {
   readonly [autoFightConfig_FightFinishDetectConfigBrand]: true;
   /**
-   * 按下切换队伍后检测屏幕色块的延迟，单位秒，默认 `0.4`，频繁误判时可适当提高
+   * 按下切换队伍后检测屏幕色块的延迟，单位秒，频繁误判时可适当提高，默认 "0.4"
    * @since 0.52.0
    */
   beforeDetectDelay: string;
   /**
-   * 是否在释放元素爆发前检查战斗结束
+   * 是否在释放元素爆发前检查战斗结束，默认关闭
    * @since 0.52.0
    */
   checkBeforeBurst: boolean;
   /**
-   * 触发战斗结束检查前的延时，单位秒，确保动作后摇结束；也可为角色单独指定，格式如 `0.4` 或 `0.4;钟离,1.5`
+   * 触发战斗结束检查前的延时，单位秒，确保动作后摇结束；也可为角色单独指定，格式如 `0.4` 或 `0.4;钟离,1.5`，默认 "0.4;钟离,1.4;"
    * @since 0.52.0
    */
   checkEndDelay: string;
@@ -253,37 +253,37 @@ export interface AutoFightConfig_FightFinishDetectConfig
    */
   fastCheckEnabled: boolean;
   /**
-   * 快速检查参数；数字为距上次检查的间隔秒数，人名为对应角色动作后触发，多项用分号分隔，格式如 `5` 或 `5;白术;`
+   * 快速检查参数；数字为距上次检查的间隔秒数，人名为对应角色动作后触发，多项用分号分隔，格式如 `5` 或 `5;白术;`，默认空字符串
    * @since 0.52.0
    */
   fastCheckParams: string;
   /**
-   * 是否在切人后再执行战斗结束检查；无需等待上一动作后摇，目前仅 JSON 策略下生效
+   * 是否在切人后再执行战斗结束检查；无需等待上一动作后摇，目前仅 JSON 策略下生效，默认关闭
    * @since 0.64.0
    */
   checkAfterSwitchAvatar: boolean;
   /**
-   * 是否在首次检查时进行面敌
+   * 是否在首次检查时进行面敌，默认关闭
    * @since 0.52.0
    */
   isFirstCheck: boolean;
   /**
-   * 旋转寻敌的旋转因子，范围 1–13，默认 12，越大越快
+   * 旋转寻敌的旋转因子，范围 1–13，越大越快，默认 12
    * @since 0.52.0
    */
   rotaryFactor: number;
   /**
-   * 是否启用旋转寻找敌人
+   * 是否启用旋转寻找敌人，默认关闭
    * @since 0.52.0
    */
   rotateFindEnemyEnabled: boolean;
   /**
-   * 是否在敌人可见时跳过战斗结束检查；检测到敌人血条时跳过，与旋转寻找敌人互斥
+   * 是否在敌人可见时跳过战斗结束检查；检测到敌人血条时跳过，与旋转寻找敌人互斥，默认关闭
    * @since 0.63.0
    */
   skipFightEndCheckWhenEnemyVisible: boolean;
   /**
-   * 开战后阻断战斗结束检查的时长，单位秒；默认 0 不阻断，大于 0 时该时间内的检查视为战斗未结束
+   * 开战后阻断战斗结束检查的时长，单位秒；大于 0 时该时间内的检查视为战斗未结束，默认 0
    * @since 0.64.0
    */
   blockCheckBeforeBattleSeconds: number;

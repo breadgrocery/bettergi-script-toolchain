@@ -39,17 +39,17 @@ export interface AutoBossParam extends Omit<
 > {
   readonly [autoBossParamBrand]: true;
   /**
-   * 需要讨伐的 Boss 名称；空字符串表示未指定，启动前须为受支持名单内名称
+   * 需要讨伐的 Boss 名称，默认空字符串（未指定）；空字符串表示未指定，启动前须为受支持名单内名称
    * @since 0.62.0
    */
   bossName: BossName;
   /**
-   * 界面中选择的战斗策略名称；无自定义策略路径时会同步更新实际策略路径
+   * 界面中选择的战斗策略名称，默认 "根据队伍自动选择"；无自定义策略路径时会同步更新实际策略路径
    * @since 0.62.0
    */
   strategyName: CombatStrategyName;
   /**
-   * 实际用于解析自动战斗脚本的路径，脚本可直接设置该路径以覆盖界面选择
+   * 实际用于解析自动战斗脚本的路径，默认根据策略名称自动解析；脚本可直接设置该路径以覆盖界面选择
    * @since 0.62.0
    */
   combatStrategyPath: string;
@@ -59,7 +59,7 @@ export interface AutoBossParam extends Omit<
    */
   resinUsage: BetterGenshinImpact.GameTask.Common.Resin.ResinUsage;
   /**
-   * 本次运行使用的自动战斗配置
+   * 本次运行使用的自动战斗配置，默认 null
    * @since 0.67.0
    */
   fightConfig: BetterGenshinImpact.GameTask.AutoFight.AutoFightConfig | null;
@@ -69,37 +69,37 @@ export interface AutoBossParam extends Omit<
    */
   targetItems: System.Collections.Generic.List<BetterGenshinImpact.GameTask.Common.Reward.TargetItem>;
   /**
-   * 讨伐前需要切换到的队伍名称，为空时保持当前队伍
+   * 讨伐前需要切换到的队伍名称，默认空字符串（保持当前队伍）
    * @since 0.62.0
    */
   teamName: string;
   /**
-   * 是否启用指定讨伐次数模式；关闭时刷取至原粹树脂耗尽
+   * 是否启用指定讨伐次数模式，默认关闭；关闭时刷取至原粹树脂耗尽
    * @since 0.62.0
    */
   specifyRunCount: boolean;
   /**
-   * 指定模式下成功领取奖励的目标次数
+   * 指定模式下成功领取奖励的目标次数，默认 1
    * @since 0.62.0
    */
   runCount: number;
   /**
-   * 指定讨伐次数模式下原粹树脂不足时是否允许使用须臾树脂补充
+   * 指定讨伐次数模式下原粹树脂不足时是否允许使用须臾树脂补充，默认关闭
    * @since 0.62.0
    */
   useTransientResin: boolean;
   /**
-   * 指定讨伐次数模式下原粹树脂不足时是否允许使用脆弱树脂补充
+   * 指定讨伐次数模式下原粹树脂不足时是否允许使用脆弱树脂补充，默认关闭
    * @since 0.62.0
    */
   useFragileResin: boolean;
   /**
-   * 检测到角色死亡后回神像恢复并重试当前首领讨伐的最大次数
+   * 检测到角色死亡后回神像恢复并重试当前首领讨伐的最大次数，默认 3
    * @since 0.62.0
    */
   reviveRetryCount: number;
   /**
-   * 每轮领奖后是否先返回七天神像，再重新前往 Boss
+   * 每轮领奖后是否先返回七天神像，再重新前往 Boss，默认关闭
    * @since 0.62.0
    */
   returnToStatueAfterEachRound: boolean;

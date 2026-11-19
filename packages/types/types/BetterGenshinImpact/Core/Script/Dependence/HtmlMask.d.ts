@@ -151,17 +151,17 @@ declare const htmlMask_MessageBrand: unique symbol;
 export interface HtmlMask_Message extends ClrHostValue {
   readonly [htmlMask_MessageBrand]: true;
   /**
-   * 消息路径
+   * 消息路径，默认空字符串
    * @since 0.61.0
    */
   url: string;
   /**
-   * 消息数据
+   * 消息数据，默认 null
    * @since 0.61.0
    */
   data: System.Text.Json.JsonElement | null;
   /**
-   * 请求 ID，用于 request/respond 匹配
+   * 请求 ID，用于 request/respond 匹配，默认 null
    * @since 0.61.0
    */
   requestId: string;

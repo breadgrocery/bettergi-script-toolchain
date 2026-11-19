@@ -29,7 +29,7 @@ interface SetGameMetricsDelegate extends HostDelegate {
 
 declare global {
   /**
-   * 设置游戏窗口度量
+   * 设置游戏窗口度量，省略 dpi 时默认 1
    * @since 0.43.1
    */
   const setGameMetrics: SetGameMetricsDelegate;

@@ -66,6 +66,7 @@ export type BossName =
   | "不灭衍生造物"
   | "嵌合翼骏狮"
   | "游雪的护刃"
+  | "浪涛锚定者"
   | "" // 未指定
   | (string & {});
 
@@ -94,17 +95,17 @@ export interface AutoBossConfig
     System.ComponentModel.INotifyPropertyChangingInput {
   readonly [autoBossConfigBrand]: true;
   /**
-   * 需要讨伐的 Boss 名称；空字符串表示未指定，启动前须为受支持名单内名称
+   * 需要讨伐的 Boss 名称，默认空字符串（未指定）；空字符串表示未指定，启动前须为受支持名单内名称
    * @since 0.62.0
    */
   bossName: BossName;
   /**
-   * 每轮领奖后是否先返回七天神像，再重新前往 Boss
+   * 每轮领奖后是否先返回七天神像，再重新前往 Boss，默认关闭
    * @since 0.62.0
    */
   returnToStatueAfterEachRound: boolean;
   /**
-   * 检测到角色死亡后回神像恢复并重试当前首领讨伐的最大次数
+   * 检测到角色死亡后回神像恢复并重试当前首领讨伐的最大次数，默认 3
    * @since 0.62.0
    */
   reviveRetryCount: number;
@@ -119,32 +120,32 @@ export interface AutoBossConfig
    */
   timeout: number;
   /**
-   * 指定模式下成功领取奖励的目标次数
+   * 指定模式下成功领取奖励的目标次数，默认 1
    * @since 0.62.0
    */
   runCount: number;
   /**
-   * 是否启用指定讨伐次数模式；关闭时刷取至原粹树脂耗尽
+   * 是否启用指定讨伐次数模式，默认关闭；关闭时刷取至原粹树脂耗尽
    * @since 0.62.0
    */
   specifyRunCount: boolean;
   /**
-   * 战斗策略名称，`根据队伍自动选择` 表示按当前队伍匹配策略
+   * 战斗策略名称，默认 "根据队伍自动选择"；`根据队伍自动选择` 表示按当前队伍匹配策略
    * @since 0.62.0
    */
   strategyName: CombatStrategyName;
   /**
-   * 讨伐前需要切换到的队伍名称，为空时保持当前队伍
+   * 讨伐前需要切换到的队伍名称，默认空字符串（保持当前队伍）
    * @since 0.62.0
    */
   teamName: string;
   /**
-   * 指定讨伐次数模式下原粹树脂不足时是否允许使用脆弱树脂补充
+   * 指定讨伐次数模式下原粹树脂不足时是否允许使用脆弱树脂补充，默认关闭
    * @since 0.62.0
    */
   useFragileResin: boolean;
   /**
-   * 指定讨伐次数模式下原粹树脂不足时是否允许使用须臾树脂补充
+   * 指定讨伐次数模式下原粹树脂不足时是否允许使用须臾树脂补充，默认关闭
    * @since 0.62.0
    */
   useTransientResin: boolean;

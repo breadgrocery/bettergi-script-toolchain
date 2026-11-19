@@ -19,7 +19,7 @@ export type RealtimeTriggerConfigMap = {
   AutoPick: {
     /** 需要 F 的文本（对话、拾取） */
     textList?: string[];
-    /** 无视文本和图标，遇到 F 就点击；默认 false */
+    /** 无视文本和图标，遇到 F 就点击，默认关闭 */
     forceInteraction?: boolean;
   };
   /**

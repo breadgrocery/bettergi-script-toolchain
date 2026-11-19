@@ -25,8 +25,8 @@ export interface Http extends ClrHostValue {
    * 需在调度器通用设置中启用 JS HTTP 权限，并在 manifest.json 的 http_allowed_urls 中配置允许的 URL
    * @param method HTTP 方法
    * @param url 请求 URL
-   * @param body 请求体，可为 null
-   * @param headersJson 请求头 JSON，可为 null
+   * @param body 请求体，省略或为 null 时不包含请求体
+   * @param headersJson 请求头 JSON，省略或为 null 时不包含自定义请求头
    * @returns 在任务完成后兑现 HTTP 响应的 Promise
    * @since 0.52.0
    */
@@ -53,12 +53,12 @@ export interface Http_HttpReponse extends ClrHostValue {
    */
   status_code: number;
   /**
-   * 响应头
+   * 响应头，默认空字典
    * @since 0.52.0
    */
   headers: System.Collections.Generic.Dictionary<string, string>;
   /**
-   * 响应体文本
+   * 响应体文本，默认空字符串
    * @since 0.52.0
    */
   body: string;

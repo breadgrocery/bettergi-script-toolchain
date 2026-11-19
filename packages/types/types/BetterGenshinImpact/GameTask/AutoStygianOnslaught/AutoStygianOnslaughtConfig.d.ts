@@ -34,32 +34,32 @@ export interface AutoStygianOnslaughtConfig
     System.ComponentModel.INotifyPropertyChangingInput {
   readonly [autoStygianOnslaughtConfigBrand]: true;
   /**
-   * 是否在结束后自动分解圣遗物
+   * 是否在结束后自动分解圣遗物，默认关闭
    * @since 0.58.0
    */
   autoArtifactSalvage: boolean;
   /**
-   * 挑战 Boss 序号，取值 1–3
+   * 挑战 Boss 序号，取值 1–3，默认 1
    * @since 0.58.0
    */
   bossNum: number;
   /**
-   * 使用浓缩树脂刷取的次数
+   * 使用浓缩树脂刷取的次数，默认 0
    * @since 0.58.0
    */
   condensedResinUseCount: number;
   /**
-   * 指定战斗队伍名称
+   * 指定战斗队伍名称，默认空字符串（保持当前队伍）
    * @since 0.58.0
    */
   fightTeamName: string;
   /**
-   * 使用脆弱树脂刷取的次数
+   * 使用脆弱树脂刷取的次数，默认 0
    * @since 0.58.0
    */
   fragileResinUseCount: number;
   /**
-   * 使用原粹树脂刷取的次数
+   * 使用原粹树脂刷取的次数，默认 0
    * @since 0.58.0
    */
   originalResinUseCount: number;
@@ -69,17 +69,17 @@ export interface AutoStygianOnslaughtConfig
    */
   resinPriorityList: System.Collections.Generic.List<ResinName>;
   /**
-   * 是否启用指定树脂使用次数模式
+   * 是否启用指定树脂使用次数模式，默认关闭
    * @since 0.58.0
    */
   specifyResinUse: boolean;
   /**
-   * 战斗策略名称，`根据队伍自动选择` 表示按当前队伍匹配策略
+   * 战斗策略名称，默认空字符串；`根据队伍自动选择` 表示按当前队伍匹配策略
    * @since 0.58.0
    */
   strategyName: CombatStrategyName;
   /**
-   * 使用须臾树脂刷取的次数
+   * 使用须臾树脂刷取的次数，默认 0
    * @since 0.58.0
    */
   transientResinUseCount: number;

@@ -17,22 +17,22 @@ declare const countInventoryItemParamBrand: unique symbol;
 export interface CountInventoryItemParam extends ClrHostValue {
   readonly [countInventoryItemParamBrand]: true;
   /**
-   * 目标网格界面名称；可选，为 null 时按物品自动分组多页扫描
+   * 目标网格界面名称，默认 null（按物品自动分组多页扫描）
    * @since 0.62.0
    */
   gridScreenName: BetterGenshinImpact.GameTask.Model.GameUI.GridScreenName | null;
   /**
-   * 物品名称列表
+   * 物品名称列表，默认空列表
    * @since 0.62.0
    */
   itemNames: System.Collections.Generic.List<string>;
   /**
-   * 物品图标识别模式
+   * 物品图标识别模式，默认继承全局配置
    * @since 0.62.0
    */
   iconRecognitionMode: BetterGenshinImpact.GameTask.Common.Job.ItemIconRecognitionMode;
   /**
-   * 是否启用按物品排序提前停止；默认 false
+   * 是否启用按物品排序提前停止，默认关闭
    * @since 0.67.0
    */
   stopByItemSort: boolean;

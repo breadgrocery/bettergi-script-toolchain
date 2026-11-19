@@ -37,17 +37,17 @@ export interface AutoStygianOnslaughtParam extends Omit<
 > {
   readonly [autoStygianOnslaughtParamBrand]: true;
   /**
-   * 挑战 Boss 序号，取值 1–3
+   * 挑战 Boss 序号，取值 1–3，默认 1
    * @since 0.58.0
    */
   bossNum: number;
   /**
-   * 是否在结束后自动分解圣遗物
+   * 是否在结束后自动分解圣遗物，默认关闭
    * @since 0.58.0
    */
   autoArtifactSalvage: boolean;
   /**
-   * 是否启用指定树脂使用次数模式
+   * 是否启用指定树脂使用次数模式，默认关闭
    * @since 0.58.0
    */
   specifyResinUse: boolean;
@@ -57,27 +57,27 @@ export interface AutoStygianOnslaughtParam extends Omit<
    */
   resinPriorityList: System.Collections.Generic.List<ResinName>;
   /**
-   * 使用原粹树脂刷取的次数
+   * 使用原粹树脂刷取的次数，默认 0
    * @since 0.58.0
    */
   originalResinUseCount: number;
   /**
-   * 使用浓缩树脂刷取的次数
+   * 使用浓缩树脂刷取的次数，默认 0
    * @since 0.58.0
    */
   condensedResinUseCount: number;
   /**
-   * 使用须臾树脂刷取的次数
+   * 使用须臾树脂刷取的次数，默认 0
    * @since 0.58.0
    */
   transientResinUseCount: number;
   /**
-   * 使用脆弱树脂刷取的次数
+   * 使用脆弱树脂刷取的次数，默认 0
    * @since 0.58.0
    */
   fragileResinUseCount: number;
   /**
-   * 指定战斗队伍名称
+   * 指定战斗队伍名称，默认空字符串（保持当前队伍）
    * @since 0.58.0
    */
   fightTeamName: string;
@@ -92,17 +92,17 @@ export interface AutoStygianOnslaughtParam extends Omit<
    */
   resinUsage: BetterGenshinImpact.GameTask.Common.Resin.ResinUsage;
   /**
-   * 危战勋望目标：达到该值时停止，0 表示不限制
+   * 危战勋望目标：达到该值时停止，默认 0（不限制）
    * @since 0.67.0
    */
   direPrestigeTarget: number;
   /**
-   * 分解圣遗物的最大星级
+   * 分解圣遗物的最大星级，默认 null
    * @since 0.67.0
    */
   maxArtifactStar: string | null;
   /**
-   * 战斗策略名称
+   * 战斗策略名称，默认 null
    * @since 0.67.0
    */
   strategyName: string | null;

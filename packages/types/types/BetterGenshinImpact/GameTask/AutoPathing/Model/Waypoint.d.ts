@@ -38,12 +38,12 @@ export interface Waypoint extends ClrHostValue {
    */
   pointExtParams: Waypoint_ExtParams;
   /**
-   * 路径点类型
+   * 路径点类型，默认 "path"
    * @since 0.43.1
    */
   type: WaypointPointType;
   /**
-   * 移动模式
+   * 移动模式，默认 "walk"
    * @since 0.43.1
    */
   moveMode: MoveMode;
@@ -53,12 +53,12 @@ export interface Waypoint extends ClrHostValue {
    */
   action: WaypointAction;
   /**
-   * 动作参数
+   * 动作参数，默认空字符串
    * @since 0.43.1
    */
   actionParams: string;
   /**
-   * 关联的怪物或特产材料列表
+   * 关联的怪物或特产材料列表，默认空列表
    * @since 0.43.1
    */
   items: System.Collections.Generic.List<BetterGenshinImpact.GameTask.AutoPathing.Model.MaterialInfo>;
@@ -77,12 +77,12 @@ export interface Waypoint_Misidentification extends ClrHostValue {
    */
   type: System.Collections.Generic.List<MisidentificationTriggerType>;
   /**
-   * 处理方式
+   * 处理方式，默认 "previousDetectedPoint"
    * @since 0.43.1
    */
   handlingMode: MisidentificationHandlingMode;
   /**
-   * 预估到达时间
+   * 预估到达时间，单位秒，默认 0
    * @since 0.43.1
    */
   arrivalTime: number;
@@ -118,7 +118,7 @@ export interface Waypoint_ExtParams extends ClrHostValue {
    */
   misidentification: BetterGenshinImpact.GameTask.AutoPathing.Model.Waypoint.Misidentification;
   /**
-   * 描述
+   * 描述，默认空字符串
    * @since 0.43.1
    */
   description: string;
@@ -128,7 +128,7 @@ export interface Waypoint_ExtParams extends ClrHostValue {
    */
   monsterTag: MonsterTag;
   /**
-   * 是否按怪物标签区分拾取
+   * 是否按怪物标签区分拾取，默认关闭
    * @since 0.43.1
    */
   enableMonsterLootSplit: boolean;

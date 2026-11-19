@@ -65,7 +65,7 @@ export interface WaypointForTrack extends Omit<
    */
   monsterTag: MonsterTag;
   /**
-   * 是否按怪物标签区分拾取
+   * 是否按怪物标签区分拾取，默认关闭
    * @since 0.43.1
    */
   enableMonsterLootSplit: boolean;

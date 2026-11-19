@@ -64,7 +64,7 @@ export interface AutoFightParam extends Omit<
    */
   combatStrategyPath: string;
   /**
-   * 是否启用战斗结束检测
+   * 是否启用战斗结束检测，默认开启
    * @since 0.52.0
    */
   fightFinishDetectEnabled: boolean;
@@ -89,67 +89,67 @@ export interface AutoFightParam extends Omit<
    */
   timeout: number;
   /**
-   * 是否在战斗结束后使用枫原万叶聚集并拾取掉落物
+   * 是否在战斗结束后使用枫原万叶聚集并拾取掉落物，默认开启
    * @since 0.52.0
    */
   kazuhaPickupEnabled: boolean;
   /**
-   * 按技能冷却优化出招的角色配置，英文逗号分隔人名或人名与秒数，多种用分号分隔
+   * 按技能冷却优化出招的角色配置，英文逗号分隔人名或人名与秒数，多种用分号分隔，默认空字符串
    * @since 0.52.0
    */
   actionSchedulerByCd: string;
   /**
-   * 战后万叶拾取时切换的备用队伍名称，当前队伍无枫原万叶时使用
+   * 战后万叶拾取时切换的备用队伍名称，当前队伍无枫原万叶时使用，默认空字符串
    * @since 0.52.0
    */
   kazuhaPartyName: string;
   /**
-   * 只拾取精英掉落模式：`Closed` 关闭、`AllowAutoPickupForNonElite` 非精英允许脚下自动拾取、`DisableAutoPickupForNonElite` 非精英关闭拾取
+   * 只拾取精英掉落模式：`Closed` 关闭、`AllowAutoPickupForNonElite` 非精英允许脚下自动拾取、`DisableAutoPickupForNonElite` 非精英关闭拾取，默认 "Closed"
    * @since 0.52.0
    */
   onlyPickEliteDropsMode: OnlyPickEliteDropsMode;
   /**
-   * 盾奶位角色队伍序号，从 1 开始，空字符串表示不指定
+   * 盾奶位角色队伍序号，从 1 开始，默认空字符串（不指定）
    * @since 0.52.0
    */
   guardianAvatar: PartySlotIndex;
   /**
-   * 是否跳过盾奶位自身的战斗策略脚本
+   * 是否跳过盾奶位自身的战斗策略脚本，默认关闭
    * @since 0.52.0
    */
   guardianCombatSkip: boolean;
   /**
-   * 盾奶位是否长按元素战技
+   * 盾奶位是否长按元素战技，默认关闭
    * @since 0.52.0
    */
   guardianAvatarHold: boolean;
   /**
-   * 是否在释放元素爆发前检查战斗结束
+   * 是否在释放元素爆发前检查战斗结束，默认关闭
    * @since 0.52.0
    */
   checkBeforeBurst: boolean;
   /**
-   * 是否在首次检查时进行面敌
+   * 是否在首次检查时进行面敌，默认关闭
    * @since 0.52.0
    */
   isFirstCheck: boolean;
   /**
-   * 旋转寻敌的旋转因子，范围 1–13，越大越快
+   * 旋转寻敌的旋转因子，范围 1–13，越大越快，默认 12
    * @since 0.52.0
    */
   rotaryFactor: number;
   /**
-   * 是否优先释放元素爆发
+   * 是否优先释放元素爆发，默认关闭
    * @since 0.52.0
    */
   burstEnabled: boolean;
   /**
-   * 是否在战后使用琴二次长按元素战技拾取
+   * 是否在战后使用琴二次长按元素战技拾取，默认关闭
    * @since 0.52.0
    */
   qinDoublePickUp: boolean;
   /**
-   * 是否在战斗中持续尝试面朝敌人
+   * 是否在战斗中持续尝试面朝敌人，默认关闭
    * @since 0.63.0
    */
   enableCombatTargeting: boolean;
@@ -159,7 +159,7 @@ export interface AutoFightParam extends Omit<
    */
   targetingDetectionInterval: number;
   /**
-   * 是否在遮罩窗口绘制血条、伤害数字等识别结果
+   * 是否在遮罩窗口绘制血条、伤害数字等识别结果，默认开启
    * @since 0.63.0
    */
   drawRecognitionResults: boolean;
@@ -169,12 +169,12 @@ export interface AutoFightParam extends Omit<
    */
   lockLostWaitTime: number;
   /**
-   * 伤害数字识别模式
+   * 伤害数字识别模式，默认 "Color"
    * @since 0.63.0
    */
   damageNumberRecognitionMode: DamageNumberRecognitionMode;
   /**
-   * 是否仅在检测到精英怪经验值图标时执行战后拾取
+   * 是否仅在检测到精英怪经验值图标时执行战后拾取，默认关闭
    * @since 0.61.0
    */
   expBasedPickupEnabled: boolean;
@@ -202,52 +202,52 @@ declare const autoFightParam_FightFinishDetectConfigBrand: unique symbol;
 export interface AutoFightParam_FightFinishDetectConfig extends ClrHostValue {
   readonly [autoFightParam_FightFinishDetectConfigBrand]: true;
   /**
-   * 是否启用快速检查战斗结束
+   * 是否启用快速检查战斗结束，默认关闭
    * @since 0.52.0
    */
   fastCheckEnabled: boolean;
   /**
-   * 快速检查参数；数字为距上次检查的间隔秒数，人名为对应角色动作后触发，多项用分号分隔
+   * 快速检查参数；数字为距上次检查的间隔秒数，人名为对应角色动作后触发，多项用分号分隔，默认空字符串
    * @since 0.52.0
    */
   fastCheckParams: string;
   /**
-   * 是否在切人后再执行战斗结束检查；无需等待上一动作后摇，目前仅 JSON 策略下生效
+   * 是否在切人后再执行战斗结束检查；无需等待上一动作后摇，目前仅 JSON 策略下生效，默认关闭
    * @since 0.64.0
    */
   checkAfterSwitchAvatar: boolean;
   /**
-   * 触发战斗结束检查前的延时，单位秒，确保动作后摇结束；也可为角色单独指定
+   * 触发战斗结束检查前的延时，单位秒，确保动作后摇结束；也可为角色单独指定，默认 "0.4;钟离,1.4;"
    * @since 0.52.0
    */
   checkEndDelay: string;
   /**
-   * 按下切换队伍后检测屏幕色块的延迟，单位秒
+   * 按下切换队伍后检测屏幕色块的延迟，单位秒，默认 "0.4"
    * @since 0.52.0
    */
   beforeDetectDelay: string;
   /**
-   * 是否启用旋转寻找敌人
+   * 是否启用旋转寻找敌人，默认关闭
    * @since 0.52.0
    */
   rotateFindEnemyEnabled: boolean;
   /**
-   * 是否在敌人可见时跳过战斗结束检查；检测到敌人血条时跳过，与旋转寻找敌人互斥
+   * 是否在敌人可见时跳过战斗结束检查；检测到敌人血条时跳过，与旋转寻找敌人互斥，默认关闭
    * @since 0.63.0
    */
   skipFightEndCheckWhenEnemyVisible: boolean;
   /**
-   * 开战后阻断战斗结束检查的时长，单位秒；默认 0 不阻断，大于 0 时该时间内的检查视为战斗未结束
+   * 开战后阻断战斗结束检查的时长，单位秒；大于 0 时该时间内的检查视为战斗未结束，默认 0
    * @since 0.64.0
    */
   blockCheckBeforeBattleSeconds: number;
   /**
-   * 是否启用派蒙辅助检测；按 L 后当派蒙头像可见时提前跳出战斗结束检测
+   * 是否启用派蒙辅助检测；按 L 后当派蒙头像可见时提前跳出战斗结束检测，默认关闭
    * @since 0.64.0
    */
   paimonEndCheckEnabled: boolean;
   /**
-   * 派蒙辅助检测延时，单位秒
+   * 派蒙辅助检测延时，单位秒，默认 0.2
    * @since 0.64.0
    */
   paimonEndCheckDelay: number;
