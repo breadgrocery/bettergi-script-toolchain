@@ -1,6 +1,6 @@
 {
   "name": "@bettergi/create-script",
-  "version": "0.2.15",
+  "version": "0.2.16",
   "description": "搭建您的第一个 BetterGI 脚本项目",
   "type": "module",
   "author": "Bread Grocery<https://github.com/breadgrocery>",
@@ -34,7 +34,7 @@
     "release": "pnpm build && pnpm publish --access public"
   },
   "dependencies": {
-    "@clack/prompts": "^1.8.1",
+    "@clack/prompts": "^1.9.0",
     "fs-extra": "^11.4.1",
     "git-config": "^0.0.7"
   },
@@ -43,6 +43,6 @@
     "@types/git-config": "^0.0.32",
     "@types/node": "24.x",
     "rimraf": "^6.1.4",
-    "typescript": "^6.0.3"
+    "typescript": "6.x"
   }
 }
