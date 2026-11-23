@@ -32,6 +32,7 @@ import PostBuildProcessor from "./plugins/post-build-processor.js";
       buildDelay: 500 // 防抖
     },
     checks: {
+      couldNotCleanDirectory: false,
       pluginTimings: false
     },
     tsconfig: true,
