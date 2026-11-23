@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "dev": "bettergi-cli --watch",
-    "build": "bettergi-cli"
+    "build": "tsc --noEmit && bettergi-cli"
   },
   "devDependencies": {
     "@bettergi/cli": "workspace:^",
